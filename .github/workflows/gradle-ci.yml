@@ -1,0 +1,75 @@
+# This workflow will build a Java project with Gradle
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
+name: JavaCI-PR
+
+on:
+  push:
+    branches: [ feature/*, bugfix/* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # Set up build environment
+      - uses: actions/checkout@a81bbbf8298c0fa03ea29cdc473d45769f953675
+      - name: Set up JDK 8
+        uses: actions/setup-java@d202f5dbf7256730fb690ec59f6381650114feb2
+        with:
+          java-version: 8
+      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16 # save wrapper
+        with:
+          path: |
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradleWrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradleWrapper-
+      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16 # save resolved dependencies
+        with:
+          path: |
+            ~/.gradle/caches
+            !~/.gradle/caches/build-cache-*
+          key: ${{ runner.os }}-gradleCaches-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradleCaches-
+      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16 # save build cache
+        with:
+          path: |
+            ~/.gradle/caches/build-cache-*
+          key: ${{ runner.os }}-gradleBuildCache-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-gradleBuildCache-
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: Upload coverage to Codecov - Core
+        uses: codecov/codecov-action@7d5dfa54903bd909319c580a00535b483d1efcf3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./mission-control/build/reports/jacoco/report.xml
+          flags: core
+          fail_ci_if_error: false
+      - name: Upload coverage to Codecov - Boosters - JUnit4
+        uses: codecov/codecov-action@7d5dfa54903bd909319c580a00535b483d1efcf3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./boosters/booster-junit4/build/reports/jacoco/report.xml
+          flags: junit4
+          fail_ci_if_error: false
+      - name: Upload coverage to Codecov - Boosters - Jupiter
+        uses: codecov/codecov-action@7d5dfa54903bd909319c580a00535b483d1efcf3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./boosters/booster-junit-jupiter/build/reports/jacoco/report.xml
+          flags: jupiter
+          fail_ci_if_error: false
+      - name: Upload coverage to Codecov - Boosters - Testkit
+        uses: codecov/codecov-action@7d5dfa54903bd909319c580a00535b483d1efcf3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./boosters/testkit/build/reports/jacoco/report.xml
+          flags: testkit
+          fail_ci_if_error: false

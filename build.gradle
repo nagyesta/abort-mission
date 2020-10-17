@@ -1,0 +1,190 @@
+plugins {
+    //noinspection GroovyAssignabilityCheck
+    id 'io.toolebox.git-versioner' version '1.5.0'
+}
+
+group = 'com.github.nagyesta.abort-mission'
+
+project.ext {
+    //noinspection GroovyAssignabilityCheck
+    gitToken = project.hasProperty('githubToken') ? (project.property('githubToken') as String) : ''
+    //noinspection GroovyAssignabilityCheck
+    gitUser = project.hasProperty('githubUser') ? (project.property('githubUser') as String) : ''
+    //noinspection GroovyAssignabilityCheck
+    repoUrl = 'https://github.com/nagyesta/abort-mission'
+    //noinspection GroovyAssignabilityCheck
+    licenseName = 'MIT License'
+    //noinspection GroovyAssignabilityCheck
+    licenseUrl = 'https://raw.githubusercontent.com/nagyesta/abort-mission/main/LICENSE'
+    //noinspection GroovyAssignabilityCheck
+    maintainerId = 'nagyesta'
+    //noinspection GroovyAssignabilityCheck
+    maintainerName = 'Istvan Zoltan Nagy'
+
+    // dependency versions
+    // minimum supported dependency version
+    //noinspection GroovyAssignabilityCheck
+    junit4Version = '4.13'
+    //noinspection GroovyAssignabilityCheck
+    jupiterVersion = '5.5.0'
+
+    // internal build versions
+    //noinspection GroovyAssignabilityCheck
+    jupiterTestKitVersion = '1.7.0'
+    //noinspection GroovyAssignabilityCheck
+    jupiterPlatformVersion = '5.7.0'
+    //noinspection GroovyAssignabilityCheck
+    mockitoCoreVersion = '3.6.0'
+    //noinspection GroovyAssignabilityCheck
+    springBootVersion = '2.3.4.RELEASE'
+}
+
+versioner {
+    startFrom {
+        major = 0
+        minor = 9
+        patch = 0
+    }
+    pattern {
+        pattern = "%M.%m.%p(.%c)"
+    }
+    git {
+        authentication {
+            https {
+                token = project.ext.gitToken
+            }
+        }
+    }
+    tag {
+        prefix = 'v'
+        useCommitMessage = true
+    }
+}
+
+configure(subprojects.findAll({
+    //noinspection GroovyAssignabilityCheck
+    !'boosters'.equalsIgnoreCase(it.name)
+})) {
+    //noinspection GroovyAssignabilityCheck
+    apply plugin: 'java'
+    //noinspection GroovyAssignabilityCheck
+    apply plugin: 'checkstyle'
+    //noinspection GroovyAssignabilityCheck
+    apply plugin: 'jacoco'
+    //noinspection GroovyAssignabilityCheck
+    apply plugin: 'maven-publish'
+
+    versioner.apply()
+
+    version = rootProject.version
+    //noinspection GroovyUnusedAssignment
+    sourceCompatibility = '8'
+    repositories {
+        mavenCentral()
+    }
+
+    java {
+        withJavadocJar()
+        withSourcesJar()
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            //noinspection GroovyAssignabilityCheck
+            xml.destination file("$buildDir/reports/jacoco/report.xml")
+            csv.enabled false
+            html.enabled true
+        }
+    }
+
+    test.finalizedBy jacocoTestReport
+    jacocoTestReport.finalizedBy jacocoTestCoverageVerification
+
+    jacoco {
+        toolVersion = "0.8.2"
+    }
+
+    jacocoTestCoverageVerification {
+        inputs.file(file("${buildDir}/reports/jacoco/report.xml") as String)
+        outputs.file(file("${buildDir}/reports/jacoco/jacocoTestCoverageVerification") as String)
+
+        violationRules {
+            rule {
+                limit {
+                    counter = 'LINE'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.8
+                }
+                limit {
+                    counter = 'BRANCH'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.8
+                }
+                excludes = [
+                        "testkit",
+                        "booster-junit4"
+                ]
+            }
+            rule {
+                element = 'CLASS'
+                limit {
+                    counter = 'LINE'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.5
+                }
+                limit {
+                    counter = 'BRANCH'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.5
+                }
+                excludes = [
+                        "com.github.nagyesta.abortmission.core.LaunchSequenceTemplate",
+                        "com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets",
+                        "com.github.nagyesta.abortmission.testkit.vanilla.FuelTankTestAssets",
+                        "com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDropTestAssets"
+                ]
+            }
+        }
+        doLast {
+            file("${buildDir}/reports/jacoco/jacocoTestCoverageVerification").write("Passed")
+        }
+    }
+    jar.dependsOn check
+
+    //noinspection GroovyAssignabilityCheck
+    tasks.withType(Checkstyle) {
+        //noinspection GroovyAssignabilityCheck
+        configProperties = [base_dir: rootDir.toString(), cache_file: file("${buildDir}/checkstyle/cacheFile")]
+        reports {
+            xml.enabled false
+            html.enabled true
+            html.stylesheet resources.text
+                    .fromFile(rootProject.file('config/checkstyle/checkstyle-stylesheet.xsl') as String)
+        }
+    }
+
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/nagyesta/abort-mission")
+                credentials {
+                    username = rootProject.ext.gitUser
+                    password = rootProject.ext.gitToken
+                }
+            }
+        }
+    }
+
+    //Disable metadata publishing and rely on Maven only
+    //noinspection GroovyAssignabilityCheck
+    tasks.withType(GenerateModuleMetadata) {
+        enabled = false
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+

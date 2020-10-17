@@ -1,0 +1,27 @@
+coverage:
+  status:
+    project:
+      default:
+        threshold: 0.50%
+      core:
+        flags: core
+      junit4:
+        flags: junit4
+      jupiter:
+        flags: jupiter
+      testkit:
+        flags: testkit
+    patch: off
+flags:
+  core:
+    paths:
+      - ./mission-control
+  junit4:
+    paths:
+      - ./boosters/booster-junit4
+  jupiter:
+    paths:
+      - ./boosters/booster-junit-jupiter
+  testkit:
+    paths:
+      - ./boosters/testkit

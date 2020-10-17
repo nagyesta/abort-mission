@@ -1,0 +1,62 @@
+group = "${rootProject.group}.testkit"
+
+project.ext {
+    //noinspection GroovyAssignabilityCheck
+    artifactDisplayName = "Abort Mission - Booster Test Kit"
+    //noinspection GroovyAssignabilityCheck
+    artifactDescription = "A collection of classes we can use to test Abort Mission Boosters."
+}
+
+dependencies {
+    //noinspection GroovyAssignabilityCheck
+    implementation project(":mission-control")
+    implementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.springBootVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${rootProject.ext.jupiterPlatformVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterPlatformVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        //noinspection GroovyAssignabilityCheck
+        mavenJava(MavenPublication) {
+            //noinspection GroovyAssignabilityCheck
+            from components.java
+            //noinspection GroovyAssignabilityCheck
+            artifactId = "abort.${project.name}"
+            pom {
+                //noinspection GroovyAssignabilityCheck
+                name = "${project.artifactDisplayName}"
+                //noinspection GroovyAssignabilityCheck
+                description = "${project.artifactDescription}"
+                //noinspection GroovyAssignabilityCheck
+                url = rootProject.ext.repoUrl
+                licenses {
+                    license {
+                        //noinspection GroovyAssignabilityCheck
+                        name = rootProject.ext.licenseName
+                        //noinspection GroovyAssignabilityCheck
+                        url = rootProject.ext.licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        //noinspection GroovyAssignabilityCheck
+                        id = rootProject.ext.maintainerId
+                        //noinspection GroovyAssignabilityCheck
+                        name = rootProject.ext.maintainerName
+                    }
+                }
+                withXml {
+                    asNode().dependencies.'*'.findAll() {
+                        it.scope.text() == 'runtime'
+                    }.each { it.scope*.value = 'compile' }
+                }
+            }
+        }
+    }
+}

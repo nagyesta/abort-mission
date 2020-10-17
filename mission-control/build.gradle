@@ -1,0 +1,53 @@
+group = rootProject.group
+
+project.ext {
+    //noinspection GroovyAssignabilityCheck
+    artifactDisplayName = "Abort Mission - Mission Control"
+    //noinspection GroovyAssignabilityCheck
+    artifactDescription = "Core module of Abort Mission which is providing flexible test abort options for failing test groups."
+}
+
+dependencies {
+    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterPlatformVersion}"
+    testImplementation "org.mockito:mockito-core:${rootProject.ext.mockitoCoreVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        //noinspection GroovyAssignabilityCheck
+        mavenJava(MavenPublication) {
+            //noinspection GroovyAssignabilityCheck
+            from components.java
+            //noinspection GroovyAssignabilityCheck
+            artifactId = "abort.${project.name}"
+            pom {
+                //noinspection GroovyAssignabilityCheck
+                name = "${project.artifactDisplayName}"
+                //noinspection GroovyAssignabilityCheck
+                description = "${project.artifactDescription}"
+                //noinspection GroovyAssignabilityCheck
+                url = rootProject.ext.repoUrl
+                licenses {
+                    license {
+                        //noinspection GroovyAssignabilityCheck
+                        name = rootProject.ext.licenseName
+                        //noinspection GroovyAssignabilityCheck
+                        url = rootProject.ext.licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        //noinspection GroovyAssignabilityCheck
+                        id = rootProject.ext.maintainerId
+                        //noinspection GroovyAssignabilityCheck
+                        name = rootProject.ext.maintainerName
+                    }
+                }
+            }
+        }
+    }
+}
