@@ -23,26 +23,11 @@ jobs:
         with:
           path: |
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradleWrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: |
-            ${{ runner.os }}-gradleWrapper-
-      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16 # save resolved dependencies
-        with:
-          path: |
-            ~/.gradle/caches
-            !~/.gradle/caches/build-cache-*
-          key: ${{ runner.os }}-gradleCaches-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradleCaches-
-      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16 # save build cache
-        with:
-          path: |
-            ~/.gradle/caches/build-cache-*
-          key: ${{ runner.os }}-gradleBuildCache-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-gradleBuildCache-
+            ${{ runner.os }}-gradle-wrapper-
       - name: Build with Gradle
-        run: ./gradlew build tagVersion -PgithubToken=${{ secrets.PUBLISH_KEY }} -PgithubUser=${{ secrets.PUBLISH_USER_NAME }}
+        run: ./gradlew tagVersion build -PgithubToken=${{ secrets.PUBLISH_KEY }} -PgithubUser=${{ secrets.PUBLISH_USER_NAME }}
       - name: Publish with Gradle
         run: ./gradlew publish -PgithubToken=${{ secrets.PUBLISH_KEY }} -PgithubUser=${{ secrets.PUBLISH_USER_NAME }}
       - name: Upload coverage to Codecov - Core
