@@ -1,6 +1,6 @@
 ![Abort-Mission](.github/assets/Abort-Mission-logo_export_transparent_640.png)
 
-[![GitHub license](https://img.shields.io/github/license/nagyesta/abort-mission?color=blue)](https://raw.githubusercontent.com/nagyesta/abort-mission/main/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/nagyesta/abort-mission?color=informational)](https://raw.githubusercontent.com/nagyesta/abort-mission/main/LICENSE)
 [![Java version](https://img.shields.io/badge/Java%20version-8-yellow?logo=java)](https://img.shields.io/badge/Java%20version-8-yellow?logo=java)
 [![latest-release](https://img.shields.io/github/v/tag/nagyesta/abort-mission?color=blue&logo=git&label=releases&sort=semver)](https://github.com/nagyesta/abort-mission/releases)
 [![JavaCI](https://img.shields.io/github/workflow/status/nagyesta/abort-mission/JavaCI?logo=github)](https://img.shields.io/github/workflow/status/nagyesta/abort-mission/JavaCI?logo=github)
@@ -8,6 +8,7 @@
 [![code-climate-maintainability](https://img.shields.io/codeclimate/maintainability/nagyesta/abort-mission?logo=code%20climate)](https://img.shields.io/codeclimate/maintainability/nagyesta/abort-mission?logo=code%20climate)
 [![code-climate-tech-debt](https://img.shields.io/codeclimate/tech-debt/nagyesta/abort-mission?logo=code%20climate)](https://img.shields.io/codeclimate/tech-debt/nagyesta/abort-mission?logo=code%20climate)
 [![last_commit](https://img.shields.io/github/last-commit/nagyesta/abort-mission?logo=git)](https://img.shields.io/github/last-commit/nagyesta/abort-mission?logo=git)
+[![wiki](https://img.shields.io/badge/See-Wiki-informational)](https://github.com/nagyesta/abort-mission/wiki)
 
 Abort-Mission is a lightweight Java library providing flexible test abortion support for test groups to allow fast failures.
 
