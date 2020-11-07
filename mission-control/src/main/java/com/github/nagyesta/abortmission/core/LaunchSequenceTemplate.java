@@ -51,6 +51,20 @@ public final class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate
                 methodBasedEvaluatorLookup.apply(method));
     }
 
+
+    /**
+     * Indicates that a failure happened during test run.
+     *
+     * @param testClass The class we executed.
+     * @param rootCause The exception identified as root cause of the issue.
+     */
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    public void launchFailure(final Class<?> testClass, final Optional<Throwable> rootCause) {
+        failureDetected(rootCause,
+                classBasedEvaluatorLookup().apply(testClass),
+                annotationContextEvaluator().findSuppressedExceptions(testClass));
+    }
+
     /**
      * Indicates that a failure happened during test run.
      *

@@ -7,6 +7,8 @@ import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import com.github.nagyesta.abortmission.core.matcher.impl.MissionHealthCheckMatcherBuilder;
 import com.github.nagyesta.abortmission.core.matcher.impl.builder.InitialMissionHealthCheckMatcherBuilder;
 
+import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -100,7 +102,9 @@ public final class MissionControl {
      * @return set of matching evaluators
      */
     public static Set<MissionHealthCheckEvaluator> matchingHealthChecks(final Object component) {
-        return AbortMissionCommandOps.shared().matchingEvaluators(component);
+        return Optional.ofNullable(AbortMissionCommandOps.shared())
+                .map(ops -> ops.matchingEvaluators(component))
+                .orElse(Collections.emptySet());
     }
 
     /**
