@@ -43,14 +43,6 @@ jobs:
           key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-wrapper-
-      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16 # save resolved dependencies
-        with:
-          path: |
-            ~/.gradle/caches
-            !~/.gradle/caches/build-cache-*
-          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-caches-
       - name: Initialize CodeQL
         uses: github/codeql-action/init@46110c361b7e9ea1b6f9c6ba2cc941fa7a106cca
         with:

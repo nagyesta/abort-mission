@@ -28,21 +28,6 @@ jobs:
           key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-wrapper-
-      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16 # save resolved dependencies
-        with:
-          path: |
-            ~/.gradle/caches
-            !~/.gradle/caches/build-cache-*
-          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-caches-
-      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16 # save build cache
-        with:
-          path: |
-            ~/.gradle/caches/build-cache-*
-          key: ${{ runner.os }}-gradle-build-cache-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-build-cache-
       - name: Build with Gradle
         run: ./gradlew build
       - name: Upload coverage to Codecov - Core
