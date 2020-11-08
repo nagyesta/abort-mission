@@ -118,4 +118,13 @@ public abstract class AbstractLaunchSequenceTemplate {
             abortSequence.run();
         }
     }
+
+    /**
+     * Provides access to the class based lookup.
+     *
+     * @return Class based lookup.
+     */
+    protected final Function<Class<?>, Set<MissionHealthCheckEvaluator>> classBasedEvaluatorLookup() {
+        return classBasedEvaluatorLookup;
+    }
 }

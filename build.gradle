@@ -27,12 +27,16 @@ project.ext {
     junit4Version = '4.13'
     //noinspection GroovyAssignabilityCheck
     jupiterVersion = '5.5.0'
+    //noinspection GroovyAssignabilityCheck
+    testNgVersion = '7.0.0'
 
     // internal build versions
     //noinspection GroovyAssignabilityCheck
     jupiterTestKitVersion = '1.7.0'
     //noinspection GroovyAssignabilityCheck
     jupiterPlatformVersion = '5.7.0'
+    //noinspection GroovyAssignabilityCheck
+    latestTestNgVersion = '7.3.0'
     //noinspection GroovyAssignabilityCheck
     mockitoCoreVersion = '3.6.0'
     //noinspection GroovyAssignabilityCheck

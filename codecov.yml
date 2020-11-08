@@ -9,6 +9,8 @@ coverage:
         flags: junit4
       jupiter:
         flags: jupiter
+      testng:
+        flags: testng
       testkit:
         flags: testkit
     patch: off
@@ -22,6 +24,9 @@ flags:
   jupiter:
     paths:
       - ./boosters/booster-junit-jupiter
+  testng:
+    paths:
+      - ./boosters/booster-testng
   testkit:
     paths:
       - ./boosters/testkit
