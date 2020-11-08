@@ -66,6 +66,13 @@ jobs:
           file: ./boosters/booster-junit-jupiter/build/reports/jacoco/report.xml
           flags: jupiter
           fail_ci_if_error: false
+      - name: Upload coverage to Codecov - Boosters - TestNG
+        uses: codecov/codecov-action@7d5dfa54903bd909319c580a00535b483d1efcf3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./boosters/booster-tetng/build/reports/jacoco/report.xml
+          flags: testng
+          fail_ci_if_error: false
       - name: Upload coverage to Codecov - Boosters - Testkit
         uses: codecov/codecov-action@7d5dfa54903bd909319c580a00535b483d1efcf3
         with:
