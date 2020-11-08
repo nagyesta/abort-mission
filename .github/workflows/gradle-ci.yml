@@ -4,8 +4,6 @@
 name: JavaCI-PR
 
 on:
-  push:
-    branches: [ feature/*, bugfix/* ]
   pull_request:
     branches: [ main ]
 
