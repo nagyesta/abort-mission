@@ -47,7 +47,7 @@ Let me know by creating an issue! No promises, but I will at least take a look.
 - Boosters
   - [JUnit 4](boosters/booster-junit4)
   - [JUnit Jupiter](boosters/booster-junit-jupiter)
-  - [Test NG](boosters/booster-testng)
+  - [TestNG](boosters/booster-testng)
   - [Booster Test Kit](boosters/testkit)
 
 ## Terminology and Lifecycle
