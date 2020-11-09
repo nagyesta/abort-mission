@@ -50,12 +50,12 @@ versioner {
         patch = 1
     }
     match {
-        major = '__MAJOR__'
-        minor = '__MINOR__'
-        patch = '__PATCH__'
+        major = '{major}'
+        minor = '{minor}'
+        patch = '{patch}'
     }
     pattern {
-        pattern = "%M.%m.%p"
+        pattern = "%M.%m.%p(.%c)"
     }
     git {
         authentication {
