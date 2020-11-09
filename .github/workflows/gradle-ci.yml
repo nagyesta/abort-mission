@@ -27,7 +27,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-wrapper-
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew printVersion build
       - name: Upload coverage to Codecov - Core
         uses: codecov/codecov-action@7d5dfa54903bd909319c580a00535b483d1efcf3
         with:
