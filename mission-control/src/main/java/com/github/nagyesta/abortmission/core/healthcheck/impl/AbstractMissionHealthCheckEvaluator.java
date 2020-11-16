@@ -1,7 +1,9 @@
 package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
-import com.github.nagyesta.abortmission.core.healthcheck.MissionStatisticsView;
+import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyMissionStatistics;
+import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyStageStatistics;
+import com.github.nagyesta.abortmission.core.healthcheck.StatisticsLogger;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 
 /**
@@ -24,7 +26,7 @@ public abstract class AbstractMissionHealthCheckEvaluator implements MissionHeal
     }
 
     @Override
-    public MissionStatisticsView getStats() {
+    public ReadOnlyMissionStatistics getStats() {
         return this.stats;
     }
 
@@ -34,63 +36,22 @@ public abstract class AbstractMissionHealthCheckEvaluator implements MissionHeal
     }
 
     @Override
-    public int getMissionSuccessCount() {
-        return stats.getMissionSuccess();
+    public ReadOnlyStageStatistics getCountdownStatistics() {
+        return stats.getReadOnlyCountdown();
     }
 
     @Override
-    public int getMissionFailureCount() {
-        return stats.getMissionFailure();
+    public StatisticsLogger countdownLogger() {
+        return stats.getCountdown();
     }
 
     @Override
-    public int getMissionAbortCount() {
-        return stats.getMissionAbort();
+    public ReadOnlyStageStatistics getMissionStatistics() {
+        return stats.getReadOnlyMission();
     }
 
     @Override
-    public int getCountdownStartCount() {
-        return stats.getCountdownStarted();
+    public StatisticsLogger missionLogger() {
+        return stats.getMission();
     }
-
-    @Override
-    public int getCountdownAbortCount() {
-        return stats.getCountdownAborted();
-    }
-
-    @Override
-    public int getCountdownCompleteCount() {
-        return stats.getCountdownCompleted();
-    }
-
-    @Override
-    public void logCountdownStarted() {
-        stats.incrementCountdownStarted();
-    }
-
-    @Override
-    public void logLaunchImminent() {
-        stats.incrementCountdownCompleted();
-    }
-
-    @Override
-    public void logMissionFailure() {
-        stats.incrementMissionFailure();
-    }
-
-    @Override
-    public void logMissionAbort() {
-        stats.incrementMissionAbort();
-    }
-
-    @Override
-    public void logCountdownAborted() {
-        stats.incrementCountdownAborted();
-    }
-
-    @Override
-    public void logMissionSuccess() {
-        stats.incrementMissionSuccess();
-    }
-
 }

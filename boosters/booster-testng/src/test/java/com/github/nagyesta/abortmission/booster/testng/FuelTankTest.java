@@ -2,8 +2,6 @@ package com.github.nagyesta.abortmission.booster.testng;
 
 import com.github.nagyesta.abortmission.booster.testng.listener.AbortMissionListener;
 import com.github.nagyesta.abortmission.core.MissionControl;
-import com.github.nagyesta.abortmission.core.healthcheck.MissionStatisticsView;
-import com.github.nagyesta.abortmission.core.healthcheck.impl.MissionStatisticsCollector;
 import org.testng.ITestContext;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
@@ -16,8 +14,6 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class FuelTankTest {
-    private static final MissionStatisticsView FUEL_TANK_NOMINAL_STATS_CONFIG_FAILURE =
-            new MissionStatisticsCollector(3, 5, 0, 1, 1, 2);
 
     @Test(groups = "integration")
     @SuppressWarnings("checkstyle:MagicNumber")
@@ -29,7 +25,7 @@ public class FuelTankTest {
         engine.run();
         assertTrue(engine.hasFailure());
         MissionControl.matchingHealthChecks(CONTEXT_NAME, FuelTankTestContext.class)
-                .forEach(evaluator -> assertEquals(evaluator.getStats(), FUEL_TANK_NOMINAL_STATS_CONFIG_FAILURE));
+                .forEach(evaluator -> assertEquals(evaluator.getStats(), FUEL_TANK_NOMINAL_STATS_PER_CLASS));
     }
 
     public static class ValidatingTestListener extends TestListenerAdapter {

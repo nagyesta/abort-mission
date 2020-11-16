@@ -3,6 +3,7 @@ package com.github.nagyesta.abortmission.booster.junit4.support;
 import com.github.nagyesta.abortmission.booster.junit4.annotation.LaunchAbortArmed;
 import com.github.nagyesta.abortmission.core.LaunchSequenceTemplate;
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
+import com.github.nagyesta.abortmission.core.telemetry.watch.StageTimeStopwatch;
 import org.junit.AssumptionViolatedException;
 import org.junit.Before;
 import org.junit.internal.runners.statements.RunAfters;
@@ -44,24 +45,20 @@ public class LaunchAbortTestWatcher extends TestWatcher {
         return super.apply(wrapped, description);
     }
 
-    @Override
-    protected void succeeded(final Description description) {
-        findMethodByDescription(description).ifPresent(launchSequenceTemplate::launchSuccess);
-        super.succeeded(description);
-    }
-
-    @Override
-    protected void failed(final Throwable e, final Description description) {
-        findMethodByDescription(description).ifPresent(method -> launchSequenceTemplate.launchFailure(method, Optional.of(e)));
-        super.failed(e, description);
-    }
-
     private Statement wrapPreparationCall(final Statement base) {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                launchSequenceTemplate.launchGoNoGo(testClass);
-                base.evaluate();
+                final Optional<StageTimeStopwatch> stopwatch = launchSequenceTemplate.launchGoNoGo(testClass);
+                try {
+                    base.evaluate();
+                    launchSequenceTemplate.countdownSuccess(testClass, stopwatch);
+                } catch (final AssumptionViolatedException e) {
+                    throw e;
+                } catch (final Throwable e) {
+                    launchSequenceTemplate.countdownFailure(testClass, Optional.of(e), stopwatch);
+                    throw e;
+                }
             }
         };
     }
@@ -71,10 +68,24 @@ public class LaunchAbortTestWatcher extends TestWatcher {
             @Override
             public void evaluate() throws Throwable {
                 if (noBefores) {
-                    findEvaluators(testClass).forEach(MissionHealthCheckEvaluator::logCountdownStarted);
+                    launchSequenceTemplate.countdownSuccess(testClass, Optional.of(new StageTimeStopwatch(testClass)));
                 }
-                findMethodByDescription(description).ifPresent(launchSequenceTemplate::launchImminent);
-                base.evaluate();
+                final Optional<Method> method = findMethodByDescription(description);
+                if (method.isPresent()) {
+                    Optional<StageTimeStopwatch> stopwatch = Optional.empty();
+                    try {
+                        stopwatch = launchSequenceTemplate.launchImminent(method.get());
+                        base.evaluate();
+                        launchSequenceTemplate.launchSuccess(method.get(), stopwatch);
+                    } catch (final AssumptionViolatedException e) {
+                        throw e;
+                    } catch (final Throwable e) {
+                        launchSequenceTemplate.launchFailure(method.get(), Optional.of(e), stopwatch);
+                        throw e;
+                    }
+                } else {
+                    throw new IllegalArgumentException("Method not found.");
+                }
             }
         };
     }

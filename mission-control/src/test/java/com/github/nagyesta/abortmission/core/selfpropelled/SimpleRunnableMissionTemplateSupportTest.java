@@ -6,7 +6,6 @@ import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvalu
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.opentest4j.TestAbortedException;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -14,30 +13,30 @@ import java.util.function.Consumer;
 @SuppressAbortDecisions
 class SimpleRunnableMissionTemplateSupportTest extends AbstractMissionTemplateSupportTest {
 
+
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
     void testSimpleRunnableShouldLogLifeCycleEventsWhenCalled(final boolean fail) {
         //given
         AnnotationContextEvaluator.shared().findAndApplyLaunchPlanDefinition(SimpleRunnableMissionTemplateSupport.class);
 
-        final MissionHealthCheckEvaluator evaluator = getRelevantEvaluator();
-        final int countdownStart = evaluator.getCountdownStartCount();
-        final int countdownComplete = evaluator.getCountdownCompleteCount();
-        final int missionFail = evaluator.getMissionFailureCount();
-        final int missionSuccess = evaluator.getMissionSuccessCount();
+        final MissionHealthCheckEvaluator evaluator = getRelevantEvaluator(fail);
+        final int countdownStart = evaluator.getCountdownStatistics().getTotal();
+        final int countdownComplete = evaluator.getCountdownStatistics().getSucceeded();
+        final int missionFail = evaluator.getMissionStatistics().getFailed();
+        final int missionSuccess = evaluator.getMissionStatistics().getSucceeded();
 
         final SimpleRunnableMissionTemplateSupport underTest = new SimpleRunnableMissionTemplateSupport(
-                MissionOutlineDefinition.SELF_PROPELLED_RUNNABLE,
-                this.getClass(), () -> {
-            throw new TestAbortedException();
-        }) {
+                MissionOutlineDefinition.SELF_PROPELLED_RUNNABLE + fail,
+                this.getClass(), AbstractMissionTemplateSupportTest::abort) {
             @Override
             public Consumer<Optional<Void>> missionPayloadConsumer() {
                 return v -> {
-                    Assertions.assertEquals(countdownStart + 1, evaluator.getCountdownStartCount());
-                    Assertions.assertEquals(countdownComplete + 1, evaluator.getCountdownCompleteCount());
-                    Assertions.assertEquals(missionFail, evaluator.getMissionFailureCount());
-                    Assertions.assertEquals(missionSuccess, evaluator.getMissionSuccessCount());
+                    Assertions.assertEquals(countdownStart + 1, evaluator.getCountdownStatistics().getTotal());
+                    Assertions.assertEquals(countdownComplete + 1, evaluator.getCountdownStatistics().getSucceeded());
+                    Assertions.assertEquals(missionFail, evaluator.getMissionStatistics().getFailed());
+                    Assertions.assertEquals(missionSuccess, evaluator.getMissionStatistics().getSucceeded());
+
                     if (fail) {
                         throw new IllegalStateException();
                     }
@@ -53,19 +52,19 @@ class SimpleRunnableMissionTemplateSupportTest extends AbstractMissionTemplateSu
         }
 
         //then
-        Assertions.assertEquals(countdownStart + 1, evaluator.getCountdownStartCount());
-        Assertions.assertEquals(countdownComplete + 1, evaluator.getCountdownCompleteCount());
+        Assertions.assertEquals(countdownStart + 1, evaluator.getCountdownStatistics().getTotal());
+        Assertions.assertEquals(countdownComplete + 1, evaluator.getCountdownStatistics().getSucceeded());
         if (fail) {
-            Assertions.assertEquals(missionFail + 1, evaluator.getMissionFailureCount());
-            Assertions.assertEquals(missionSuccess, evaluator.getMissionSuccessCount());
+            Assertions.assertEquals(missionFail + 1, evaluator.getMissionStatistics().getFailed());
+            Assertions.assertEquals(missionSuccess, evaluator.getMissionStatistics().getSucceeded());
         } else {
-            Assertions.assertEquals(missionFail, evaluator.getMissionFailureCount());
-            Assertions.assertEquals(missionSuccess + 1, evaluator.getMissionSuccessCount());
+            Assertions.assertEquals(missionFail, evaluator.getMissionStatistics().getFailed());
+            Assertions.assertEquals(missionSuccess + 1, evaluator.getMissionStatistics().getSucceeded());
         }
     }
 
-
-    private MissionHealthCheckEvaluator getRelevantEvaluator() {
-        return getMissionHealthCheckEvaluator(SimpleRunnableMissionTemplateSupport.class, MissionOutlineDefinition.SELF_PROPELLED_RUNNABLE);
+    private MissionHealthCheckEvaluator getRelevantEvaluator(final boolean fail) {
+        return getMissionHealthCheckEvaluator(this.getClass(),
+                MissionOutlineDefinition.SELF_PROPELLED_RUNNABLE + fail);
     }
 }

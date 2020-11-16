@@ -30,4 +30,23 @@ public class FuelTankTest {
                 .forEach(evaluator -> assertEquals(FUEL_TANK_NOMINAL_STATS, evaluator.getStats()));
     }
 
+    @Test
+    @Tag("integration")
+    @SuppressWarnings("checkstyle:MagicNumber")
+    public void testAssumptionPerClass() {
+        EngineTestKit
+                .engine("junit-jupiter")
+                .selectors(selectClass(FuelTankTestContextPerClass.class))
+                .execute()
+                .testEvents()
+                .assertStatistics(stats -> stats
+                        .skipped(DISABLED_CASES)
+                        .started(TOTAL_CASES)
+                        .succeeded(SUCCESSFUL_CASES)
+                        .aborted(ABORTED_CASES)
+                        .failed(FAILED_CASES));
+        MissionControl.matchingHealthChecks(PER_CLASS_CONTEXT, FuelTankTestContextPerClass.class)
+                .forEach(evaluator -> assertEquals(FUEL_TANK_NOMINAL_STATS_PER_CLASS, evaluator.getStats()));
+    }
+
 }
