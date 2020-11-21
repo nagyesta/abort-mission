@@ -78,7 +78,7 @@ public abstract class AbstractMissionTemplate<P, T> extends AbstractLaunchSequen
 
     private Optional<T> executeLaunch(final P preparedContext) {
         final Optional<StageTimeStopwatch> stopwatch = evaluateLaunchAbort(
-                getClassLevelEvaluatorsOnly(), new StageTimeStopwatch(evaluationScope.getName() + "#executeLaunch"),
+                getClassLevelEvaluatorsOnly(), new StageTimeStopwatch(evaluationScope.getName(), "executeLaunch"),
                 () -> annotationContextEvaluator().isAbortSuppressed(evaluationScope)
         );
         try {

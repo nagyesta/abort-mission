@@ -1,6 +1,7 @@
 package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -9,9 +10,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static com.github.nagyesta.abortmission.core.MissionControl.ABORT_MISSION_DISARM_COUNTDOWN;
+import static com.github.nagyesta.abortmission.core.MissionControl.ABORT_MISSION_DISARM_MISSION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("checkstyle:MagicNumber")
 class PercentageBasedMissionHealthCheckEvaluatorTest {
@@ -113,5 +116,37 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
                 .burnInTestCount(input));
 
         //then exception
+    }
+
+    @Test
+    void testShouldAbortShouldNotCallInternalMethodWhenDisarmed() {
+        //given
+        final PercentageBasedMissionHealthCheckEvaluator underTest = spy(PercentageBasedMissionHealthCheckEvaluator
+                .builder(mock(MissionHealthCheckMatcher.class))
+                .abortThreshold(1)
+                .build());
+        doReturn(true).when(underTest).isDisarmed(eq(ABORT_MISSION_DISARM_MISSION));
+
+        //when
+        underTest.shouldAbort();
+
+        //then
+        verify(underTest, never()).shouldAbortInternal();
+    }
+
+    @Test
+    void testShouldAbortCountdownShouldNotCallInternalMethodWhenDisarmed() {
+        //given
+        final PercentageBasedMissionHealthCheckEvaluator underTest = spy(PercentageBasedMissionHealthCheckEvaluator
+                .builder(mock(MissionHealthCheckMatcher.class))
+                .abortThreshold(1)
+                .build());
+        doReturn(true).when(underTest).isDisarmed(eq(ABORT_MISSION_DISARM_COUNTDOWN));
+
+        //when
+        underTest.shouldAbortCountdown();
+
+        //then
+        verify(underTest, never()).shouldAbortCountdownInternal();
     }
 }

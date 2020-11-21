@@ -35,4 +35,5 @@ public class StaticFireBoosterTest {
         MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestCenterCoreOnly.class.getDeclaredMethod("testIsOnFire"))
                 .forEach(evaluator -> assertEquals(CENTER_CORE_NOMINAL_STATS, evaluator.getStats()));
     }
+
 }

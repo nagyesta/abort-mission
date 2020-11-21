@@ -14,11 +14,11 @@ public enum StageResult {
      */
     ABORT,
     /**
-     * Execution finished successfully.
-     */
-    SUCCESS,
-    /**
      * Reporting was suppressed.
      */
-    SUPPRESSED
+    SUPPRESSED,
+    /**
+     * Execution finished successfully.
+     */
+    SUCCESS
 }

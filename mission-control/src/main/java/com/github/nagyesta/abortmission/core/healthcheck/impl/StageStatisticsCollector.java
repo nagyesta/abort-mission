@@ -4,11 +4,10 @@ import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyStageStatistics
 import com.github.nagyesta.abortmission.core.healthcheck.StatisticsLogger;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.StringJoiner;
-import java.util.TreeSet;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -21,7 +20,7 @@ public class StageStatisticsCollector implements ReadOnlyStageStatistics, Statis
     private final AtomicInteger succeeded;
     private final AtomicInteger aborted;
     private final AtomicInteger suppressed;
-    private final Set<StageTimeMeasurement> timeSeriesData = new ConcurrentSkipListSet<>();
+    private final List<StageTimeMeasurement> timeSeriesData = new CopyOnWriteArrayList<>();
 
     /**
      * Default constructor using 0 as baseline all across the measurements.
@@ -78,7 +77,7 @@ public class StageStatisticsCollector implements ReadOnlyStageStatistics, Statis
 
     @Override
     public Stream<StageTimeMeasurement> timeSeriesStream() {
-        return new TreeSet<>(timeSeriesData).stream();
+        return timeSeriesData.stream();
     }
 
     @Override

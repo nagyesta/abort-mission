@@ -3,6 +3,7 @@ package com.github.nagyesta.abortmission.booster.testng.listener;
 import com.github.nagyesta.abortmission.booster.testng.annotation.LaunchAbortArmed;
 import com.github.nagyesta.abortmission.core.LaunchSequenceTemplate;
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
+import com.github.nagyesta.abortmission.core.telemetry.ReportingHelper;
 import com.github.nagyesta.abortmission.core.telemetry.watch.StageTimeStopwatch;
 import org.testng.*;
 import org.testng.internal.ConstructorOrMethod;
@@ -14,7 +15,7 @@ import java.util.Set;
 import static com.github.nagyesta.abortmission.core.MissionControl.annotationContextEvaluator;
 import static com.github.nagyesta.abortmission.core.MissionControl.matchingHealthChecks;
 
-public class AbortMissionListener implements ITestListener, IClassListener {
+public class AbortMissionListener implements ITestListener, IClassListener, ISuiteListener {
 
     private static final ThreadLocal<Optional<StageTimeStopwatch>> STORE = new ThreadLocal<>();
     private final LaunchSequenceTemplate launchSequenceTemplate =
@@ -51,6 +52,11 @@ public class AbortMissionListener implements ITestListener, IClassListener {
     public void onBeforeClass(final ITestClass testClass) {
         final Class<?> testInstanceClass = testClass.getRealClass();
         STORE.set(launchSequenceTemplate.launchGoNoGo(testInstanceClass));
+    }
+
+    @Override
+    public void onFinish(final ISuite suite) {
+        new ReportingHelper().report();
     }
 
     private Optional<StageTimeStopwatch> stopwatchFromStore() {

@@ -28,6 +28,8 @@ project.ext {
     //noinspection GroovyAssignabilityCheck
     jupiterVersion = '5.6.2'
     //noinspection GroovyAssignabilityCheck
+    jupiterReportingVersion = '1.0.0'
+    //noinspection GroovyAssignabilityCheck
     testNgVersion = '7.0.0'
 
     // internal build versions
@@ -41,6 +43,8 @@ project.ext {
     mockitoCoreVersion = '3.6.0'
     //noinspection GroovyAssignabilityCheck
     springBootVersion = '2.3.4.RELEASE'
+    //noinspection GroovyAssignabilityCheck
+    gsonVersion = '2.8.6'
 }
 
 versioner {

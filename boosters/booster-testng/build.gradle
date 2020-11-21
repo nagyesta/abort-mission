@@ -25,6 +25,7 @@ dependencies {
 
 test {
     useTestNG {
+        systemProperty("abort-mission.report.directory", file("${buildDir}/reports/abort-mission/"))
         includeGroups('unit', 'integration')
     }
 }

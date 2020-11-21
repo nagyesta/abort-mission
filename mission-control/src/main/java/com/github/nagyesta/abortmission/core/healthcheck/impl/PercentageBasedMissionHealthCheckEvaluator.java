@@ -4,7 +4,12 @@ import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 
 import java.util.Objects;
 
-public final class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionHealthCheckEvaluator {
+/**
+ * {@link com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator} implementation based on failure to success
+ * percentage thresholds.
+ */
+@SuppressWarnings("checkstyle:FinalClass")
+public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionHealthCheckEvaluator {
 
     private static final double DOUBLE_100 = 100.0D;
 
@@ -31,7 +36,7 @@ public final class PercentageBasedMissionHealthCheckEvaluator extends AbstractMi
     }
 
     @Override
-    public boolean shouldAbort() {
+    protected boolean shouldAbortInternal() {
         final double totalMissions = getMissionStatistics().getTotal();
         final boolean isActive = burnInTestCount <= totalMissions;
         final double failedOrAborted = getMissionStatistics().getNotSuccessful();
@@ -40,7 +45,7 @@ public final class PercentageBasedMissionHealthCheckEvaluator extends AbstractMi
     }
 
     @Override
-    public boolean shouldAbortCountdown() {
+    protected boolean shouldAbortCountdownInternal() {
         final boolean isActive = burnInTestCount <= getCountdownStatistics().getTotal();
         final boolean countdownNeverCompleted = getCountdownStatistics().getSucceeded() == 0;
         return isActive && countdownNeverCompleted;
