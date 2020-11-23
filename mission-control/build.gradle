@@ -50,6 +50,11 @@ publishing {
                         name = rootProject.ext.maintainerName
                     }
                 }
+                withXml {
+                    asNode().dependencies.'*'.findAll() {
+                        it.scope.text() == 'runtime'
+                    }.each { it.scope*.value = 'compile' }
+                }
             }
         }
     }
