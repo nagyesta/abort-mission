@@ -45,6 +45,8 @@ preferably in your root package
 3. Use the [LaunchAbortTestWatcher](./src/main/java/com/github/nagyesta/abortmission/booster/junit4/support/LaunchAbortTestWatcher.java) 
 4. Use the additional core annotations or the `@Category` annotation provided by JUnit to define your dependencies and group your tests properly
 
+**Note:** This booster does not support telemetry reporting.
+
 ## Examples
 
 In case you need some basic examples, please feel free to check out [this package](./src/test/java/com/github/nagyesta/abortmission/booster/junit4)

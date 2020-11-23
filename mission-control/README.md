@@ -54,3 +54,10 @@ preferably in your root package
    2. or one of the [Callable/runnable implementations here](./src/main/java/com/github/nagyesta/abortmission/core/selfpropelled/) 
 4. Figure out how to group your tests and limit the blast radius of each dependency as you go
 
+### System properties
+
+| Property                         | Type      | Meaning                                                                     |
+| -------------------------------- | --------- | --------------------------------------------------------------------------- |
+| `abort-mission.disarm.countdown` | `boolean` | Disables countdown aborts for all tests. Default: false                     |
+| `abort-mission.disarm.mission`   | `boolean` | Disables mission aborts for all tests. Default: false                       |
+| `abort-mission.report.directory` | `String`  | Output directory path where we want to save telemetry output. Default: null |
