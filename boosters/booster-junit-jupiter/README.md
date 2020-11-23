@@ -45,6 +45,8 @@ preferably in your root package
    1. Make sure the Extension we are adding is the one running first (in case you are using others, like the ones offered by Spring.)
 3. Use the additional core annotations or the `@Tag` annotation provided by Jupiter to define your dependencies and group your tests properly
 
+**Note:** Using `PER_CLASS` lifecycle makes countdown abort evaluation less effective as test classes are reused.
+
 ## Examples
 
 In case you need some basic examples, please feel free to check out [this package](./src/test/java/com/github/nagyesta/abortmission/booster/jupiter)

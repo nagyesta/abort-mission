@@ -8,12 +8,15 @@ project.ext {
 }
 
 dependencies {
+    implementation "com.google.code.gson:gson:${rootProject.ext.gsonVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterPlatformVersion}"
     testImplementation "org.mockito:mockito-core:${rootProject.ext.mockitoCoreVersion}"
 }
 
 test {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        systemProperty("abort-mission.report.directory", file("${buildDir}/reports/abort-mission/"))
+    }
 }
 
 publishing {
@@ -46,6 +49,11 @@ publishing {
                         //noinspection GroovyAssignabilityCheck
                         name = rootProject.ext.maintainerName
                     }
+                }
+                withXml {
+                    asNode().dependencies.'*'.findAll() {
+                        it.scope.text() == 'runtime'
+                    }.each { it.scope*.value = 'compile' }
                 }
             }
         }

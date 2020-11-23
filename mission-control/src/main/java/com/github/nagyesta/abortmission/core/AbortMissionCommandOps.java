@@ -55,6 +55,15 @@ public final class AbortMissionCommandOps {
     }
 
     /**
+     * Returns the names of all registered contexts.
+     *
+     * @return context names
+     */
+    public static Set<String> contextNames() {
+        return Collections.unmodifiableSet(MissionControlHolder.NAMED_CONTEXTS.keySet());
+    }
+
+    /**
      * Registers a new evaluator with the current instance.
      *
      * @param evaluator The evaluator we want to register.

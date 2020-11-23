@@ -1,6 +1,7 @@
 package com.github.nagyesta.abortmission.core;
 
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
+import com.github.nagyesta.abortmission.core.telemetry.watch.StageTimeStopwatch;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -14,7 +15,7 @@ import static com.github.nagyesta.abortmission.core.MissionControl.annotationCon
  * Provides support for the whole lifecycle of the mission in a reasonably flexible format to allow easy test
  * framework integration.
  */
-public final class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
+public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
 
     private final Function<Method, Set<MissionHealthCheckEvaluator>> methodBasedEvaluatorLookup;
 
@@ -36,19 +37,48 @@ public final class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate
      * The initial step of the mission before test instance initialization would start.
      *
      * @param testInstanceClass The class which will act as the test instance.
+     * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
      */
-    public void launchGoNoGo(final Class<?> testInstanceClass) {
-        this.performPreLaunchInit(testInstanceClass);
+    public Optional<StageTimeStopwatch> launchGoNoGo(final Class<?> testInstanceClass) {
+        return this.performPreLaunchInit(testInstanceClass);
+    }
+
+    /**
+     * Indicates that a failure happened during test post-processing.
+     *
+     * @param testClass The test class which was post-processed.
+     * @param rootCause The exception identified as root cause of the issue.
+     * @param stopwatch Captures when did the countdown start.
+     */
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    public void countdownFailure(final Class<?> testClass, final Optional<Throwable> rootCause,
+                                 final Optional<StageTimeStopwatch> stopwatch) {
+        countdownFailureDetected(classBasedEvaluatorLookup().apply(testClass), stopwatch, rootCause,
+                annotationContextEvaluator().findSuppressedExceptions(testClass)
+        );
+    }
+
+    /**
+     * Wraps up the post-processing by logging a successful countdown.
+     *
+     * @param testClass The test class which was post-processed.
+     * @param stopwatch Captures when did the countdown start.
+     */
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    public void countdownSuccess(final Class<?> testClass, final Optional<StageTimeStopwatch> stopwatch) {
+        countdownCompletedSuccessfully(classBasedEvaluatorLookup().apply(testClass), stopwatch);
     }
 
     /**
      * Marks completion of the test instance preparation.
      *
      * @param method The test method which is ready for execution.
+     * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
      */
-    public void launchImminent(final Method method) {
-        preLaunchInitComplete(() -> annotationContextEvaluator().isAbortSuppressed(method),
-                methodBasedEvaluatorLookup.apply(method));
+    public Optional<StageTimeStopwatch> launchImminent(final Method method) {
+        return evaluateLaunchAbort(methodBasedEvaluatorLookup.apply(method), new StageTimeStopwatch(method),
+                () -> annotationContextEvaluator().isAbortSuppressed(method)
+        );
     }
 
     /**
@@ -56,21 +86,23 @@ public final class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate
      *
      * @param method    The method we executed.
      * @param rootCause The exception identified as root cause of the issue.
+     * @param stopwatch Captures when did the launch start.
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public void launchFailure(final Method method, final Optional<Throwable> rootCause) {
-        failureDetected(rootCause,
-                methodBasedEvaluatorLookup.apply(method),
-                annotationContextEvaluator().findSuppressedExceptions(method));
+    public void launchFailure(final Method method, final Optional<Throwable> rootCause, final Optional<StageTimeStopwatch> stopwatch) {
+        missionFailureDetected(methodBasedEvaluatorLookup.apply(method), stopwatch,
+                rootCause, annotationContextEvaluator().findSuppressedExceptions(method)
+        );
     }
 
     /**
      * Wraps up the mission by logging a successful run.
      *
-     * @param method The test method which was executed.
+     * @param method    The test method which was executed.
+     * @param stopwatch Captures when did the launch start.
      */
-    public void launchSuccess(final Method method) {
-        completedSuccessfully(methodBasedEvaluatorLookup.apply(method));
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    public void launchSuccess(final Method method, final Optional<StageTimeStopwatch> stopwatch) {
+        missionCompletedSuccessfully(methodBasedEvaluatorLookup.apply(method), stopwatch);
     }
-
 }

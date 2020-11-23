@@ -3,21 +3,21 @@ package com.github.nagyesta.abortmission.booster.testng.listener;
 import com.github.nagyesta.abortmission.booster.testng.annotation.LaunchAbortArmed;
 import com.github.nagyesta.abortmission.core.LaunchSequenceTemplate;
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
+import com.github.nagyesta.abortmission.core.telemetry.ReportingHelper;
+import com.github.nagyesta.abortmission.core.telemetry.watch.StageTimeStopwatch;
 import org.testng.*;
 import org.testng.internal.ConstructorOrMethod;
 
 import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.core.MissionControl.annotationContextEvaluator;
 import static com.github.nagyesta.abortmission.core.MissionControl.matchingHealthChecks;
 
-public class AbortMissionListener implements ITestListener, IClassListener {
+public class AbortMissionListener implements ITestListener, IClassListener, ISuiteListener {
 
+    private static final ThreadLocal<Optional<StageTimeStopwatch>> STORE = new ThreadLocal<>();
     private final LaunchSequenceTemplate launchSequenceTemplate =
             new LaunchSequenceTemplate(this::doAbort, this::findEvaluators, this::findEvaluators);
 
@@ -27,62 +27,46 @@ public class AbortMissionListener implements ITestListener, IClassListener {
         final Optional<Throwable> throwable = Optional.ofNullable(result.getThrowable());
         if (throwable.isPresent()) {
             // when test setup threw an exception, we are not logging success
-            logCountdownAbort(testInstanceClass);
+            launchSequenceTemplate.countdownFailure(testInstanceClass, throwable, stopwatchFromStore());
         } else {
-            optionalMethod(result).ifPresent(launchSequenceTemplate::launchImminent);
+            launchSequenceTemplate.countdownSuccess(testInstanceClass, stopwatchFromStore());
+            optionalMethod(result).ifPresent(method -> {
+                STORE.set(launchSequenceTemplate.launchImminent(method));
+            });
         }
-        //log countdown started retroactively
-        findEvaluators(testInstanceClass).forEach(MissionHealthCheckEvaluator::logCountdownStarted);
     }
 
     @Override
     public void onTestSuccess(final ITestResult result) {
-        optionalMethod(result).ifPresent(launchSequenceTemplate::launchSuccess);
+        optionalMethod(result).ifPresent(method -> launchSequenceTemplate.launchSuccess(method, stopwatchFromStore()));
     }
 
     @Override
     public void onTestFailure(final ITestResult result) {
         optionalMethod(result)
-                .ifPresent(method -> launchSequenceTemplate.launchFailure(method, Optional.ofNullable(result.getThrowable())));
+                .ifPresent(method -> launchSequenceTemplate
+                        .launchFailure(method, Optional.ofNullable(result.getThrowable()), stopwatchFromStore()));
     }
 
     @Override
     public void onBeforeClass(final ITestClass testClass) {
         final Class<?> testInstanceClass = testClass.getRealClass();
-        annotationContextEvaluator().findAndApplyLaunchPlanDefinition(testInstanceClass);
-
-        final Set<MissionHealthCheckEvaluator> evaluators = findEvaluators(testInstanceClass);
-        if (!annotationContextEvaluator().isAbortSuppressed(testInstanceClass)) {
-            final Set<MissionHealthCheckEvaluator> shouldAbort = applyOnFiltered(evaluators,
-                    MissionHealthCheckEvaluator::shouldAbort,
-                    MissionHealthCheckEvaluator::logCountdownAborted);
-            shouldAbort.stream().findFirst().ifPresent(e -> this.doAbort());
-        }
+        STORE.set(launchSequenceTemplate.launchGoNoGo(testInstanceClass));
     }
 
-    /**
-     * Logs pre-launch failure.
-     *
-     * @param testInstanceClass The test class.
-     */
-    private void logCountdownAbort(final Class<?> testInstanceClass) {
-        // at this point TestNG already decided that the test class post processing failed and will skip all tests
-        final Set<MissionHealthCheckEvaluator> evaluators = findEvaluators(testInstanceClass);
-        if (!annotationContextEvaluator().isAbortSuppressed(testInstanceClass)) {
-            applyOnFiltered(evaluators,
-                    MissionHealthCheckEvaluator::shouldAbortCountdown,
-                    MissionHealthCheckEvaluator::logCountdownAborted);
-        }
+    @Override
+    public void onFinish(final ISuite suite) {
+        new ReportingHelper().report();
     }
 
-    private Set<MissionHealthCheckEvaluator> applyOnFiltered(final Set<MissionHealthCheckEvaluator> evaluators,
-                                                             final Predicate<MissionHealthCheckEvaluator> filterBy,
-                                                             final Consumer<MissionHealthCheckEvaluator> applyForEach) {
-        final Set<MissionHealthCheckEvaluator> shouldAbort = evaluators.stream()
-                .filter(filterBy)
-                .collect(Collectors.toSet());
-        shouldAbort.forEach(applyForEach);
-        return shouldAbort;
+    private Optional<StageTimeStopwatch> stopwatchFromStore() {
+        Optional<StageTimeStopwatch> stopWatch = STORE.get();
+        //noinspection OptionalAssignedToNull
+        if (stopWatch == null) {
+            stopWatch = Optional.empty();
+        }
+        STORE.remove();
+        return stopWatch;
     }
 
     private Optional<Method> optionalMethod(final ITestResult result) {

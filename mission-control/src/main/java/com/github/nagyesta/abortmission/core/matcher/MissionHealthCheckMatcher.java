@@ -1,5 +1,7 @@
 package com.github.nagyesta.abortmission.core.matcher;
 
+import java.util.Comparator;
+
 /**
  * Defines how component matchers should behave.
  */
@@ -29,11 +31,9 @@ public interface MissionHealthCheckMatcher extends Comparable<MissionHealthCheck
 
     @Override
     default int compareTo(final MissionHealthCheckMatcher o) {
-        int result = Integer.compare(this.getMatchCriteria().ordinal(), o.getMatchCriteria().ordinal());
-        if (result == 0) {
-            result = this.getName().compareTo(o.getName());
-        }
-        return result;
+        return Comparator.comparing(MissionHealthCheckMatcher::getMatchCriteria)
+                .thenComparing(MissionHealthCheckMatcher::getName)
+                .compare(this, o);
     }
 
     /**

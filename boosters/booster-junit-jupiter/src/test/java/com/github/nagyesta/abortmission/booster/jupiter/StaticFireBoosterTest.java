@@ -17,7 +17,9 @@ public class StaticFireBoosterTest {
     public void testAssumption() throws NoSuchMethodException {
         EngineTestKit
                 .engine("junit-jupiter")
-                .selectors(selectClass(StaticFireTestCenterCoreOnly.class), selectClass(StaticFireTestWithSideBoosters.class))
+                .selectors(selectClass(StaticFireTestCenterCoreOnly.class),
+                        selectClass(StaticFireTestWithSideBoosters.class),
+                        selectClass(StaticFireTestWithSideBoostersPerClass.class))
                 .execute()
                 .testEvents()
                 .assertStatistics(stats -> stats
@@ -28,6 +30,8 @@ public class StaticFireBoosterTest {
                         .failed(FAILED_CASES));
         MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestWithSideBoosters.class)
                 .forEach(evaluator -> assertEquals(SIDE_BOOSTER_NOMINAL_STATS, evaluator.getStats()));
+        MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestWithSideBoostersPerClass.class)
+                .forEach(evaluator -> assertEquals(SIDE_BOOSTER_NOMINAL_STATS_PER_CLASS, evaluator.getStats()));
         MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestCenterCoreOnly.class.getDeclaredMethod("testIsOnFire"))
                 .forEach(evaluator -> assertEquals(CENTER_CORE_NOMINAL_STATS, evaluator.getStats()));
     }

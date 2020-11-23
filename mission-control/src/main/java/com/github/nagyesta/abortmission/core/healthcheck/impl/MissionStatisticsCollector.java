@@ -1,104 +1,55 @@
 package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
-import com.github.nagyesta.abortmission.core.healthcheck.MissionStatisticsView;
+import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyMissionStatistics;
+import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyStageStatistics;
 
 import java.util.Objects;
 import java.util.StringJoiner;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * The component counting mission success/failure events in order to aid abort decision making.
  */
-public final class MissionStatisticsCollector implements MissionStatisticsView {
+public final class MissionStatisticsCollector implements ReadOnlyMissionStatistics {
 
-    private final AtomicInteger countdownStarted;
-    private final AtomicInteger countdownCompleted;
-    private final AtomicInteger countdownAborted;
-    private final AtomicInteger missionSuccess;
-    private final AtomicInteger missionFailure;
-    private final AtomicInteger missionAbort;
+    private final StageStatisticsCollector countdown;
+    private final StageStatisticsCollector mission;
 
     /**
      * Default constructor using 0 as baseline all across the measurements.
      * Allows clean starts.
      */
     public MissionStatisticsCollector() {
-        this(0, 0, 0, 0, 0, 0);
+        this(new StageStatisticsCollector(), new StageStatisticsCollector());
     }
 
     /**
-     * Constructor allowing us to start with some previous knowledge about successes or failures.
+     * Constructor allowing us to set a starting value for each statistic we store.
      *
-     * @param countdownStarted   The number of times test preparation was started.
-     * @param countdownCompleted The number of times test preparation was completed successfully.
-     * @param countdownAborted   The number of times test preparation was aborted.
-     * @param missionSuccess     The number of times test run succeeded.
-     * @param missionFailure     The number of times test preparation or test run failed.
-     * @param missionAbort       The number of times test run was aborted.
+     * @param countdown The countdown specific statistics.
+     * @param mission   The mission specific statistics.
      */
-    public MissionStatisticsCollector(final int countdownStarted, final int countdownCompleted,
-                                      final int countdownAborted, final int missionSuccess,
-                                      final int missionFailure, final int missionAbort) {
-        this.countdownStarted = new AtomicInteger(countdownStarted);
-        this.countdownCompleted = new AtomicInteger(countdownCompleted);
-        this.countdownAborted = new AtomicInteger(countdownAborted);
-        this.missionSuccess = new AtomicInteger(missionSuccess);
-        this.missionFailure = new AtomicInteger(missionFailure);
-        this.missionAbort = new AtomicInteger(missionAbort);
+    public MissionStatisticsCollector(final StageStatisticsCollector countdown,
+                                      final StageStatisticsCollector mission) {
+        this.countdown = Objects.requireNonNull(countdown, "Countdown statistics cannot be null.");
+        this.mission = Objects.requireNonNull(mission, "Mission statistics cannot be null.");
+    }
+
+    public StageStatisticsCollector getCountdown() {
+        return countdown;
+    }
+
+    public StageStatisticsCollector getMission() {
+        return mission;
     }
 
     @Override
-    public int getCountdownStarted() {
-        return countdownStarted.get();
+    public ReadOnlyStageStatistics getReadOnlyCountdown() {
+        return countdown;
     }
 
     @Override
-    public int getCountdownCompleted() {
-        return countdownCompleted.get();
-    }
-
-    @Override
-    public int getCountdownAborted() {
-        return countdownAborted.get();
-    }
-
-    @Override
-    public int getMissionSuccess() {
-        return missionSuccess.get();
-    }
-
-    @Override
-    public int getMissionFailure() {
-        return missionFailure.get();
-    }
-
-    @Override
-    public int getMissionAbort() {
-        return missionAbort.get();
-    }
-
-    public void incrementCountdownStarted() {
-        countdownStarted.incrementAndGet();
-    }
-
-    public void incrementCountdownCompleted() {
-        countdownCompleted.incrementAndGet();
-    }
-
-    public void incrementCountdownAborted() {
-        countdownAborted.incrementAndGet();
-    }
-
-    public void incrementMissionSuccess() {
-        missionSuccess.incrementAndGet();
-    }
-
-    public void incrementMissionFailure() {
-        missionFailure.incrementAndGet();
-    }
-
-    public void incrementMissionAbort() {
-        missionAbort.incrementAndGet();
+    public ReadOnlyStageStatistics getReadOnlyMission() {
+        return mission;
     }
 
     @Override
@@ -106,33 +57,24 @@ public final class MissionStatisticsCollector implements MissionStatisticsView {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof MissionStatisticsView)) {
+        if (!(o instanceof ReadOnlyMissionStatistics)) {
             return false;
         }
-        final MissionStatisticsView that = (MissionStatisticsView) o;
-        return countdownStarted.get() == that.getCountdownStarted()
-                && countdownCompleted.get() == that.getCountdownCompleted()
-                && countdownAborted.get() == that.getCountdownAborted()
-                && missionSuccess.get() == that.getMissionSuccess()
-                && missionFailure.get() == that.getMissionFailure()
-                && missionAbort.get() == that.getMissionAbort();
+        final ReadOnlyMissionStatistics that = (ReadOnlyMissionStatistics) o;
+        return Objects.equals(countdown, that.getReadOnlyCountdown())
+                && Objects.equals(mission, that.getReadOnlyMission());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(countdownStarted.get(), countdownCompleted.get(), countdownAborted.get(),
-                missionSuccess.get(), missionFailure.get(), missionAbort.get());
+        return Objects.hash(countdown, mission);
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", MissionStatisticsCollector.class.getSimpleName() + "[", "]")
-                .add("countdownStarted=" + countdownStarted)
-                .add("countdownCompleted=" + countdownCompleted)
-                .add("countdownAborted=" + countdownAborted)
-                .add("missionSuccess=" + missionSuccess)
-                .add("missionFailure=" + missionFailure)
-                .add("missionAbort=" + missionAbort)
+                .add("countdown=" + countdown)
+                .add("mission=" + mission)
                 .toString();
     }
 }

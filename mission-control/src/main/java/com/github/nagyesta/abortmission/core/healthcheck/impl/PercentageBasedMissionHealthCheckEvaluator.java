@@ -3,24 +3,23 @@ package com.github.nagyesta.abortmission.core.healthcheck.impl;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 
 import java.util.Objects;
-import java.util.Optional;
 
-public final class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionHealthCheckEvaluator {
+/**
+ * {@link com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator} implementation based on failure to success
+ * percentage thresholds.
+ */
+@SuppressWarnings("checkstyle:FinalClass")
+public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionHealthCheckEvaluator {
 
     private static final double DOUBLE_100 = 100.0D;
-    private static final String DEFAULT_MESSAGE_PATTERN =
-            "Precondition reached threshold of %d. Abort sequence initiated.\n    Abort root cause:  %s";
 
     private final int burnInTestCount;
     private final int abortThreshold;
-    private final String message;
 
     private PercentageBasedMissionHealthCheckEvaluator(final Builder builder) {
         super(Objects.requireNonNull(builder, "Builder cannot be null.").matcher, new MissionStatisticsCollector());
         this.burnInTestCount = builder.burnInTestCount;
         this.abortThreshold = builder.abortThreshold;
-        this.message = Optional.ofNullable(builder.message)
-                .orElseGet(() -> String.format(DEFAULT_MESSAGE_PATTERN, builder.abortThreshold, builder.matcher.getName()));
     }
 
     public static Builder builder(final MissionHealthCheckMatcher matcher) {
@@ -37,24 +36,19 @@ public final class PercentageBasedMissionHealthCheckEvaluator extends AbstractMi
     }
 
     @Override
-    public boolean shouldAbort() {
-        final boolean isActive = burnInTestCount <= Math.max(getCountdownStartCount(), getCountdownCompleteCount());
-        final double totalMissions = getMissionSuccessCount() + getMissionFailureCount() + getMissionAbortCount();
-        final double failedOrAborted = getMissionFailureCount() + getMissionAbortCount();
+    protected boolean shouldAbortInternal() {
+        final double totalMissions = getMissionStatistics().getTotal();
+        final boolean isActive = burnInTestCount <= totalMissions;
+        final double failedOrAborted = getMissionStatistics().getNotSuccessful();
         final double failurePercentage = (failedOrAborted * DOUBLE_100) / totalMissions;
         return isActive && abortThreshold < failurePercentage;
     }
 
     @Override
-    public boolean shouldAbortCountdown() {
-        final boolean isActive = burnInTestCount <= getCountdownStartCount();
-        final boolean countdownNeverCompleted = getCountdownCompleteCount() == 0;
+    protected boolean shouldAbortCountdownInternal() {
+        final boolean isActive = burnInTestCount <= getCountdownStatistics().getTotal();
+        final boolean countdownNeverCompleted = getCountdownStatistics().getSucceeded() == 0;
         return isActive && countdownNeverCompleted;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
     }
 
     @SuppressWarnings({"checkstyle:HiddenField", "checkstyle:DesignForExtension"})
@@ -65,7 +59,6 @@ public final class PercentageBasedMissionHealthCheckEvaluator extends AbstractMi
         private final MissionHealthCheckMatcher matcher;
         private int burnInTestCount = BURN_IN_LOWER_LIMIT;
         private int abortThreshold = PERCENTAGE_LOWER_LIMIT;
-        private String message;
 
         private Builder(final MissionHealthCheckMatcher matcher) {
             this.matcher = Objects.requireNonNull(matcher, "Matcher cannot be null.");
@@ -84,11 +77,6 @@ public final class PercentageBasedMissionHealthCheckEvaluator extends AbstractMi
                 throw new IllegalArgumentException("Abort threshold must be in the 0-99 range (inclusive).");
             }
             this.abortThreshold = abortThreshold;
-            return this;
-        }
-
-        public Builder message(final String message) {
-            this.message = Objects.requireNonNull(message, "Message cannot be null.");
             return this;
         }
 

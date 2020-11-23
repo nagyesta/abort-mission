@@ -26,7 +26,9 @@ project.ext {
     //noinspection GroovyAssignabilityCheck
     junit4Version = '4.13'
     //noinspection GroovyAssignabilityCheck
-    jupiterVersion = '5.5.0'
+    jupiterVersion = '5.6.2'
+    //noinspection GroovyAssignabilityCheck
+    jupiterReportingVersion = '1.0.0'
     //noinspection GroovyAssignabilityCheck
     testNgVersion = '7.0.0'
 
@@ -41,6 +43,8 @@ project.ext {
     mockitoCoreVersion = '3.6.0'
     //noinspection GroovyAssignabilityCheck
     springBootVersion = '2.3.4.RELEASE'
+    //noinspection GroovyAssignabilityCheck
+    gsonVersion = '2.8.6'
 }
 
 versioner {
@@ -151,7 +155,8 @@ configure(subprojects.findAll({
                         "com.github.nagyesta.abortmission.core.LaunchSequenceTemplate",
                         "com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets",
                         "com.github.nagyesta.abortmission.testkit.vanilla.FuelTankTestAssets",
-                        "com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDropTestAssets"
+                        "com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDropTestAssets",
+                        "com.github.nagyesta.abortmission.booster.junit4.support.LaunchAbortTestWatcher.1"
                 ]
             }
         }

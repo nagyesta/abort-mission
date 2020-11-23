@@ -2,8 +2,9 @@ package com.github.nagyesta.abortmission.testkit.spring;
 
 import com.github.nagyesta.abortmission.core.AbortMissionCommandOps;
 import com.github.nagyesta.abortmission.core.extractor.DependencyNameExtractor;
-import com.github.nagyesta.abortmission.core.healthcheck.MissionStatisticsView;
+import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyMissionStatistics;
 import com.github.nagyesta.abortmission.core.healthcheck.impl.MissionStatisticsCollector;
+import com.github.nagyesta.abortmission.core.healthcheck.impl.StageStatisticsCollector;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,10 +21,19 @@ public final class StaticFireTestAssets {
     public static final String BOOSTER = "Booster";
     public static final String CENTER_CORE = "CenterCore";
     public static final String SIDE_BOOSTER = "SideBooster";
-    public static final MissionStatisticsView CENTER_CORE_NOMINAL_STATS =
-            new MissionStatisticsCollector(0, 1, 0, 1, 1, 0);
-    public static final MissionStatisticsView SIDE_BOOSTER_NOMINAL_STATS =
-            new MissionStatisticsCollector(501, 0, 499, 0, 2, 0);
+    public static final String PER_CLASS = "PerClass";
+    public static final ReadOnlyMissionStatistics CENTER_CORE_NOMINAL_STATS =
+            new MissionStatisticsCollector(
+                    new StageStatisticsCollector(0, 0, 0, 0),
+                    new StageStatisticsCollector(0, 0, 1, 0));
+    public static final ReadOnlyMissionStatistics SIDE_BOOSTER_NOMINAL_STATS =
+            new MissionStatisticsCollector(
+                    new StageStatisticsCollector(2, 499, 0, 0),
+                    new StageStatisticsCollector(0, 0, 0, 0));
+    public static final ReadOnlyMissionStatistics SIDE_BOOSTER_NOMINAL_STATS_PER_CLASS =
+            new MissionStatisticsCollector(
+                    new StageStatisticsCollector(1, 0, 0, 0),
+                    new StageStatisticsCollector(0, 0, 0, 0));
     public static final int DISABLED_CASES = 0;
     public static final int TOTAL_CASES = 503;
     public static final int SUCCESSFUL_CASES = 2;

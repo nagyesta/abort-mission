@@ -3,6 +3,7 @@ package com.github.nagyesta.abortmission.core.selfpropelled;
 import com.github.nagyesta.abortmission.core.AbstractLaunchSequenceTemplate;
 import com.github.nagyesta.abortmission.core.MissionControl;
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
+import com.github.nagyesta.abortmission.core.telemetry.watch.StageTimeStopwatch;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -48,22 +49,9 @@ public abstract class AbstractMissionTemplate<P, T> extends AbstractLaunchSequen
      * @return The end result of the test (optional)
      */
     protected final Optional<T> executeTemplate() {
-        performPreLaunchInit(evaluationScope);
-        final P preparedContext = executePreLaunchPreparation();
+        final Optional<StageTimeStopwatch> countdownStopWatch = performPreLaunchInit(evaluationScope);
+        final P preparedContext = executePreLaunchPreparation(countdownStopWatch);
         return executeLaunch(preparedContext);
-    }
-
-    private Optional<T> executeLaunch(final P preparedContext) {
-        try {
-            final Optional<T> result = doLaunch(preparedContext);
-            completedSuccessfully(getClassLevelEvaluatorsOnly());
-            return result;
-        } catch (final Exception e) {
-            failureDetected(Optional.of(e),
-                    getClassLevelEvaluatorsOnly(),
-                    annotationContextEvaluator().findSuppressedExceptions(evaluationScope));
-            throw e;
-        }
     }
 
     /**
@@ -74,19 +62,35 @@ public abstract class AbstractMissionTemplate<P, T> extends AbstractLaunchSequen
      */
     protected abstract Optional<T> doLaunch(P preparedContext);
 
-    private P executePreLaunchPreparation() {
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    private P executePreLaunchPreparation(final Optional<StageTimeStopwatch> countdownStopWatch) {
         final P preparedContext;
         try {
             preparedContext = preLaunchPreparationSupplier().get();
+            countdownCompletedSuccessfully(getClassLevelEvaluatorsOnly(), countdownStopWatch);
         } catch (final Exception e) {
-            failureDetected(Optional.of(e),
-                    getClassLevelEvaluatorsOnly(),
+            countdownFailureDetected(getClassLevelEvaluatorsOnly(), countdownStopWatch, Optional.of(e),
                     annotationContextEvaluator().findSuppressedExceptions(evaluationScope));
             throw e;
         }
-        preLaunchInitComplete(() -> annotationContextEvaluator().isAbortSuppressed(evaluationScope),
-                getClassLevelEvaluatorsOnly());
         return preparedContext;
+    }
+
+    private Optional<T> executeLaunch(final P preparedContext) {
+        final Optional<StageTimeStopwatch> stopwatch = evaluateLaunchAbort(
+                getClassLevelEvaluatorsOnly(), new StageTimeStopwatch(evaluationScope.getName(), "executeLaunch"),
+                () -> annotationContextEvaluator().isAbortSuppressed(evaluationScope)
+        );
+        try {
+            final Optional<T> result = doLaunch(preparedContext);
+            missionCompletedSuccessfully(getClassLevelEvaluatorsOnly(), stopwatch);
+            return result;
+        } catch (final Exception e) {
+            missionFailureDetected(getClassLevelEvaluatorsOnly(), stopwatch,
+                    Optional.of(e), annotationContextEvaluator().findSuppressedExceptions(evaluationScope)
+            );
+            throw e;
+        }
     }
 
     private Set<MissionHealthCheckEvaluator> getClassLevelEvaluatorsOnly() {

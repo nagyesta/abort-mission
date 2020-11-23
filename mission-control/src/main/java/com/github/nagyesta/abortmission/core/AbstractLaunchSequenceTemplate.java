@@ -1,10 +1,12 @@
 package com.github.nagyesta.abortmission.core;
 
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
+import com.github.nagyesta.abortmission.core.healthcheck.StatisticsLogger;
+import com.github.nagyesta.abortmission.core.telemetry.StageResult;
+import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
+import com.github.nagyesta.abortmission.core.telemetry.watch.StageTimeStopwatch;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -12,6 +14,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.core.MissionControl.annotationContextEvaluator;
+import static com.github.nagyesta.abortmission.core.telemetry.StageResult.*;
 
 /**
  * Abstract class providing a basic template for launch.
@@ -38,85 +41,97 @@ public abstract class AbstractLaunchSequenceTemplate {
      * starting the countdown for the matching evaluators and aborting the countdown if needed.
      *
      * @param testInstanceClass The test class.
+     * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
      */
-    protected final void performPreLaunchInit(final Class<?> testInstanceClass) {
+    protected Optional<StageTimeStopwatch> performPreLaunchInit(final Class<?> testInstanceClass) {
         annotationContextEvaluator().findAndApplyLaunchPlanDefinition(testInstanceClass);
 
+        final StageTimeStopwatch watch = new StageTimeStopwatch(testInstanceClass);
         final Set<MissionHealthCheckEvaluator> evaluators = classBasedEvaluatorLookup.apply(testInstanceClass);
-        try {
-            if (!annotationContextEvaluator().isAbortSuppressed(testInstanceClass)) {
-                evaluateAndAbortIfNeeded(evaluators,
-                        MissionHealthCheckEvaluator::shouldAbortCountdown,
-                        MissionHealthCheckEvaluator::logCountdownAborted);
-            }
-        } finally {
-            //only log start once the abort decision was made to avoid disabling the test in all cases
-            evaluators.forEach(MissionHealthCheckEvaluator::logCountdownStarted);
-        }
+        final boolean reportingDone = evaluateAndAbortIfNeeded(
+                partitionBy(evaluators, MissionHealthCheckEvaluator::shouldAbortCountdown),
+                annotationContextEvaluator().isAbortSuppressed(testInstanceClass),
+                watch.stop(),
+                MissionHealthCheckEvaluator::countdownLogger);
+        return emptyIfTrue(reportingDone, watch);
     }
 
     /**
-     * Marks the end of the launch preparation by marking the countdown as completed and making the abort decision for the test method
-     * being started.
+     * Handles a failure either during the launch preparation.
      *
-     * @param abortSuppressionDecisionSupplier The supplier which helps us figure out whether abort decisions are suppressed.
-     * @param evaluators                       The matching evaluators.
-     */
-    protected final void preLaunchInitComplete(final Supplier<Boolean> abortSuppressionDecisionSupplier,
-                                               final Set<MissionHealthCheckEvaluator> evaluators) {
-        evaluators.forEach(MissionHealthCheckEvaluator::logLaunchImminent);
-
-        final Boolean shouldSuppressAbortDecisions = Objects.requireNonNull(abortSuppressionDecisionSupplier).get();
-        if (Boolean.FALSE.equals(shouldSuppressAbortDecisions)) {
-            evaluateAndAbortIfNeeded(evaluators,
-                    MissionHealthCheckEvaluator::shouldAbort,
-                    MissionHealthCheckEvaluator::logMissionAbort);
-        }
-    }
-
-    /**
-     * Handles a failure either during the launch preparation or after launch.
-     *
-     * @param rootCause            The exception identified as root cause for the launch failure.
      * @param evaluators           The matching evaluators.
+     * @param stopwatch            Captures when did the pre-launch init start.
+     * @param rootCause            The exception identified as root cause for the launch failure.
      * @param suppressedExceptions The exceptions which must be ignored when identified as root cause.
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    protected final void failureDetected(final Optional<Throwable> rootCause,
-                                         final Set<MissionHealthCheckEvaluator> evaluators,
-                                         final Set<Class<? extends Exception>> suppressedExceptions) {
-        if (!rootCause.isPresent()
-                || suppressedExceptions.stream().noneMatch(exType -> exType.isInstance(rootCause.get()))) {
-            evaluators.forEach(MissionHealthCheckEvaluator::logMissionFailure);
-        }
+    protected void countdownFailureDetected(final Set<MissionHealthCheckEvaluator> evaluators,
+                                            final Optional<StageTimeStopwatch> stopwatch,
+                                            final Optional<Throwable> rootCause,
+                                            final Set<Class<? extends Exception>> suppressedExceptions) {
+        failureDetected(isNotSuppressed(rootCause, suppressedExceptions), evaluators, stopwatch,
+                MissionHealthCheckEvaluator::countdownLogger);
+    }
+
+    /**
+     * Marks the end of the launch preparation by marking the countdown as completed.
+     *
+     * @param evaluators The matching evaluators.
+     * @param stopwatch  Captures when did the pre-launch init start.
+     */
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    protected void countdownCompletedSuccessfully(final Set<MissionHealthCheckEvaluator> evaluators,
+                                                  final Optional<StageTimeStopwatch> stopwatch) {
+        completedSuccessfully(evaluators, stopwatch, MissionHealthCheckEvaluator::countdownLogger);
+    }
+
+    /**
+     * Makes the abort decision for the test method being started.
+     *
+     * @param evaluators                       The matching evaluators.
+     * @param stopwatch                        The stopwatch initialized for the test method we are executing now.
+     * @param abortSuppressionDecisionSupplier The supplier which helps us figure out whether abort decisions are suppressed.
+     * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
+     */
+    protected Optional<StageTimeStopwatch> evaluateLaunchAbort(final Set<MissionHealthCheckEvaluator> evaluators,
+                                                               final StageTimeStopwatch stopwatch,
+                                                               final Supplier<Boolean> abortSuppressionDecisionSupplier) {
+        final Boolean shouldSuppressAbortDecisions = Objects.requireNonNull(abortSuppressionDecisionSupplier).get();
+        final boolean reportingDone = evaluateAndAbortIfNeeded(
+                partitionBy(evaluators, MissionHealthCheckEvaluator::shouldAbort),
+                Boolean.TRUE.equals(shouldSuppressAbortDecisions),
+                stopwatch.stop(),
+                MissionHealthCheckEvaluator::missionLogger);
+        return emptyIfTrue(reportingDone, stopwatch);
+    }
+
+    /**
+     * Handles a failure after launch was initiated.
+     *
+     * @param evaluators           The matching evaluators.
+     * @param stopwatch            Captures when did the test run start.
+     * @param rootCause            The exception identified as root cause for the launch failure.
+     * @param suppressedExceptions The exceptions which must be ignored when identified as root cause.
+     */
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    protected void missionFailureDetected(final Set<MissionHealthCheckEvaluator> evaluators,
+                                          final Optional<StageTimeStopwatch> stopwatch,
+                                          final Optional<Throwable> rootCause,
+                                          final Set<Class<? extends Exception>> suppressedExceptions) {
+        failureDetected(isNotSuppressed(rootCause, suppressedExceptions), evaluators, stopwatch,
+                MissionHealthCheckEvaluator::missionLogger);
     }
 
     /**
      * Marks a successful launch.
      *
      * @param evaluators The matching evaluators.
+     * @param stopwatch  Captures when did the execution start.
      */
-    protected final void completedSuccessfully(final Set<MissionHealthCheckEvaluator> evaluators) {
-        evaluators.forEach(MissionHealthCheckEvaluator::logMissionSuccess);
-    }
-
-    /**
-     * Evaluates whether launch should be aborted considering the current mission status.
-     *
-     * @param evaluators    The matching evaluators.
-     * @param abortDecision The predicate which can make the abort decision.
-     * @param abortLogger   The action we want to take in order to log mission abort properly.
-     */
-    protected final void evaluateAndAbortIfNeeded(final Set<MissionHealthCheckEvaluator> evaluators,
-                                                  final Predicate<MissionHealthCheckEvaluator> abortDecision,
-                                                  final Consumer<MissionHealthCheckEvaluator> abortLogger) {
-        final Set<MissionHealthCheckEvaluator> shouldAbort = evaluators.stream()
-                .filter(abortDecision)
-                .collect(Collectors.toSet());
-        if (!shouldAbort.isEmpty()) {
-            shouldAbort.forEach(abortLogger);
-            abortSequence.run();
-        }
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    protected void missionCompletedSuccessfully(final Set<MissionHealthCheckEvaluator> evaluators,
+                                                final Optional<StageTimeStopwatch> stopwatch) {
+        completedSuccessfully(evaluators, stopwatch, MissionHealthCheckEvaluator::missionLogger);
     }
 
     /**
@@ -124,7 +139,84 @@ public abstract class AbstractLaunchSequenceTemplate {
      *
      * @return Class based lookup.
      */
-    protected final Function<Class<?>, Set<MissionHealthCheckEvaluator>> classBasedEvaluatorLookup() {
+    protected Function<Class<?>, Set<MissionHealthCheckEvaluator>> classBasedEvaluatorLookup() {
         return classBasedEvaluatorLookup;
+    }
+
+    /**
+     * Makes the abort decision for the test class/method.
+     *
+     * @param partitionsByShouldAbort The matching evaluators partitioned by their abort decisions.
+     * @param isAbortSuppressed       The abort is suppressed by the test class or method.
+     * @param timed                   The stopwatch initialized for the test method we are executing now.
+     * @param loggerFunction          The function we are using to obtain the logger.
+     * @return true if the reporting is already taken care of.
+     */
+    protected boolean evaluateAndAbortIfNeeded(final Map<Boolean, List<MissionHealthCheckEvaluator>> partitionsByShouldAbort,
+                                               final Boolean isAbortSuppressed,
+                                               final Function<StageResult, StageTimeMeasurement> timed,
+                                               final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction) {
+        final List<MissionHealthCheckEvaluator> shouldAbort = partitionsByShouldAbort.getOrDefault(true, Collections.emptyList());
+        final List<MissionHealthCheckEvaluator> shouldNotAbort = partitionsByShouldAbort.getOrDefault(false, Collections.emptyList());
+        final boolean hasAnyAbort = !shouldAbort.isEmpty();
+        if (hasAnyAbort && Boolean.TRUE.equals(isAbortSuppressed)) {
+            partitionsByShouldAbort.values().forEach(list -> list.forEach(
+                    logOutcomeAndIncreaseCounter(loggerFunction, timed.apply(SUPPRESSED))
+            ));
+            return true;
+        } else if (hasAnyAbort) {
+            shouldNotAbort.forEach(logOutcomeAndIncreaseCounter(loggerFunction, timed.apply(SUPPRESSED)));
+            shouldAbort.forEach(logOutcomeAndIncreaseCounter(loggerFunction, timed.apply(ABORT)));
+            abortSequence.run();
+        }
+        return false;
+    }
+
+    private Map<Boolean, List<MissionHealthCheckEvaluator>> partitionBy(final Set<MissionHealthCheckEvaluator> evaluators,
+                                                                        final Predicate<MissionHealthCheckEvaluator> abortDecision) {
+        return evaluators.stream().collect(Collectors.partitioningBy(abortDecision));
+    }
+
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    private boolean isNotSuppressed(final Optional<Throwable> rootCause,
+                                    final Set<Class<? extends Exception>> suppressedExceptions) {
+        return !rootCause.isPresent()
+                || suppressedExceptions.stream().noneMatch(exType -> exType.isInstance(rootCause.get()));
+    }
+
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    private void failureDetected(final boolean isNotSuppressed,
+                                 final Set<MissionHealthCheckEvaluator> evaluators,
+                                 final Optional<StageTimeStopwatch> stopwatch,
+                                 final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction) {
+        stopwatch.ifPresent(stageTimeStopwatch -> {
+            if (isNotSuppressed) {
+                evaluators.forEach(logOutcomeAndIncreaseCounter(loggerFunction, stageTimeStopwatch.stop().apply(FAILURE)));
+            } else {
+                evaluators.forEach(logOutcomeAndIncreaseCounter(loggerFunction, stageTimeStopwatch.stop().apply(SUPPRESSED)));
+            }
+        });
+    }
+
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    private void completedSuccessfully(final Set<MissionHealthCheckEvaluator> evaluators,
+                                       final Optional<StageTimeStopwatch> stopwatch,
+                                       final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction) {
+        stopwatch.map(StageTimeStopwatch::stop)
+                .ifPresent(watch -> evaluators.forEach(logOutcomeAndIncreaseCounter(loggerFunction, watch.apply(SUCCESS))));
+    }
+
+    private Consumer<MissionHealthCheckEvaluator> logOutcomeAndIncreaseCounter(
+            final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction,
+            final StageTimeMeasurement measurement) {
+        return e -> loggerFunction.apply(e).logAndIncrement(measurement);
+    }
+
+    private Optional<StageTimeStopwatch> emptyIfTrue(final boolean reportingDone, final StageTimeStopwatch stopwatch) {
+        if (reportingDone) {
+            return Optional.empty();
+        } else {
+            return Optional.of(stopwatch);
+        }
     }
 }

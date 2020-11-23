@@ -19,7 +19,7 @@ public interface MissionHealthCheckEvaluator {
      *
      * @return the statistics we are collecting.
      */
-    MissionStatisticsView getStats();
+    ReadOnlyMissionStatistics getStats();
 
     /**
      * Returns the number of times countdown needs to start/complete for collecting an initial baseline for test failures.
@@ -29,46 +29,18 @@ public interface MissionHealthCheckEvaluator {
     int getBurnInTestCount();
 
     /**
-     * See {@link MissionStatisticsView#getCountdownStarted()}.
+     * Returns the read-only view of the countdown statistics.
      *
-     * @return count;
+     * @return countdown;
      */
-    int getCountdownStartCount();
+    ReadOnlyStageStatistics getCountdownStatistics();
 
     /**
-     * See {@link MissionStatisticsView#getCountdownAborted()}.
+     * Returns the read-only view of the mission statistics.
      *
-     * @return count;
+     * @return mission;
      */
-    int getCountdownAbortCount();
-
-    /**
-     * See {@link MissionStatisticsView#getCountdownCompleted()}.
-     *
-     * @return count;
-     */
-    int getCountdownCompleteCount();
-
-    /**
-     * See {@link MissionStatisticsView#getMissionSuccess()}.
-     *
-     * @return count;
-     */
-    int getMissionSuccessCount();
-
-    /**
-     * See {@link MissionStatisticsView#getMissionFailure()}.
-     *
-     * @return count;
-     */
-    int getMissionFailureCount();
-
-    /**
-     * See {@link MissionStatisticsView#getMissionAbort()}.
-     *
-     * @return count;
-     */
-    int getMissionAbortCount();
+    ReadOnlyStageStatistics getMissionStatistics();
 
     /**
      * Tells the launch controller whether or not we should abort the launch after the preparation was done.
@@ -86,39 +58,16 @@ public interface MissionHealthCheckEvaluator {
     boolean shouldAbortCountdown();
 
     /**
-     * Increases the number counting test preparation started.
-     */
-    void logCountdownStarted();
-
-    /**
-     * Increases the number counting test preparation was aborted.
-     */
-    void logCountdownAborted();
-
-    /**
-     * Increases the number counting test preparation completed.
-     */
-    void logLaunchImminent();
-
-    /**
-     * Increases the number counting failures (during or after the test preparation steps).
-     */
-    void logMissionFailure();
-
-    /**
-     * Increases the number counting test runs aborted.
-     */
-    void logMissionAbort();
-
-    /**
-     * Increases the number counting test run successes.
-     */
-    void logMissionSuccess();
-
-    /**
-     * Returns the predefined message that belongs ot the health check (or the matcher if not set).
+     * Returns the countdown specific statistics logger we are using.
      *
-     * @return The message that can be used by summary generators.
+     * @return countdown
      */
-    String getMessage();
+    StatisticsLogger countdownLogger();
+
+    /**
+     * Returns the mission specific statistics logger we are using.
+     *
+     * @return mission
+     */
+    StatisticsLogger missionLogger();
 }

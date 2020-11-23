@@ -17,6 +17,20 @@ import java.util.function.Function;
  */
 public final class MissionControl {
 
+    /**
+     * System property name we need to use to disarm mission aborts.
+     */
+    public static final String ABORT_MISSION_DISARM_MISSION = "abort-mission.disarm.mission";
+    /**
+     * System property name we need to use to disarm countdown aborts.
+     */
+    public static final String ABORT_MISSION_DISARM_COUNTDOWN = "abort-mission.disarm.countdown";
+
+    /**
+     * System property name we need to use to set reporting directory.
+     */
+    public static final String ABORT_MISSION_REPORT_DIRECTORY = "abort-mission.report.directory";
+
     private MissionControl() {
         throw new UnsupportedOperationException("Util class.");
     }

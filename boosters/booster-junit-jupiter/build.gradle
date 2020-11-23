@@ -12,6 +12,7 @@ dependencies {
     implementation project(":mission-control")
     implementation "org.junit.jupiter:junit-jupiter-api:${rootProject.ext.jupiterVersion}"
     implementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterVersion}"
+    implementation "org.junit.platform:junit-platform-reporting:${rootProject.ext.jupiterReportingVersion}"
     //noinspection GroovyAssignabilityCheck
     testImplementation project(":boosters:testkit")
     testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.springBootVersion}"
@@ -21,6 +22,7 @@ dependencies {
 
 test {
     useJUnitPlatform {
+        systemProperty("abort-mission.report.directory", file("${buildDir}/reports/abort-mission/"))
         includeTags 'unit', 'integration'
     }
 }
