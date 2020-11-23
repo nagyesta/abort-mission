@@ -48,10 +48,10 @@ public abstract class AbstractLaunchSequenceTemplate {
 
         final StageTimeStopwatch watch = new StageTimeStopwatch(testInstanceClass);
         final Set<MissionHealthCheckEvaluator> evaluators = classBasedEvaluatorLookup.apply(testInstanceClass);
-        final boolean reportingDone = evaluateAndAbortIfNeeded(evaluators,
+        final boolean reportingDone = evaluateAndAbortIfNeeded(
+                partitionBy(evaluators, MissionHealthCheckEvaluator::shouldAbortCountdown),
                 annotationContextEvaluator().isAbortSuppressed(testInstanceClass),
                 watch.stop(),
-                MissionHealthCheckEvaluator::shouldAbortCountdown,
                 MissionHealthCheckEvaluator::countdownLogger);
         return emptyIfTrue(reportingDone, watch);
     }
@@ -69,7 +69,8 @@ public abstract class AbstractLaunchSequenceTemplate {
                                             final Optional<StageTimeStopwatch> stopwatch,
                                             final Optional<Throwable> rootCause,
                                             final Set<Class<? extends Exception>> suppressedExceptions) {
-        failureDetected(rootCause, evaluators, stopwatch, suppressedExceptions, MissionHealthCheckEvaluator::countdownLogger);
+        failureDetected(isNotSuppressed(rootCause, suppressedExceptions), evaluators, stopwatch,
+                MissionHealthCheckEvaluator::countdownLogger);
     }
 
     /**
@@ -96,10 +97,10 @@ public abstract class AbstractLaunchSequenceTemplate {
                                                                final StageTimeStopwatch stopwatch,
                                                                final Supplier<Boolean> abortSuppressionDecisionSupplier) {
         final Boolean shouldSuppressAbortDecisions = Objects.requireNonNull(abortSuppressionDecisionSupplier).get();
-        final boolean reportingDone = evaluateAndAbortIfNeeded(evaluators,
+        final boolean reportingDone = evaluateAndAbortIfNeeded(
+                partitionBy(evaluators, MissionHealthCheckEvaluator::shouldAbort),
                 Boolean.TRUE.equals(shouldSuppressAbortDecisions),
                 stopwatch.stop(),
-                MissionHealthCheckEvaluator::shouldAbort,
                 MissionHealthCheckEvaluator::missionLogger);
         return emptyIfTrue(reportingDone, stopwatch);
     }
@@ -117,7 +118,8 @@ public abstract class AbstractLaunchSequenceTemplate {
                                           final Optional<StageTimeStopwatch> stopwatch,
                                           final Optional<Throwable> rootCause,
                                           final Set<Class<? extends Exception>> suppressedExceptions) {
-        failureDetected(rootCause, evaluators, stopwatch, suppressedExceptions, MissionHealthCheckEvaluator::missionLogger);
+        failureDetected(isNotSuppressed(rootCause, suppressedExceptions), evaluators, stopwatch,
+                MissionHealthCheckEvaluator::missionLogger);
     }
 
     /**
@@ -144,25 +146,23 @@ public abstract class AbstractLaunchSequenceTemplate {
     /**
      * Makes the abort decision for the test class/method.
      *
-     * @param evaluators        The matching evaluators.
-     * @param isAbortSuppressed The abort is suppressed by the test class or method.
-     * @param timed             The stopwatch initialized for the test method we are executing now.
-     * @param abortDecision     The predicate which helps us figure out whether abort decisions should be made.
-     * @param loggerFunction    The function we are using to obtain the logger.
+     * @param partitionsByShouldAbort The matching evaluators partitioned by their abort decisions.
+     * @param isAbortSuppressed       The abort is suppressed by the test class or method.
+     * @param timed                   The stopwatch initialized for the test method we are executing now.
+     * @param loggerFunction          The function we are using to obtain the logger.
      * @return true if the reporting is already taken care of.
      */
-    protected boolean evaluateAndAbortIfNeeded(final Set<MissionHealthCheckEvaluator> evaluators,
+    protected boolean evaluateAndAbortIfNeeded(final Map<Boolean, List<MissionHealthCheckEvaluator>> partitionsByShouldAbort,
                                                final Boolean isAbortSuppressed,
                                                final Function<StageResult, StageTimeMeasurement> timed,
-                                               final Predicate<MissionHealthCheckEvaluator> abortDecision,
                                                final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction) {
-        final Map<Boolean, List<MissionHealthCheckEvaluator>> partitionsByShouldAbort = evaluators.stream()
-                .collect(Collectors.partitioningBy(abortDecision));
         final List<MissionHealthCheckEvaluator> shouldAbort = partitionsByShouldAbort.getOrDefault(true, Collections.emptyList());
         final List<MissionHealthCheckEvaluator> shouldNotAbort = partitionsByShouldAbort.getOrDefault(false, Collections.emptyList());
         final boolean hasAnyAbort = !shouldAbort.isEmpty();
         if (hasAnyAbort && Boolean.TRUE.equals(isAbortSuppressed)) {
-            evaluators.forEach(logOutcomeAndIncreaseCounter(loggerFunction, timed.apply(SUPPRESSED)));
+            partitionsByShouldAbort.values().forEach(list -> list.forEach(
+                    logOutcomeAndIncreaseCounter(loggerFunction, timed.apply(SUPPRESSED))
+            ));
             return true;
         } else if (hasAnyAbort) {
             shouldNotAbort.forEach(logOutcomeAndIncreaseCounter(loggerFunction, timed.apply(SUPPRESSED)));
@@ -172,15 +172,25 @@ public abstract class AbstractLaunchSequenceTemplate {
         return false;
     }
 
+    private Map<Boolean, List<MissionHealthCheckEvaluator>> partitionBy(final Set<MissionHealthCheckEvaluator> evaluators,
+                                                                        final Predicate<MissionHealthCheckEvaluator> abortDecision) {
+        return evaluators.stream().collect(Collectors.partitioningBy(abortDecision));
+    }
+
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    private void failureDetected(final Optional<Throwable> rootCause,
+    private boolean isNotSuppressed(final Optional<Throwable> rootCause,
+                                    final Set<Class<? extends Exception>> suppressedExceptions) {
+        return !rootCause.isPresent()
+                || suppressedExceptions.stream().noneMatch(exType -> exType.isInstance(rootCause.get()));
+    }
+
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    private void failureDetected(final boolean isNotSuppressed,
                                  final Set<MissionHealthCheckEvaluator> evaluators,
                                  final Optional<StageTimeStopwatch> stopwatch,
-                                 final Set<Class<? extends Exception>> suppressedExceptions,
                                  final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction) {
         stopwatch.ifPresent(stageTimeStopwatch -> {
-            if (!rootCause.isPresent()
-                    || suppressedExceptions.stream().noneMatch(exType -> exType.isInstance(rootCause.get()))) {
+            if (isNotSuppressed) {
                 evaluators.forEach(logOutcomeAndIncreaseCounter(loggerFunction, stageTimeStopwatch.stop().apply(FAILURE)));
             } else {
                 evaluators.forEach(logOutcomeAndIncreaseCounter(loggerFunction, stageTimeStopwatch.stop().apply(SUPPRESSED)));

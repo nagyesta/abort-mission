@@ -70,24 +70,31 @@ public class LaunchAbortTestWatcher extends TestWatcher {
                 if (noBefores) {
                     launchSequenceTemplate.countdownSuccess(testClass, Optional.of(new StageTimeStopwatch(testClass)));
                 }
-                final Optional<Method> method = findMethodByDescription(description);
-                if (method.isPresent()) {
-                    Optional<StageTimeStopwatch> stopwatch = Optional.empty();
-                    try {
-                        stopwatch = launchSequenceTemplate.launchImminent(method.get());
-                        base.evaluate();
-                        launchSequenceTemplate.launchSuccess(method.get(), stopwatch);
-                    } catch (final AssumptionViolatedException e) {
-                        throw e;
-                    } catch (final Throwable e) {
-                        launchSequenceTemplate.launchFailure(method.get(), Optional.of(e), stopwatch);
-                        throw e;
-                    }
-                } else {
-                    throw new IllegalArgumentException("Method not found.");
-                }
+                wrapMethodCall(base, findRequiredMethod(description));
             }
         };
+    }
+
+    private void wrapMethodCall(final Statement base, final Method requiredMethod) throws Throwable {
+        Optional<StageTimeStopwatch> stopwatch = Optional.empty();
+        try {
+            stopwatch = launchSequenceTemplate.launchImminent(requiredMethod);
+            base.evaluate();
+            launchSequenceTemplate.launchSuccess(requiredMethod, stopwatch);
+        } catch (final AssumptionViolatedException e) {
+            throw e;
+        } catch (final Throwable e) {
+            launchSequenceTemplate.launchFailure(requiredMethod, Optional.of(e), stopwatch);
+            throw e;
+        }
+    }
+
+    private Method findRequiredMethod(final Description description) {
+        final Optional<Method> method = findMethodByDescription(description);
+        if (!method.isPresent()) {
+            throw new IllegalArgumentException("Method not found.");
+        }
+        return method.get();
     }
 
     private Optional<Method> findMethodByDescription(final Description description) {

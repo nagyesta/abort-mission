@@ -10,10 +10,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -95,12 +93,13 @@ class LaunchSequenceTemplateTest {
         //given
         final Set<MissionHealthCheckEvaluator> evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
         final LaunchSequenceTemplate underTest = underTestWithNullFunctions();
+        final Map<Boolean, List<MissionHealthCheckEvaluator>> partitions = evaluators.stream()
+                .collect(Collectors.partitioningBy(MissionHealthCheckEvaluator::shouldAbort));
 
         //when
-        underTest.evaluateAndAbortIfNeeded(evaluators,
+        underTest.evaluateAndAbortIfNeeded(partitions,
                 false,
                 new StageTimeStopwatch(getClass()).stop(),
-                MissionHealthCheckEvaluator::shouldAbort,
                 MissionHealthCheckEvaluator::missionLogger);
 
         //then

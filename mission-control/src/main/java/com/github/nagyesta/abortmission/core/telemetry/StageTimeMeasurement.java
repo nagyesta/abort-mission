@@ -95,7 +95,10 @@ public final class StageTimeMeasurement implements Comparable<StageTimeMeasureme
         if (!(o instanceof StageTimeMeasurement)) {
             return false;
         }
-        final StageTimeMeasurement that = (StageTimeMeasurement) o;
+        return areFieldValuesEqual((StageTimeMeasurement) o);
+    }
+
+    private boolean areFieldValuesEqual(final StageTimeMeasurement that) {
         return launchId.equals(that.launchId)
                 && start == that.start
                 && end == that.end
