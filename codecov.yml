@@ -13,6 +13,8 @@ coverage:
         flags: testng
       testkit:
         flags: testkit
+      flighteval:
+        flags: flighteval
     patch: off
 flags:
   core:
@@ -30,3 +32,6 @@ flags:
   testkit:
     paths:
       - ./boosters/testkit
+  flighteval:
+    paths:
+      - ./mission-report/flight-evaluation-report
