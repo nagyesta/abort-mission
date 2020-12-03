@@ -583,712 +583,555 @@
         </tr>
         </thead>
         <tbody>
-
-        <!-- class header collapsed summary start -->
-        <tr class="class-row abort-class-7i6s2q-collapse hidden-class">
-            <td colspan="2"
-                class="top-row row-start border class-name-collapsed result-failure"
-                title="com.github.nagyesta.abortmission.booster.testng.FuelTankTestContext"
-                onclick="expandClass(&quot;7i6s2q&quot;)">► co.gi.na.ab.bo.te.FuelTankTestContext
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-count exec-stat exec-int">6
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-total exec-time exec-int">0s 14ms
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-min exec-stat exec-int exec-ms">0
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-avg exec-stat exec-float exec-ms">2.3
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-max exec-stat exec-int exec-ms">7
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-success">2
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-failure">1
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-abort">2
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-suppress">1
-            </td>
-        </tr>
-        <!-- class header collapsed summary end -->
-        <!-- class header expanded start -->
-        <tr class="class-row abort-class-7i6s2q-expand">
-            <td colspan="3" class="top-row row-start border class-name result-failure"
-                title="com.github.nagyesta.abortmission.booster.testng.FuelTankTestContext"
-                onclick="collapseClass(&quot;7i6s2q&quot;)">▼ co.gi.na.ab.bo.te.FuelTankTestContext
-            </td>
-            <td colspan="4" class="top-row border center class-times result-failure">Times
-            </td>
-            <td colspan="4" class="top-row border center class-results result-failure">Results
-            </td>
-        </tr>
-        <!-- class header expanded end -->
-        <!-- countdown summary start -->
-        <tr class="class-row abort-class-7i6s2q-expand">
-            <td colspan="1"
-                class="col-spacer center abort-class-7i6s2q-mission-countdown-indicator">►
-            </td>
-            <td colspan="1"
-                class="row-start border exec-title result-success"
-                title="Countdown"
-                onclick="toggleMethod(&quot;7i6s2q&quot;, &#39;countdown&#39;)">Countdown
-            </td>
-            <td colspan="1"
-                class="border center exec-count exec-stat exec-int">1
-            </td>
-            <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 7ms
-            </td>
-            <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">7
-            </td>
-            <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">7.0
-            </td>
-            <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">7
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-success">1
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-failure inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-abort inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress inactive">0
-            </td>
-        </tr>
-        <!-- countdown summary end -->
-        <!-- countdown matcher details start -->
-        <tr class="class-row abort-class-7i6s2q-expand abort-class-7i6s2q-mission-countdown-details hidden">
-            <td colspan="1" class="col-spacer"></td>
-            <td colspan="10" class="class-matchers row-start border">
-                Countdown matchers:
-                <ul class="matcher-list">
-                    <li>(1bcvmid) CLASS_MATCHING(&#39;.+\.FuelTankTestContext&#39;)</li>
-                </ul>
-            </td>
-        </tr>
-        <!-- countdown matcher details end -->
-
-        <!-- method summary start -->
-        <tr class="class-row abort-class-7i6s2q-expand">
-            <td colspan="1"
-                class="col-spacer center abort-class-7i6s2q-mission-1u8c7qv-indicator">▼
-            </td>
-            <td colspan="1"
-                class="row-start border exec-title result-failure"
-                title="test
+        
+            <!-- class header collapsed summary start -->
+            <tr class="class-row abort-class-7i6s2q-collapse hidden-class">
+                <td colspan="2"
+                    class="top-row row-start border class-name-collapsed result-failure"
+                    title="com.github.nagyesta.abortmission.booster.testng.FuelTankTestContext"
+                    onclick="expandClass(&quot;7i6s2q&quot;)">► co.gi.na.ab.bo.te.FuelTankTestContext</td>
+                <td colspan="1"
+                    class="top-row border center exec-count exec-stat exec-int">6</td>
+                <td colspan="1"
+                    class="top-row border center exec-total exec-time exec-int">0s 14ms</td>
+                <td colspan="1"
+                    class="top-row border center exec-min exec-stat exec-int exec-ms">0</td>
+                <td colspan="1"
+                    class="top-row border center exec-avg exec-stat exec-float exec-ms">2.3</td>
+                <td colspan="1"
+                    class="top-row border center exec-max exec-stat exec-int exec-ms">7</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-success">2</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-failure">1</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-abort">2</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-suppress">1</td>
+            </tr>
+            <!-- class header collapsed summary end -->
+            <!-- class header expanded start -->
+            <tr class="class-row abort-class-7i6s2q-expand">
+                <td colspan="3" class="top-row row-start border class-name result-failure"
+                    title="com.github.nagyesta.abortmission.booster.testng.FuelTankTestContext"
+                    onclick="collapseClass(&quot;7i6s2q&quot;)">▼ co.gi.na.ab.bo.te.FuelTankTestContext</td>
+                <td colspan="4" class="top-row border center class-times result-failure">Times
+                </td>
+                <td colspan="4" class="top-row border center class-results result-failure">Results
+                </td>
+            </tr>
+            <!-- class header expanded end -->
+            <!-- countdown summary start -->
+            <tr class="class-row abort-class-7i6s2q-expand">
+                <td colspan="1"
+                    class="col-spacer center abort-class-7i6s2q-mission-countdown-indicator">►</td>
+                <td colspan="1"
+                    class="row-start border exec-title result-success"
+                    title="Countdown"
+                    onclick="toggleMethod(&quot;7i6s2q&quot;, &#39;countdown&#39;)">Countdown</td>
+                <td colspan="1"
+                    class="border center exec-count exec-stat exec-int">1</td>
+                <td colspan="1"
+                    class="border center exec-total exec-time exec-int">0s 7ms</td>
+                <td colspan="1"
+                    class="border center exec-min exec-stat exec-int exec-ms">7</td>
+                <td colspan="1"
+                    class="border center exec-avg exec-stat exec-float exec-ms">7.0</td>
+                <td colspan="1"
+                    class="border center exec-max exec-stat exec-int exec-ms">7</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-success">1</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-failure inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-abort inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-suppress inactive">0</td>
+            </tr>
+            <!-- countdown summary end -->
+            <!-- countdown matcher details start -->
+            <tr class="class-row abort-class-7i6s2q-expand abort-class-7i6s2q-mission-countdown-details hidden">
+                <td colspan="1" class="col-spacer"></td>
+                <td colspan="10" class="class-matchers row-start border">
+                    Countdown matchers:
+                    <ul class="matcher-list">
+                        <li>(1bcvmid) CLASS_MATCHING(&#39;.+\.FuelTankTestContext&#39;)</li>
+                    </ul>
+                </td>
+            </tr>
+            <!-- countdown matcher details end -->
+            
+                <!-- method summary start -->
+                <tr class="class-row abort-class-7i6s2q-expand">
+                    <td colspan="1"
+                        class="col-spacer center abort-class-7i6s2q-mission-1u8c7qv-indicator">▼</td>
+                    <td colspan="1"
+                        class="row-start border exec-title result-failure"
+                        title="test
 FuelTank
 Should
 Fill
 When
 Called"
-                onclick="toggleMethod(&quot;7i6s2q&quot;, &quot;1u8c7qv&quot;)">testFuelTankShouldFillWhenCalled
-            </td>
-            <td colspan="1"
-                class="border center exec-count exec-stat exec-int">5
-            </td>
-            <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 7ms
-            </td>
-            <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">0
-            </td>
-            <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">1.4
-            </td>
-            <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">6
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-success">1
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-failure">1
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-abort">2
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress">1
-            </td>
-        </tr>
-        <!-- method summary end -->
-        <!-- method matcher details start -->
-        <tr class="class-row abort-class-7i6s2q-expand abort-class-7i6s2q-mission-1u8c7qv-details">
-            <td colspan="1" class="col-spacer"></td>
-            <td colspan="10" class="class-matchers row-start border">
-                Mission matchers:
-                <ul class="matcher-list">
-                    <li>(1bcvmid) CLASS_MATCHING(&#39;.+\.FuelTankTestContext&#39;)</li>
-                </ul>
-            </td>
-        </tr>
-        <!-- method matcher details end -->
-
-        <!-- class summary start -->
-        <tr class="class-summary-row abort-class-7i6s2q-expand">
-            <td colspan="1" class="col-spacer"></td>
-            <td colspan="1" class="row-start border exec-summary">Class total</td>
-            <td colspan="1"
-                class="border center exec-count exec-stat exec-int">6
-            </td>
-            <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 14ms
-            </td>
-            <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">0
-            </td>
-            <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">2.3
-            </td>
-            <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">7
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-success">2
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-failure">1
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-abort">2
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress">1
-            </td>
-        </tr>
-        <tr class="class-summary-row-spacing">
-            <td colspan="11"></td>
-        </tr>
-        <!-- class summary end -->
-
-        <!-- class header collapsed summary start -->
-        <tr class="class-row abort-class-5u5amv-collapse hidden-class">
-            <td colspan="2"
-                class="top-row row-start border class-name-collapsed result-failure"
-                title="com.github.nagyesta.abortmission.booster.testng.ParachuteTestContext"
-                onclick="expandClass(&quot;5u5amv&quot;)">► co.gi.na.ab.bo.te.ParachuteTestContext
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-count exec-stat exec-int">11
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-total exec-time exec-int">0s 4ms
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-min exec-stat exec-int exec-ms">0
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-avg exec-stat exec-float exec-ms">0.4
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-max exec-stat exec-int exec-ms">2
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-success">4
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-failure">1
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-abort">6
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-suppress inactive">0
-            </td>
-        </tr>
-        <!-- class header collapsed summary end -->
-        <!-- class header expanded start -->
-        <tr class="class-row abort-class-5u5amv-expand">
-            <td colspan="3" class="top-row row-start border class-name result-failure"
-                title="com.github.nagyesta.abortmission.booster.testng.ParachuteTestContext"
-                onclick="collapseClass(&quot;5u5amv&quot;)">▼ co.gi.na.ab.bo.te.ParachuteTestContext
-            </td>
-            <td colspan="4" class="top-row border center class-times result-failure">Times
-            </td>
-            <td colspan="4" class="top-row border center class-results result-failure">Results
-            </td>
-        </tr>
-        <!-- class header expanded end -->
-        <!-- countdown summary start -->
-        <tr class="class-row abort-class-5u5amv-expand">
-            <td colspan="1"
-                class="col-spacer center abort-class-5u5amv-mission-countdown-indicator">►
-            </td>
-            <td colspan="1"
-                class="row-start border exec-title result-success"
-                title="Countdown"
-                onclick="toggleMethod(&quot;5u5amv&quot;, &#39;countdown&#39;)">Countdown
-            </td>
-            <td colspan="1"
-                class="border center exec-count exec-stat exec-int">1
-            </td>
-            <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 2ms
-            </td>
-            <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">2
-            </td>
-            <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">2.0
-            </td>
-            <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">2
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-success">1
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-failure inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-abort inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress inactive">0
-            </td>
-        </tr>
-        <!-- countdown summary end -->
-        <!-- countdown matcher details start -->
-        <tr class="class-row abort-class-5u5amv-expand abort-class-5u5amv-mission-countdown-details hidden">
-            <td colspan="1" class="col-spacer"></td>
-            <td colspan="10" class="class-matchers row-start border">
-                Countdown matchers:
-                <ul class="matcher-list">
-                    <li>(1pvtkkg) CLASS_MATCHING(&#39;.+\.ParachuteTestContext&#39;)</li>
-                </ul>
-            </td>
-        </tr>
-        <!-- countdown matcher details end -->
-
-        <!-- method summary start -->
-        <tr class="class-row abort-class-5u5amv-expand">
-            <td colspan="1"
-                class="col-spacer center abort-class-5u5amv-mission-19oau5t-indicator">▼
-            </td>
-            <td colspan="1"
-                class="row-start border exec-title result-failure"
-                title="test
+                        onclick="toggleMethod(&quot;7i6s2q&quot;, &quot;1u8c7qv&quot;)">testFuelTankShouldFillWhenCalled</td>
+                    <td colspan="1"
+                        class="border center exec-count exec-stat exec-int">5</td>
+                    <td colspan="1"
+                        class="border center exec-total exec-time exec-int">0s 7ms</td>
+                    <td colspan="1"
+                        class="border center exec-min exec-stat exec-int exec-ms">0</td>
+                    <td colspan="1"
+                        class="border center exec-avg exec-stat exec-float exec-ms">1.4</td>
+                    <td colspan="1"
+                        class="border center exec-max exec-stat exec-int exec-ms">6</td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-success">1</td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-failure">1</td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-abort">2</td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-suppress">1</td>
+                </tr>
+                <!-- method summary end -->
+                <!-- method matcher details start -->
+                <tr class="class-row abort-class-7i6s2q-expand abort-class-7i6s2q-mission-1u8c7qv-details">
+                    <td colspan="1" class="col-spacer"></td>
+                    <td colspan="10" class="class-matchers row-start border">
+                        Mission matchers:
+                        <ul class="matcher-list">
+                            <li>(1bcvmid) CLASS_MATCHING(&#39;.+\.FuelTankTestContext&#39;)</li>
+                        </ul>
+                    </td>
+                </tr>
+                <!-- method matcher details end -->
+            
+            <!-- class summary start -->
+            <tr class="class-summary-row abort-class-7i6s2q-expand">
+                <td colspan="1" class="col-spacer"></td>
+                <td colspan="1" class="row-start border exec-summary">Class total</td>
+                <td colspan="1"
+                    class="border center exec-count exec-stat exec-int">6</td>
+                <td colspan="1"
+                    class="border center exec-total exec-time exec-int">0s 14ms</td>
+                <td colspan="1"
+                    class="border center exec-min exec-stat exec-int exec-ms">0</td>
+                <td colspan="1"
+                    class="border center exec-avg exec-stat exec-float exec-ms">2.3</td>
+                <td colspan="1"
+                    class="border center exec-max exec-stat exec-int exec-ms">7</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-success">2</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-failure">1</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-abort">2</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-suppress">1</td>
+            </tr>
+            <tr class="class-summary-row-spacing">
+                <td colspan="11"></td>
+            </tr>
+            <!-- class summary end -->
+        
+            <!-- class header collapsed summary start -->
+            <tr class="class-row abort-class-5u5amv-collapse hidden-class">
+                <td colspan="2"
+                    class="top-row row-start border class-name-collapsed result-failure"
+                    title="com.github.nagyesta.abortmission.booster.testng.ParachuteTestContext"
+                    onclick="expandClass(&quot;5u5amv&quot;)">► co.gi.na.ab.bo.te.ParachuteTestContext</td>
+                <td colspan="1"
+                    class="top-row border center exec-count exec-stat exec-int">11</td>
+                <td colspan="1"
+                    class="top-row border center exec-total exec-time exec-int">0s 4ms</td>
+                <td colspan="1"
+                    class="top-row border center exec-min exec-stat exec-int exec-ms">0</td>
+                <td colspan="1"
+                    class="top-row border center exec-avg exec-stat exec-float exec-ms">0.4</td>
+                <td colspan="1"
+                    class="top-row border center exec-max exec-stat exec-int exec-ms">2</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-success">4</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-failure">1</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-abort">6</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-suppress inactive">0</td>
+            </tr>
+            <!-- class header collapsed summary end -->
+            <!-- class header expanded start -->
+            <tr class="class-row abort-class-5u5amv-expand">
+                <td colspan="3" class="top-row row-start border class-name result-failure"
+                    title="com.github.nagyesta.abortmission.booster.testng.ParachuteTestContext"
+                    onclick="collapseClass(&quot;5u5amv&quot;)">▼ co.gi.na.ab.bo.te.ParachuteTestContext</td>
+                <td colspan="4" class="top-row border center class-times result-failure">Times
+                </td>
+                <td colspan="4" class="top-row border center class-results result-failure">Results
+                </td>
+            </tr>
+            <!-- class header expanded end -->
+            <!-- countdown summary start -->
+            <tr class="class-row abort-class-5u5amv-expand">
+                <td colspan="1"
+                    class="col-spacer center abort-class-5u5amv-mission-countdown-indicator">►</td>
+                <td colspan="1"
+                    class="row-start border exec-title result-success"
+                    title="Countdown"
+                    onclick="toggleMethod(&quot;5u5amv&quot;, &#39;countdown&#39;)">Countdown</td>
+                <td colspan="1"
+                    class="border center exec-count exec-stat exec-int">1</td>
+                <td colspan="1"
+                    class="border center exec-total exec-time exec-int">0s 2ms</td>
+                <td colspan="1"
+                    class="border center exec-min exec-stat exec-int exec-ms">2</td>
+                <td colspan="1"
+                    class="border center exec-avg exec-stat exec-float exec-ms">2.0</td>
+                <td colspan="1"
+                    class="border center exec-max exec-stat exec-int exec-ms">2</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-success">1</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-failure inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-abort inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-suppress inactive">0</td>
+            </tr>
+            <!-- countdown summary end -->
+            <!-- countdown matcher details start -->
+            <tr class="class-row abort-class-5u5amv-expand abort-class-5u5amv-mission-countdown-details hidden">
+                <td colspan="1" class="col-spacer"></td>
+                <td colspan="10" class="class-matchers row-start border">
+                    Countdown matchers:
+                    <ul class="matcher-list">
+                        <li>(1pvtkkg) CLASS_MATCHING(&#39;.+\.ParachuteTestContext&#39;)</li>
+                    </ul>
+                </td>
+            </tr>
+            <!-- countdown matcher details end -->
+            
+                <!-- method summary start -->
+                <tr class="class-row abort-class-5u5amv-expand">
+                    <td colspan="1"
+                        class="col-spacer center abort-class-5u5amv-mission-19oau5t-indicator">▼</td>
+                    <td colspan="1"
+                        class="row-start border exec-title result-failure"
+                        title="test
 Parachute
 Should
 Open
 When
 Called"
-                onclick="toggleMethod(&quot;5u5amv&quot;, &quot;19oau5t&quot;)">testParachuteShouldOpenWhenCalled
-            </td>
-            <td colspan="1"
-                class="border center exec-count exec-stat exec-int">10
-            </td>
-            <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 2ms
-            </td>
-            <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">0
-            </td>
-            <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">0.2
-            </td>
-            <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">1
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-success">3
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-failure">1
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-abort">6
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress inactive">0
-            </td>
-        </tr>
-        <!-- method summary end -->
-        <!-- method matcher details start -->
-        <tr class="class-row abort-class-5u5amv-expand abort-class-5u5amv-mission-19oau5t-details">
-            <td colspan="1" class="col-spacer"></td>
-            <td colspan="10" class="class-matchers row-start border">
-                Mission matchers:
-                <ul class="matcher-list">
-                    <li>(1pvtkkg) CLASS_MATCHING(&#39;.+\.ParachuteTestContext&#39;)</li>
-                </ul>
-            </td>
-        </tr>
-        <!-- method matcher details end -->
-
-        <!-- class summary start -->
-        <tr class="class-summary-row abort-class-5u5amv-expand">
-            <td colspan="1" class="col-spacer"></td>
-            <td colspan="1" class="row-start border exec-summary">Class total</td>
-            <td colspan="1"
-                class="border center exec-count exec-stat exec-int">11
-            </td>
-            <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 4ms
-            </td>
-            <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">0
-            </td>
-            <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">0.4
-            </td>
-            <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">2
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-success">4
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-failure">1
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-abort">6
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress inactive">0
-            </td>
-        </tr>
-        <tr class="class-summary-row-spacing">
-            <td colspan="11"></td>
-        </tr>
-        <!-- class summary end -->
-
-        <!-- class header collapsed summary start -->
-        <tr class="class-row abort-class-jbhbb7-collapse hidden-class">
-            <td colspan="2"
-                class="top-row row-start border class-name-collapsed result-suppressed"
-                title="com.github.nagyesta.abortmission.booster.testng.StaticFireTestCenterCoreOnly"
-                onclick="expandClass(&quot;jbhbb7&quot;)">► co.gi.na.ab.bo.te.StaticFireTestCenterCoreOnly
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-count exec-stat exec-int">1
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-total exec-time exec-int">0s 2ms
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-min exec-stat exec-int exec-ms">2
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-avg exec-stat exec-float exec-ms">2.0
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-max exec-stat exec-int exec-ms">2
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-success">1
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-failure inactive">0
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-abort inactive">0
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-suppress inactive">0
-            </td>
-        </tr>
-        <!-- class header collapsed summary end -->
-        <!-- class header expanded start -->
-        <tr class="class-row abort-class-jbhbb7-expand">
-            <td colspan="3" class="top-row row-start border class-name result-suppressed"
-                title="com.github.nagyesta.abortmission.booster.testng.StaticFireTestCenterCoreOnly"
-                onclick="collapseClass(&quot;jbhbb7&quot;)">▼ co.gi.na.ab.bo.te.StaticFireTestCenterCoreOnly
-            </td>
-            <td colspan="4" class="top-row border center class-times result-suppressed">Times
-            </td>
-            <td colspan="4" class="top-row border center class-results result-suppressed">Results
-            </td>
-        </tr>
-        <!-- class header expanded end -->
-        <!-- countdown summary start -->
-        <tr class="class-row abort-class-jbhbb7-expand">
-            <td colspan="1"
-                class="col-spacer center abort-class-jbhbb7-mission-countdown-indicator">►
-            </td>
-            <td colspan="1"
-                class="row-start border exec-title result-suppressed"
-                title="Countdown"
-                onclick="toggleMethod(&quot;jbhbb7&quot;, &#39;countdown&#39;)">Countdown
-            </td>
-            <td colspan="1"
-                class="border center exec-count exec-stat exec-int">0
-            </td>
-            <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 0ms
-            </td>
-            <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">0
-            </td>
-            <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">0.0
-            </td>
-            <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-success inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-failure inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-abort inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress inactive">0
-            </td>
-        </tr>
-        <!-- countdown summary end -->
-        <!-- countdown matcher details start -->
-        <tr class="class-row abort-class-jbhbb7-expand abort-class-jbhbb7-mission-countdown-details hidden">
-            <td colspan="1" class="col-spacer"></td>
-            <td colspan="10" class="class-matchers row-start border">
-                Countdown matchers:
-
-            </td>
-        </tr>
-        <!-- countdown matcher details end -->
-
-        <!-- method summary start -->
-        <tr class="class-row abort-class-jbhbb7-expand">
-            <td colspan="1"
-                class="col-spacer center abort-class-jbhbb7-mission-b5km9h-indicator">►
-            </td>
-            <td colspan="1"
-                class="row-start border exec-title result-success"
-                title="testIsOnFire"
-                onclick="toggleMethod(&quot;jbhbb7&quot;, &quot;b5km9h&quot;)">testIsOnFire
-            </td>
-            <td colspan="1"
-                class="border center exec-count exec-stat exec-int">1
-            </td>
-            <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 2ms
-            </td>
-            <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">2
-            </td>
-            <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">2.0
-            </td>
-            <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">2
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-success">1
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-failure inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-abort inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress inactive">0
-            </td>
-        </tr>
-        <!-- method summary end -->
-        <!-- method matcher details start -->
-        <tr class="class-row abort-class-jbhbb7-expand abort-class-jbhbb7-mission-b5km9h-details hidden">
-            <td colspan="1" class="col-spacer"></td>
-            <td colspan="10" class="class-matchers row-start border">
-                Mission matchers:
-                <ul class="matcher-list">
-                    <li>(11v6pic) CenterCore</li>
-                </ul>
-            </td>
-        </tr>
-        <!-- method matcher details end -->
-
-        <!-- class summary start -->
-        <tr class="class-summary-row abort-class-jbhbb7-expand">
-            <td colspan="1" class="col-spacer"></td>
-            <td colspan="1" class="row-start border exec-summary">Class total</td>
-            <td colspan="1"
-                class="border center exec-count exec-stat exec-int">1
-            </td>
-            <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 2ms
-            </td>
-            <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">2
-            </td>
-            <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">2.0
-            </td>
-            <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">2
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-success">1
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-failure inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-abort inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress inactive">0
-            </td>
-        </tr>
-        <tr class="class-summary-row-spacing">
-            <td colspan="11"></td>
-        </tr>
-        <!-- class summary end -->
-
-        <!-- class header collapsed summary start -->
-        <tr class="class-row abort-class-1un6me7-collapse hidden-class">
-            <td colspan="2"
-                class="top-row row-start border class-name-collapsed result-failure"
-                title="com.github.nagyesta.abortmission.booster.testng.StaticFireTestWithSideBoosters"
-                onclick="expandClass(&quot;1un6me7&quot;)">► co.gi.na.ab.bo.te.StaticFireTestWithSideBoosters
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-count exec-stat exec-int">1
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-total exec-time exec-int">0s 938ms
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-min exec-stat exec-int exec-ms">938
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-avg exec-stat exec-float exec-ms">938.0
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-max exec-stat exec-int exec-ms">938
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-success inactive">0
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-failure">1
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-abort inactive">0
-            </td>
-            <td colspan="1"
-                class="top-row border center exec-stat exec-int exec-suppress inactive">0
-            </td>
-        </tr>
-        <!-- class header collapsed summary end -->
-        <!-- class header expanded start -->
-        <tr class="class-row abort-class-1un6me7-expand">
-            <td colspan="3" class="top-row row-start border class-name result-failure"
-                title="com.github.nagyesta.abortmission.booster.testng.StaticFireTestWithSideBoosters"
-                onclick="collapseClass(&quot;1un6me7&quot;)">▼ co.gi.na.ab.bo.te.StaticFireTestWithSideBoosters
-            </td>
-            <td colspan="4" class="top-row border center class-times result-failure">Times
-            </td>
-            <td colspan="4" class="top-row border center class-results result-failure">Results
-            </td>
-        </tr>
-        <!-- class header expanded end -->
-        <!-- countdown summary start -->
-        <tr class="class-row abort-class-1un6me7-expand">
-            <td colspan="1"
-                class="col-spacer center abort-class-1un6me7-mission-countdown-indicator">▼
-            </td>
-            <td colspan="1"
-                class="row-start border exec-title result-failure"
-                title="Countdown"
-                onclick="toggleMethod(&quot;1un6me7&quot;, &#39;countdown&#39;)">Countdown
-            </td>
-            <td colspan="1"
-                class="border center exec-count exec-stat exec-int">1
-            </td>
-            <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 938ms
-            </td>
-            <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">938
-            </td>
-            <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">938.0
-            </td>
-            <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">938
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-success inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-failure">1
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-abort inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress inactive">0
-            </td>
-        </tr>
-        <!-- countdown summary end -->
-        <!-- countdown matcher details start -->
-        <tr class="class-row abort-class-1un6me7-expand abort-class-1un6me7-mission-countdown-details">
-            <td colspan="1" class="col-spacer"></td>
-            <td colspan="10" class="class-matchers row-start border">
-                Countdown matchers:
-                <ul class="matcher-list">
-                    <li>(t12af7) SideBooster</li>
-                </ul>
-            </td>
-        </tr>
-        <!-- countdown matcher details end -->
-
-        <!-- class summary start -->
-        <tr class="class-summary-row abort-class-1un6me7-expand">
-            <td colspan="1" class="col-spacer"></td>
-            <td colspan="1" class="row-start border exec-summary">Class total</td>
-            <td colspan="1"
-                class="border center exec-count exec-stat exec-int">1
-            </td>
-            <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 938ms
-            </td>
-            <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">938
-            </td>
-            <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">938.0
-            </td>
-            <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">938
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-success inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-failure">1
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-abort inactive">0
-            </td>
-            <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress inactive">0
-            </td>
-        </tr>
-        <tr class="class-summary-row-spacing">
-            <td colspan="11"></td>
-        </tr>
-        <!-- class summary end -->
-
+                        onclick="toggleMethod(&quot;5u5amv&quot;, &quot;19oau5t&quot;)">testParachuteShouldOpenWhenCalled</td>
+                    <td colspan="1"
+                        class="border center exec-count exec-stat exec-int">10</td>
+                    <td colspan="1"
+                        class="border center exec-total exec-time exec-int">0s 2ms</td>
+                    <td colspan="1"
+                        class="border center exec-min exec-stat exec-int exec-ms">0</td>
+                    <td colspan="1"
+                        class="border center exec-avg exec-stat exec-float exec-ms">0.2</td>
+                    <td colspan="1"
+                        class="border center exec-max exec-stat exec-int exec-ms">1</td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-success">3</td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-failure">1</td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-abort">6</td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-suppress inactive">0</td>
+                </tr>
+                <!-- method summary end -->
+                <!-- method matcher details start -->
+                <tr class="class-row abort-class-5u5amv-expand abort-class-5u5amv-mission-19oau5t-details">
+                    <td colspan="1" class="col-spacer"></td>
+                    <td colspan="10" class="class-matchers row-start border">
+                        Mission matchers:
+                        <ul class="matcher-list">
+                            <li>(1pvtkkg) CLASS_MATCHING(&#39;.+\.ParachuteTestContext&#39;)</li>
+                        </ul>
+                    </td>
+                </tr>
+                <!-- method matcher details end -->
+            
+            <!-- class summary start -->
+            <tr class="class-summary-row abort-class-5u5amv-expand">
+                <td colspan="1" class="col-spacer"></td>
+                <td colspan="1" class="row-start border exec-summary">Class total</td>
+                <td colspan="1"
+                    class="border center exec-count exec-stat exec-int">11</td>
+                <td colspan="1"
+                    class="border center exec-total exec-time exec-int">0s 4ms</td>
+                <td colspan="1"
+                    class="border center exec-min exec-stat exec-int exec-ms">0</td>
+                <td colspan="1"
+                    class="border center exec-avg exec-stat exec-float exec-ms">0.4</td>
+                <td colspan="1"
+                    class="border center exec-max exec-stat exec-int exec-ms">2</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-success">4</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-failure">1</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-abort">6</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-suppress inactive">0</td>
+            </tr>
+            <tr class="class-summary-row-spacing">
+                <td colspan="11"></td>
+            </tr>
+            <!-- class summary end -->
+        
+            <!-- class header collapsed summary start -->
+            <tr class="class-row abort-class-jbhbb7-collapse hidden-class">
+                <td colspan="2"
+                    class="top-row row-start border class-name-collapsed result-suppressed"
+                    title="com.github.nagyesta.abortmission.booster.testng.StaticFireTestCenterCoreOnly"
+                    onclick="expandClass(&quot;jbhbb7&quot;)">► co.gi.na.ab.bo.te.StaticFireTestCenterCoreOnly</td>
+                <td colspan="1"
+                    class="top-row border center exec-count exec-stat exec-int">1</td>
+                <td colspan="1"
+                    class="top-row border center exec-total exec-time exec-int">0s 2ms</td>
+                <td colspan="1"
+                    class="top-row border center exec-min exec-stat exec-int exec-ms">2</td>
+                <td colspan="1"
+                    class="top-row border center exec-avg exec-stat exec-float exec-ms">2.0</td>
+                <td colspan="1"
+                    class="top-row border center exec-max exec-stat exec-int exec-ms">2</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-success">1</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-failure inactive">0</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-abort inactive">0</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-suppress inactive">0</td>
+            </tr>
+            <!-- class header collapsed summary end -->
+            <!-- class header expanded start -->
+            <tr class="class-row abort-class-jbhbb7-expand">
+                <td colspan="3" class="top-row row-start border class-name result-suppressed"
+                    title="com.github.nagyesta.abortmission.booster.testng.StaticFireTestCenterCoreOnly"
+                    onclick="collapseClass(&quot;jbhbb7&quot;)">▼ co.gi.na.ab.bo.te.StaticFireTestCenterCoreOnly</td>
+                <td colspan="4" class="top-row border center class-times result-suppressed">Times
+                </td>
+                <td colspan="4" class="top-row border center class-results result-suppressed">Results
+                </td>
+            </tr>
+            <!-- class header expanded end -->
+            <!-- countdown summary start -->
+            <tr class="class-row abort-class-jbhbb7-expand">
+                <td colspan="1"
+                    class="col-spacer center abort-class-jbhbb7-mission-countdown-indicator">►</td>
+                <td colspan="1"
+                    class="row-start border exec-title result-suppressed"
+                    title="Countdown"
+                    onclick="toggleMethod(&quot;jbhbb7&quot;, &#39;countdown&#39;)">Countdown</td>
+                <td colspan="1"
+                    class="border center exec-count exec-stat exec-int">0</td>
+                <td colspan="1"
+                    class="border center exec-total exec-time exec-int">0s 0ms</td>
+                <td colspan="1"
+                    class="border center exec-min exec-stat exec-int exec-ms">0</td>
+                <td colspan="1"
+                    class="border center exec-avg exec-stat exec-float exec-ms">0.0</td>
+                <td colspan="1"
+                    class="border center exec-max exec-stat exec-int exec-ms">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-success inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-failure inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-abort inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-suppress inactive">0</td>
+            </tr>
+            <!-- countdown summary end -->
+            <!-- countdown matcher details start -->
+            <tr class="class-row abort-class-jbhbb7-expand abort-class-jbhbb7-mission-countdown-details hidden">
+                <td colspan="1" class="col-spacer"></td>
+                <td colspan="10" class="class-matchers row-start border">
+                    Countdown matchers:
+                    
+                </td>
+            </tr>
+            <!-- countdown matcher details end -->
+            
+                <!-- method summary start -->
+                <tr class="class-row abort-class-jbhbb7-expand">
+                    <td colspan="1"
+                        class="col-spacer center abort-class-jbhbb7-mission-b5km9h-indicator">►</td>
+                    <td colspan="1"
+                        class="row-start border exec-title result-success"
+                        title="testIsOnFire"
+                        onclick="toggleMethod(&quot;jbhbb7&quot;, &quot;b5km9h&quot;)">testIsOnFire</td>
+                    <td colspan="1"
+                        class="border center exec-count exec-stat exec-int">1</td>
+                    <td colspan="1"
+                        class="border center exec-total exec-time exec-int">0s 2ms</td>
+                    <td colspan="1"
+                        class="border center exec-min exec-stat exec-int exec-ms">2</td>
+                    <td colspan="1"
+                        class="border center exec-avg exec-stat exec-float exec-ms">2.0</td>
+                    <td colspan="1"
+                        class="border center exec-max exec-stat exec-int exec-ms">2</td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-success">1</td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-failure inactive">0</td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-abort inactive">0</td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-suppress inactive">0</td>
+                </tr>
+                <!-- method summary end -->
+                <!-- method matcher details start -->
+                <tr class="class-row abort-class-jbhbb7-expand abort-class-jbhbb7-mission-b5km9h-details hidden">
+                    <td colspan="1" class="col-spacer"></td>
+                    <td colspan="10" class="class-matchers row-start border">
+                        Mission matchers:
+                        <ul class="matcher-list">
+                            <li>(11v6pic) CenterCore</li>
+                        </ul>
+                    </td>
+                </tr>
+                <!-- method matcher details end -->
+            
+            <!-- class summary start -->
+            <tr class="class-summary-row abort-class-jbhbb7-expand">
+                <td colspan="1" class="col-spacer"></td>
+                <td colspan="1" class="row-start border exec-summary">Class total</td>
+                <td colspan="1"
+                    class="border center exec-count exec-stat exec-int">1</td>
+                <td colspan="1"
+                    class="border center exec-total exec-time exec-int">0s 2ms</td>
+                <td colspan="1"
+                    class="border center exec-min exec-stat exec-int exec-ms">2</td>
+                <td colspan="1"
+                    class="border center exec-avg exec-stat exec-float exec-ms">2.0</td>
+                <td colspan="1"
+                    class="border center exec-max exec-stat exec-int exec-ms">2</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-success">1</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-failure inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-abort inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-suppress inactive">0</td>
+            </tr>
+            <tr class="class-summary-row-spacing">
+                <td colspan="11"></td>
+            </tr>
+            <!-- class summary end -->
+        
+            <!-- class header collapsed summary start -->
+            <tr class="class-row abort-class-1un6me7-collapse hidden-class">
+                <td colspan="2"
+                    class="top-row row-start border class-name-collapsed result-failure"
+                    title="com.github.nagyesta.abortmission.booster.testng.StaticFireTestWithSideBoosters"
+                    onclick="expandClass(&quot;1un6me7&quot;)">► co.gi.na.ab.bo.te.StaticFireTestWithSideBoosters</td>
+                <td colspan="1"
+                    class="top-row border center exec-count exec-stat exec-int">1</td>
+                <td colspan="1"
+                    class="top-row border center exec-total exec-time exec-int">0s 938ms</td>
+                <td colspan="1"
+                    class="top-row border center exec-min exec-stat exec-int exec-ms">938</td>
+                <td colspan="1"
+                    class="top-row border center exec-avg exec-stat exec-float exec-ms">938.0</td>
+                <td colspan="1"
+                    class="top-row border center exec-max exec-stat exec-int exec-ms">938</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-success inactive">0</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-failure">1</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-abort inactive">0</td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-suppress inactive">0</td>
+            </tr>
+            <!-- class header collapsed summary end -->
+            <!-- class header expanded start -->
+            <tr class="class-row abort-class-1un6me7-expand">
+                <td colspan="3" class="top-row row-start border class-name result-failure"
+                    title="com.github.nagyesta.abortmission.booster.testng.StaticFireTestWithSideBoosters"
+                    onclick="collapseClass(&quot;1un6me7&quot;)">▼ co.gi.na.ab.bo.te.StaticFireTestWithSideBoosters</td>
+                <td colspan="4" class="top-row border center class-times result-failure">Times
+                </td>
+                <td colspan="4" class="top-row border center class-results result-failure">Results
+                </td>
+            </tr>
+            <!-- class header expanded end -->
+            <!-- countdown summary start -->
+            <tr class="class-row abort-class-1un6me7-expand">
+                <td colspan="1"
+                    class="col-spacer center abort-class-1un6me7-mission-countdown-indicator">▼</td>
+                <td colspan="1"
+                    class="row-start border exec-title result-failure"
+                    title="Countdown"
+                    onclick="toggleMethod(&quot;1un6me7&quot;, &#39;countdown&#39;)">Countdown</td>
+                <td colspan="1"
+                    class="border center exec-count exec-stat exec-int">1</td>
+                <td colspan="1"
+                    class="border center exec-total exec-time exec-int">0s 938ms</td>
+                <td colspan="1"
+                    class="border center exec-min exec-stat exec-int exec-ms">938</td>
+                <td colspan="1"
+                    class="border center exec-avg exec-stat exec-float exec-ms">938.0</td>
+                <td colspan="1"
+                    class="border center exec-max exec-stat exec-int exec-ms">938</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-success inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-failure">1</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-abort inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-suppress inactive">0</td>
+            </tr>
+            <!-- countdown summary end -->
+            <!-- countdown matcher details start -->
+            <tr class="class-row abort-class-1un6me7-expand abort-class-1un6me7-mission-countdown-details">
+                <td colspan="1" class="col-spacer"></td>
+                <td colspan="10" class="class-matchers row-start border">
+                    Countdown matchers:
+                    <ul class="matcher-list">
+                        <li>(t12af7) SideBooster</li>
+                    </ul>
+                </td>
+            </tr>
+            <!-- countdown matcher details end -->
+            
+            <!-- class summary start -->
+            <tr class="class-summary-row abort-class-1un6me7-expand">
+                <td colspan="1" class="col-spacer"></td>
+                <td colspan="1" class="row-start border exec-summary">Class total</td>
+                <td colspan="1"
+                    class="border center exec-count exec-stat exec-int">1</td>
+                <td colspan="1"
+                    class="border center exec-total exec-time exec-int">0s 938ms</td>
+                <td colspan="1"
+                    class="border center exec-min exec-stat exec-int exec-ms">938</td>
+                <td colspan="1"
+                    class="border center exec-avg exec-stat exec-float exec-ms">938.0</td>
+                <td colspan="1"
+                    class="border center exec-max exec-stat exec-int exec-ms">938</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-success inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-failure">1</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-abort inactive">0</td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-suppress inactive">0</td>
+            </tr>
+            <tr class="class-summary-row-spacing">
+                <td colspan="11"></td>
+            </tr>
+            <!-- class summary end -->
+        
         <tr class="overall-summary-row-spacing">
             <td colspan="11"></td>
         </tr>
@@ -1296,96 +1139,69 @@ Called"
         <tr class="overall-summary-row">
             <td colspan="2" class="row-start border exec-summary">Countdown Subtotal</td>
             <td colspan="1"
-                class="border center exec-count exec-stat exec-int">3
-            </td>
+                class="border center exec-count exec-stat exec-int">3</td>
             <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 947ms
-            </td>
+                class="border center exec-total exec-time exec-int">0s 947ms</td>
             <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">2
-            </td>
+                class="border center exec-min exec-stat exec-int exec-ms">2</td>
             <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">315.7
-            </td>
+                class="border center exec-avg exec-stat exec-float exec-ms">315.7</td>
             <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">938
-            </td>
+                class="border center exec-max exec-stat exec-int exec-ms">938</td>
             <td colspan="1"
-                class="border center exec-stat exec-int exec-success">2
-            </td>
+                class="border center exec-stat exec-int exec-success">2</td>
             <td colspan="1"
-                class="border center exec-stat exec-int exec-failure">1
-            </td>
+                class="border center exec-stat exec-int exec-failure">1</td>
             <td colspan="1"
-                class="border center exec-stat exec-int exec-abort inactive">0
-            </td>
+                class="border center exec-stat exec-int exec-abort inactive">0</td>
             <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress inactive">0
-            </td>
+                class="border center exec-stat exec-int exec-suppress inactive">0</td>
         </tr>
         <!-- overall countdown summary end -->
         <!-- overall mission summary start -->
         <tr class="overall-summary-row">
             <td colspan="2" class="row-start border exec-summary">Missions Subtotal</td>
             <td colspan="1"
-                class="border center exec-count exec-stat exec-int">16
-            </td>
+                class="border center exec-count exec-stat exec-int">16</td>
             <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 11ms
-            </td>
+                class="border center exec-total exec-time exec-int">0s 11ms</td>
             <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">0
-            </td>
+                class="border center exec-min exec-stat exec-int exec-ms">0</td>
             <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">0.7
-            </td>
+                class="border center exec-avg exec-stat exec-float exec-ms">0.7</td>
             <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">6
-            </td>
+                class="border center exec-max exec-stat exec-int exec-ms">6</td>
             <td colspan="1"
-                class="border center exec-stat exec-int exec-success">5
-            </td>
+                class="border center exec-stat exec-int exec-success">5</td>
             <td colspan="1"
-                class="border center exec-stat exec-int exec-failure">2
-            </td>
+                class="border center exec-stat exec-int exec-failure">2</td>
             <td colspan="1"
-                class="border center exec-stat exec-int exec-abort">8
-            </td>
+                class="border center exec-stat exec-int exec-abort">8</td>
             <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress">1
-            </td>
+                class="border center exec-stat exec-int exec-suppress">1</td>
         </tr>
         <!-- overall mission summary end -->
         <!-- overall summary start -->
         <tr class="overall-summary-row">
             <td colspan="2" class="row-start border exec-summary">Total</td>
             <td colspan="1"
-                class="border center exec-count exec-stat exec-int">19
-            </td>
+                class="border center exec-count exec-stat exec-int">19</td>
             <td colspan="1"
-                class="border center exec-total exec-time exec-int">0s 958ms
-            </td>
+                class="border center exec-total exec-time exec-int">0s 958ms</td>
             <td colspan="1"
-                class="border center exec-min exec-stat exec-int exec-ms">0
-            </td>
+                class="border center exec-min exec-stat exec-int exec-ms">0</td>
             <td colspan="1"
-                class="border center exec-avg exec-stat exec-float exec-ms">50.4
-            </td>
+                class="border center exec-avg exec-stat exec-float exec-ms">50.4</td>
             <td colspan="1"
-                class="border center exec-max exec-stat exec-int exec-ms">938
-            </td>
+                class="border center exec-max exec-stat exec-int exec-ms">938</td>
             <td colspan="1"
-                class="border center exec-stat exec-int exec-success">7
-            </td>
+                class="border center exec-stat exec-int exec-success">7</td>
             <td colspan="1"
-                class="border center exec-stat exec-int exec-failure">3
-            </td>
+                class="border center exec-stat exec-int exec-failure">3</td>
             <td colspan="1"
-                class="border center exec-stat exec-int exec-abort">8
-            </td>
+                class="border center exec-stat exec-int exec-abort">8</td>
             <td colspan="1"
-                class="border center exec-stat exec-int exec-suppress">1
-            </td>
+                class="border center exec-stat exec-int exec-suppress">1</td>
         </tr>
         <!-- overall summary end -->
         </tbody>

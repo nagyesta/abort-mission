@@ -30,8 +30,8 @@ class ConversionControllerIntegrationTest {
 
     private static Stream<Arguments> validInputSource() {
         return Stream.<Arguments>builder()
-                .add(Arguments.of("/abort-mission-report.json", true, "/abort-mission-report.html"))
-                .add(Arguments.of("/abort-mission-report.json", false, "/abort-mission-report.html"))
+                .add(Arguments.of("/abort-mission-report.json", true, "/abort-mission-report.txt"))
+                .add(Arguments.of("/abort-mission-report.json", false, "/abort-mission-report.txt"))
                 .build();
     }
 
