@@ -49,6 +49,8 @@ Let me know by creating an issue! No promises, but I will at least take a look.
   - [JUnit Jupiter](boosters/booster-junit-jupiter)
   - [TestNG](boosters/booster-testng)
   - [Booster Test Kit](boosters/testkit)
+- Mission Report
+  - [Flight Evaluation Report](mission-report/flight-evaluation-report)
 
 ## Terminology and Lifecycle
 
