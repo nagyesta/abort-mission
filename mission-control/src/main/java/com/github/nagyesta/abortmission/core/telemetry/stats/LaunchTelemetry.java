@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 public final class LaunchTelemetry {
 
     private final SortedMap<String, ClassTelemetry> classes;
+    private final AggregatedLaunchStats countdownStats;
+    private final AggregatedLaunchStats missionStats;
     private final AggregatedLaunchStats stats;
 
     /**
@@ -26,9 +28,17 @@ public final class LaunchTelemetry {
         Objects.requireNonNull(converter, "Converter cannot be null.");
         Objects.requireNonNull(nameSpaces, "Namespaces cannot be null.");
         this.classes = converter.processClassStatistics(nameSpaces);
-        this.stats = new AggregatedLaunchStats(classes.values().stream()
-                .map(ClassTelemetry::getStats)
+        this.countdownStats = new AggregatedLaunchStats(classes.values().stream()
+                .map(ClassTelemetry::getCountdown)
+                .map(StageLaunchStats::getStats)
                 .collect(Collectors.toSet()));
+        this.missionStats = new AggregatedLaunchStats(classes.values().stream()
+                .map(ClassTelemetry::getLaunches)
+                .map(Map::values)
+                .flatMap(Collection::stream)
+                .map(StageLaunchStats::getStats)
+                .collect(Collectors.toSet()));
+        this.stats = new AggregatedLaunchStats(new HashSet<>(Arrays.asList(countdownStats, missionStats)));
     }
 
     /**
@@ -58,5 +68,13 @@ public final class LaunchTelemetry {
 
     public AggregatedLaunchStats getStats() {
         return stats;
+    }
+
+    public AggregatedLaunchStats getCountdownStats() {
+        return countdownStats;
+    }
+
+    public AggregatedLaunchStats getMissionStats() {
+        return missionStats;
     }
 }

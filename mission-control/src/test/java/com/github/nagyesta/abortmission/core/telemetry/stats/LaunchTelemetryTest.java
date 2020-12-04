@@ -55,7 +55,7 @@ class LaunchTelemetryTest {
         final InOrder inOrder = inOrder(converter, classStats);
         inOrder.verify(converter).processClassStatistics(same(nameSpaces));
         //noinspection ResultOfMethodCallIgnored
-        inOrder.verify(classStats).values();
+        inOrder.verify(classStats, times(2)).values();
         inOrder.verifyNoMoreInteractions();
         verifyNoInteractions(nameSpaces);
     }

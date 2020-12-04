@@ -45,6 +45,10 @@ project.ext {
     springBootVersion = '2.3.4.RELEASE'
     //noinspection GroovyAssignabilityCheck
     gsonVersion = '2.8.6'
+    //noinspection GroovyAssignabilityCheck
+    jsonSchemaValidatorVersion = '1.0.43'
+    //noinspection GroovyAssignabilityCheck
+    lombokVersion = '1.18.12'
 }
 
 versioner {
@@ -76,7 +80,7 @@ versioner {
 
 configure(subprojects.findAll({
     //noinspection GroovyAssignabilityCheck
-    !'boosters'.equalsIgnoreCase(it.name)
+    !'boosters'.equalsIgnoreCase(it.name) && !'mission-report'.equalsIgnoreCase(it.name)
 })) {
     //noinspection GroovyAssignabilityCheck
     apply plugin: 'java'
@@ -156,7 +160,8 @@ configure(subprojects.findAll({
                         "com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets",
                         "com.github.nagyesta.abortmission.testkit.vanilla.FuelTankTestAssets",
                         "com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDropTestAssets",
-                        "com.github.nagyesta.abortmission.booster.junit4.support.LaunchAbortTestWatcher.1"
+                        "com.github.nagyesta.abortmission.booster.junit4.support.LaunchAbortTestWatcher.1",
+                        "com.github.nagyesta.abortmission.reporting.AbortMissionFlightEvaluationReportApp"
                 ]
             }
         }

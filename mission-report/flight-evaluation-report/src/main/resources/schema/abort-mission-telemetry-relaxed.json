@@ -1,0 +1,288 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://github.com/nagyesta/abort-mission/blob/main/mission-report/flight-evaluation-report/src/main/resources/schema/abort-mission-telemetry-relaxed.json",
+  "definitions": {
+    "localDateTime": {
+      "type": "object",
+      "description": "Java LocalDateTime",
+      "properties": {
+        "date": {
+          "type": "object",
+          "properties": {
+            "year": {
+              "type": "integer"
+            },
+            "month": {
+              "type": "integer"
+            },
+            "day": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "year",
+            "month",
+            "day"
+          ],
+          "additionalProperties": false
+        },
+        "time": {
+          "type": "object",
+          "properties": {
+            "hour": {
+              "type": "integer"
+            },
+            "minute": {
+              "type": "integer"
+            },
+            "second": {
+              "type": "integer"
+            },
+            "nano": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "hour",
+            "minute",
+            "second",
+            "nano"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "date",
+        "time"
+      ],
+      "additionalProperties": false
+    },
+    "stageResult": {
+      "type": "string",
+      "description": "Stage execution result.",
+      "enum": [
+        "ABORT",
+        "SUPPRESSED",
+        "SUCCESS",
+        "FAILURE"
+      ]
+    },
+    "stageStats": {
+      "type": "object",
+      "description": "Statistical data collected related to one stage of the mission (class or method)",
+      "properties": {
+        "matcherNames": {
+          "type": "array",
+          "description": "Names of mission healthcheck matchers which were used to collect the measurements",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "timeMeasurements": {
+          "type": "array",
+          "description": "Time measurements and outcomes of single stage executions",
+          "items": {
+            "type": "object",
+            "description": "Measurement data captured related to a single execution",
+            "properties": {
+              "launchId": {
+                "type": "string",
+                "description": "The unique Id of the class initialization or test run call represented by this stage"
+              },
+              "result": {
+                "$ref": "#/definitions/stageResult"
+              },
+              "start": {
+                "type": "integer",
+                "description": "Java epoch millis long representation of the instance when the execution started"
+              },
+              "end": {
+                "type": "integer",
+                "description": "Java epoch millis long representation of the instance when the execution ended"
+              }
+            },
+            "required": [
+              "launchId",
+              "result",
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          },
+          "uniqueItems": true
+        },
+        "stats": {
+          "$ref": "#/definitions/aggregatedStats"
+        }
+      },
+      "required": [
+        "matcherNames",
+        "timeMeasurements",
+        "stats"
+      ],
+      "additionalProperties": false
+    },
+    "aggregatedStats": {
+      "type": "object",
+      "description": "Aggregated launch statistics.",
+      "properties": {
+        "minStart": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/localDateTime"
+            }
+          ]
+        },
+        "maxEnd": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/localDateTime"
+            }
+          ]
+        },
+        "worstResult": {
+          "$ref": "#/definitions/stageResult"
+        },
+        "count": {
+          "type": "integer",
+          "description": "Number of executions."
+        },
+        "sumDuration": {
+          "type": "integer",
+          "description": "Total execution time in millis."
+        },
+        "minDuration": {
+          "anyOf": [
+            {
+              "type": "null",
+              "description": "Minimum execution time in millis."
+            },
+            {
+              "type": "integer",
+              "description": "Minimum execution time in millis."
+            }
+          ]
+        },
+        "maxDuration": {
+          "anyOf": [
+            {
+              "type": "null",
+              "description": "Maximum execution time in millis."
+            },
+            {
+              "type": "integer",
+              "description": "Maximum execution time in millis."
+            }
+          ]
+        },
+        "avgDuration": {
+          "anyOf": [
+            {
+              "type": "null",
+              "description": "Average execution time in millis."
+            },
+            {
+              "type": "number",
+              "description": "Average execution time in millis."
+            }
+          ]
+        },
+        "resultCount": {
+          "type": "object",
+          "properties": {
+            "ABORT": {
+              "type": "integer"
+            },
+            "SUPPRESSED": {
+              "type": "integer"
+            },
+            "SUCCESS": {
+              "type": "integer"
+            },
+            "FAILURE": {
+              "type": "integer"
+            }
+          },
+          "maxProperties": 4,
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "worstResult",
+        "count",
+        "sumDuration",
+        "resultCount"
+      ],
+      "additionalProperties": false
+    },
+    "classTelemetry": {
+      "properties": {
+        "className": {
+          "type": "string",
+          "description": "The fully qualified name of the test class represented by this node.",
+          "pattern": "^.+$"
+        },
+        "countdown": {
+          "$ref": "#/definitions/stageStats"
+        },
+        "launches": {
+          "type": "object",
+          "description": "Method level execution measurement data collected",
+          "patternProperties": {
+            "^.+$": {
+              "$ref": "#/definitions/stageStats"
+            }
+          },
+          "additionalProperties": false
+        },
+        "stats": {
+          "$ref": "#/definitions/aggregatedStats"
+        }
+      },
+      "required": [
+        "className",
+        "countdown",
+        "launches",
+        "stats"
+      ],
+      "additionalProperties": false
+    },
+    "classesContainer": {
+      "type": "object",
+      "description": "Test class container.",
+      "patternProperties": {
+        "^.+$": {
+          "$ref": "#/definitions/classTelemetry"
+        }
+      },
+      "additionalProperties": false,
+      "uniqueItems": true
+    }
+  },
+  "properties": {
+    "classes": {
+      "$ref": "#/definitions/classesContainer"
+    },
+    "stats": {
+      "$ref": "#/definitions/aggregatedStats"
+    },
+    "countdownStats": {
+      "$ref": "#/definitions/aggregatedStats"
+    },
+    "missionStats": {
+      "$ref": "#/definitions/aggregatedStats"
+    }
+  },
+  "required": [
+    "classes",
+    "stats"
+  ],
+  "additionalProperties": false
+}

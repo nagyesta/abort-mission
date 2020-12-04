@@ -3,6 +3,7 @@ package com.github.nagyesta.abortmission.core;
 import com.github.nagyesta.abortmission.core.annotation.AnnotationContextEvaluator;
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
 import com.github.nagyesta.abortmission.core.healthcheck.impl.PercentageBasedMissionHealthCheckEvaluator;
+import com.github.nagyesta.abortmission.core.healthcheck.impl.ReportOnlyMissionHealthCheckEvaluator;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import com.github.nagyesta.abortmission.core.matcher.impl.MissionHealthCheckMatcherBuilder;
 import com.github.nagyesta.abortmission.core.matcher.impl.builder.InitialMissionHealthCheckMatcherBuilder;
@@ -52,6 +53,16 @@ public final class MissionControl {
      */
     public static PercentageBasedMissionHealthCheckEvaluator.Builder percentageBasedEvaluator(final MissionHealthCheckMatcher matcher) {
         return PercentageBasedMissionHealthCheckEvaluator.builder(matcher);
+    }
+
+    /**
+     * Creates a builder instance for report only evaluators.
+     *
+     * @param matcher The matcher we want to use for this evaluator.
+     * @return builder
+     */
+    public static ReportOnlyMissionHealthCheckEvaluator.Builder reportOnlyEvaluator(final MissionHealthCheckMatcher matcher) {
+        return ReportOnlyMissionHealthCheckEvaluator.builder(matcher);
     }
 
     /**

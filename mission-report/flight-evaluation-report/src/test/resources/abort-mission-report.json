@@ -1,0 +1,687 @@
+{
+  "classes": {
+    "com.github.nagyesta.abortmission.booster.testng.FuelTankTestContext": {
+      "className": "com.github.nagyesta.abortmission.booster.testng.FuelTankTestContext",
+      "countdown": {
+        "matcherNames": [
+          "CLASS_MATCHING(\u0027.+\\.FuelTankTestContext\u0027)"
+        ],
+        "timeMeasurements": [
+          {
+            "launchId": "06ff0303-e437-40a6-8e9e-cd16ee7b9f5c",
+            "result": "SUCCESS",
+            "start": 1606773283429,
+            "end": 1606773283436
+          }
+        ],
+        "stats": {
+          "minStart": {
+            "date": {
+              "year": 2020,
+              "month": 11,
+              "day": 30
+            },
+            "time": {
+              "hour": 22,
+              "minute": 54,
+              "second": 43,
+              "nano": 429000000
+            }
+          },
+          "maxEnd": {
+            "date": {
+              "year": 2020,
+              "month": 11,
+              "day": 30
+            },
+            "time": {
+              "hour": 22,
+              "minute": 54,
+              "second": 43,
+              "nano": 436000000
+            }
+          },
+          "worstResult": "SUCCESS",
+          "count": 1,
+          "sumDuration": 7,
+          "minDuration": 7,
+          "maxDuration": 7,
+          "avgDuration": 7.0,
+          "resultCount": {
+            "SUCCESS": 1
+          }
+        }
+      },
+      "stats": {
+        "minStart": {
+          "date": {
+            "year": 2020,
+            "month": 11,
+            "day": 30
+          },
+          "time": {
+            "hour": 22,
+            "minute": 54,
+            "second": 43,
+            "nano": 429000000
+          }
+        },
+        "maxEnd": {
+          "date": {
+            "year": 2020,
+            "month": 11,
+            "day": 30
+          },
+          "time": {
+            "hour": 22,
+            "minute": 54,
+            "second": 43,
+            "nano": 445000000
+          }
+        },
+        "worstResult": "FAILURE",
+        "count": 6,
+        "sumDuration": 14,
+        "minDuration": 0,
+        "maxDuration": 7,
+        "avgDuration": 2.3,
+        "resultCount": {
+          "FAILURE": 1,
+          "SUPPRESSED": 1,
+          "ABORT": 2,
+          "SUCCESS": 2
+        }
+      },
+      "launches": {
+        "testFuelTankShouldFillWhenCalled": {
+          "matcherNames": [
+            "CLASS_MATCHING(\u0027.+\\.FuelTankTestContext\u0027)"
+          ],
+          "timeMeasurements": [
+            {
+              "launchId": "5bd9a809-0bb3-4521-9a21-2ccc03ef7987",
+              "result": "SUPPRESSED",
+              "start": 1606773283436,
+              "end": 1606773283442
+            },
+            {
+              "launchId": "7d3d9cb0-e4b7-4e32-a0b5-9de872c39f6e",
+              "result": "SUCCESS",
+              "start": 1606773283442,
+              "end": 1606773283443
+            },
+            {
+              "launchId": "bdaabc45-52a1-4c40-9cbc-770b69653586",
+              "result": "FAILURE",
+              "start": 1606773283444,
+              "end": 1606773283444
+            },
+            {
+              "launchId": "3a74823b-52cc-4f4e-873b-6053ef5f623c",
+              "result": "ABORT",
+              "start": 1606773283444,
+              "end": 1606773283444
+            },
+            {
+              "launchId": "a26cc24f-cd3a-41c7-b2a0-69a116a540d2",
+              "result": "ABORT",
+              "start": 1606773283445,
+              "end": 1606773283445
+            }
+          ],
+          "stats": {
+            "minStart": {
+              "date": {
+                "year": 2020,
+                "month": 11,
+                "day": 30
+              },
+              "time": {
+                "hour": 22,
+                "minute": 54,
+                "second": 43,
+                "nano": 436000000
+              }
+            },
+            "maxEnd": {
+              "date": {
+                "year": 2020,
+                "month": 11,
+                "day": 30
+              },
+              "time": {
+                "hour": 22,
+                "minute": 54,
+                "second": 43,
+                "nano": 445000000
+              }
+            },
+            "worstResult": "FAILURE",
+            "count": 5,
+            "sumDuration": 7,
+            "minDuration": 0,
+            "maxDuration": 6,
+            "avgDuration": 1.4,
+            "resultCount": {
+              "FAILURE": 1,
+              "ABORT": 2,
+              "SUPPRESSED": 1,
+              "SUCCESS": 1
+            }
+          }
+        }
+      }
+    },
+    "com.github.nagyesta.abortmission.booster.testng.ParachuteTestContext": {
+      "className": "com.github.nagyesta.abortmission.booster.testng.ParachuteTestContext",
+      "countdown": {
+        "matcherNames": [
+          "CLASS_MATCHING(\u0027.+\\.ParachuteTestContext\u0027)"
+        ],
+        "timeMeasurements": [
+          {
+            "launchId": "c6626254-0ab3-4fe1-a167-7fab71fae6da",
+            "result": "SUCCESS",
+            "start": 1606773283693,
+            "end": 1606773283695
+          }
+        ],
+        "stats": {
+          "minStart": {
+            "date": {
+              "year": 2020,
+              "month": 11,
+              "day": 30
+            },
+            "time": {
+              "hour": 22,
+              "minute": 54,
+              "second": 43,
+              "nano": 693000000
+            }
+          },
+          "maxEnd": {
+            "date": {
+              "year": 2020,
+              "month": 11,
+              "day": 30
+            },
+            "time": {
+              "hour": 22,
+              "minute": 54,
+              "second": 43,
+              "nano": 695000000
+            }
+          },
+          "worstResult": "SUCCESS",
+          "count": 1,
+          "sumDuration": 2,
+          "minDuration": 2,
+          "maxDuration": 2,
+          "avgDuration": 2.0,
+          "resultCount": {
+            "SUCCESS": 1
+          }
+        }
+      },
+      "stats": {
+        "minStart": {
+          "date": {
+            "year": 2020,
+            "month": 11,
+            "day": 30
+          },
+          "time": {
+            "hour": 22,
+            "minute": 54,
+            "second": 43,
+            "nano": 693000000
+          }
+        },
+        "maxEnd": {
+          "date": {
+            "year": 2020,
+            "month": 11,
+            "day": 30
+          },
+          "time": {
+            "hour": 22,
+            "minute": 54,
+            "second": 43,
+            "nano": 701000000
+          }
+        },
+        "worstResult": "FAILURE",
+        "count": 11,
+        "sumDuration": 4,
+        "minDuration": 0,
+        "maxDuration": 2,
+        "avgDuration": 0.4,
+        "resultCount": {
+          "FAILURE": 1,
+          "ABORT": 6,
+          "SUCCESS": 4
+        }
+      },
+      "launches": {
+        "testParachuteShouldOpenWhenCalled": {
+          "matcherNames": [
+            "CLASS_MATCHING(\u0027.+\\.ParachuteTestContext\u0027)"
+          ],
+          "timeMeasurements": [
+            {
+              "launchId": "58d7b910-ba07-4209-938b-361a7af07bb2",
+              "result": "SUCCESS",
+              "start": 1606773283695,
+              "end": 1606773283696
+            },
+            {
+              "launchId": "a8a1fe28-6ee4-489c-975e-c90641c60427",
+              "result": "SUCCESS",
+              "start": 1606773283696,
+              "end": 1606773283696
+            },
+            {
+              "launchId": "50421d2e-0184-443d-8e47-a19d4a86140d",
+              "result": "SUCCESS",
+              "start": 1606773283697,
+              "end": 1606773283697
+            },
+            {
+              "launchId": "3d4c76c5-7f93-4733-be94-99788f2a5f4e",
+              "result": "FAILURE",
+              "start": 1606773283697,
+              "end": 1606773283698
+            },
+            {
+              "launchId": "96621bbe-56d8-4158-bbd9-23709a30d94c",
+              "result": "ABORT",
+              "start": 1606773283699,
+              "end": 1606773283699
+            },
+            {
+              "launchId": "28b8aadd-e1e7-41f5-a1bd-2b609e943063",
+              "result": "ABORT",
+              "start": 1606773283699,
+              "end": 1606773283699
+            },
+            {
+              "launchId": "40c34a0e-f643-46c3-9cd5-a7ebf53762e7",
+              "result": "ABORT",
+              "start": 1606773283700,
+              "end": 1606773283700
+            },
+            {
+              "launchId": "40f16f01-ef79-4d38-82e8-72952c36edcd",
+              "result": "ABORT",
+              "start": 1606773283700,
+              "end": 1606773283700
+            },
+            {
+              "launchId": "8785ffa7-4ae0-4fd3-ad7c-9b91daadd5a2",
+              "result": "ABORT",
+              "start": 1606773283701,
+              "end": 1606773283701
+            },
+            {
+              "launchId": "b608fe17-3d78-4cc6-93ad-7daf192d3031",
+              "result": "ABORT",
+              "start": 1606773283701,
+              "end": 1606773283701
+            }
+          ],
+          "stats": {
+            "minStart": {
+              "date": {
+                "year": 2020,
+                "month": 11,
+                "day": 30
+              },
+              "time": {
+                "hour": 22,
+                "minute": 54,
+                "second": 43,
+                "nano": 695000000
+              }
+            },
+            "maxEnd": {
+              "date": {
+                "year": 2020,
+                "month": 11,
+                "day": 30
+              },
+              "time": {
+                "hour": 22,
+                "minute": 54,
+                "second": 43,
+                "nano": 701000000
+              }
+            },
+            "worstResult": "FAILURE",
+            "count": 10,
+            "sumDuration": 2,
+            "minDuration": 0,
+            "maxDuration": 1,
+            "avgDuration": 0.2,
+            "resultCount": {
+              "FAILURE": 1,
+              "ABORT": 6,
+              "SUCCESS": 3
+            }
+          }
+        }
+      }
+    },
+    "com.github.nagyesta.abortmission.booster.testng.StaticFireTestCenterCoreOnly": {
+      "className": "com.github.nagyesta.abortmission.booster.testng.StaticFireTestCenterCoreOnly",
+      "countdown": {
+        "matcherNames": [],
+        "timeMeasurements": [],
+        "stats": {
+          "worstResult": "SUPPRESSED",
+          "count": 0,
+          "sumDuration": 0,
+          "resultCount": {}
+        }
+      },
+      "stats": {
+        "minStart": {
+          "date": {
+            "year": 2020,
+            "month": 11,
+            "day": 30
+          },
+          "time": {
+            "hour": 22,
+            "minute": 54,
+            "second": 45,
+            "nano": 3000000
+          }
+        },
+        "maxEnd": {
+          "date": {
+            "year": 2020,
+            "month": 11,
+            "day": 30
+          },
+          "time": {
+            "hour": 22,
+            "minute": 54,
+            "second": 45,
+            "nano": 5000000
+          }
+        },
+        "worstResult": "SUPPRESSED",
+        "count": 1,
+        "sumDuration": 2,
+        "minDuration": 2,
+        "maxDuration": 2,
+        "avgDuration": 2.0,
+        "resultCount": {
+          "SUCCESS": 1
+        }
+      },
+      "launches": {
+        "testIsOnFire": {
+          "matcherNames": [
+            "CenterCore"
+          ],
+          "timeMeasurements": [
+            {
+              "launchId": "b220d9f1-9963-4d10-845c-3dc61a39ff35",
+              "result": "SUCCESS",
+              "start": 1606773285003,
+              "end": 1606773285005
+            }
+          ],
+          "stats": {
+            "minStart": {
+              "date": {
+                "year": 2020,
+                "month": 11,
+                "day": 30
+              },
+              "time": {
+                "hour": 22,
+                "minute": 54,
+                "second": 45,
+                "nano": 3000000
+              }
+            },
+            "maxEnd": {
+              "date": {
+                "year": 2020,
+                "month": 11,
+                "day": 30
+              },
+              "time": {
+                "hour": 22,
+                "minute": 54,
+                "second": 45,
+                "nano": 5000000
+              }
+            },
+            "worstResult": "SUCCESS",
+            "count": 1,
+            "sumDuration": 2,
+            "minDuration": 2,
+            "maxDuration": 2,
+            "avgDuration": 2.0,
+            "resultCount": {
+              "SUCCESS": 1
+            }
+          }
+        }
+      }
+    },
+    "com.github.nagyesta.abortmission.booster.testng.StaticFireTestWithSideBoosters": {
+      "className": "com.github.nagyesta.abortmission.booster.testng.StaticFireTestWithSideBoosters",
+      "countdown": {
+        "matcherNames": [
+          "SideBooster"
+        ],
+        "timeMeasurements": [
+          {
+            "launchId": "ecad05dc-bf69-447d-9723-7b2d40a07709",
+            "result": "FAILURE",
+            "start": 1606773283808,
+            "end": 1606773284746
+          }
+        ],
+        "stats": {
+          "minStart": {
+            "date": {
+              "year": 2020,
+              "month": 11,
+              "day": 30
+            },
+            "time": {
+              "hour": 22,
+              "minute": 54,
+              "second": 43,
+              "nano": 808000000
+            }
+          },
+          "maxEnd": {
+            "date": {
+              "year": 2020,
+              "month": 11,
+              "day": 30
+            },
+            "time": {
+              "hour": 22,
+              "minute": 54,
+              "second": 44,
+              "nano": 746000000
+            }
+          },
+          "worstResult": "FAILURE",
+          "count": 1,
+          "sumDuration": 938,
+          "minDuration": 938,
+          "maxDuration": 938,
+          "avgDuration": 938.0,
+          "resultCount": {
+            "FAILURE": 1
+          }
+        }
+      },
+      "stats": {
+        "minStart": {
+          "date": {
+            "year": 2020,
+            "month": 11,
+            "day": 30
+          },
+          "time": {
+            "hour": 22,
+            "minute": 54,
+            "second": 43,
+            "nano": 808000000
+          }
+        },
+        "maxEnd": {
+          "date": {
+            "year": 2020,
+            "month": 11,
+            "day": 30
+          },
+          "time": {
+            "hour": 22,
+            "minute": 54,
+            "second": 44,
+            "nano": 746000000
+          }
+        },
+        "worstResult": "FAILURE",
+        "count": 1,
+        "sumDuration": 938,
+        "minDuration": 938,
+        "maxDuration": 938,
+        "avgDuration": 938.0,
+        "resultCount": {
+          "FAILURE": 1
+        }
+      },
+      "launches": {}
+    }
+  },
+  "countdownStats": {
+    "minStart": {
+      "date": {
+        "year": 2020,
+        "month": 11,
+        "day": 30
+      },
+      "time": {
+        "hour": 22,
+        "minute": 54,
+        "second": 43,
+        "nano": 429000000
+      }
+    },
+    "maxEnd": {
+      "date": {
+        "year": 2020,
+        "month": 11,
+        "day": 30
+      },
+      "time": {
+        "hour": 22,
+        "minute": 54,
+        "second": 44,
+        "nano": 746000000
+      }
+    },
+    "worstResult": "FAILURE",
+    "count": 3,
+    "sumDuration": 947,
+    "minDuration": 2,
+    "maxDuration": 938,
+    "avgDuration": 315.7,
+    "resultCount": {
+      "FAILURE": 1,
+      "SUCCESS": 2
+    }
+  },
+  "missionStats": {
+    "minStart": {
+      "date": {
+        "year": 2020,
+        "month": 11,
+        "day": 30
+      },
+      "time": {
+        "hour": 22,
+        "minute": 54,
+        "second": 43,
+        "nano": 436000000
+      }
+    },
+    "maxEnd": {
+      "date": {
+        "year": 2020,
+        "month": 11,
+        "day": 30
+      },
+      "time": {
+        "hour": 22,
+        "minute": 54,
+        "second": 45,
+        "nano": 5000000
+      }
+    },
+    "worstResult": "FAILURE",
+    "count": 16,
+    "sumDuration": 11,
+    "minDuration": 0,
+    "maxDuration": 6,
+    "avgDuration": 0.7,
+    "resultCount": {
+      "FAILURE": 2,
+      "SUPPRESSED": 1,
+      "ABORT": 8,
+      "SUCCESS": 5
+    }
+  },
+  "stats": {
+    "minStart": {
+      "date": {
+        "year": 2020,
+        "month": 11,
+        "day": 30
+      },
+      "time": {
+        "hour": 22,
+        "minute": 54,
+        "second": 43,
+        "nano": 429000000
+      }
+    },
+    "maxEnd": {
+      "date": {
+        "year": 2020,
+        "month": 11,
+        "day": 30
+      },
+      "time": {
+        "hour": 22,
+        "minute": 54,
+        "second": 45,
+        "nano": 5000000
+      }
+    },
+    "worstResult": "FAILURE",
+    "count": 19,
+    "sumDuration": 958,
+    "minDuration": 0,
+    "maxDuration": 938,
+    "avgDuration": 50.4,
+    "resultCount": {
+      "FAILURE": 3,
+      "SUPPRESSED": 1,
+      "ABORT": 8,
+      "SUCCESS": 7
+    }
+  }
+}

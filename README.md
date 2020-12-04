@@ -49,6 +49,8 @@ Let me know by creating an issue! No promises, but I will at least take a look.
   - [JUnit Jupiter](boosters/booster-junit-jupiter)
   - [TestNG](boosters/booster-testng)
   - [Booster Test Kit](boosters/testkit)
+- Mission Report
+  - [Flight Evaluation Report](mission-report/flight-evaluation-report)
 
 ## Terminology and Lifecycle
 
@@ -62,9 +64,9 @@ will rely on when using Abort-Mission.
 
 | Measurement point  | What happens there?                       |
 | ------------------ | ----------------------------------------- |
-| Countdown start    | Test instance post processing starts      |
-| Countdown abort    | Test instance post processing failed      |
-| Countdown complete | Test instance post processed successfully |
+| Countdown failed   | Test instance post processing failed      |
+| Countdown abort    | Test instance post processing prevented   |
+| Countdown success  | Test instance post processed successfully |
 | Mission abort      | Test start prevented / abort after start  |
 | Mission failed     | Test failed                               | 
 | Mission success    | Test executed successfully                | 
