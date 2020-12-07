@@ -68,18 +68,7 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
         final Optional<StageTimeStopwatch> stopwatch = optionalStopwatch(context, MISSION_START_PREFIX + Thread.currentThread().getName());
         final Optional<Throwable> rootCause = Optional.of(throwable);
         if (!stopwatch.isPresent()) {
-            findClassContext(context).ifPresent(classContext -> {
-                final Optional<StageTimeStopwatch> countdownStopwatch =
-                        optionalStopwatch(classContext, COUNTDOWN_START_PREFIX + Thread.currentThread().getName());
-                classContext.getTestClass().ifPresent(testClass -> {
-                    LOGGER.trace("Logging countdown failure of class: {} due to cause: {} for launch id: {}",
-                            classContext.getTestClass().map(Class::getSimpleName).orElse(null), throwable,
-                            countdownStopwatch.map(StageTimeStopwatch::getLaunchId).orElse(null));
-                    launchSequenceTemplate.countdownFailure(testClass, rootCause, countdownStopwatch);
-                    putOptionalStopwatch(classContext, Optional.empty(), COUNTDOWN_START_PREFIX + Thread.currentThread().getName());
-                    classContext.getStore(NAMESPACE).remove(CLASS_LEVEL_MARKER_PREFIX + Thread.currentThread().getName());
-                });
-            });
+            LOGGER.warn("Test method stopwatch is not found in store. Reporting is most probably incomplete.");
         }
         context.getTestMethod().ifPresent(method -> {
             LOGGER.trace("Logging test failure of class: {} and method: {} for launch id: {}",
