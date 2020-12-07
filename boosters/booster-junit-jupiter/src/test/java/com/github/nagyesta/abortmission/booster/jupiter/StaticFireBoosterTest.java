@@ -7,6 +7,7 @@ import org.junit.platform.testkit.engine.EngineTestKit;
 
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
 public class StaticFireBoosterTest {
@@ -34,6 +35,32 @@ public class StaticFireBoosterTest {
                 .forEach(evaluator -> assertEquals(SIDE_BOOSTER_NOMINAL_STATS_PER_CLASS, evaluator.getStats()));
         MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestCenterCoreOnly.class.getDeclaredMethod("testIsOnFire"))
                 .forEach(evaluator -> assertEquals(CENTER_CORE_NOMINAL_STATS, evaluator.getStats()));
+    }
+
+    @Test
+    @Tag("integration")
+    @SuppressWarnings("checkstyle:MagicNumber")
+    public void testParallelAssumption() throws NoSuchMethodException {
+        EngineTestKit
+                .engine("junit-jupiter")
+                .selectors(selectClass(ParallelStaticFireTestWithSideBoostersPerClassTest.class),
+                        selectClass(ParallelStaticFireTestWithSideBoostersTest.class))
+                .configurationParameter("junit.jupiter.execution.parallel.enabled", "true")
+                .configurationParameter("junit.jupiter.execution.parallel.mode.default", "concurrent")
+                .configurationParameter("junit.jupiter.execution.parallel.mode.classes.default", "concurrent")
+                .configurationParameter("junit.jupiter.execution.parallel.config.strategy", "fixed")
+                .configurationParameter("junit.jupiter.execution.parallel.config.fixed.parallelism", "4")
+                .execute()
+                .testEvents()
+                .assertStatistics(stats -> stats
+                        .skipped(0)
+                        .started(SUCCESSFUL_PARALLEL_CASES)
+                        .succeeded(SUCCESSFUL_PARALLEL_CASES)
+                        .aborted(0)
+                        .failed(0));
+        MissionControl.matchingHealthChecks(PARALLEL, StaticFireTestWithSideBoosters.class)
+                .forEach(evaluator -> assertEquals(PARALLEL_NOMINAL_STATS, evaluator.getStats()));
+        assertTrue(ParallelStaticFireTestWithSideBoostersTest.THREADS_USED.size() > 1);
     }
 
 }

@@ -52,6 +52,10 @@ public final class StageTimeStopwatch {
                 .getDeclaringClass().getName(), testMethod.getName());
     }
 
+    public UUID getLaunchId() {
+        return launchId;
+    }
+
     public Function<StageResult, StageTimeMeasurement> stop() {
         final long end = System.currentTimeMillis();
         return result -> cache

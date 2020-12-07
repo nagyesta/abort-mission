@@ -6,6 +6,7 @@ import org.testng.ITestContext;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 import org.testng.annotations.Test;
+import org.testng.xml.XmlSuite;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -13,19 +14,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
+import static org.testng.AssertJUnit.assertFalse;
 
 public class StaticFireBoosterTest {
 
     private static final AtomicInteger FAILED = new AtomicInteger(0);
     private static final AtomicInteger SKIPPED = new AtomicInteger(0);
     private static final AtomicInteger PASSED = new AtomicInteger(0);
+    private static final AtomicInteger PARALLEL_FAILED = new AtomicInteger(0);
+    private static final AtomicInteger PARALLEL_SKIPPED = new AtomicInteger(0);
+    private static final AtomicInteger PARALLEL_PASSED = new AtomicInteger(0);
     private static final int CASES_SKIPPED_DUE_TO_CONFIG_ERROR = 501;
     private static final int FAILED_CASES_CONFIG_ERROR_ONLY = 1;
-
-//    private static final ReadOnlyMissionStatistics SIDE_BOOSTER_NOMINAL_STATS_CONFIG_FAILURE =
-//            new MissionStatisticsCollector(CASES_SKIPPED_DUE_TO_CONFIG_ERROR, 0, 499, 0, 0, 0);
-//    private static final ReadOnlyMissionStatistics CENTER_CORE_NOMINAL_STATS_CONFIG_FAILURE =
-//            new MissionStatisticsCollector(0, 1, 0, 1, 0, 0);
 
     @Test(groups = "integration")
     @SuppressWarnings("checkstyle:MagicNumber")
@@ -45,6 +45,24 @@ public class StaticFireBoosterTest {
                 .forEach(evaluator -> assertEquals(evaluator.getStats(), CENTER_CORE_NOMINAL_STATS));
     }
 
+    @Test(groups = "integration")
+    @SuppressWarnings("checkstyle:MagicNumber")
+    public void testParallelAssumption() throws NoSuchMethodException {
+        final TestNG engine = new TestNG();
+        engine.setOutputDirectory(System.getProperty("java.io.tmpdir") + "/abort-mission/" + this.getClass().getSimpleName());
+        engine.setTestClasses(new Class[] {ParallelStaticFireTestWithSideBoosters.class});
+        engine.setListenerClasses(Arrays.asList(AbortMissionListener.class, ParallelValidatingTestListener.class));
+        engine.setParallel(XmlSuite.ParallelMode.METHODS);
+        engine.setThreadCount(4);
+        engine.run();
+        assertFalse(engine.hasFailure());
+        assertEquals(PARALLEL_PASSED.get(), SUCCESSFUL_PARALLEL_CASES);
+        assertEquals(PARALLEL_FAILED.get(), 0);
+        assertEquals(PARALLEL_SKIPPED.get(), 0);
+        MissionControl.matchingHealthChecks(PARALLEL, ParallelStaticFireTestWithSideBoosters.class)
+                .forEach(evaluator -> assertEquals(evaluator.getStats(), PARALLEL_NOMINAL_STATS_PER_CLASS));
+    }
+
 
     public static class ValidatingTestListener extends TestListenerAdapter {
         @Override
@@ -54,6 +72,17 @@ public class StaticFireBoosterTest {
             FAILED.addAndGet(this.getConfigurationFailures().size());
             SKIPPED.addAndGet(this.getSkippedTests().size());
             PASSED.addAndGet(this.getPassedTests().size());
+        }
+    }
+
+    public static class ParallelValidatingTestListener extends TestListenerAdapter {
+        @Override
+        public void onFinish(final ITestContext testContext) {
+            super.onFinish(testContext);
+            PARALLEL_FAILED.addAndGet(this.getFailedTests().size());
+            PARALLEL_FAILED.addAndGet(this.getConfigurationFailures().size());
+            PARALLEL_SKIPPED.addAndGet(this.getSkippedTests().size());
+            PARALLEL_PASSED.addAndGet(this.getPassedTests().size());
         }
     }
 

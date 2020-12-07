@@ -2,6 +2,8 @@ package com.github.nagyesta.abortmission.core;
 
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
 import com.github.nagyesta.abortmission.core.telemetry.watch.StageTimeStopwatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -17,6 +19,7 @@ import static com.github.nagyesta.abortmission.core.MissionControl.annotationCon
  */
 public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LaunchSequenceTemplate.class);
     private final Function<Method, Set<MissionHealthCheckEvaluator>> methodBasedEvaluatorLookup;
 
     /**
@@ -40,6 +43,7 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
      * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
      */
     public Optional<StageTimeStopwatch> launchGoNoGo(final Class<?> testInstanceClass) {
+        LOGGER.debug("Preparing countdown for class: {}", testInstanceClass.getSimpleName());
         return this.performPreLaunchInit(testInstanceClass);
     }
 
@@ -53,6 +57,7 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public void countdownFailure(final Class<?> testClass, final Optional<Throwable> rootCause,
                                  final Optional<StageTimeStopwatch> stopwatch) {
+        LOGGER.debug("Countdown failed for class: {} due to root cause: {}", testClass.getSimpleName(), rootCause);
         countdownFailureDetected(classBasedEvaluatorLookup().apply(testClass), stopwatch, rootCause,
                 annotationContextEvaluator().findSuppressedExceptions(testClass)
         );
@@ -66,6 +71,7 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public void countdownSuccess(final Class<?> testClass, final Optional<StageTimeStopwatch> stopwatch) {
+        LOGGER.debug("Countdown completed for class: {}", testClass.getSimpleName());
         countdownCompletedSuccessfully(classBasedEvaluatorLookup().apply(testClass), stopwatch);
     }
 
@@ -76,6 +82,7 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
      * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
      */
     public Optional<StageTimeStopwatch> launchImminent(final Method method) {
+        LOGGER.debug("Preparing mission for class: {} method: {}", method.getDeclaringClass().getSimpleName(), method.getName());
         return evaluateLaunchAbort(methodBasedEvaluatorLookup.apply(method), new StageTimeStopwatch(method),
                 () -> annotationContextEvaluator().isAbortSuppressed(method)
         );
@@ -90,6 +97,8 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public void launchFailure(final Method method, final Optional<Throwable> rootCause, final Optional<StageTimeStopwatch> stopwatch) {
+        LOGGER.debug("Mission failed for class: {} method: {} due to: {}",
+                method.getDeclaringClass().getSimpleName(), method.getName(), rootCause);
         missionFailureDetected(methodBasedEvaluatorLookup.apply(method), stopwatch,
                 rootCause, annotationContextEvaluator().findSuppressedExceptions(method)
         );
@@ -103,6 +112,7 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public void launchSuccess(final Method method, final Optional<StageTimeStopwatch> stopwatch) {
+        LOGGER.debug("Mission successful for class: {} method: {}", method.getDeclaringClass().getSimpleName(), method.getName());
         missionCompletedSuccessfully(methodBasedEvaluatorLookup.apply(method), stopwatch);
     }
 }

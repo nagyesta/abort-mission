@@ -3,6 +3,8 @@ package com.github.nagyesta.abortmission.core.healthcheck.impl;
 import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyStageStatistics;
 import com.github.nagyesta.abortmission.core.healthcheck.StatisticsLogger;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,6 +18,7 @@ import java.util.stream.Stream;
  */
 public class StageStatisticsCollector implements ReadOnlyStageStatistics, StatisticsLogger {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(StageStatisticsCollector.class);
     private final AtomicInteger failed;
     private final AtomicInteger succeeded;
     private final AtomicInteger aborted;
@@ -103,6 +106,14 @@ public class StageStatisticsCollector implements ReadOnlyStageStatistics, Statis
     @Override
     public void logTimeMeasurement(final StageTimeMeasurement timeMeasurement) {
         timeSeriesData.add(Objects.requireNonNull(timeMeasurement, "Measurement cannot be null."));
+        if (StageTimeMeasurement.CLASS_ONLY.equals(timeMeasurement.getTestCaseId())) {
+            LOGGER.trace("Logging countdown {} event for class: {} with id: {}",
+                    timeMeasurement.getResult(), timeMeasurement.getTestClassId(), timeMeasurement.getLaunchId());
+        } else {
+            LOGGER.trace("Logging mission {} event for class: {} and method: {} with id: {}",
+                    timeMeasurement.getResult(), timeMeasurement.getTestClassId(),
+                    timeMeasurement.getTestCaseId(), timeMeasurement.getLaunchId());
+        }
     }
 
     @Override

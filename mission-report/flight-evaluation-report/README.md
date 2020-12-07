@@ -62,49 +62,57 @@ test.finalizedBy generateMissionReport
 
 Define an exec plugin and let it resolve and run the Jar for you.
 
-**Note:** The XML below is a potentially working, but untested snippet. Please take it with a grain of salt.
+**Note:** The XML below is only a workaround for the time being. Please be aware of the known limitation preventing it
+from generating the report in case of test failures happened. This is due to the fact, that surefire stops execution
+already.
 
 ```xml
+
 <project>
-...
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>3.0.0</version>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>java</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <includeProjectDependencies>false</includeProjectDependencies>
-                <includePluginDependencies>true</includePluginDependencies>
-                <executableDependency>
-                    <groupId>com.github.nagyesta.abort-mission.reports</groupId>
-                    <artifactId>abort.flight-evaluation-report</artifactId>
-                </executableDependency>
-                <mainClass>org.springframework.boot.loader.JarLauncher</mainClass>
-                <arguments>
-                    <argument>--report.input=${project.build.directory}/reports/abort-mission/abort-mission-report.json</argument>
-                    <argument>--report.output=${project.build.directory}/reports/abort-mission/abort-mission-report.html</argument>
-                </arguments>
-            </configuration>
-            <dependencies>
-                <dependency>
-                    <groupId>com.github.nagyesta.abort-mission.reports</groupId>
-                    <artifactId>abort.flight-evaluation-report</artifactId>
-                    <version>RELEASE</version>
-                    <type>jar</type>
-                </dependency>
-            </dependencies>
-        </plugin>
-    </plugins>
-</build>
-...
+    ...
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>test</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includeProjectDependencies>false</includeProjectDependencies>
+                    <includePluginDependencies>true</includePluginDependencies>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-jar</argument>
+                        <argument>
+                            ${settings.localRepository}/com/github/nagyesta/abort-mission/reports/abort.flight-evaluation-report/2.1.0/abort.flight-evaluation-report-2.1.0.jar
+                        </argument>
+                        <argument>
+                            --report.input=${project.build.directory}/reports/abort-mission/abort-mission-report.json
+                        </argument>
+                        <argument>
+                            --report.output=${project.build.directory}/reports/abort-mission/abort-mission-report.html
+                        </argument>
+                    </arguments>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.nagyesta.abort-mission.reports</groupId>
+                        <artifactId>abort.flight-evaluation-report</artifactId>
+                        <version>2.1.0</version>
+                        <type>jar</type>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+    ...
 </project>
 ```
 

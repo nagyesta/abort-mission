@@ -2,8 +2,11 @@ package com.github.nagyesta.abortmission.core.outline;
 
 import com.github.nagyesta.abortmission.core.AbortMissionCommandOps;
 import com.github.nagyesta.abortmission.core.MissionControl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Consumer;
@@ -13,6 +16,7 @@ import java.util.function.Consumer;
  */
 public abstract class MissionOutline {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MissionOutline.class);
     /**
      * The name of the shared context.
      */
@@ -33,6 +37,9 @@ public abstract class MissionOutline {
             final Map<String, Consumer<AbortMissionCommandOps>> map = defineOutline();
             map.forEach((k, v) -> {
                 if (!MissionOutlineHolder.NAMED_CONTEXTS.contains(k)) {
+                    LOGGER.debug("Configuring mission outline for context: {}", Optional.of(k)
+                            .filter(anObject -> !SHARED_CONTEXT.equals(anObject))
+                            .orElse("- SHARED -"));
                     if (SHARED_CONTEXT.equals(k)) {
                         MissionControl.createSharedCommandOps(ops -> {
                             v.accept(ops);
