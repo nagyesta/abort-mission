@@ -10,6 +10,7 @@ project.ext {
 dependencies {
     //noinspection GroovyAssignabilityCheck
     implementation project(":mission-control")
+    implementation "org.slf4j:slf4j-api:${rootProject.ext.slf4jApiVersion}"
     implementation "org.testng:testng:${rootProject.ext.testNgVersion}"
     //noinspection GroovyAssignabilityCheck
     testImplementation project(":boosters:testkit")

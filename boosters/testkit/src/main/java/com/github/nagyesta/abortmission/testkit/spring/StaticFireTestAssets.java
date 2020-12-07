@@ -11,12 +11,12 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
-import static com.github.nagyesta.abortmission.core.MissionControl.matcher;
-import static com.github.nagyesta.abortmission.core.MissionControl.percentageBasedEvaluator;
+import static com.github.nagyesta.abortmission.core.MissionControl.*;
 
 @SuppressWarnings({"checkstyle:JavadocVariable", "checkstyle:MagicNumber"})
 public final class StaticFireTestAssets {
 
+    public static final String PARALLEL = "Parallel";
     public static final String STATIC_FIRE = "StaticFire";
     public static final String BOOSTER = "Booster";
     public static final String CENTER_CORE = "CenterCore";
@@ -34,11 +34,20 @@ public final class StaticFireTestAssets {
             new MissionStatisticsCollector(
                     new StageStatisticsCollector(1, 0, 0, 0),
                     new StageStatisticsCollector(0, 0, 0, 0));
+    public static final ReadOnlyMissionStatistics PARALLEL_NOMINAL_STATS =
+            new MissionStatisticsCollector(
+                    new StageStatisticsCollector(0, 0, 201, 0),
+                    new StageStatisticsCollector(0, 0, 400, 0));
+    public static final ReadOnlyMissionStatistics PARALLEL_NOMINAL_STATS_PER_CLASS =
+            new MissionStatisticsCollector(
+                    new StageStatisticsCollector(0, 0, 1, 0),
+                    new StageStatisticsCollector(0, 0, 400, 0));
     public static final int DISABLED_CASES = 0;
     public static final int TOTAL_CASES = 503;
     public static final int SUCCESSFUL_CASES = 2;
     public static final int ABORTED_CASES = 499;
     public static final int FAILED_CASES = 2;
+    public static final int SUCCESSFUL_PARALLEL_CASES = 400;
 
     private StaticFireTestAssets() {
         throw new UnsupportedOperationException("Utility.");
@@ -64,7 +73,15 @@ public final class StaticFireTestAssets {
                                     .build())
                             .build());
         });
+        plan.put(PARALLEL, ops -> {
+            ops.registerHealthCheck(
+                    reportOnlyEvaluator(matcher().anyClass().build()).build());
+        });
         return plan;
+    }
+
+    public static IntStream staticFireTestParallelInputProvider() {
+        return IntStream.range(10, 60);
     }
 
     public static IntStream staticFireTestInputProvider() {
