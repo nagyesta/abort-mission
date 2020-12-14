@@ -23,8 +23,9 @@ give a full reference guide.
 
 ## Dependency
 
-Note: Please don't forget to set up the packages we offer as repository as detailed on
-[this page](https://docs.github.com/en/free-pro-team@latest/packages/using-github-packages-with-your-projects-ecosystem).
+Abort-Mission can be downloaded from a few Maven repositories. Please head to
+[this page](https://github.com/nagyesta/abort-mission/wiki/Configuring-our-repository-for-your-build-system)
+to find out more.
 
 ### Maven
 

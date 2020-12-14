@@ -33,13 +33,13 @@ If you are still not convinced, you can trust the ancient proverb saying:
 
 ## Installation
 
-Abort-Mission is distributed using Github Packages for now. Please read
-[this page](https://docs.github.com/en/free-pro-team@latest/packages/using-github-packages-with-your-projects-ecosystem)
-to see how you need to configure your build ecosystem.
+Abort-Mission can be downloaded from a few Maven repositories. Please head to
+[this page](https://github.com/nagyesta/abort-mission/wiki/Configuring-our-repository-for-your-build-system)
+to find out more.
 
-To find out which Abort-Mission dependency will you need, it is recommended to start with the
-booster created for the test framework you are using. Is your favorite framework missing?
-Let me know by creating an issue! No promises, but I will at least take a look.
+To find out which Abort-Mission dependency will you need, it is recommended to start with the booster created for the
+test framework you are using. Is your favorite framework missing? Let me know by creating an issue! No promises, but I
+will at least take a look.
 
 ### Currently supported packages
 
