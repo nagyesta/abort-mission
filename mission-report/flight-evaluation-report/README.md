@@ -22,99 +22,29 @@ want to integrate it into your build pipeline and automate the report generation
 
 # Quick-start
 
+## Manually
+
+Abort-Mission can be downloaded from a few Maven repositories. Please head to
+[this page](https://github.com/nagyesta/abort-mission/wiki/Configuring-our-repository-for-your-build-system)
+to find out more.
+
+**Note:** Please don't forget to set the `abort-mission.report.directory` System property as described
+[here](https://github.com/nagyesta/abort-mission/blob/main/mission-control/README.md#system-properties)
+in order to have the JSON input generated during your build.
+
 ## Gradle
 
-Create a custom configuration
-
-```groovy
-configurations {
-    missionReport
-}
-```
-
-Add the dependency on this module
-
-```groovy
-dependencies {
-    missionReport 'com.github.nagyesta.abort-mission.reports:abort.flight-evaluation-report:+'
-}
-```
-
-Create a task to execute the resolved Jar
-
-```groovy
-task generateMissionReport(type: JavaExec) {
-    inputs.file(file("${buildDir}/reports/abort-mission/abort-mission-report.json"))
-    outputs.file(file("${buildDir}/reports/abort-mission/abort-mission-report.html"))
-
-    main = "org.springframework.boot.loader.JarLauncher"
-    classpath configurations.missionReport
-    args = ["--report.input=${buildDir}/reports/abort-mission/abort-mission-report.json",
-            "--report.output=${buildDir}/reports/abort-mission/abort-mission-report.html"]
-    logging.captureStandardOutput LogLevel.INFO
-    logging.captureStandardError LogLevel.ERROR
-}
-//make sure it is running after the tests
-test.finalizedBy generateMissionReport
-```
+Please find our own Abort-Mission Gradle
+plugin [here](https://github.com/nagyesta/abort-mission-gradle-plugin/blob/main/README.md)
 
 ## Maven
 
-Define an exec plugin and let it resolve and run the Jar for you.
+Please find our own Abort-Mission Maven
+plugin [here](https://github.com/nagyesta/abort-mission-maven-plugin/blob/main/README.md)
 
-**Note:** The XML below is only a workaround for the time being. Please be aware of the known limitation preventing it
-from generating the report in case of test failures happened. This is due to the fact, that surefire stops execution
-already.
-
-```xml
-
-<project>
-    ...
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <phase>test</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <includeProjectDependencies>false</includeProjectDependencies>
-                    <includePluginDependencies>true</includePluginDependencies>
-                    <executable>java</executable>
-                    <arguments>
-                        <argument>-jar</argument>
-                        <argument>
-                            ${settings.localRepository}/com/github/nagyesta/abort-mission/reports/abort.flight-evaluation-report/2.1.0/abort.flight-evaluation-report-2.1.0.jar
-                        </argument>
-                        <argument>
-                            --report.input=${project.build.directory}/reports/abort-mission/abort-mission-report.json
-                        </argument>
-                        <argument>
-                            --report.output=${project.build.directory}/reports/abort-mission/abort-mission-report.html
-                        </argument>
-                    </arguments>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.github.nagyesta.abort-mission.reports</groupId>
-                        <artifactId>abort.flight-evaluation-report</artifactId>
-                        <version>2.1.0</version>
-                        <type>jar</type>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
-    </build>
-    ...
-</project>
-```
+**Note:** Please don't forget to set the `abort-mission.report.directory` System property as described
+[here](https://github.com/nagyesta/abort-mission/blob/main/mission-control/README.md#system-properties)
+in order to have the JSON input generated during your build.
 
 # Configuration
 

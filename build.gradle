@@ -34,7 +34,7 @@ project.ext {
 
     // internal build versions
     //noinspection GroovyAssignabilityCheck
-    jupiterTestKitVersion = '1.7.0'
+    jupiterTestKitVersion = '1.6.2'
     //noinspection GroovyAssignabilityCheck
     jupiterPlatformVersion = '5.7.0'
     //noinspection GroovyAssignabilityCheck
