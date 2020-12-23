@@ -1,38 +1,32 @@
-plugins {
-    id 'org.springframework.boot' version '2.3.3.RELEASE'
-    id 'java'
-    //noinspection SpellCheckingInspection
-    id "io.freefair.lombok" version "5.2.1"
-}
-
-group = "${rootProject.group}.reports"
+group = "${rootProject.group}.boosters"
 
 project.ext {
     //noinspection GroovyAssignabilityCheck
-    artifactDisplayName = "Abort Mission - Flight Evaluation Report"
+    artifactDisplayName = "Abort Mission - Cucumber JVM Booster"
     //noinspection GroovyAssignabilityCheck
-    artifactDescription = "Core reporting module of Abort Mission generating reports from telemetry data."
+    artifactDescription = "Booster module of Abort Mission adding Cucumber JVM bindings."
 }
 
 dependencies {
     //noinspection GroovyAssignabilityCheck
-    implementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.springBootVersion}"
+    implementation project(":mission-control")
+    implementation "org.slf4j:slf4j-api:${rootProject.ext.slf4jApiVersion}"
+    implementation "io.cucumber:cucumber-java:${rootProject.ext.cucumberVersion}"
+    implementation "io.cucumber:cucumber-junit:${rootProject.ext.cucumberVersion}"
     //noinspection GroovyAssignabilityCheck
-    implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${rootProject.ext.springBootVersion}"
-    //noinspection GroovyAssignabilityCheck
-    implementation "org.springframework.boot:spring-boot-starter-json:${rootProject.ext.springBootVersion}"
-    implementation "com.networknt:json-schema-validator:${rootProject.ext.jsonSchemaValidatorVersion}"
-    //noinspection GroovyAssignabilityCheck
-    annotationProcessor "org.projectlombok:lombok:${rootProject.ext.lombokVersion}"
-    //noinspection GroovyAssignabilityCheck
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${rootProject.ext.springBootVersion}"
-    //noinspection GroovyAssignabilityCheck
+    testImplementation project(":boosters:testkit")
+    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.springBootVersion}"
     testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.springBootVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterPlatformVersion}"
+    testImplementation "io.cucumber:cucumber-spring:${rootProject.ext.cucumberVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterVersion}"
+    testImplementation "org.junit.platform:junit-platform-testkit:${rootProject.ext.jupiterTestKitVersion}"
 }
 
 test {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        systemProperty("abort-mission.report.directory", file("${buildDir}/reports/abort-mission/"))
+        includeTags 'unit', 'integration'
+    }
 }
 
 publishing {
@@ -42,8 +36,6 @@ publishing {
             //noinspection GroovyAssignabilityCheck
             from components.java
             //noinspection GroovyAssignabilityCheck
-            artifact bootJar
-            //noinspection GroovyAssignabilityCheck
             artifactId = "abort.${project.name}"
             pom {
                 //noinspection GroovyAssignabilityCheck
@@ -52,7 +44,6 @@ publishing {
                 description = "${project.artifactDescription}"
                 //noinspection GroovyAssignabilityCheck
                 url = rootProject.ext.repoUrl
-                packaging = "jar"
                 licenses {
                     license {
                         //noinspection GroovyAssignabilityCheck
@@ -70,10 +61,9 @@ publishing {
                     }
                 }
                 withXml {
-                    asNode().dependencies.findAll() {
-                        def parent = it.parent()
-                        parent.remove(it)
-                    }
+                    asNode().dependencies.'*'.findAll() {
+                        it.scope.text() == 'runtime'
+                    }.each { it.scope*.value = 'compile' }
                 }
             }
         }

@@ -61,6 +61,10 @@ public interface MissionHealthCheckMatcher extends Comparable<MissionHealthCheck
          */
         CLASS,
         /**
+         * Custom matcher.
+         */
+        CUSTOM,
+        /**
          * Environment variable matching.
          */
         ENVIRONMENT,

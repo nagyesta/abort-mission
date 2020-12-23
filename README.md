@@ -45,6 +45,7 @@ will at least take a look.
 
 - [Mission Control](mission-control)
 - Boosters
+  - [Cucumber JVM](boosters/booster-cucumber-jvm)
   - [JUnit 4](boosters/booster-junit4)
   - [JUnit Jupiter](boosters/booster-junit-jupiter)
   - [TestNG](boosters/booster-testng)

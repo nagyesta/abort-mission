@@ -24,7 +24,10 @@ public class ClassHtml implements Comparable<ClassHtml> {
     }
 
     public String getClassNameTextShort() {
-        return classNameText.replaceAll("([a-z]{2})[a-z]+\\.", "$1.");
+        return classNameText
+                .replaceFirst("^classpath:", "")
+                .replaceFirst("\\.feature$", "")
+                .replaceAll("([a-z]{2})[a-z]+([./])", "$1$2");
     }
 
     public String getClassNameTitle() {
