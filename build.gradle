@@ -46,6 +46,8 @@ project.ext {
     //noinspection GroovyAssignabilityCheck
     gsonVersion = '2.8.6'
     //noinspection GroovyAssignabilityCheck
+    cucumberVersion = '6.5.0'
+    //noinspection GroovyAssignabilityCheck
     slf4jApiVersion = '1.7.30'
     //noinspection GroovyAssignabilityCheck
     jsonSchemaValidatorVersion = '1.0.43'
@@ -54,19 +56,24 @@ project.ext {
 }
 
 versioner {
+    //noinspection GroovyAssignabilityCheck
     startFrom {
         major = 1
         minor = 1
         patch = 1
     }
+    //noinspection GroovyAssignabilityCheck
     match {
         major = '{major}'
         minor = '{minor}'
         patch = '{patch}'
     }
+    //noinspection GroovyAssignabilityCheck
     pattern {
+        //noinspection GroovyAssignabilityCheck
         pattern = "%M.%m.%p"
     }
+    //noinspection GroovyAssignabilityCheck
     git {
         authentication {
             https {
@@ -74,6 +81,7 @@ versioner {
             }
         }
     }
+    //noinspection GroovyAssignabilityCheck
     tag {
         prefix = 'v'
         useCommitMessage = true
@@ -159,6 +167,7 @@ configure(subprojects.findAll({
                 }
                 excludes = [
                         "com.github.nagyesta.abortmission.core.LaunchSequenceTemplate",
+                        "com.github.nagyesta.abortmission.core.matcher.impl.CustomMatcher",
                         "com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets",
                         "com.github.nagyesta.abortmission.testkit.vanilla.FuelTankTestAssets",
                         "com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDropTestAssets",

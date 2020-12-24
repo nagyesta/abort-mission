@@ -14,6 +14,7 @@ class ClassHtmlTest {
     private static Stream<Arguments> classNameProvider() {
         return Stream.<Arguments>builder()
                 .add(Arguments.of("ClassName", "ClassName"))
+                .add(Arguments.of("classpath:com/github/nagyesta/abortmission/Example.feature", "co/gi/na/ab/Example"))
                 .add(Arguments.of(String.class.getName(), "ja.la.String"))
                 .add(Arguments.of(Collectors.class.getName(), "ja.ut.st.Collectors"))
                 .add(Arguments.of(ClassHtml.ClassHtmlBuilder.class.getName(), "co.gi.na.ab.re.ht.ClassHtml$ClassHtmlBuilder"))

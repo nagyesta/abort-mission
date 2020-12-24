@@ -5,6 +5,8 @@ coverage:
         threshold: 0.50%
       core:
         flags: core
+      cucumber:
+        flags: cucumber
       junit4:
         flags: junit4
       jupiter:
@@ -20,6 +22,9 @@ flags:
   core:
     paths:
       - ./mission-control
+  cucumber:
+    paths:
+      - ./boosters/booster-cucumber-jvm
   junit4:
     paths:
       - ./boosters/booster-junit4
