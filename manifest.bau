@@ -1,0 +1,52 @@
+# GROUP_ID:ARTIFACT_ID:CLASSIFIER:PACKAGING:File pattern
+#
+# Mission Control
+#
+com.github.nagyesta.abort-mission:abort.mission-control:-:pom:mission-control/build/publications/mavenJava/pom-default.xml
+com.github.nagyesta.abort-mission:abort.mission-control:-:jar:mission-control/build/libs/mission-control-*.?.jar
+com.github.nagyesta.abort-mission:abort.mission-control:javadoc:jar:mission-control/build/libs/mission-control-*.?-javadoc.jar
+com.github.nagyesta.abort-mission:abort.mission-control:sources:jar:mission-control/build/libs/mission-control-*.?-sources.jar
+#
+# Mission Report
+#
+com.github.nagyesta.abort-mission.reports:abort.flight-evaluation-report:-:pom:mission-report/flight-evaluation-report/build/publications/mavenJava/pom-default.xml
+com.github.nagyesta.abort-mission.reports:abort.flight-evaluation-report:-:jar:mission-report/flight-evaluation-report/build/libs/flight-evaluation-report-*.?.jar
+com.github.nagyesta.abort-mission.reports:abort.flight-evaluation-report:javadoc:jar:mission-report/flight-evaluation-report/build/libs/flight-evaluation-report-*.?-javadoc.jar
+com.github.nagyesta.abort-mission.reports:abort.flight-evaluation-report:sources:jar:mission-report/flight-evaluation-report/build/libs/flight-evaluation-report-*.?-sources.jar
+#
+# Boosters
+#
+# - Testkit
+#
+com.github.nagyesta.abort-mission.testkit:abort.testkit:-:pom:boosters/testkit/build/publications/mavenJava/pom-default.xml
+com.github.nagyesta.abort-mission.testkit:abort.testkit:-:jar:boosters/testkit/build/libs/testkit-*.?.jar
+com.github.nagyesta.abort-mission.testkit:abort.testkit:javadoc:jar:boosters/testkit/build/libs/testkit-*.?-javadoc.jar
+com.github.nagyesta.abort-mission.testkit:abort.testkit:sources:jar:boosters/testkit/build/libs/testkit-*.?-sources.jar
+#
+# - Cucumber JVM
+#
+com.github.nagyesta.abort-mission.boosters:abort.booster-cucumber-jvm:-:pom:boosters/booster-cucumber-jvm/build/publications/mavenJava/pom-default.xml
+com.github.nagyesta.abort-mission.boosters:abort.booster-cucumber-jvm:-:jar:boosters/booster-cucumber-jvm/build/libs/booster-cucumber-jvm-*.?.jar
+com.github.nagyesta.abort-mission.boosters:abort.booster-cucumber-jvm:javadoc:jar:boosters/booster-cucumber-jvm/build/libs/booster-cucumber-jvm-*.?-javadoc.jar
+com.github.nagyesta.abort-mission.boosters:abort.booster-cucumber-jvm:sources:jar:boosters/booster-cucumber-jvm/build/libs/booster-cucumber-jvm-*.?-sources.jar
+#
+# - JUnit Jupiter
+#
+com.github.nagyesta.abort-mission.boosters:abort.booster-junit-jupiter:-:pom:boosters/booster-junit-jupiter/build/publications/mavenJava/pom-default.xml
+com.github.nagyesta.abort-mission.boosters:abort.booster-junit-jupiter:-:jar:boosters/booster-junit-jupiter/build/libs/booster-junit-jupiter-*.?.jar
+com.github.nagyesta.abort-mission.boosters:abort.booster-junit-jupiter:javadoc:jar:boosters/booster-junit-jupiter/build/libs/booster-junit-jupiter-*.?-javadoc.jar
+com.github.nagyesta.abort-mission.boosters:abort.booster-junit-jupiter:sources:jar:boosters/booster-junit-jupiter/build/libs/booster-junit-jupiter-*.?-sources.jar
+#
+# - JUnit 4
+#
+com.github.nagyesta.abort-mission.boosters:abort.booster-junit4-experimental:-:pom:boosters/booster-junit4/build/publications/mavenJava/pom-default.xml
+com.github.nagyesta.abort-mission.boosters:abort.booster-junit4-experimental:-:jar:boosters/booster-junit4/build/libs/booster-junit4-*.?.jar
+com.github.nagyesta.abort-mission.boosters:abort.booster-junit4-experimental:javadoc:jar:boosters/booster-junit4/build/libs/booster-junit4-*.?-javadoc.jar
+com.github.nagyesta.abort-mission.boosters:abort.booster-junit4-experimental:sources:jar:boosters/booster-junit4/build/libs/booster-junit4-*.?-sources.jar
+#
+# - TestNG
+#
+com.github.nagyesta.abort-mission.boosters:abort.booster-testng:-:pom:boosters/booster-testng/build/publications/mavenJava/pom-default.xml
+com.github.nagyesta.abort-mission.boosters:abort.booster-testng:-:jar:boosters/booster-testng/build/libs/booster-testng-*.?.jar
+com.github.nagyesta.abort-mission.boosters:abort.booster-testng:javadoc:jar:boosters/booster-testng/build/libs/booster-testng-*.?-javadoc.jar
+com.github.nagyesta.abort-mission.boosters:abort.booster-testng:sources:jar:boosters/booster-testng/build/libs/booster-testng-*.?-sources.jar

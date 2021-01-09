@@ -43,7 +43,7 @@ testImplementation "com.github.nagyesta.abort-mission.boosters:abort.booster-cuc
 The minimal setup consists of only 3 steps in case you are using this booster.
 
 1. Create a Cucumber hook implementing ```com.github.nagyesta.abortmission.booster.cucumber.LaunchAbortHook```
-   . [See example](src/java/com/github/nagyesta/abortmission/booster/cucumber/fueltank/AbortMissionHook.java)
+   . [See example](src/test/java/com/github/nagyesta/abortmission/booster/cucumber/fueltank/AbortMissionHook.java)
 2. Use the plugin named ```com.github.nagyesta.abortmission.booster.cucumber.AbortMissionPlugin```
 3. Annotate your scenarios with the Abort-Mission tags:
     1. ```@AbortMission_Context_ContextName``` if you want to use a named context
