@@ -6,6 +6,13 @@ name: JavaCI
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+      - '**/README.md'
+      - 'SECURITY.md'
+      - 'LICENSE'
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/assets/**'
 
 jobs:
   build:
@@ -32,6 +39,17 @@ jobs:
         run: ./gradlew tagVersion build -PgithubToken=${{ secrets.PUBLISH_KEY }} -PgithubUser=${{ secrets.PUBLISH_USER_NAME }}
       - name: Publish with Gradle
         run: ./gradlew publish -PgithubToken=${{ secrets.PUBLISH_KEY }} -PgithubUser=${{ secrets.PUBLISH_USER_NAME }}
+      - name: Publish to Bintray
+        uses: nagyesta/bintray-maven-publisher-action@v1.1.0
+        with:
+          MANIFEST: "manifest.bau"
+          API_USER: "nagyesta"
+          API_KEY: "${{ secrets.BINTRAY_TOKEN }}"
+          BINTRAY_VERSION_PREFIX: "v"
+          BASE_URL: "https://api.bintray.com/"
+          PACKAGE_NAME: "abort-mission"
+          SUBJECT: "nagyesta"
+          REPO: "releases-maven"
       - name: Upload coverage to Codecov - Core
         uses: codecov/codecov-action@7d5dfa54903bd909319c580a00535b483d1efcf3
         with:
