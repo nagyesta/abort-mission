@@ -36,20 +36,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-wrapper-
       - name: Build with Gradle
-        run: ./gradlew tagVersion build -PgithubToken=${{ secrets.PUBLISH_KEY }} -PgithubUser=${{ secrets.PUBLISH_USER_NAME }}
+        run: >
+          ./gradlew tagVersion build
+          -PgithubUser=${{ secrets.PUBLISH_USER_NAME }}
+          -PgithubToken=${{ secrets.PUBLISH_KEY }}
+      - name: Decode key
+        run: |
+          mkdir -p ~/.gnupg/
+          echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}" | base64 --decode > ~/.gnupg/secring.gpg
       - name: Publish with Gradle
-        run: ./gradlew publish -PgithubToken=${{ secrets.PUBLISH_KEY }} -PgithubUser=${{ secrets.PUBLISH_USER_NAME }}
-      - name: Publish to Bintray
-        uses: nagyesta/bintray-maven-publisher-action@v1.1.0
-        with:
-          MANIFEST: "manifest.bau"
-          API_USER: "nagyesta"
-          API_KEY: "${{ secrets.BINTRAY_TOKEN }}"
-          BINTRAY_VERSION_PREFIX: "v"
-          BASE_URL: "https://api.bintray.com/"
-          PACKAGE_NAME: "abort-mission"
-          SUBJECT: "nagyesta"
-          REPO: "releases-maven"
+        run: >
+          ./gradlew publish
+          -PgithubUser=${{ secrets.PUBLISH_USER_NAME }}
+          -PgithubToken=${{ secrets.PUBLISH_KEY }}
+          -PossrhUsername=${{ secrets.OSSRH_USER }}
+          -PossrhPassword=${{ secrets.OSSRH_PASS }}
+          -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }}
+          -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+          -Psigning.secretKeyRingFile=$(echo ~/.gnupg/secring.gpg)
       - name: Upload coverage to Codecov - Core
         uses: codecov/codecov-action@7d5dfa54903bd909319c580a00535b483d1efcf3
         with:
