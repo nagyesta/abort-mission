@@ -1,79 +1,57 @@
 plugins {
-    //noinspection GroovyAssignabilityCheck
     id 'io.toolebox.git-versioner' version '1.6.5'
 }
 
 group = 'com.github.nagyesta.abort-mission'
 
 project.ext {
-    //noinspection GroovyAssignabilityCheck
     gitToken = project.hasProperty('githubToken') ? (project.property('githubToken') as String) : ''
-    //noinspection GroovyAssignabilityCheck
     gitUser = project.hasProperty('githubUser') ? (project.property('githubUser') as String) : ''
-    //noinspection GroovyAssignabilityCheck
+    ossrhUser = project.hasProperty('ossrhUsername') ? (project.property('ossrhUsername') as String) : ''
+    ossrhPass = project.hasProperty('ossrhPassword') ? (project.property('ossrhPassword') as String) : ''
     repoUrl = 'https://github.com/nagyesta/abort-mission'
-    //noinspection GroovyAssignabilityCheck
     licenseName = 'MIT License'
-    //noinspection GroovyAssignabilityCheck
     licenseUrl = 'https://raw.githubusercontent.com/nagyesta/abort-mission/main/LICENSE'
-    //noinspection GroovyAssignabilityCheck
     maintainerId = 'nagyesta'
-    //noinspection GroovyAssignabilityCheck
     maintainerName = 'Istvan Zoltan Nagy'
+    maintainerUrl = 'https://github.com/nagyesta/'
+    scmConnection = 'scm:git:https://github.com/nagyesta/abort-mission.git'
+    scmProjectUrl = 'https://github.com/nagyesta/abort-mission/'
 
     // dependency versions
     // minimum supported dependency version
-    //noinspection GroovyAssignabilityCheck
     junit4Version = '4.13'
-    //noinspection GroovyAssignabilityCheck
     jupiterVersion = '5.6.2'
-    //noinspection GroovyAssignabilityCheck
     jupiterReportingVersion = '1.0.0'
-    //noinspection GroovyAssignabilityCheck
     testNgVersion = '7.0.0'
 
     // internal build versions
-    //noinspection GroovyAssignabilityCheck
     jupiterTestKitVersion = '1.6.2'
-    //noinspection GroovyAssignabilityCheck
     jupiterPlatformVersion = '5.7.0'
-    //noinspection GroovyAssignabilityCheck
     latestTestNgVersion = '7.3.0'
-    //noinspection GroovyAssignabilityCheck
     mockitoCoreVersion = '3.6.0'
-    //noinspection GroovyAssignabilityCheck
     springBootVersion = '2.3.4.RELEASE'
-    //noinspection GroovyAssignabilityCheck
     gsonVersion = '2.8.6'
-    //noinspection GroovyAssignabilityCheck
     cucumberVersion = '6.5.0'
-    //noinspection GroovyAssignabilityCheck
     slf4jApiVersion = '1.7.30'
-    //noinspection GroovyAssignabilityCheck
     jsonSchemaValidatorVersion = '1.0.43'
-    //noinspection GroovyAssignabilityCheck
     lombokVersion = '1.18.12'
 }
 
 versioner {
-    //noinspection GroovyAssignabilityCheck
     startFrom {
         major = 1
         minor = 1
         patch = 1
     }
-    //noinspection GroovyAssignabilityCheck
     match {
         major = '{major}'
         minor = '{minor}'
         patch = '{patch}'
     }
-    //noinspection GroovyAssignabilityCheck
     pattern {
-        //noinspection GroovyAssignabilityCheck
         pattern = "%M.%m.%p"
     }
-    //noinspection GroovyAssignabilityCheck
     git {
         authentication {
             https {
@@ -81,7 +59,6 @@ versioner {
             }
         }
     }
-    //noinspection GroovyAssignabilityCheck
     tag {
         prefix = 'v'
         useCommitMessage = true
@@ -89,17 +66,13 @@ versioner {
 }
 
 configure(subprojects.findAll({
-    //noinspection GroovyAssignabilityCheck
     !'boosters'.equalsIgnoreCase(it.name) && !'mission-report'.equalsIgnoreCase(it.name)
 })) {
-    //noinspection GroovyAssignabilityCheck
     apply plugin: 'java'
-    //noinspection GroovyAssignabilityCheck
     apply plugin: 'checkstyle'
-    //noinspection GroovyAssignabilityCheck
     apply plugin: 'jacoco'
-    //noinspection GroovyAssignabilityCheck
     apply plugin: 'maven-publish'
+    apply plugin: 'signing'
 
     versioner.apply()
 
@@ -118,7 +91,6 @@ configure(subprojects.findAll({
     jacocoTestReport {
         reports {
             xml.enabled true
-            //noinspection GroovyAssignabilityCheck
             xml.destination file("$buildDir/reports/jacoco/report.xml")
             csv.enabled false
             html.enabled true
@@ -182,9 +154,7 @@ configure(subprojects.findAll({
     }
     jar.dependsOn check
 
-    //noinspection GroovyAssignabilityCheck
     tasks.withType(Checkstyle) {
-        //noinspection GroovyAssignabilityCheck
         configProperties = [base_dir: rootDir.toString(), cache_file: file("${buildDir}/checkstyle/cacheFile")]
         reports {
             xml.enabled false
@@ -204,11 +174,18 @@ configure(subprojects.findAll({
                     password = rootProject.ext.gitToken
                 }
             }
+            maven {
+                name = "ossrh"
+                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+                credentials {
+                    username = rootProject.ext.ossrhUser
+                    password = rootProject.ext.ossrhPass
+                }
+            }
         }
     }
 
     //Disable metadata publishing and rely on Maven only
-    //noinspection GroovyAssignabilityCheck
     tasks.withType(GenerateModuleMetadata) {
         enabled = false
     }

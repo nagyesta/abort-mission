@@ -8,25 +8,17 @@ plugins {
 group = "${rootProject.group}.reports"
 
 project.ext {
-    //noinspection GroovyAssignabilityCheck
     artifactDisplayName = "Abort Mission - Flight Evaluation Report"
-    //noinspection GroovyAssignabilityCheck
     artifactDescription = "Core reporting module of Abort Mission generating reports from telemetry data."
 }
 
 dependencies {
-    //noinspection GroovyAssignabilityCheck
     implementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.springBootVersion}"
-    //noinspection GroovyAssignabilityCheck
     implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${rootProject.ext.springBootVersion}"
-    //noinspection GroovyAssignabilityCheck
     implementation "org.springframework.boot:spring-boot-starter-json:${rootProject.ext.springBootVersion}"
     implementation "com.networknt:json-schema-validator:${rootProject.ext.jsonSchemaValidatorVersion}"
-    //noinspection GroovyAssignabilityCheck
     annotationProcessor "org.projectlombok:lombok:${rootProject.ext.lombokVersion}"
-    //noinspection GroovyAssignabilityCheck
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${rootProject.ext.springBootVersion}"
-    //noinspection GroovyAssignabilityCheck
     testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.springBootVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterPlatformVersion}"
 }
@@ -37,37 +29,32 @@ test {
 
 publishing {
     publications {
-        //noinspection GroovyAssignabilityCheck
         mavenJava(MavenPublication) {
-            //noinspection GroovyAssignabilityCheck
             from components.java
-            //noinspection GroovyAssignabilityCheck
             artifact bootJar
-            //noinspection GroovyAssignabilityCheck
             artifactId = "abort.${project.name}"
             pom {
-                //noinspection GroovyAssignabilityCheck
                 name = "${project.artifactDisplayName}"
-                //noinspection GroovyAssignabilityCheck
                 description = "${project.artifactDescription}"
-                //noinspection GroovyAssignabilityCheck
                 url = rootProject.ext.repoUrl
                 packaging = "jar"
                 licenses {
                     license {
-                        //noinspection GroovyAssignabilityCheck
                         name = rootProject.ext.licenseName
-                        //noinspection GroovyAssignabilityCheck
                         url = rootProject.ext.licenseUrl
                     }
                 }
                 developers {
                     developer {
-                        //noinspection GroovyAssignabilityCheck
                         id = rootProject.ext.maintainerId
-                        //noinspection GroovyAssignabilityCheck
                         name = rootProject.ext.maintainerName
+                        url = rootProject.ext.maintainerUrl
                     }
+                }
+                scm {
+                    connection = rootProject.ext.scmConnection
+                    developerConnection = rootProject.ext.scmConnection
+                    url = rootProject.ext.scmProjectUrl
                 }
                 withXml {
                     asNode().dependencies.findAll() {
@@ -78,4 +65,8 @@ publishing {
             }
         }
     }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }

@@ -1,17 +1,13 @@
 group = "${rootProject.group}.boosters"
 
 project.ext {
-    //noinspection GroovyAssignabilityCheck
     artifactDisplayName = "Abort Mission - JUnit 4 Booster"
-    //noinspection GroovyAssignabilityCheck
     artifactDescription = "Booster module of Abort Mission adding JUnit 4 bindings."
 }
 
 dependencies {
-    //noinspection GroovyAssignabilityCheck
     implementation project(":mission-control")
     implementation "junit:junit:${rootProject.ext.junit4Version}"
-    //noinspection GroovyAssignabilityCheck
     testImplementation project(":boosters:testkit")
     testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.springBootVersion}"
     testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.springBootVersion}"
@@ -28,34 +24,30 @@ test {
 
 publishing {
     publications {
-        //noinspection GroovyAssignabilityCheck
         mavenJava(MavenPublication) {
-            //noinspection GroovyAssignabilityCheck
             from components.java
-            //noinspection GroovyAssignabilityCheck
             artifactId = "abort.${project.name}-experimental"
             pom {
-                //noinspection GroovyAssignabilityCheck
                 name = "${project.artifactDisplayName}"
-                //noinspection GroovyAssignabilityCheck
                 description = "${project.artifactDescription}"
-                //noinspection GroovyAssignabilityCheck
                 url = rootProject.ext.repoUrl
                 licenses {
                     license {
-                        //noinspection GroovyAssignabilityCheck
                         name = rootProject.ext.licenseName
-                        //noinspection GroovyAssignabilityCheck
                         url = rootProject.ext.licenseUrl
                     }
                 }
                 developers {
                     developer {
-                        //noinspection GroovyAssignabilityCheck
                         id = rootProject.ext.maintainerId
-                        //noinspection GroovyAssignabilityCheck
                         name = rootProject.ext.maintainerName
+                        url = rootProject.ext.maintainerUrl
                     }
+                }
+                scm {
+                    connection = rootProject.ext.scmConnection
+                    developerConnection = rootProject.ext.scmConnection
+                    url = rootProject.ext.scmProjectUrl
                 }
                 withXml {
                     asNode().dependencies.'*'.findAll() {
@@ -65,4 +57,8 @@ publishing {
             }
         }
     }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }
