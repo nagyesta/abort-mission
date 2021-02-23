@@ -18,9 +18,11 @@ import org.springframework.util.Assert;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 @Component
@@ -56,7 +58,8 @@ public class ConversionController {
 
     @SuppressWarnings("LocalCanBeFinal")
     private void render(final Context context) {
-        try (FileWriter writer = new FileWriter(properties.getOutput())) {
+        try (FileOutputStream stream = new FileOutputStream(properties.getOutput());
+             OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8)) {
             templateEngine.process("launch-report", context, writer);
         } catch (final Exception e) {
             log.error(e.getMessage(), e);
