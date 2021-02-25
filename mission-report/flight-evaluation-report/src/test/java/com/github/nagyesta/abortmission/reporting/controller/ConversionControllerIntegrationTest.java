@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.stream.Stream;
@@ -42,6 +43,7 @@ class ConversionControllerIntegrationTest {
                                                                       final String expectedHtml) throws Exception {
         //given
         final File inputFile = new File(this.getClass().getResource(jsonResource).getFile());
+        final File expectedFile = new File(this.getClass().getResource(expectedHtml).getFile());
         final ConversionProperties properties = new ConversionProperties();
         properties.setInput(inputFile);
         properties.setOutput(File.createTempFile("abort-mission-test", ".html"));
@@ -55,8 +57,8 @@ class ConversionControllerIntegrationTest {
         underTest.convert();
 
         //then
-        final List<String> actualLines = Files.readAllLines(properties.getOutput().toPath());
-        final List<String> expectedLines = Files.readAllLines(new File(this.getClass().getResource(expectedHtml).getFile()).toPath());
+        final List<String> actualLines = Files.readAllLines(properties.getOutput().toPath(), StandardCharsets.UTF_8);
+        final List<String> expectedLines = Files.readAllLines(expectedFile.toPath(), StandardCharsets.UTF_8);
         assertIterableEquals(expectedLines, actualLines);
     }
 

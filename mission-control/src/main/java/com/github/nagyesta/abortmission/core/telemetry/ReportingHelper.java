@@ -4,7 +4,9 @@ import com.github.nagyesta.abortmission.core.telemetry.stats.LaunchTelemetry;
 import com.google.gson.Gson;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import static com.github.nagyesta.abortmission.core.MissionControl.ABORT_MISSION_REPORT_DIRECTORY;
@@ -55,7 +57,8 @@ public class ReportingHelper {
      */
     @SuppressWarnings("LocalCanBeFinal")
     protected void writeJson(final LaunchTelemetry telemetry, final File json) {
-        try (FileWriter jsonWriter = new FileWriter(json)) {
+        try (FileOutputStream stream = new FileOutputStream(json);
+             OutputStreamWriter jsonWriter = new OutputStreamWriter(stream, StandardCharsets.UTF_8)) {
             final String jsonReport = new Gson().toJson(telemetry);
             jsonWriter.write(jsonReport);
         } catch (final Exception e) {

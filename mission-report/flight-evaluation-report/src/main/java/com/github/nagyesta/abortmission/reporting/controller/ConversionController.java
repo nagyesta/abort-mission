@@ -18,10 +18,7 @@ import org.springframework.util.Assert;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
@@ -74,9 +71,11 @@ public class ConversionController {
         return context;
     }
 
+    @SuppressWarnings("LocalCanBeFinal")
     private LaunchJson readValidJson() throws RenderException {
-        try {
-            final JsonNode rootNode = objectMapper.readTree(properties.getInput());
+        try (FileInputStream stream = new FileInputStream(properties.getInput());
+             InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
+            final JsonNode rootNode = objectMapper.readTree(reader);
             final JsonSchema schema = getSchema(properties.isRelaxed());
             final Set<ValidationMessage> violations = schema.validate(rootNode, rootNode, ROOT_NODE);
             if (!violations.isEmpty()) {
