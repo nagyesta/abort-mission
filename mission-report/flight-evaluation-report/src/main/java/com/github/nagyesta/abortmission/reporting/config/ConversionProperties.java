@@ -18,4 +18,5 @@ public class ConversionProperties {
     @NonNull
     private File output;
     private boolean relaxed = false;
+    private boolean failOnError = false;
 }

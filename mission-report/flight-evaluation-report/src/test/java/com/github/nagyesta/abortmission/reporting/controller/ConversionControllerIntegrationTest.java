@@ -2,6 +2,7 @@ package com.github.nagyesta.abortmission.reporting.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nagyesta.abortmission.reporting.config.ConversionProperties;
+import com.github.nagyesta.abortmission.reporting.exception.RenderException;
 import com.github.nagyesta.abortmission.reporting.html.converter.LaunchJsonToHtmlConverter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,8 +32,10 @@ class ConversionControllerIntegrationTest {
 
     private static Stream<Arguments> validInputSource() {
         return Stream.<Arguments>builder()
-                .add(Arguments.of("/abort-mission-report.json", true, "/abort-mission-report.txt"))
-                .add(Arguments.of("/abort-mission-report.json", false, "/abort-mission-report.txt"))
+                .add(Arguments.of("/abort-mission-report.json", true, true, "/abort-mission-report.txt"))
+                .add(Arguments.of("/abort-mission-report.json", true, false, "/abort-mission-report.txt"))
+                .add(Arguments.of("/abort-mission-report.json", false, true, "/abort-mission-report.txt"))
+                .add(Arguments.of("/abort-mission-report.json", false, false, "/abort-mission-report.txt"))
                 .build();
     }
 
@@ -40,6 +43,7 @@ class ConversionControllerIntegrationTest {
     @MethodSource("validInputSource")
     void testConvertShouldConvertAndRenderDataWhenCalledWithValidJson(final String jsonResource,
                                                                       final boolean relaxed,
+                                                                      final boolean failOnError,
                                                                       final String expectedHtml) throws Exception {
         //given
         final File inputFile = new File(this.getClass().getResource(jsonResource).getFile());
@@ -48,13 +52,18 @@ class ConversionControllerIntegrationTest {
         properties.setInput(inputFile);
         properties.setOutput(File.createTempFile("abort-mission-test", ".html"));
         properties.setRelaxed(relaxed);
+        properties.setFailOnError(failOnError);
 
         properties.getOutput().deleteOnExit();
 
         final ConversionController underTest = new ConversionController(properties, objectMapper, converter, templateEngine);
 
         //when
-        underTest.convert();
+        if (failOnError) {
+            assertThrows(RenderException.class, underTest::convert);
+        } else {
+            underTest.convert();
+        }
 
         //then
         final List<String> actualLines = Files.readAllLines(properties.getOutput().toPath(), StandardCharsets.UTF_8);

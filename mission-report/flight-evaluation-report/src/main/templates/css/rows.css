@@ -1,0 +1,67 @@
+.class-name {
+    padding-left: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.class-name-collapsed {
+    padding-left: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.class-times {
+}
+
+.class-results {
+}
+
+.matcher-list {
+    list-style-type: square;
+}
+
+.class-matchers {
+    padding-left: 30px;
+    background-color: #eeeeee;
+}
+
+.class-matchers ul {
+    padding-left: 25px;
+}
+
+.overall-summary-row {
+}
+
+.overall-summary-row td, .class-summary-row td {
+    height: 3em;
+    max-height: 3em;
+    line-height: 2.7em;
+}
+
+.class-summary-row-spacing {
+    min-height: 10px;
+    height: 10px;
+    max-height: 10px;
+}
+
+.class-summary-row .exec-summary {
+    padding-left: 5px;
+    background-color: #eeeeee;
+}
+
+.overall-summary-row-spacing {
+    min-height: 2px;
+    height: 2px;
+    max-height: 2px;
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+}
+
+.overall-summary-row .exec-summary {
+    padding-left: 5px;
+    background-color: #eeeeee;
+}

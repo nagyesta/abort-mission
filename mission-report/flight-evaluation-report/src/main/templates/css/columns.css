@@ -1,0 +1,149 @@
+@media only screen and (max-width: 1280px) {
+    body .root-container {
+        width: 902px;
+        min-width: 902px;
+        max-width: 902px;
+    }
+
+    .class-reports {
+        width: 900px;
+        max-width: 900px;
+        font-size: 8pt;
+    }
+
+    .class-name-collapsed {
+        width: 448px;
+        max-width: 448px;
+        padding: 0;
+    }
+
+    .class-name {
+        width: 493px;
+        max-width: 493px;
+        padding: 0;
+    }
+
+    .col-spacer {
+        width: 19px;
+        max-width: 19px;
+        padding: 0;
+    }
+
+    .col-name, .exec-title {
+        width: 428px;
+        max-width: 428px;
+        padding: 0;
+    }
+
+    .col-time, .exec-time {
+        width: 89px;
+        max-width: 89px;
+        padding: 0;
+    }
+
+    .col-count, .exec-stat {
+        width: 44px;
+        max-width: 44px;
+        padding: 0;
+    }
+}
+
+@media only screen and (min-width: 1281px) and (max-width: 1680px) {
+    body .root-container {
+        width: 1202px;
+        min-width: 1202px;
+        max-width: 1202px;
+    }
+
+    .class-reports {
+        width: 1200px;
+        max-width: 1200px;
+        font-size: 9pt;
+    }
+
+    .class-name-collapsed {
+        width: 648px;
+        max-width: 648px;
+        padding: 0;
+    }
+
+    .class-name {
+        width: 703px;
+        max-width: 703px;
+        padding: 0;
+    }
+
+    .col-spacer {
+        width: 19px;
+        max-width: 19px;
+        padding: 0;
+    }
+
+    .col-name, .exec-title {
+        width: 628px;
+        max-width: 628px;
+        padding: 0;
+    }
+
+    .col-time, .exec-time {
+        width: 109px;
+        max-width: 109px;
+        padding: 0;
+    }
+
+    .col-count, .exec-stat {
+        width: 54px;
+        max-width: 54px;
+        padding: 0;
+    }
+}
+
+@media only screen and (min-width: 1681px) {
+    body .root-container {
+        width: 1602px;
+        min-width: 1602px;
+        max-width: 1602px;
+    }
+
+    .class-reports {
+        width: 1600px;
+        max-width: 1600px;
+        font-size: 10pt;
+    }
+
+    .class-name-collapsed {
+        width: 848px;
+        max-width: 848px;
+        padding: 0;
+    }
+
+    .class-name {
+        width: 923px;
+        max-width: 923px;
+        padding: 0;
+    }
+
+    .col-spacer {
+        width: 19px;
+        max-width: 19px;
+        padding: 0;
+    }
+
+    .col-name, .exec-title {
+        width: 828px;
+        max-width: 828px;
+        padding: 0;
+    }
+
+    .col-time, .exec-time {
+        width: 149px;
+        max-width: 149px;
+        padding: 0;
+    }
+
+    .col-count, .exec-stat {
+        width: 74px;
+        max-width: 74px;
+        padding: 0;
+    }
+}

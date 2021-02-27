@@ -1,0 +1,75 @@
+.inactive {
+    background-color: #ffffff !important;
+}
+
+.result-success {
+    background-color: #d5e8d4;
+}
+
+.exec-success {
+    background-color: #d5e8d4;
+}
+
+.exec-success:before {
+    content: 'Success';
+    color: #82b366;
+    font-size: 0.6em;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    line-height: normal;
+}
+
+.result-failure {
+    background-color: #f8cecc;
+}
+
+.exec-failure {
+    background-color: #f8cecc;
+}
+
+.exec-failure:before {
+    content: 'Failure';
+    color: #b85450;
+    font-size: 0.6em;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    line-height: normal;
+}
+
+.result-abort {
+    background-color: #fff2cc;
+}
+
+.exec-abort {
+    background-color: #fff2cc;
+}
+
+.exec-abort:before {
+    content: 'Abort';
+    color: #d6b656;
+    font-size: 0.6em;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    line-height: normal;
+}
+
+.result-suppressed {
+    background-color: #dae8fc;
+}
+
+.exec-suppress {
+    background-color: #dae8fc;
+}
+
+.exec-suppress:before {
+    content: 'Suppress';
+    color: #6c8ebf;
+    font-size: 0.6em;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    line-height: normal;
+}
