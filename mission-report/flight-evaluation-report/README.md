@@ -48,8 +48,9 @@ in order to have the JSON input generated during your build.
 
 # Configuration
 
-| Argument name    | Type    | Description                                          |
-| ---------------- | ------- | ---------------------------------------------------- |
-| --report.input   | File    | The path of the input JSON file                      |
-| --report.output  | File    | The path of the output HTML file                     |
-| --report.relaxed | boolean | Selects between relaxed and strict schema validation |
+| Argument name        | Type    | Description                                                                                                          |
+| -------------------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
+| --report.input       | File    | The path of the input JSON file                                                                                      |
+| --report.output      | File    | The path of the output HTML file                                                                                     |
+| --report.relaxed     | boolean | Selects between relaxed and strict schema validation (default: false)                                                |
+| --report.failOnError | boolean | Decides whether we need to exit with error in case failures are detected in the test execution data (default: false) |

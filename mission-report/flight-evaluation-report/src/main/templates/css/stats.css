@@ -1,0 +1,77 @@
+.exec-title {
+    padding-left: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.exec-time {
+    position: relative;
+}
+
+.exec-stat {
+    /* Fix FF drawing background over the borders */
+    background-clip: padding-box;
+    position: relative;
+}
+
+.exec-ms:after {
+    content: 'ms';
+    color: #666666;
+    font-size: 0.6em;
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    line-height: normal;
+}
+
+.exec-count:before {
+    content: 'Runs';
+    color: #666666;
+    font-size: 0.6em;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    line-height: normal;
+}
+
+.exec-total:before {
+    content: 'Total';
+    color: #666666;
+    font-size: 0.6em;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    line-height: normal;
+}
+
+.exec-min:before {
+    content: 'Min';
+    color: #666666;
+    font-size: 0.6em;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    line-height: normal;
+}
+
+.exec-avg:before {
+    content: 'Average';
+    color: #666666;
+    font-size: 0.6em;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    line-height: normal;
+}
+
+.exec-max:before {
+    content: 'Max';
+    color: #666666;
+    font-size: 0.6em;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    line-height: normal;
+}

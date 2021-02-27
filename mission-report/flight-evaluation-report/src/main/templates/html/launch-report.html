@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Abort-Mission Flight Evaluation Report</title>
+    <!--/*@thymesVar id="allCss" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="allJs" type="java.lang.String"*/-->
+    <style type="text/css" th:utext="${allCss}"></style>
+    <script type="text/javascript" th:utext="${allJs}"></script>
+</head>
+<body>
+<!--/*@thymesVar id="launchModel" type="com.github.nagyesta.abortmission.reporting.html.LaunchHtml"*/-->
+<div class="root-container">
+    <div class="center logo"></div>
+    <h1 class="header center">Flight Evaluation Report</h1>
+    <p class="header"
+       data-th-text="${'Countdown started: ' + #temporals.format(launchModel.stats.getMinStart(), 'yyyy-MM-dd HH:mm:ss')}"></p>
+    <p class="header header-last"
+       data-th-text="${'Mission concluded: ' + #temporals.format(launchModel.stats.getMaxEnd(), 'yyyy-MM-dd HH:mm:ss')}"></p>
+    <table class="class-reports">
+        <thead>
+        <tr class="hidden">
+            <th class="col-spacer"></th>
+            <th class="col-name"></th>
+            <th class="col-count"></th><!-- runs -->
+            <th class="col-time"></th><!-- total -->
+            <th class="col-count"></th><!-- min -->
+            <th class="col-count"></th><!-- avg -->
+            <th class="col-count"></th><!-- max -->
+            <th class="col-count"></th><!-- pass -->
+            <th class="col-count"></th><!-- fail -->
+            <th class="col-count"></th><!-- abort -->
+            <th class="col-count"></th><!-- suppress -->
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="aTestClass : ${launchModel.classes}">
+            <!-- class header collapsed summary start -->
+            <tr data-th-object="${aTestClass}"
+                data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-collapse'}"
+                data-th-classappend="${aTestClass.isCollapsed()?'':'hidden-class'}">
+                <td colspan="2"
+                    data-th-class="*{'top-row row-start border class-name-collapsed result-'
+                                     + stats.worstResult.lowerCaseName()}"
+                    data-th-text="*{'&#9658; ' + getClassNameTextShort()}"
+                    data-th-title="*{getClassNameTitle()}"
+                    data-th-onclick="expandClass([[${aTestClass.getId()}]])"></td>
+                <td colspan="1"
+                    class="top-row border center exec-count exec-stat exec-int"
+                    data-th-text="*{stats.count}"></td>
+                <td colspan="1"
+                    class="top-row border center exec-total exec-time exec-int"
+                    data-th-text="*{stats.getSumDurationAsText()}"></td>
+                <td colspan="1"
+                    class="top-row border center exec-min exec-stat exec-int exec-ms"
+                    data-th-text="*{stats.minDuration}"></td>
+                <td colspan="1"
+                    class="top-row border center exec-avg exec-stat exec-float exec-ms"
+                    data-th-text="*{#numbers.formatDecimal(stats.avgDuration, 1, 1)}"></td>
+                <td colspan="1"
+                    class="top-row border center exec-max exec-stat exec-int exec-ms"
+                    data-th-text="*{stats.maxDuration}"></td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-success"
+                    data-th-classappend="*{stats.cssIfSuccessInactive('inactive')}"
+                    data-th-text="*{stats.success}"></td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-failure"
+                    data-th-classappend="*{stats.cssIfFailureInactive('inactive')}"
+                    data-th-text="*{stats.failure}"></td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-abort"
+                    data-th-classappend="*{stats.cssIfAbortInactive('inactive')}"
+                    data-th-text="*{stats.abort}">0
+                </td>
+                <td colspan="1"
+                    class="top-row border center exec-stat exec-int exec-suppress"
+                    data-th-classappend="*{stats.cssIfSuppressedInactive('inactive')}"
+                    data-th-text="*{stats.suppressed}"></td>
+            </tr>
+            <!-- class header collapsed summary end -->
+            <!-- class header expanded start -->
+            <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand'}"
+                data-th-classappend="${aTestClass.isCollapsed()?'hidden-class':''}">
+                <td colspan="3" class="top-row row-start border class-name"
+                    data-th-text="*{'&#9660; ' + aTestClass.getClassNameTextShort()}"
+                    data-th-title="*{aTestClass.getClassNameTitle()}"
+                    data-th-classappend="*{'result-' + aTestClass.stats.worstResult.lowerCaseName()}"
+                    data-th-onclick="collapseClass([[${aTestClass.getId()}]])"></td>
+                <td colspan="4" class="top-row border center class-times"
+                    data-th-classappend="*{'result-' + aTestClass.stats.worstResult.lowerCaseName()}">Times
+                </td>
+                <td colspan="4" class="top-row border center class-results"
+                    data-th-classappend="*{'result-' + aTestClass.stats.worstResult.lowerCaseName()}">Results
+                </td>
+            </tr>
+            <!-- class header expanded end -->
+            <!-- countdown summary start -->
+            <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand'}"
+                data-th-classappend="${aTestClass.isCollapsed()?' hidden-class':''}"
+                data-th-object="${aTestClass.countdown}">
+                <td colspan="1"
+                    data-th-class="${'col-spacer center abort-class-' + aTestClass.getId()
+                                         + '-mission-countdown-indicator'}"
+                    data-th-text="${aTestClass.countdown.isCollapsed()?'&#9658;':'&#9660;'}"></td>
+                <td colspan="1"
+                    class="row-start border exec-title"
+                    data-th-text="*{getDisplayName()}"
+                    data-th-title="*{getDisplayName()}"
+                    data-th-onclick="toggleMethod([[${aTestClass.getId()}]], 'countdown')"
+                    data-th-classappend="*{'result-' + stats.worstResult.lowerCaseName()}"></td>
+                <td colspan="1"
+                    class="border center exec-count exec-stat exec-int"
+                    data-th-text="*{stats.count}"></td>
+                <td colspan="1"
+                    class="border center exec-total exec-time exec-int"
+                    data-th-text="*{stats.getSumDurationAsText()}"></td>
+                <td colspan="1"
+                    class="border center exec-min exec-stat exec-int exec-ms"
+                    data-th-text="*{stats.minDuration}"></td>
+                <td colspan="1"
+                    class="border center exec-avg exec-stat exec-float exec-ms"
+                    data-th-text="*{#numbers.formatDecimal(stats.avgDuration, 1, 1)}"></td>
+                <td colspan="1"
+                    class="border center exec-max exec-stat exec-int exec-ms"
+                    data-th-text="*{stats.maxDuration}"></td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-success"
+                    data-th-classappend="*{stats.cssIfSuccessInactive('inactive')}"
+                    data-th-text="*{stats.success}"></td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-failure"
+                    data-th-classappend="*{stats.cssIfFailureInactive('inactive')}"
+                    data-th-text="*{stats.failure}"></td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-abort"
+                    data-th-classappend="*{stats.cssIfAbortInactive('inactive')}"
+                    data-th-text="*{stats.abort}">0
+                </td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-suppress"
+                    data-th-classappend="*{stats.cssIfSuppressedInactive('inactive')}"
+                    data-th-text="*{stats.suppressed}"></td>
+            </tr>
+            <!-- countdown summary end -->
+            <!-- countdown matcher details start -->
+            <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand'
+                                 + ' abort-class-' + aTestClass.getId() + '-mission-countdown-details'}"
+                data-th-classappend="${aTestClass.countdown.isCollapsed()?'hidden':''}"
+                data-th-object="${aTestClass.countdown}">
+                <td colspan="1" class="col-spacer"></td>
+                <td colspan="10" class="class-matchers row-start border">
+                    Countdown matchers:
+                    <ul class="matcher-list" data-th-each="entry: *{getMatcherNames()}">
+                        <li data-th-text="${'(' + entry.value + ') ' + entry.key}"></li>
+                    </ul>
+                </td>
+            </tr>
+            <!-- countdown matcher details end -->
+            <th:block th:each="methodItem: ${aTestClass.launches}">
+                <!-- method summary start -->
+                <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand'}"
+                    data-th-classappend="${aTestClass.isCollapsed()?'hidden-class':''}"
+                    data-th-object="${methodItem.value}">
+                    <td colspan="1"
+                        data-th-class="${'col-spacer center abort-class-' + aTestClass.getId()
+                                         + '-mission-' + methodItem.value.getId() + '-indicator'}"
+                        data-th-text="${methodItem.value.isCollapsed()?'&#9658;':'&#9660;'}"></td>
+                    <td colspan="1"
+                        class="row-start border exec-title"
+                        data-th-text="*{getDisplayName()}"
+                        data-th-title="*{getTitleName()}"
+                        data-th-onclick="toggleMethod([[${aTestClass.getId()}]], [[${methodItem.value.getId()}]])"
+                        data-th-classappend="*{'result-' + stats.worstResult.lowerCaseName()}"></td>
+                    <td colspan="1"
+                        class="border center exec-count exec-stat exec-int"
+                        data-th-text="*{stats.count}"></td>
+                    <td colspan="1"
+                        class="border center exec-total exec-time exec-int"
+                        data-th-text="*{stats.getSumDurationAsText()}"></td>
+                    <td colspan="1"
+                        class="border center exec-min exec-stat exec-int exec-ms"
+                        data-th-text="*{stats.minDuration}"></td>
+                    <td colspan="1"
+                        class="border center exec-avg exec-stat exec-float exec-ms"
+                        data-th-text="*{#numbers.formatDecimal(stats.avgDuration, 1, 1)}"></td>
+                    <td colspan="1"
+                        class="border center exec-max exec-stat exec-int exec-ms"
+                        data-th-text="*{stats.maxDuration}"></td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-success"
+                        data-th-classappend="*{stats.cssIfSuccessInactive('inactive')}"
+                        data-th-text="*{stats.success}"></td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-failure"
+                        data-th-classappend="*{stats.cssIfFailureInactive('inactive')}"
+                        data-th-text="*{stats.failure}"></td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-abort"
+                        data-th-classappend="*{stats.cssIfAbortInactive('inactive')}"
+                        data-th-text="*{stats.abort}">0
+                    </td>
+                    <td colspan="1"
+                        class="border center exec-stat exec-int exec-suppress"
+                        data-th-classappend="*{stats.cssIfSuppressedInactive('inactive')}"
+                        data-th-text="*{stats.suppressed}"></td>
+                </tr>
+                <!-- method summary end -->
+                <!-- method matcher details start -->
+                <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand'
+                                 + ' abort-class-' + aTestClass.getId()
+                                 + '-mission-' + methodItem.value.getId() + '-details'}"
+                    data-th-classappend="${methodItem.value.isCollapsed()?'hidden':''}"
+                    data-th-object="${methodItem.value}">
+                    <td colspan="1" class="col-spacer"></td>
+                    <td colspan="10" class="class-matchers row-start border">
+                        Mission matchers:
+                        <ul class="matcher-list" data-th-each="entry: *{getMatcherNames()}">
+                            <li data-th-text="${'(' + entry.value + ') ' + entry.key}"></li>
+                        </ul>
+                    </td>
+                </tr>
+                <!-- method matcher details end -->
+            </th:block>
+            <!-- class summary start -->
+            <tr data-th-class="${'class-summary-row abort-class-' + aTestClass.getId() + '-expand'}"
+                data-th-object="${aTestClass}"
+                data-th-classappend="${aTestClass.isCollapsed()?'hidden-class':''}">
+                <td colspan="1" class="col-spacer"></td>
+                <td colspan="1" class="row-start border exec-summary">Class total</td>
+                <td colspan="1"
+                    class="border center exec-count exec-stat exec-int"
+                    data-th-text="*{stats.count}"></td>
+                <td colspan="1"
+                    class="border center exec-total exec-time exec-int"
+                    data-th-text="*{stats.getSumDurationAsText()}"></td>
+                <td colspan="1"
+                    class="border center exec-min exec-stat exec-int exec-ms"
+                    data-th-text="*{stats.minDuration}"></td>
+                <td colspan="1"
+                    class="border center exec-avg exec-stat exec-float exec-ms"
+                    data-th-text="*{#numbers.formatDecimal(stats.avgDuration, 1, 1)}"></td>
+                <td colspan="1"
+                    class="border center exec-max exec-stat exec-int exec-ms"
+                    data-th-text="*{stats.maxDuration}"></td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-success"
+                    data-th-classappend="*{stats.cssIfSuccessInactive('inactive')}"
+                    data-th-text="*{stats.success}"></td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-failure"
+                    data-th-classappend="*{stats.cssIfFailureInactive('inactive')}"
+                    data-th-text="*{stats.failure}"></td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-abort"
+                    data-th-classappend="*{stats.cssIfAbortInactive('inactive')}"
+                    data-th-text="*{stats.abort}">0
+                </td>
+                <td colspan="1"
+                    class="border center exec-stat exec-int exec-suppress"
+                    data-th-classappend="*{stats.cssIfSuppressedInactive('inactive')}"
+                    data-th-text="*{stats.suppressed}"></td>
+            </tr>
+            <tr class="class-summary-row-spacing">
+                <td colspan="11"></td>
+            </tr>
+            <!-- class summary end -->
+        </th:block>
+        <tr class="overall-summary-row-spacing">
+            <td colspan="11"></td>
+        </tr>
+        <!-- overall countdown summary start -->
+        <tr class="overall-summary-row"
+            data-th-if="${launchModel.countdownStats != null and launchModel.countdownStats.count > 0}"
+            data-th-object="${launchModel}">
+            <td colspan="2" class="row-start border exec-summary">Countdown Subtotal</td>
+            <td colspan="1"
+                class="border center exec-count exec-stat exec-int"
+                data-th-text="*{countdownStats.count}"></td>
+            <td colspan="1"
+                class="border center exec-total exec-time exec-int"
+                data-th-text="*{countdownStats.getSumDurationAsText()}"></td>
+            <td colspan="1"
+                class="border center exec-min exec-stat exec-int exec-ms"
+                data-th-text="*{countdownStats.minDuration}"></td>
+            <td colspan="1"
+                class="border center exec-avg exec-stat exec-float exec-ms"
+                data-th-text="*{#numbers.formatDecimal(countdownStats.avgDuration, 1, 1)}"></td>
+            <td colspan="1"
+                class="border center exec-max exec-stat exec-int exec-ms"
+                data-th-text="*{countdownStats.maxDuration}"></td>
+            <td colspan="1"
+                class="border center exec-stat exec-int exec-success"
+                data-th-classappend="*{countdownStats.cssIfSuccessInactive('inactive')}"
+                data-th-text="*{countdownStats.success}"></td>
+            <td colspan="1"
+                class="border center exec-stat exec-int exec-failure"
+                data-th-classappend="*{countdownStats.cssIfFailureInactive('inactive')}"
+                data-th-text="*{countdownStats.failure}"></td>
+            <td colspan="1"
+                class="border center exec-stat exec-int exec-abort"
+                data-th-classappend="*{countdownStats.cssIfAbortInactive('inactive')}"
+                data-th-text="*{countdownStats.abort}">0
+            </td>
+            <td colspan="1"
+                class="border center exec-stat exec-int exec-suppress"
+                data-th-classappend="*{countdownStats.cssIfSuppressedInactive('inactive')}"
+                data-th-text="*{countdownStats.suppressed}"></td>
+        </tr>
+        <!-- overall countdown summary end -->
+        <!-- overall mission summary start -->
+        <tr class="overall-summary-row"
+            data-th-if="${launchModel.missionStats != null and launchModel.missionStats.count > 0}"
+            data-th-object="${launchModel}">
+            <td colspan="2" class="row-start border exec-summary">Missions Subtotal</td>
+            <td colspan="1"
+                class="border center exec-count exec-stat exec-int"
+                data-th-text="*{missionStats.count}"></td>
+            <td colspan="1"
+                class="border center exec-total exec-time exec-int"
+                data-th-text="*{missionStats.getSumDurationAsText()}"></td>
+            <td colspan="1"
+                class="border center exec-min exec-stat exec-int exec-ms"
+                data-th-text="*{missionStats.minDuration}"></td>
+            <td colspan="1"
+                class="border center exec-avg exec-stat exec-float exec-ms"
+                data-th-text="*{#numbers.formatDecimal(missionStats.avgDuration, 1, 1)}"></td>
+            <td colspan="1"
+                class="border center exec-max exec-stat exec-int exec-ms"
+                data-th-text="*{missionStats.maxDuration}"></td>
+            <td colspan="1"
+                class="border center exec-stat exec-int exec-success"
+                data-th-classappend="*{missionStats.cssIfSuccessInactive('inactive')}"
+                data-th-text="*{missionStats.success}"></td>
+            <td colspan="1"
+                class="border center exec-stat exec-int exec-failure"
+                data-th-classappend="*{missionStats.cssIfFailureInactive('inactive')}"
+                data-th-text="*{missionStats.failure}"></td>
+            <td colspan="1"
+                class="border center exec-stat exec-int exec-abort"
+                data-th-classappend="*{missionStats.cssIfAbortInactive('inactive')}"
+                data-th-text="*{missionStats.abort}">0
+            </td>
+            <td colspan="1"
+                class="border center exec-stat exec-int exec-suppress"
+                data-th-classappend="*{missionStats.cssIfSuppressedInactive('inactive')}"
+                data-th-text="*{missionStats.suppressed}"></td>
+        </tr>
+        <!-- overall mission summary end -->
+        <!-- overall summary start -->
+        <tr class="overall-summary-row"
+            data-th-object="${launchModel}">
+            <td colspan="2" class="row-start border exec-summary">Total</td>
+            <td colspan="1"
+                class="border center exec-count exec-stat exec-int"
+                data-th-text="*{stats.count}"></td>
+            <td colspan="1"
+                class="border center exec-total exec-time exec-int"
+                data-th-text="*{stats.getSumDurationAsText()}"></td>
+            <td colspan="1"
+                class="border center exec-min exec-stat exec-int exec-ms"
+                data-th-text="*{stats.minDuration}"></td>
+            <td colspan="1"
+                class="border center exec-avg exec-stat exec-float exec-ms"
+                data-th-text="*{#numbers.formatDecimal(stats.avgDuration, 1, 1)}"></td>
+            <td colspan="1"
+                class="border center exec-max exec-stat exec-int exec-ms"
+                data-th-text="*{stats.maxDuration}"></td>
+            <td colspan="1"
+                class="border center exec-stat exec-int exec-success"
+                data-th-classappend="*{stats.cssIfSuccessInactive('inactive')}"
+                data-th-text="*{stats.success}"></td>
+            <td colspan="1"
+                class="border center exec-stat exec-int exec-failure"
+                data-th-classappend="*{stats.cssIfFailureInactive('inactive')}"
+                data-th-text="*{stats.failure}"></td>
+            <td colspan="1"
+                class="border center exec-stat exec-int exec-abort"
+                data-th-classappend="*{stats.cssIfAbortInactive('inactive')}"
+                data-th-text="*{stats.abort}">0
+            </td>
+            <td colspan="1"
+                class="border center exec-stat exec-int exec-suppress"
+                data-th-classappend="*{stats.cssIfSuppressedInactive('inactive')}"
+                data-th-text="*{stats.suppressed}"></td>
+        </tr>
+        <!-- overall summary end -->
+        </tbody>
+    </table>
+    <p class="footer center">Thank you for trusting Abort-Mission with your launch!</p>
+</div>
+</body>
+</html>

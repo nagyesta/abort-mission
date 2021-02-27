@@ -61,3 +61,5 @@ jobs:
         run: ./gradlew build -x test
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@46110c361b7e9ea1b6f9c6ba2cc941fa7a106cca
+      - name: Check dependencies with Gradle
+        run: ./gradlew ossIndexAudit --info

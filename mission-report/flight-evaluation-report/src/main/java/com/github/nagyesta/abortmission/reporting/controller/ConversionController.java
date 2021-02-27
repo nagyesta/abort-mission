@@ -7,6 +7,7 @@ import com.github.nagyesta.abortmission.reporting.exception.RenderException;
 import com.github.nagyesta.abortmission.reporting.html.LaunchHtml;
 import com.github.nagyesta.abortmission.reporting.html.converter.LaunchJsonToHtmlConverter;
 import com.github.nagyesta.abortmission.reporting.json.LaunchJson;
+import com.github.nagyesta.abortmission.reporting.json.StageResultJson;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersion;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.springframework.util.StreamUtils;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
@@ -50,14 +52,19 @@ public class ConversionController {
      */
     public void convert() throws RenderException {
         Assert.isTrue(properties.getInput().exists(), "Input file does not exist.");
-        render(prepareContext(readValidJson()));
+        final LaunchJson json = readValidJson();
+        render(prepareContext(json));
+        if (properties.isFailOnError() && json.getStats().getWorstResult() == StageResultJson.FAILURE) {
+            log.error("Failure detected in execution data and build is set to fail on error.");
+            throw new RenderException();
+        }
     }
 
     @SuppressWarnings("LocalCanBeFinal")
     private void render(final Context context) {
         try (FileOutputStream stream = new FileOutputStream(properties.getOutput());
              OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8)) {
-            templateEngine.process("launch-report", context, writer);
+            templateEngine.process("html/launch-report", context, writer);
         } catch (final Exception e) {
             log.error(e.getMessage(), e);
             throw new RenderException();
@@ -68,7 +75,18 @@ public class ConversionController {
         final LaunchHtml launchHtml = converter.convert(launchJson);
         final Context context = new Context();
         context.setVariable("launchModel", launchHtml);
+        context.setVariable("allCss", readResource("/templates/css/all.min.css"));
+        context.setVariable("allJs", readResource("/templates/js/all.min.js"));
         return context;
+    }
+
+    private String readResource(final String input) throws RenderException {
+        try {
+            return StreamUtils.copyToString(ConversionController.class.getResourceAsStream(input), StandardCharsets.UTF_8);
+        } catch (final IOException e) {
+            log.error(e.getMessage(), e);
+            throw new RenderException();
+        }
     }
 
     @SuppressWarnings("LocalCanBeFinal")
