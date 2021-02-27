@@ -4,6 +4,7 @@ plugins {
     //noinspection SpellCheckingInspection
     id "io.freefair.lombok" version "5.2.1"
     id "org.padler.gradle.minify" version "1.6.0"
+    id "org.sonatype.gradle.plugins.scan" version "2.0.4"
 }
 
 group = "${rootProject.group}.reports"
