@@ -51,6 +51,7 @@
 .class-summary-row .exec-summary {
     padding-left: 5px;
     background-color: #eeeeee;
+    vertical-align: top;
 }
 
 .overall-summary-row-spacing {
@@ -64,4 +65,5 @@
 .overall-summary-row .exec-summary {
     padding-left: 5px;
     background-color: #eeeeee;
+    vertical-align: top;
 }

@@ -4,8 +4,12 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.lang.NonNull;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.github.nagyesta.abortmission.reporting.html.LaunchHtml.shortHash;
 
@@ -38,8 +42,18 @@ public class ClassHtml implements Comparable<ClassHtml> {
         return stats.getWorstResult() == StageResultHtml.SUCCESS;
     }
 
+    public long startTimeEpochMillis() {
+        return Optional.ofNullable(stats)
+                .map(StatsHtml::getMinStart)
+                .map((LocalDateTime offset) -> offset.toInstant(ZoneOffset.UTC))
+                .map(Instant::toEpochMilli)
+                .orElse(0L);
+    }
+
     @Override
     public int compareTo(@NonNull final ClassHtml o) {
-        return Comparator.comparing(ClassHtml::getClassNameText).compare(this, o);
+        return Comparator.comparing(ClassHtml::startTimeEpochMillis)
+                .thenComparing(ClassHtml::getClassNameText)
+                .compare(this, o);
     }
 }

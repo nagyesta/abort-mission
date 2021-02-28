@@ -38,3 +38,11 @@ function toggleMethod(className, methodName) {
         }
     }
 }
+
+function filterRow(resultName) {
+    let cssClass = 'row-' + resultName;
+    let toToggle = document.getElementsByClassName(cssClass);
+    for (let toToggleElement of toToggle) {
+        toToggleElement.classList.toggle('filtered');
+    }
+}

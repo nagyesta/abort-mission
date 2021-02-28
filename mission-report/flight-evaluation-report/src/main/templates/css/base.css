@@ -22,6 +22,15 @@ body .root-container p.header-last {
     padding-bottom: 25px;
 }
 
+body .root-container div.header {
+    height: 2em;
+    padding-bottom: 25px;
+}
+
+body .root-container div.header input {
+    margin-left: 40px;
+}
+
 body .root-container p.footer {
     line-height: 2.7em;
     vertical-align: center;
@@ -40,6 +49,10 @@ body .root-container p.footer {
 }
 
 .hidden {
+    display: none;
+}
+
+.filtered {
     display: none;
 }
 

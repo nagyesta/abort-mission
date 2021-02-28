@@ -18,6 +18,16 @@
        data-th-text="${'Countdown started: ' + #temporals.format(launchModel.stats.getMinStart(), 'yyyy-MM-dd HH:mm:ss')}"></p>
     <p class="header header-last"
        data-th-text="${'Mission concluded: ' + #temporals.format(launchModel.stats.getMaxEnd(), 'yyyy-MM-dd HH:mm:ss')}"></p>
+    <div class="header">
+        Filter:
+        <input id="showsuccess" type="checkbox" checked="checked" onchange="filterRow('success')"/><label for="showsuccess">Show
+        successes</label>
+        <input id="showfailure" type="checkbox" checked="checked" onchange="filterRow('failure')"/><label for="showfailure">Show
+        failures</label>
+        <input id="showabort" type="checkbox" checked="checked" onchange="filterRow('abort')"/><label for="showabort">Show aborted</label>
+        <input id="showsuppress" type="checkbox" checked="checked" onchange="filterRow('suppressed')"/><label for="showsuppress">Show
+        suppressions</label>
+    </div>
     <table class="class-reports">
         <thead>
         <tr class="hidden">
@@ -38,7 +48,8 @@
         <th:block th:each="aTestClass : ${launchModel.classes}">
             <!-- class header collapsed summary start -->
             <tr data-th-object="${aTestClass}"
-                data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-collapse'}"
+                data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-collapse row-'
+                                     + aTestClass.stats.worstResult.lowerCaseName()}"
                 data-th-classappend="${aTestClass.isCollapsed()?'':'hidden-class'}">
                 <td colspan="2"
                     data-th-class="*{'top-row row-start border class-name-collapsed result-'
@@ -81,7 +92,8 @@
             </tr>
             <!-- class header collapsed summary end -->
             <!-- class header expanded start -->
-            <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand'}"
+            <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand row-'
+                                     + aTestClass.stats.worstResult.lowerCaseName()}"
                 data-th-classappend="${aTestClass.isCollapsed()?'hidden-class':''}">
                 <td colspan="3" class="top-row row-start border class-name"
                     data-th-text="*{'&#9660; ' + aTestClass.getClassNameTextShort()}"
@@ -97,7 +109,8 @@
             </tr>
             <!-- class header expanded end -->
             <!-- countdown summary start -->
-            <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand'}"
+            <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand row-'
+                                     + aTestClass.stats.worstResult.lowerCaseName()}"
                 data-th-classappend="${aTestClass.isCollapsed()?' hidden-class':''}"
                 data-th-object="${aTestClass.countdown}">
                 <td colspan="1"
@@ -145,7 +158,8 @@
             </tr>
             <!-- countdown summary end -->
             <!-- countdown matcher details start -->
-            <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand'
+            <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand row-'
+                                     + aTestClass.stats.worstResult.lowerCaseName()
                                  + ' abort-class-' + aTestClass.getId() + '-mission-countdown-details'}"
                 data-th-classappend="${aTestClass.countdown.isCollapsed()?'hidden':''}"
                 data-th-object="${aTestClass.countdown}">
@@ -160,7 +174,8 @@
             <!-- countdown matcher details end -->
             <th:block th:each="methodItem: ${aTestClass.launches}">
                 <!-- method summary start -->
-                <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand'}"
+                <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand row-'
+                                     + aTestClass.stats.worstResult.lowerCaseName()}"
                     data-th-classappend="${aTestClass.isCollapsed()?'hidden-class':''}"
                     data-th-object="${methodItem.value}">
                     <td colspan="1"
@@ -208,7 +223,8 @@
                 </tr>
                 <!-- method summary end -->
                 <!-- method matcher details start -->
-                <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand'
+                <tr data-th-class="${'class-row abort-class-' + aTestClass.getId() + '-expand row-'
+                                     + aTestClass.stats.worstResult.lowerCaseName()
                                  + ' abort-class-' + aTestClass.getId()
                                  + '-mission-' + methodItem.value.getId() + '-details'}"
                     data-th-classappend="${methodItem.value.isCollapsed()?'hidden':''}"
@@ -224,11 +240,14 @@
                 <!-- method matcher details end -->
             </th:block>
             <!-- class summary start -->
-            <tr data-th-class="${'class-summary-row abort-class-' + aTestClass.getId() + '-expand'}"
+            <tr data-th-class="${'class-summary-row abort-class-' + aTestClass.getId() + '-expand row-'
+                                     + aTestClass.stats.worstResult.lowerCaseName()}"
                 data-th-object="${aTestClass}"
                 data-th-classappend="${aTestClass.isCollapsed()?'hidden-class':''}">
                 <td colspan="1" class="col-spacer"></td>
-                <td colspan="1" class="row-start border exec-summary">Class total</td>
+                <td colspan="1" class="row-start border exec-summary"
+                    data-th-text="*{'Class total (from ' + #temporals.format(stats.getMinStart(), 'HH:mm:ss.SSS')
+                    + ' to ' + #temporals.format(stats.getMaxEnd(), 'HH:mm:ss.SSS') + ')'}"></td>
                 <td colspan="1"
                     class="border center exec-count exec-stat exec-int"
                     data-th-text="*{stats.count}"></td>
@@ -262,7 +281,7 @@
                     data-th-classappend="*{stats.cssIfSuppressedInactive('inactive')}"
                     data-th-text="*{stats.suppressed}"></td>
             </tr>
-            <tr class="class-summary-row-spacing">
+            <tr data-th-class="${'class-summary-row-spacing row-' + aTestClass.stats.worstResult.lowerCaseName()}">
                 <td colspan="11"></td>
             </tr>
             <!-- class summary end -->
