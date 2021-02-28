@@ -20,13 +20,14 @@
        data-th-text="${'Mission concluded: ' + #temporals.format(launchModel.stats.getMaxEnd(), 'yyyy-MM-dd HH:mm:ss')}"></p>
     <div class="header">
         Filter:
-        <input id="showsuccess" type="checkbox" checked="checked" onchange="filterRow('success')"/><label for="showsuccess">Show
-        successes</label>
-        <input id="showfailure" type="checkbox" checked="checked" onchange="filterRow('failure')"/><label for="showfailure">Show
-        failures</label>
-        <input id="showabort" type="checkbox" checked="checked" onchange="filterRow('abort')"/><label for="showabort">Show aborted</label>
-        <input id="showsuppress" type="checkbox" checked="checked" onchange="filterRow('suppressed')"/><label for="showsuppress">Show
-        suppressions</label>
+        <input id="showsuccess" type="checkbox" checked="checked" onchange="filterRow('success')"/>
+        <label for="showsuccess">Show successes</label>
+        <input id="showfailure" type="checkbox" checked="checked" onchange="filterRow('failure')"/>
+        <label for="showfailure">Show failures</label>
+        <input id="showabort" type="checkbox" checked="checked" onchange="filterRow('abort')"/>
+        <label for="showabort">Show aborted</label>
+        <input id="showsuppress" type="checkbox" checked="checked" onchange="filterRow('suppressed')"/>
+        <label for="showsuppress">Show suppression</label>
     </div>
     <table class="class-reports">
         <thead>
