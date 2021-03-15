@@ -1,0 +1,22 @@
+create table LAUNCH_STATISTICS
+(
+    CONTEXT_NAME VARCHAR2(256)  not null,
+    MATCHER_NAME VARCHAR2(2048) not null,
+    LAUNCH_ID    UUID           not null,
+    TEST_CLASS   VARCHAR2(1024) not null,
+    TEST_METHOD  VARCHAR2(1024) not null,
+    COUNTDOWN    boolean        not null,
+    TEST_RESULT  smallint(3)    not null,
+    START_MILLIS bigint         not null,
+    END_MILLIS   bigint         not null
+);
+
+alter table LAUNCH_STATISTICS
+    add constraint LAUNCH_STATISTICS_PK
+        primary key (CONTEXT_NAME, MATCHER_NAME, LAUNCH_ID, TEST_CLASS, TEST_METHOD);
+
+create index LAUNCH_STATISTICS_MATCHER_NAME_INDEX
+    on LAUNCH_STATISTICS (CONTEXT_NAME, MATCHER_NAME, COUNTDOWN);
+
+create index LAUNCH_STATISTICS_MATCHER_NAME_AND_TEST_RESULT_INDEX
+    on LAUNCH_STATISTICS (CONTEXT_NAME, MATCHER_NAME, COUNTDOWN, TEST_RESULT);

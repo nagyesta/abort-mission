@@ -12,11 +12,12 @@ import java.util.Objects;
 public class ReportOnlyMissionHealthCheckEvaluator extends AbstractMissionHealthCheckEvaluator {
 
     private ReportOnlyMissionHealthCheckEvaluator(final Builder builder) {
-        super(Objects.requireNonNull(builder, "Builder cannot be null.").matcher, new MissionStatisticsCollector());
+        super(Objects.requireNonNull(builder, "Builder cannot be null.").matcher, builder.statisticsCollector);
     }
 
-    public static Builder builder(final MissionHealthCheckMatcher matcher) {
-        return new Builder(matcher);
+    public static Builder builder(final MissionHealthCheckMatcher matcher,
+                                  final MissionStatisticsCollector statisticsCollector) {
+        return new Builder(matcher, statisticsCollector);
     }
 
     @Override
@@ -37,9 +38,12 @@ public class ReportOnlyMissionHealthCheckEvaluator extends AbstractMissionHealth
     @SuppressWarnings({"checkstyle:HiddenField", "checkstyle:DesignForExtension"})
     public static final class Builder {
         private final MissionHealthCheckMatcher matcher;
+        private final MissionStatisticsCollector statisticsCollector;
 
-        private Builder(final MissionHealthCheckMatcher matcher) {
+        private Builder(final MissionHealthCheckMatcher matcher,
+                        final MissionStatisticsCollector statisticsCollector) {
             this.matcher = Objects.requireNonNull(matcher, "Matcher cannot be null.");
+            this.statisticsCollector = Objects.requireNonNull(statisticsCollector, "Statistic collector cannot be null.");
         }
 
         public ReportOnlyMissionHealthCheckEvaluator build() {

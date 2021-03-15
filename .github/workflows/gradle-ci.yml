@@ -89,3 +89,24 @@ jobs:
           file: ./mission-report/flight-evaluation-report/build/reports/jacoco/report.xml
           flags: flighteval
           fail_ci_if_error: false
+      - name: Upload coverage to Codecov - Strongback - Base
+        uses: codecov/codecov-action@7d5dfa54903bd909319c580a00535b483d1efcf3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./strongback/strongback-base/build/reports/jacoco/report.xml
+          flags: strongback
+          fail_ci_if_error: false
+      - name: Upload coverage to Codecov - Strongback - H2 Supplier
+        uses: codecov/codecov-action@7d5dfa54903bd909319c580a00535b483d1efcf3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./strongback/strongback-h2-supplier/build/reports/jacoco/report.xml
+          flags: h2
+          fail_ci_if_error: false
+      - name: Upload coverage to Codecov - Strongback - RMI Supplier
+        uses: codecov/codecov-action@7d5dfa54903bd909319c580a00535b483d1efcf3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./strongback/strongback-rmi-supplier/build/reports/jacoco/report.xml
+          flags: rmi
+          fail_ci_if_error: false

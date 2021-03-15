@@ -1,5 +1,6 @@
 package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
+import com.github.nagyesta.abortmission.core.healthcheck.StageStatisticsSnapshot;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 
 import java.util.Objects;
@@ -17,13 +18,15 @@ public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionH
     private final int abortThreshold;
 
     private PercentageBasedMissionHealthCheckEvaluator(final Builder builder) {
-        super(Objects.requireNonNull(builder, "Builder cannot be null.").matcher, new MissionStatisticsCollector());
+        super(Objects.requireNonNull(builder, "Builder cannot be null.").matcher,
+                builder.statisticsCollector);
         this.burnInTestCount = builder.burnInTestCount;
         this.abortThreshold = builder.abortThreshold;
     }
 
-    public static Builder builder(final MissionHealthCheckMatcher matcher) {
-        return new Builder(matcher);
+    public static Builder builder(final MissionHealthCheckMatcher matcher,
+                                  final MissionStatisticsCollector statisticsCollector) {
+        return new Builder(matcher, statisticsCollector);
     }
 
     @Override
@@ -37,17 +40,19 @@ public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionH
 
     @Override
     protected boolean shouldAbortInternal() {
-        final double totalMissions = getMissionStatistics().getTotal();
+        final StageStatisticsSnapshot snapshot = getMissionStatistics().getSnapshot();
+        final double totalMissions = snapshot.getTotal();
         final boolean isActive = burnInTestCount <= totalMissions;
-        final double failedOrAborted = getMissionStatistics().getNotSuccessful();
+        final double failedOrAborted = snapshot.getNotSuccessful();
         final double failurePercentage = (failedOrAborted * DOUBLE_100) / totalMissions;
         return isActive && abortThreshold < failurePercentage;
     }
 
     @Override
     protected boolean shouldAbortCountdownInternal() {
-        final boolean isActive = burnInTestCount <= getCountdownStatistics().getTotal();
-        final boolean countdownNeverCompleted = getCountdownStatistics().getSucceeded() == 0;
+        final StageStatisticsSnapshot snapshot = getCountdownStatistics().getSnapshot();
+        final boolean isActive = burnInTestCount <= snapshot.getTotal();
+        final boolean countdownNeverCompleted = snapshot.getSucceeded() == 0;
         return isActive && countdownNeverCompleted;
     }
 
@@ -56,12 +61,14 @@ public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionH
         private static final int PERCENTAGE_UPPER_LIMIT = 99;
         private static final int PERCENTAGE_LOWER_LIMIT = 0;
         private static final int BURN_IN_LOWER_LIMIT = 1;
+        private final MissionStatisticsCollector statisticsCollector;
         private final MissionHealthCheckMatcher matcher;
         private int burnInTestCount = BURN_IN_LOWER_LIMIT;
         private int abortThreshold = PERCENTAGE_LOWER_LIMIT;
 
-        private Builder(final MissionHealthCheckMatcher matcher) {
+        private Builder(final MissionHealthCheckMatcher matcher, final MissionStatisticsCollector statisticsCollector) {
             this.matcher = Objects.requireNonNull(matcher, "Matcher cannot be null.");
+            this.statisticsCollector = Objects.requireNonNull(statisticsCollector, "Statistic collector cannot be null.");
         }
 
         public Builder burnInTestCount(final int burnInTestCount) {

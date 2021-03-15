@@ -3,6 +3,8 @@ package com.github.nagyesta.abortmission.core;
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
 import com.github.nagyesta.abortmission.core.healthcheck.StatisticsLogger;
 import com.github.nagyesta.abortmission.core.healthcheck.impl.StageStatisticsCollector;
+import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
+import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.watch.StageTimeStopwatch;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -350,38 +352,39 @@ class LaunchSequenceTemplateTest {
     }
 
     private void verifyOnlyIncrementFailedCalled(final StatisticsLogger logger) {
-        verify(logger, never()).incrementSucceeded();
-        verify(logger, never()).incrementSuppressed();
-        verify(logger).incrementFailed();
-        verify(logger, never()).incrementAborted();
+        verify(logger, never()).logAndIncrement(argThat(s -> s.getResult() == StageResult.SUCCESS));
+        verify(logger, never()).logAndIncrement(argThat(s -> s.getResult() == StageResult.SUPPRESSED));
+        verify(logger).logAndIncrement(argThat(s -> s.getResult() == StageResult.FAILURE));
+        verify(logger, never()).logAndIncrement(argThat(s -> s.getResult() == StageResult.ABORT));
     }
 
     private void verifyOnlyIncrementSuppressedCalled(final StatisticsLogger logger) {
-        verify(logger, never()).incrementSucceeded();
-        verify(logger).incrementSuppressed();
-        verify(logger, never()).incrementFailed();
-        verify(logger, never()).incrementAborted();
+        verify(logger, never()).logAndIncrement(argThat(s -> s.getResult() == StageResult.SUCCESS));
+        verify(logger).logAndIncrement(argThat(s -> s.getResult() == StageResult.SUPPRESSED));
+        verify(logger, never()).logAndIncrement(argThat(s -> s.getResult() == StageResult.FAILURE));
+        verify(logger, never()).logAndIncrement(argThat(s -> s.getResult() == StageResult.ABORT));
     }
 
     private void verifyOnlyIncrementSucceededCalled(final StatisticsLogger logger) {
-        verify(logger).incrementSucceeded();
-        verify(logger, never()).incrementSuppressed();
-        verify(logger, never()).incrementFailed();
-        verify(logger, never()).incrementAborted();
+        verify(logger).logAndIncrement(argThat(s -> s.getResult() == StageResult.SUCCESS));
+        verify(logger, never()).logAndIncrement(argThat(s -> s.getResult() == StageResult.SUPPRESSED));
+        verify(logger, never()).logAndIncrement(argThat(s -> s.getResult() == StageResult.FAILURE));
+        verify(logger, never()).logAndIncrement(argThat(s -> s.getResult() == StageResult.ABORT));
     }
 
     private void verifyOnlyIncrementAbortedCalled(final StatisticsLogger logger) {
-        verify(logger, never()).incrementSuppressed();
-        verify(logger, never()).incrementSucceeded();
-        verify(logger, never()).incrementFailed();
-        verify(logger).incrementAborted();
+        verify(logger, never()).logAndIncrement(argThat(s -> s.getResult() == StageResult.SUCCESS));
+        verify(logger, never()).logAndIncrement(argThat(s -> s.getResult() == StageResult.SUPPRESSED));
+        verify(logger, never()).logAndIncrement(argThat(s -> s.getResult() == StageResult.FAILURE));
+        verify(logger).logAndIncrement(argThat(s -> s.getResult() == StageResult.ABORT));
     }
 
     private Set<MissionHealthCheckEvaluator> addEvaluatorMockWithSpyLogger(final Set<MissionHealthCheckEvaluator> evaluators,
                                                                            final boolean aborting) {
+        final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
         final MissionHealthCheckEvaluator evaluator = mock(MissionHealthCheckEvaluator.class);
-        when(evaluator.countdownLogger()).thenReturn(spy(new StageStatisticsCollector()));
-        when(evaluator.missionLogger()).thenReturn(spy(new StageStatisticsCollector()));
+        when(evaluator.countdownLogger()).thenReturn(spy(new StageStatisticsCollector(matcher)));
+        when(evaluator.missionLogger()).thenReturn(spy(new StageStatisticsCollector(matcher)));
         when(evaluator.shouldAbort()).thenReturn(aborting);
         when(evaluator.shouldAbortCountdown()).thenReturn(aborting);
         evaluators.add(evaluator);

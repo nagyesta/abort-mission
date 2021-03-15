@@ -28,9 +28,8 @@ public class FuelTankTest {
                         .aborted(ABORTED_CASES)
                         .failed(FAILED_CASES));
         MissionControl.commandOps(CONTEXT_NAME).allEvaluators()
-                .forEach(evaluator -> assertEquals(
-                        FUEL_TANK_NOMINAL_STATS.getReadOnlyMission(),
-                        evaluator.getStats().getReadOnlyMission()));
+                .forEach(evaluator -> assertEquals(FUEL_TANK_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
+                        evaluator.getStats().getReadOnlyMission().getSnapshot()));
     }
 
 }

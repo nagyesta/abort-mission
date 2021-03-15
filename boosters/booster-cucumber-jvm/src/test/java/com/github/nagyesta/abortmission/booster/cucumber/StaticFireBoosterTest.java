@@ -29,10 +29,14 @@ public class StaticFireBoosterTest {
                         .failed(FAILED_CASES));
         MissionControl.commandOps(STATIC_FIRE).allEvaluators().forEach(evaluator -> {
             if (evaluator.getMatcher().getName().contains(CENTER_CORE)) {
-                assertEquals(CENTER_CORE_NOMINAL_STATS, evaluator.getStats());
+                assertEquals(CENTER_CORE_NOMINAL_STATS.getReadOnlyCountdown().getSnapshot(),
+                        evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                assertEquals(CENTER_CORE_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
+                        evaluator.getStats().getReadOnlyMission().getSnapshot());
             } else {
                 //As there is no countdown abort here, we need to compare the regular countdown with our mission stats
-                assertEquals(SIDE_BOOSTER_NOMINAL_STATS.getReadOnlyCountdown(), evaluator.getStats().getReadOnlyMission());
+                assertEquals(SIDE_BOOSTER_NOMINAL_STATS.getReadOnlyCountdown().getSnapshot(),
+                        evaluator.getStats().getReadOnlyMission().getSnapshot());
             }
         });
     }

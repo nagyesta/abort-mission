@@ -30,7 +30,10 @@ project.ext {
     jupiterPlatformVersion = '5.7.0'
     latestTestNgVersion = '7.3.0'
     mockitoCoreVersion = '3.6.0'
-    springBootVersion = '2.3.4.RELEASE'
+    springBootVersion = '2.4.3'
+    springVersion = '5.3.4'
+    jdbiVersion = '3.18.0'
+    h2Version = '1.4.200'
     gsonVersion = '2.8.6'
     cucumberVersion = '6.5.0'
     slf4jApiVersion = '1.7.30'
@@ -139,10 +142,12 @@ configure(subprojects.findAll({
                 }
                 excludes = [
                         "com.github.nagyesta.abortmission.core.LaunchSequenceTemplate",
+                        "com.github.nagyesta.abortmission.core.healthcheck.StatisticsLogger",
                         "com.github.nagyesta.abortmission.core.matcher.impl.CustomMatcher",
                         "com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets",
                         "com.github.nagyesta.abortmission.testkit.vanilla.FuelTankTestAssets",
                         "com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDropTestAssets",
+                        "com.github.nagyesta.abortmission.testkit.NoOpMatcher",
                         "com.github.nagyesta.abortmission.booster.junit4.support.LaunchAbortTestWatcher.1",
                         "com.github.nagyesta.abortmission.reporting.AbortMissionFlightEvaluationReportApp"
                 ]
