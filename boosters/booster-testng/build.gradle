@@ -10,8 +10,8 @@ dependencies {
     implementation "org.slf4j:slf4j-api:${rootProject.ext.slf4jApiVersion}"
     implementation "org.testng:testng:${rootProject.ext.testNgVersion}"
     testImplementation project(":boosters:testkit")
-    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.springBootVersion}"
-    testImplementation("org.springframework.boot:spring-boot-starter-test:${rootProject.ext.springBootVersion}") {
+    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.testSpringBootVersion}"
+    testImplementation("org.springframework.boot:spring-boot-starter-test:${rootProject.ext.testSpringBootVersion}") {
         exclude group: "org.junit.jupiter"
         exclude group: "org.junit.vintage"
     }

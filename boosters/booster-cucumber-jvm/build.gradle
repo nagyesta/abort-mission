@@ -11,13 +11,11 @@ dependencies {
     implementation "io.cucumber:cucumber-java:${rootProject.ext.cucumberVersion}"
     implementation "io.cucumber:cucumber-junit:${rootProject.ext.cucumberVersion}"
     testImplementation project(":boosters:testkit")
-    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.springBootVersion}"
-    testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.springBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.testSpringBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.testSpringBootVersion}"
     testImplementation "io.cucumber:cucumber-spring:${rootProject.ext.cucumberVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterVersion}"
-    testImplementation("org.junit.vintage:junit-vintage-engine:${rootProject.ext.jupiterVersion}") {
-        exclude group: "org.hamcrest", module: "hamcrest-core"
-    }
+    testImplementation "org.junit.vintage:junit-vintage-engine:${rootProject.ext.jupiterVersion}"
     testImplementation "org.junit.platform:junit-platform-testkit:${rootProject.ext.jupiterTestKitVersion}"
 }
 

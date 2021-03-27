@@ -9,8 +9,8 @@ dependencies {
     implementation project(":mission-control")
     implementation "junit:junit:${rootProject.ext.junit4Version}"
     testImplementation project(":boosters:testkit")
-    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.springBootVersion}"
-    testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.springBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.testSpringBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.testSpringBootVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterVersion}"
     testImplementation "org.junit.vintage:junit-vintage-engine:${rootProject.ext.jupiterVersion}"
     testImplementation "org.junit.platform:junit-platform-testkit:${rootProject.ext.jupiterTestKitVersion}"

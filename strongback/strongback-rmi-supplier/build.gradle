@@ -15,8 +15,8 @@ dependencies {
     testImplementation project(":boosters:booster-junit-jupiter")
     testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterVersion}"
     testImplementation "org.mockito:mockito-core:${rootProject.ext.mockitoCoreVersion}"
-    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.springBootVersion}"
-    testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.springBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.testSpringBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.testSpringBootVersion}"
     testImplementation "org.junit.platform:junit-platform-testkit:${rootProject.ext.jupiterTestKitVersion}"
 }
 
