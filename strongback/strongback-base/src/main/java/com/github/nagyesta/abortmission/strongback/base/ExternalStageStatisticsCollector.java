@@ -1,6 +1,5 @@
 package com.github.nagyesta.abortmission.strongback.base;
 
-import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyStageStatistics;
 import com.github.nagyesta.abortmission.core.healthcheck.StageStatistics;
 import com.github.nagyesta.abortmission.core.healthcheck.StageStatisticsSnapshot;
 import com.github.nagyesta.abortmission.core.healthcheck.impl.AbstractStageStatisticsCollector;
@@ -52,7 +51,7 @@ public abstract class ExternalStageStatisticsCollector extends AbstractStageStat
     @Override
     public void logTimeMeasurement(final StageTimeMeasurement timeMeasurement) {
         doLogTimeMeasurement(contextName, getMatcher(), countdown, Objects.requireNonNull(timeMeasurement, "Measurement cannot be null."));
-        if (StageTimeMeasurement.CLASS_ONLY.equals(timeMeasurement.getTestCaseId())) {
+        if (countdown) {
             LOGGER.trace("Logging countdown {} event for class: {} with id: {}",
                     timeMeasurement.getResult(), timeMeasurement.getTestClassId(), timeMeasurement.getLaunchId());
         } else {
@@ -101,23 +100,4 @@ public abstract class ExternalStageStatisticsCollector extends AbstractStageStat
                                                  MissionHealthCheckMatcher matcher,
                                                  boolean countdown,
                                                  StageTimeMeasurement measurement);
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof ReadOnlyStageStatistics)) {
-            return false;
-        }
-        final ReadOnlyStageStatistics that = (ReadOnlyStageStatistics) o;
-        return super.equals(that);
-    }
-
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
 }

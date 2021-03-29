@@ -38,6 +38,7 @@ project.ext {
     gsonVersion = '2.8.6'
     cucumberVersion = '6.5.0'
     slf4jApiVersion = '1.7.30'
+    logbackVersion = "1.2.3"
     jsonSchemaValidatorVersion = '1.0.43'
     lombokVersion = '1.18.12'
 }

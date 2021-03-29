@@ -25,6 +25,19 @@ class RmiServerManagerTest {
         //then exception
     }
 
+
+    @Test
+    void testStartServerShouldNotThrowExceptionsWhenDoStartThrowsInterruptedException() throws Exception {
+        //given
+        final RmiServerManager underTest = spy(new RmiServerManager(1));
+        doThrow(new InterruptedException()).when(underTest).doStart();
+
+        //when
+        underTest.startServer();
+
+        //then exception
+    }
+
     @Test
     void testStopServerShouldCatchAndConvertExceptionsWhenDoStopThrowsOne() throws Exception {
         //given

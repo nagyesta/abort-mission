@@ -46,6 +46,8 @@ public class RmiServerManager {
         try {
             doStart();
             Thread.currentThread().join();
+        } catch (final InterruptedException ex) {
+            //ignore
         } catch (final Exception ex) {
             throw new StrongbackException("Server startup failed.", ex);
         }
