@@ -25,7 +25,12 @@ public class ParachuteDropTest {
         engine.run();
         assertTrue(engine.hasFailure());
         MissionControl.matchingHealthChecks(ParachuteTestContext.class)
-                .forEach(evaluator -> assertEquals(evaluator.getStats(), PARACHUTE_NOMINAL_STATS_PER_CLASS));
+                .forEach(evaluator -> {
+                    assertEquals(PARACHUTE_NOMINAL_STATS_PER_CLASS.getReadOnlyCountdown().getSnapshot(),
+                            evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                    assertEquals(PARACHUTE_NOMINAL_STATS_PER_CLASS.getReadOnlyMission().getSnapshot(),
+                            evaluator.getStats().getReadOnlyMission().getSnapshot());
+                });
     }
 
     public static class ValidatingTestListener extends TestListenerAdapter {

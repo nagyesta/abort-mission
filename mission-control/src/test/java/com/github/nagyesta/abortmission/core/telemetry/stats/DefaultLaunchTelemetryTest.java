@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.mockito.InOrder;
 
 import java.util.*;
@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import static org.mockito.Mockito.*;
 
-class LaunchTelemetryTest {
+class DefaultLaunchTelemetryTest {
 
     private static Stream<Arguments> nullProvider() {
         return Stream.<Arguments>builder()
@@ -25,54 +25,40 @@ class LaunchTelemetryTest {
     }
 
     @ParameterizedTest
-    @MethodSource("nullProvider")
-    void testConstructorShouldThrowExceptionWhenCalledWithNull(final LaunchTelemetryConverter converter,
-                                                               final Map<String, AbortMissionCommandOps> nameSpaces) {
+    @NullSource
+    void testConstructorShouldThrowExceptionWhenCalledWithNull(final LaunchTelemetryDataSource dataSource) {
         //given
 
         //when
-        Assertions.assertThrows(NullPointerException.class, () -> new LaunchTelemetry(converter, nameSpaces));
+        Assertions.assertThrows(NullPointerException.class, () -> new DefaultLaunchTelemetry(dataSource));
 
         //then + exception
     }
 
     @Test
-    void testConstructorShouldCalledConverterWhenCalledWithValidData() {
+    void testConstructorShouldCallFetchClassStatisticsWhenCalledWithValidData() {
         //given
         final LaunchTelemetryConverter converter = mock(LaunchTelemetryConverter.class);
         final Map<String, AbortMissionCommandOps> nameSpaces = spy(new HashMap<>());
         final SortedMap<String, ClassTelemetry> classStats = spy(new TreeMap<>());
         when(converter.processClassStatistics(same(nameSpaces))).thenReturn(classStats);
+        final LaunchTelemetryDataSource dataSource = mock(LaunchTelemetryDataSource.class);
+        when(dataSource.fetchClassStatistics()).thenReturn(classStats);
 
         //when
-        final LaunchTelemetry actual = new LaunchTelemetry(converter, nameSpaces);
+        final DefaultLaunchTelemetry actual = new DefaultLaunchTelemetry(dataSource);
 
         //then
         Assertions.assertNotNull(actual);
         Assertions.assertSame(classStats, actual.getClasses());
         Assertions.assertNotNull(actual.getStats());
 
-        final InOrder inOrder = inOrder(converter, classStats);
-        inOrder.verify(converter).processClassStatistics(same(nameSpaces));
+        final InOrder inOrder = inOrder(dataSource, classStats);
+        inOrder.verify(dataSource).fetchClassStatistics();
         //noinspection ResultOfMethodCallIgnored
         inOrder.verify(classStats, times(2)).values();
         inOrder.verifyNoMoreInteractions();
         verifyNoInteractions(nameSpaces);
     }
 
-    @Test
-    void testResolveContextMapShouldResolveContextsFromCommandOpsWhenCalled() {
-        //given
-        final Set<String> names = AbortMissionCommandOps.contextNames();
-
-        //when
-        final Map<String, AbortMissionCommandOps> actual = LaunchTelemetry.resolveContextMap();
-
-        //then
-        Assertions.assertTrue(actual.keySet().containsAll(names));
-        actual.forEach((name, context) -> {
-            Assertions.assertNotNull(context);
-            Assertions.assertTrue(names.contains(name));
-        });
-    }
 }

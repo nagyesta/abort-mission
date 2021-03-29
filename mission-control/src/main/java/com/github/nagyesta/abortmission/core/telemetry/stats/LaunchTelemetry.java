@@ -1,80 +1,37 @@
 package com.github.nagyesta.abortmission.core.telemetry.stats;
 
-import com.github.nagyesta.abortmission.core.AbortMissionCommandOps;
-import com.github.nagyesta.abortmission.core.telemetry.converter.LaunchTelemetryConverter;
-
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.SortedMap;
 
 /**
- * Represents the root of the execution related measurement and statistical information
- * both summed up on total and per test class.
+ * Defines how launch telemetry should look like.
  */
-public final class LaunchTelemetry {
-
-    private final SortedMap<String, ClassTelemetry> classes;
-    private final AggregatedLaunchStats countdownStats;
-    private final AggregatedLaunchStats missionStats;
-    private final AggregatedLaunchStats stats;
+public interface LaunchTelemetry {
 
     /**
-     * Creates a new instance and parses the nameSpaces we have used.
+     * Returns the class level data partitioned by class name.
      *
-     * @param converter  The converter we are using to help processing the data.
-     * @param nameSpaces The namespaces used during test execution,
+     * @return class data
      */
-    public LaunchTelemetry(final LaunchTelemetryConverter converter,
-                           final Map<String, AbortMissionCommandOps> nameSpaces) {
-        Objects.requireNonNull(converter, "Converter cannot be null.");
-        Objects.requireNonNull(nameSpaces, "Namespaces cannot be null.");
-        this.classes = converter.processClassStatistics(nameSpaces);
-        this.countdownStats = new AggregatedLaunchStats(classes.values().stream()
-                .map(ClassTelemetry::getCountdown)
-                .map(StageLaunchStats::getStats)
-                .collect(Collectors.toSet()));
-        this.missionStats = new AggregatedLaunchStats(classes.values().stream()
-                .map(ClassTelemetry::getLaunches)
-                .map(Map::values)
-                .flatMap(Collection::stream)
-                .map(StageLaunchStats::getStats)
-                .collect(Collectors.toSet()));
-        this.stats = new AggregatedLaunchStats(new HashSet<>(Arrays.asList(countdownStats, missionStats)));
-    }
+    SortedMap<String, ClassTelemetry> getClasses();
 
     /**
-     * Collects the namespace information from {@link AbortMissionCommandOps} and calls
-     * the constructor with the results.
+     * Returns the aggregated stats based on all data points.
      *
-     * @return the collected launch telemetry.
+     * @return stats
      */
-    public static LaunchTelemetry collect() {
-        return new LaunchTelemetry(new LaunchTelemetryConverter(), resolveContextMap());
-    }
+    AggregatedLaunchStats getStats();
 
-    protected static Map<String, AbortMissionCommandOps> resolveContextMap() {
-        final Map<Boolean, List<String>> contextNames = AbortMissionCommandOps.contextNames().stream()
-                .collect(Collectors.partitioningBy(String::isEmpty));
-        final Map<String, AbortMissionCommandOps> nameSpaces = new TreeMap<>();
-        contextNames.getOrDefault(false, Collections.emptyList()).forEach(s -> nameSpaces.put(s, AbortMissionCommandOps.named(s)));
-        if (contextNames.containsKey(true) && !contextNames.get(true).isEmpty()) {
-            nameSpaces.put("", AbortMissionCommandOps.shared());
-        }
-        return nameSpaces;
-    }
+    /**
+     * Returns the aggregated stats based on countdown data points only.
+     *
+     * @return stats
+     */
+    AggregatedLaunchStats getCountdownStats();
 
-    public SortedMap<String, ClassTelemetry> getClasses() {
-        return classes;
-    }
-
-    public AggregatedLaunchStats getStats() {
-        return stats;
-    }
-
-    public AggregatedLaunchStats getCountdownStats() {
-        return countdownStats;
-    }
-
-    public AggregatedLaunchStats getMissionStats() {
-        return missionStats;
-    }
+    /**
+     * Returns the aggregated stats based on mission data points only.
+     *
+     * @return stats
+     */
+    AggregatedLaunchStats getMissionStats();
 }

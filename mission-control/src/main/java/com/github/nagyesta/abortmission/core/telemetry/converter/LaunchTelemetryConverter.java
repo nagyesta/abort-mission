@@ -7,15 +7,12 @@ import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 import com.github.nagyesta.abortmission.core.telemetry.stats.ClassTelemetry;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
  * Converter implementation that allows simplified processing of time series data on a test suite level.
  */
-public class LaunchTelemetryConverter {
-
-    private final ClassTelemetryConverter classConverter;
+public class LaunchTelemetryConverter extends BaseLaunchTelemetryConverter {
 
     /**
      * Creates new instance and sets default classConverter implementation.
@@ -30,7 +27,7 @@ public class LaunchTelemetryConverter {
      * @param classConverter The class converter we will use for class level parsing.
      */
     public LaunchTelemetryConverter(final ClassTelemetryConverter classConverter) {
-        this.classConverter = Objects.requireNonNull(classConverter, "ClassConverter cannot be null.");
+        super(classConverter);
     }
 
     /**
@@ -47,12 +44,7 @@ public class LaunchTelemetryConverter {
             mergeInto(matchersByClassAndMethod, evaluator);
             mergeInto(byTestClassAccumulator, evaluator.getCountdownStatistics(), evaluator.getMissionStatistics());
         });
-        final SortedMap<String, ClassTelemetry> parsedClasses = new TreeMap<>();
-        byTestClassAccumulator.forEach((className, measurementList) -> {
-            final Map<String, Set<String>> matcherNames = matchersByClassAndMethod.getOrDefault(className, Collections.emptyMap());
-            parsedClasses.put(className, new ClassTelemetry(classConverter, className, measurementList, matcherNames));
-        });
-        return Collections.unmodifiableSortedMap(parsedClasses);
+        return repartitionByClasses(matchersByClassAndMethod, byTestClassAccumulator);
     }
 
     /**
@@ -78,10 +70,10 @@ public class LaunchTelemetryConverter {
                              final MissionHealthCheckEvaluator evaluator) {
         Objects.requireNonNull(matchersByClassAndMethod, "Target map cannot be null.");
         Objects.requireNonNull(evaluator, "Evaluator cannot be null.");
-        mergeMatcherNamesByClassAndMethodName(matchersByClassAndMethod,
-                evaluator.getCountdownStatistics().timeSeriesStream(), evaluator.getMatcher().getName());
-        mergeMatcherNamesByClassAndMethodName(matchersByClassAndMethod,
-                evaluator.getMissionStatistics().timeSeriesStream(), evaluator.getMatcher().getName());
+        mergeInto(matchersByClassAndMethod,
+                evaluator.getCountdownStatistics().timeSeriesStream(),
+                evaluator.getMissionStatistics().timeSeriesStream(),
+                evaluator.getMatcher().getName());
     }
 
     /**
@@ -97,45 +89,7 @@ public class LaunchTelemetryConverter {
         Objects.requireNonNull(measurementsByClassName, "Target map cannot be null.");
         Objects.requireNonNull(countdownStatistics, "CountdownStatistics cannot be null.");
         Objects.requireNonNull(missionStatistics, "MissionStatistics cannot be null.");
-        partitionTimeSeriesByClassName(measurementsByClassName, countdownStatistics.timeSeriesStream());
-        partitionTimeSeriesByClassName(measurementsByClassName, missionStatistics.timeSeriesStream());
-    }
-
-    private void partitionTimeSeriesByClassName(
-            final Map<String, List<StageTimeMeasurement>> targetMap,
-            final Stream<StageTimeMeasurement> timeSeriesStream) {
-        timeSeriesStream.collect(Collectors.groupingBy(StageTimeMeasurement::getTestClassId))
-                .forEach((testClassId, measurementList) -> {
-                    measurementList.stream()
-                            .collect(Collectors.groupingBy(StageTimeMeasurement::getTestCaseId))
-                            .forEach((testCaseId, measurements) -> {
-                                mergeIntoIntermediateClassMap(targetMap, testClassId, measurementList);
-                            });
-                });
-    }
-
-    private void mergeMatcherNamesByClassAndMethodName(
-            final Map<String, Map<String, Set<String>>> targetMap,
-            final Stream<StageTimeMeasurement> timeSeriesStream,
-            final String evaluator) {
-        timeSeriesStream.collect(Collectors.groupingBy(StageTimeMeasurement::getTestClassId))
-                .forEach((testClassId, measurementList) -> {
-                    measurementList.stream()
-                            .collect(Collectors.groupingBy(StageTimeMeasurement::getTestCaseId))
-                            .forEach((testCaseId, measurements) -> {
-                                targetMap.computeIfAbsent(testClassId, key -> new TreeMap<>())
-                                        .computeIfAbsent(testCaseId, key -> new TreeSet<>())
-                                        .add(evaluator);
-                            });
-                });
-    }
-
-    private void mergeIntoIntermediateClassMap(
-            final Map<String, List<StageTimeMeasurement>> targetMap,
-            final String testClassId,
-            final List<StageTimeMeasurement> measurementList) {
-        targetMap.computeIfAbsent(testClassId, key -> new ArrayList<>())
-                .addAll(measurementList);
+        mergeInto(measurementsByClassName, countdownStatistics.timeSeriesStream(), missionStatistics.timeSeriesStream());
     }
 
 }

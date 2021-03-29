@@ -20,10 +20,10 @@ class CallableMissionTemplateSupportTest extends AbstractMissionTemplateSupportT
         AnnotationContextEvaluator.shared().findAndApplyLaunchPlanDefinition(CallableMissionTemplateSupportTest.class);
 
         final MissionHealthCheckEvaluator evaluator = getRelevantEvaluator(fail);
-        final int countdownStart = evaluator.getCountdownStatistics().getTotal();
-        final int countdownComplete = evaluator.getCountdownStatistics().getSucceeded();
-        final int countdownFail = evaluator.getCountdownStatistics().getFailed();
-        final int missionSuccess = evaluator.getMissionStatistics().getSucceeded();
+        final int countdownStart = evaluator.getCountdownStatistics().getSnapshot().getTotal();
+        final int countdownComplete = evaluator.getCountdownStatistics().getSnapshot().getSucceeded();
+        final int countdownFail = evaluator.getCountdownStatistics().getSnapshot().getFailed();
+        final int missionSuccess = evaluator.getMissionStatistics().getSnapshot().getSucceeded();
 
         final CallableMissionTemplateSupport<Boolean, Boolean> underTest = new CallableMissionTemplateSupport<Boolean, Boolean>(
                 MissionOutlineDefinition.SELF_PROPELLED_CALLABLE + fail,
@@ -32,10 +32,10 @@ class CallableMissionTemplateSupportTest extends AbstractMissionTemplateSupportT
             public Supplier<Boolean> preLaunchPreparationSupplier() {
                 return () -> {
                     //no change in advance
-                    Assertions.assertEquals(countdownStart, evaluator.getCountdownStatistics().getTotal());
-                    Assertions.assertEquals(countdownComplete, evaluator.getCountdownStatistics().getSucceeded());
-                    Assertions.assertEquals(countdownFail, evaluator.getMissionStatistics().getFailed());
-                    Assertions.assertEquals(missionSuccess, evaluator.getMissionStatistics().getSucceeded());
+                    Assertions.assertEquals(countdownStart, evaluator.getCountdownStatistics().getSnapshot().getTotal());
+                    Assertions.assertEquals(countdownComplete, evaluator.getCountdownStatistics().getSnapshot().getSucceeded());
+                    Assertions.assertEquals(countdownFail, evaluator.getMissionStatistics().getSnapshot().getFailed());
+                    Assertions.assertEquals(missionSuccess, evaluator.getMissionStatistics().getSnapshot().getSucceeded());
                     if (fail) {
                         throw new IllegalStateException();
                     }
@@ -59,15 +59,15 @@ class CallableMissionTemplateSupportTest extends AbstractMissionTemplateSupportT
         }
 
         //then
-        Assertions.assertEquals(countdownStart + 1, evaluator.getCountdownStatistics().getTotal());
+        Assertions.assertEquals(countdownStart + 1, evaluator.getCountdownStatistics().getSnapshot().getTotal());
         if (fail) {
-            Assertions.assertEquals(countdownComplete, evaluator.getCountdownStatistics().getSucceeded());
-            Assertions.assertEquals(countdownFail + 1, evaluator.getCountdownStatistics().getFailed());
-            Assertions.assertEquals(missionSuccess, evaluator.getMissionStatistics().getSucceeded());
+            Assertions.assertEquals(countdownComplete, evaluator.getCountdownStatistics().getSnapshot().getSucceeded());
+            Assertions.assertEquals(countdownFail + 1, evaluator.getCountdownStatistics().getSnapshot().getFailed());
+            Assertions.assertEquals(missionSuccess, evaluator.getMissionStatistics().getSnapshot().getSucceeded());
         } else {
-            Assertions.assertEquals(countdownComplete + 1, evaluator.getCountdownStatistics().getSucceeded());
-            Assertions.assertEquals(countdownFail, evaluator.getCountdownStatistics().getFailed());
-            Assertions.assertEquals(missionSuccess + 1, evaluator.getMissionStatistics().getSucceeded());
+            Assertions.assertEquals(countdownComplete + 1, evaluator.getCountdownStatistics().getSnapshot().getSucceeded());
+            Assertions.assertEquals(countdownFail, evaluator.getCountdownStatistics().getSnapshot().getFailed());
+            Assertions.assertEquals(missionSuccess + 1, evaluator.getMissionStatistics().getSnapshot().getSucceeded());
         }
     }
 

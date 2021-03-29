@@ -1,12 +1,15 @@
 package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
+import com.github.nagyesta.abortmission.core.telemetry.StageResult;
+import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.UUID;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -20,6 +23,7 @@ import static org.mockito.Mockito.*;
 class PercentageBasedMissionHealthCheckEvaluatorTest {
 
     private static final int ABORT_IF_HALF_FAILED = 50;
+    private static final String DASH = "-";
 
     private static Stream<Arguments> countdownEvaluatorProvider() {
         return Stream.<Arguments>builder()
@@ -50,15 +54,16 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
                                                                    final boolean expectedCountdownAbort) {
         //given
         final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final PercentageBasedMissionHealthCheckEvaluator underTest = PercentageBasedMissionHealthCheckEvaluator.builder(anyClass)
+        final PercentageBasedMissionHealthCheckEvaluator underTest = PercentageBasedMissionHealthCheckEvaluator
+                .builder(anyClass, new MissionStatisticsCollector(anyClass))
                 .abortThreshold(1)
                 .burnInTestCount(burnInCount)
                 .build();
 
         //when
-        IntStream.range(0, countdownFailure).parallel().forEach(i -> underTest.countdownLogger().incrementFailed());
-        IntStream.range(0, failureCount).parallel().forEach(i -> underTest.missionLogger().incrementFailed());
-        IntStream.range(0, countdownComplete).parallel().forEach(i -> underTest.countdownLogger().incrementSucceeded());
+        IntStream.range(0, countdownFailure).parallel().forEach(i -> underTest.countdownLogger().logAndIncrement(failure()));
+        IntStream.range(0, failureCount).parallel().forEach(i -> underTest.missionLogger().logAndIncrement(failure()));
+        IntStream.range(0, countdownComplete).parallel().forEach(i -> underTest.countdownLogger().logAndIncrement(success()));
         final boolean actual = underTest.shouldAbortCountdown();
 
         //then
@@ -75,15 +80,16 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
                                                                      final boolean expectedCountdownAbort) {
         //given
         final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final PercentageBasedMissionHealthCheckEvaluator underTest = PercentageBasedMissionHealthCheckEvaluator.builder(anyClass)
+        final PercentageBasedMissionHealthCheckEvaluator underTest = PercentageBasedMissionHealthCheckEvaluator
+                .builder(anyClass, new MissionStatisticsCollector(anyClass))
                 .abortThreshold(ABORT_IF_HALF_FAILED)
                 .burnInTestCount(burnInCount)
                 .build();
 
         //when
-        IntStream.range(0, failureCount).parallel().forEach(i -> underTest.missionLogger().incrementFailed());
-        IntStream.range(0, successCount).parallel().forEach(i -> underTest.missionLogger().incrementSucceeded());
-        IntStream.range(0, countdownComplete).parallel().forEach(i -> underTest.countdownLogger().incrementSucceeded());
+        IntStream.range(0, failureCount).parallel().forEach(i -> underTest.missionLogger().logAndIncrement(failure()));
+        IntStream.range(0, successCount).parallel().forEach(i -> underTest.missionLogger().logAndIncrement(success()));
+        IntStream.range(0, countdownComplete).parallel().forEach(i -> underTest.countdownLogger().logAndIncrement(success()));
         final boolean actual = underTest.shouldAbort();
 
         //then
@@ -96,11 +102,14 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     @ValueSource(ints = {-2, -1, 100, 101})
     void testAbortThresholdShouldThrowExceptionWhenCalledWithInvalidValue(final int input) {
         //given
+        final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
 
         //when
-        assertThrows(IllegalArgumentException.class, () -> PercentageBasedMissionHealthCheckEvaluator
-                .builder(mock(MissionHealthCheckMatcher.class))
-                .abortThreshold(input));
+        assertThrows(IllegalArgumentException.class, () -> {
+            PercentageBasedMissionHealthCheckEvaluator
+                    .builder(matcher, new MissionStatisticsCollector(matcher))
+                    .abortThreshold(input);
+        });
 
         //then exception
     }
@@ -109,10 +118,11 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     @ValueSource(ints = {-2, -1})
     void testBurnInTestCountShouldThrowExceptionWhenCalledWithInvalidValue(final int input) {
         //given
+        final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
 
         //when
         assertThrows(IllegalArgumentException.class, () -> PercentageBasedMissionHealthCheckEvaluator
-                .builder(mock(MissionHealthCheckMatcher.class))
+                .builder(matcher, new MissionStatisticsCollector(matcher))
                 .burnInTestCount(input));
 
         //then exception
@@ -121,8 +131,9 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     @Test
     void testShouldAbortShouldNotCallInternalMethodWhenDisarmed() {
         //given
+        final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
         final PercentageBasedMissionHealthCheckEvaluator underTest = spy(PercentageBasedMissionHealthCheckEvaluator
-                .builder(mock(MissionHealthCheckMatcher.class))
+                .builder(matcher, new MissionStatisticsCollector(matcher))
                 .abortThreshold(1)
                 .build());
         doReturn(true).when(underTest).isDisarmed(eq(ABORT_MISSION_DISARM_MISSION));
@@ -137,8 +148,9 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     @Test
     void testShouldAbortCountdownShouldNotCallInternalMethodWhenDisarmed() {
         //given
+        final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
         final PercentageBasedMissionHealthCheckEvaluator underTest = spy(PercentageBasedMissionHealthCheckEvaluator
-                .builder(mock(MissionHealthCheckMatcher.class))
+                .builder(matcher, new MissionStatisticsCollector(matcher))
                 .abortThreshold(1)
                 .build());
         doReturn(true).when(underTest).isDisarmed(eq(ABORT_MISSION_DISARM_COUNTDOWN));
@@ -148,5 +160,13 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
 
         //then
         verify(underTest, never()).shouldAbortCountdownInternal();
+    }
+
+    private StageTimeMeasurement failure() {
+        return new StageTimeMeasurement(UUID.randomUUID(), DASH, DASH, StageResult.FAILURE, 0, 0);
+    }
+
+    private StageTimeMeasurement success() {
+        return new StageTimeMeasurement(UUID.randomUUID(), DASH, DASH, StageResult.SUCCESS, 0, 0);
     }
 }

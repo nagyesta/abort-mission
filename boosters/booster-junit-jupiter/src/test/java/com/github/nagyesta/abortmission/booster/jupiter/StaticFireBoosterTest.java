@@ -30,11 +30,26 @@ public class StaticFireBoosterTest {
                         .aborted(ABORTED_CASES)
                         .failed(FAILED_CASES));
         MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestWithSideBoosters.class)
-                .forEach(evaluator -> assertEquals(SIDE_BOOSTER_NOMINAL_STATS, evaluator.getStats()));
+                .forEach(evaluator -> {
+                    assertEquals(SIDE_BOOSTER_NOMINAL_STATS.getReadOnlyCountdown().getSnapshot(),
+                            evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                    assertEquals(SIDE_BOOSTER_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
+                            evaluator.getStats().getReadOnlyMission().getSnapshot());
+                });
         MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestWithSideBoostersPerClass.class)
-                .forEach(evaluator -> assertEquals(SIDE_BOOSTER_NOMINAL_STATS_PER_CLASS, evaluator.getStats()));
+                .forEach(evaluator -> {
+                    assertEquals(SIDE_BOOSTER_NOMINAL_STATS_PER_CLASS.getReadOnlyCountdown().getSnapshot(),
+                            evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                    assertEquals(SIDE_BOOSTER_NOMINAL_STATS_PER_CLASS.getReadOnlyMission().getSnapshot(),
+                            evaluator.getStats().getReadOnlyMission().getSnapshot());
+                });
         MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestCenterCoreOnly.class.getDeclaredMethod("testIsOnFire"))
-                .forEach(evaluator -> assertEquals(CENTER_CORE_NOMINAL_STATS, evaluator.getStats()));
+                .forEach(evaluator -> {
+                    assertEquals(CENTER_CORE_NOMINAL_STATS.getReadOnlyCountdown().getSnapshot(),
+                            evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                    assertEquals(CENTER_CORE_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
+                            evaluator.getStats().getReadOnlyMission().getSnapshot());
+                });
     }
 
     @Test
@@ -59,7 +74,12 @@ public class StaticFireBoosterTest {
                         .aborted(0)
                         .failed(0));
         MissionControl.matchingHealthChecks(PARALLEL, StaticFireTestWithSideBoosters.class)
-                .forEach(evaluator -> assertEquals(PARALLEL_NOMINAL_STATS, evaluator.getStats()));
+                .forEach(evaluator -> {
+                    assertEquals(PARALLEL_NOMINAL_STATS.getReadOnlyCountdown().getSnapshot(),
+                            evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                    assertEquals(PARALLEL_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
+                            evaluator.getStats().getReadOnlyMission().getSnapshot());
+                });
         assertTrue(ParallelStaticFireTestWithSideBoostersTest.THREADS_USED.size() > 1);
     }
 

@@ -27,7 +27,12 @@ public class FuelTankTest {
                         .aborted(ABORTED_CASES)
                         .failed(FAILED_CASES));
         MissionControl.matchingHealthChecks(CONTEXT_NAME, FuelTankTestContext.class)
-                .forEach(evaluator -> assertEquals(FUEL_TANK_NOMINAL_STATS, evaluator.getStats()));
+                .forEach(evaluator -> {
+                    assertEquals(FUEL_TANK_NOMINAL_STATS.getReadOnlyCountdown().getSnapshot(),
+                            evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                    assertEquals(FUEL_TANK_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
+                            evaluator.getStats().getReadOnlyMission().getSnapshot());
+                });
     }
 
     @Test
@@ -46,7 +51,12 @@ public class FuelTankTest {
                         .aborted(ABORTED_CASES)
                         .failed(FAILED_CASES));
         MissionControl.matchingHealthChecks(PER_CLASS_CONTEXT, FuelTankTestContextPerClass.class)
-                .forEach(evaluator -> assertEquals(FUEL_TANK_NOMINAL_STATS_PER_CLASS, evaluator.getStats()));
+                .forEach(evaluator -> {
+                    assertEquals(FUEL_TANK_NOMINAL_STATS_PER_CLASS.getReadOnlyCountdown().getSnapshot(),
+                            evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                    assertEquals(FUEL_TANK_NOMINAL_STATS_PER_CLASS.getReadOnlyMission().getSnapshot(),
+                            evaluator.getStats().getReadOnlyMission().getSnapshot());
+                });
     }
 
 }

@@ -2,10 +2,13 @@ package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
 import com.github.nagyesta.abortmission.core.MissionControl;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
+import com.github.nagyesta.abortmission.core.telemetry.StageResult;
+import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.UUID;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -14,6 +17,8 @@ import static org.mockito.Mockito.mock;
 
 @SuppressWarnings("checkstyle:MagicNumber")
 class ReportOnlyMissionHealthCheckEvaluatorTest {
+
+    private static final String DASH = "-";
 
     private static Stream<Arguments> countdownEvaluatorProvider() {
         return Stream.<Arguments>builder()
@@ -45,9 +50,12 @@ class ReportOnlyMissionHealthCheckEvaluatorTest {
         final ReportOnlyMissionHealthCheckEvaluator underTest = MissionControl.reportOnlyEvaluator(anyClass).build();
 
         //when
-        IntStream.range(0, countdownFailure).parallel().forEach(i -> underTest.countdownLogger().incrementFailed());
-        IntStream.range(0, failureCount).parallel().forEach(i -> underTest.missionLogger().incrementFailed());
-        IntStream.range(0, countdownComplete).parallel().forEach(i -> underTest.countdownLogger().incrementSucceeded());
+        IntStream.range(0, countdownFailure).parallel()
+                .forEach(i -> underTest.countdownLogger().logAndIncrement(with(StageResult.FAILURE)));
+        IntStream.range(0, failureCount).parallel()
+                .forEach(i -> underTest.missionLogger().logAndIncrement(with(StageResult.FAILURE)));
+        IntStream.range(0, countdownComplete).parallel()
+                .forEach(i -> underTest.countdownLogger().logAndIncrement(with(StageResult.SUCCESS)));
         final boolean actual = underTest.shouldAbortCountdown();
 
         //then
@@ -64,12 +72,19 @@ class ReportOnlyMissionHealthCheckEvaluatorTest {
         final ReportOnlyMissionHealthCheckEvaluator underTest = MissionControl.reportOnlyEvaluator(anyClass).build();
 
         //when
-        IntStream.range(0, failureCount).parallel().forEach(i -> underTest.missionLogger().incrementFailed());
-        IntStream.range(0, successCount).parallel().forEach(i -> underTest.missionLogger().incrementSucceeded());
-        IntStream.range(0, countdownComplete).parallel().forEach(i -> underTest.countdownLogger().incrementSucceeded());
+        IntStream.range(0, failureCount).parallel()
+                .forEach(i -> underTest.missionLogger().logAndIncrement(with(StageResult.FAILURE)));
+        IntStream.range(0, successCount).parallel()
+                .forEach(i -> underTest.missionLogger().logAndIncrement(with(StageResult.SUCCESS)));
+        IntStream.range(0, countdownComplete).parallel()
+                .forEach(i -> underTest.countdownLogger().logAndIncrement(with(StageResult.SUCCESS)));
         final boolean actual = underTest.shouldAbort();
 
         //then
         assertFalse(actual);
+    }
+
+    private StageTimeMeasurement with(final StageResult result) {
+        return new StageTimeMeasurement(UUID.randomUUID(), DASH, DASH, result, 0, 0);
     }
 }

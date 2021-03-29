@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 
 import static com.github.nagyesta.abortmission.core.MissionControl.matcher;
 import static com.github.nagyesta.abortmission.core.MissionControl.percentageBasedEvaluator;
+import static com.github.nagyesta.abortmission.testkit.NoOpMatcher.NOOP;
 
 @SuppressWarnings({"checkstyle:JavadocVariable", "checkstyle:MagicNumber"})
 public final class FuelTankTestAssets {
@@ -20,12 +21,12 @@ public final class FuelTankTestAssets {
     public static final String PER_CLASS_CONTEXT = "fuelTankPerClass";
     public static final ReadOnlyMissionStatistics FUEL_TANK_NOMINAL_STATS =
             new MissionStatisticsCollector(
-                    new StageStatisticsCollector(0, 0, 5, 0),
-                    new StageStatisticsCollector(1, 2, 1, 1));
+                    new StageStatisticsCollector(NOOP, 0, 0, 5, 0),
+                    new StageStatisticsCollector(NOOP, 1, 2, 1, 1));
     public static final ReadOnlyMissionStatistics FUEL_TANK_NOMINAL_STATS_PER_CLASS =
             new MissionStatisticsCollector(
-                    new StageStatisticsCollector(0, 0, 1, 0),
-                    new StageStatisticsCollector(1, 2, 1, 1));
+                    new StageStatisticsCollector(NOOP, 0, 0, 1, 0),
+                    new StageStatisticsCollector(NOOP, 1, 2, 1, 1));
     public static final int DISABLED_CASES = 0;
     public static final int TOTAL_CASES = 5;
     public static final int SUCCESSFUL_CASES = 1;

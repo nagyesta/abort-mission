@@ -1,0 +1,69 @@
+group = "${rootProject.group}.strongback"
+
+project.ext {
+    artifactDisplayName = "Abort Mission - Strongback RMI Supplier"
+    artifactDescription = "RMI implementation of Strongback logic."
+}
+
+dependencies {
+    implementation (project(":strongback:strongback-base")) {
+        transitive = false
+    }
+    implementation project(":mission-control")
+    implementation "org.slf4j:slf4j-api:${rootProject.ext.slf4jApiVersion}"
+    testImplementation project(":boosters:testkit")
+    testImplementation project(":boosters:booster-junit-jupiter")
+    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterVersion}"
+    testImplementation "org.mockito:mockito-core:${rootProject.ext.mockitoCoreVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.testSpringBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.testSpringBootVersion}"
+    testImplementation "org.junit.platform:junit-platform-testkit:${rootProject.ext.jupiterTestKitVersion}"
+}
+
+test {
+    useJUnitPlatform {
+        systemProperty("abort-mission.report.directory", file("${buildDir}/reports/abort-mission/"))
+        includeTags 'unit', 'integration'
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId = "abort.${project.name}"
+            pom {
+                name = "${project.artifactDisplayName}"
+                description = "${project.artifactDescription}"
+                url = rootProject.ext.repoUrl
+                licenses {
+                    license {
+                        name = rootProject.ext.licenseName
+                        url = rootProject.ext.licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id = rootProject.ext.maintainerId
+                        name = rootProject.ext.maintainerName
+                        url = rootProject.ext.maintainerUrl
+                    }
+                }
+                scm {
+                    connection = rootProject.ext.scmConnection
+                    developerConnection = rootProject.ext.scmConnection
+                    url = rootProject.ext.scmProjectUrl
+                }
+                withXml {
+                    asNode().dependencies.'*'.findAll() {
+                        it.scope.text() == 'runtime'
+                    }.each { it.scope*.value = 'compile' }
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}

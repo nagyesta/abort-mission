@@ -27,7 +27,12 @@ public class ParachuteDropTest {
                         .aborted(ABORTED_CASES)
                         .failed(FAILED_CASES));
         MissionControl.matchingHealthChecks(ParachuteTestContext.class)
-                .forEach(evaluator -> assertEquals(PARACHUTE_NOMINAL_STATS, evaluator.getStats()));
+                .forEach(evaluator -> {
+                    assertEquals(PARACHUTE_NOMINAL_STATS.getReadOnlyCountdown().getSnapshot(),
+                            evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                    assertEquals(PARACHUTE_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
+                            evaluator.getStats().getReadOnlyMission().getSnapshot());
+                });
     }
 
 }

@@ -2,6 +2,9 @@ package com.github.nagyesta.abortmission.core;
 
 import com.github.nagyesta.abortmission.core.annotation.AnnotationContextEvaluator;
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
+import com.github.nagyesta.abortmission.core.healthcheck.StageStatisticsCollectorFactory;
+import com.github.nagyesta.abortmission.core.healthcheck.impl.DefaultStageStatisticsCollectorFactory;
+import com.github.nagyesta.abortmission.core.healthcheck.impl.MissionStatisticsCollector;
 import com.github.nagyesta.abortmission.core.healthcheck.impl.PercentageBasedMissionHealthCheckEvaluator;
 import com.github.nagyesta.abortmission.core.healthcheck.impl.ReportOnlyMissionHealthCheckEvaluator;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
@@ -52,7 +55,23 @@ public final class MissionControl {
      * @return builder
      */
     public static PercentageBasedMissionHealthCheckEvaluator.Builder percentageBasedEvaluator(final MissionHealthCheckMatcher matcher) {
-        return PercentageBasedMissionHealthCheckEvaluator.builder(matcher);
+        return percentageBasedEvaluator(matcher, new DefaultStageStatisticsCollectorFactory());
+    }
+
+    /**
+     * Creates a builder instance for percentage based evaluators.
+     *
+     * @param matcher           The matcher we want to use for this evaluator.
+     * @param statisticsFactory The factory instance that can provide statistics collectors.
+     * @return builder
+     */
+    public static PercentageBasedMissionHealthCheckEvaluator.Builder percentageBasedEvaluator(
+            final MissionHealthCheckMatcher matcher,
+            final StageStatisticsCollectorFactory statisticsFactory) {
+        return PercentageBasedMissionHealthCheckEvaluator
+                .builder(matcher, new MissionStatisticsCollector(
+                        statisticsFactory.newCountdownStatistics(matcher),
+                        statisticsFactory.newMissionStatistics(matcher)));
     }
 
     /**
@@ -62,7 +81,23 @@ public final class MissionControl {
      * @return builder
      */
     public static ReportOnlyMissionHealthCheckEvaluator.Builder reportOnlyEvaluator(final MissionHealthCheckMatcher matcher) {
-        return ReportOnlyMissionHealthCheckEvaluator.builder(matcher);
+        return reportOnlyEvaluator(matcher, new DefaultStageStatisticsCollectorFactory());
+    }
+
+    /**
+     * Creates a builder instance for report only evaluators.
+     *
+     * @param matcher           The matcher we want to use for this evaluator.
+     * @param statisticsFactory The factory instance that can provide statistics collectors.
+     * @return builder
+     */
+    public static ReportOnlyMissionHealthCheckEvaluator.Builder reportOnlyEvaluator(
+            final MissionHealthCheckMatcher matcher,
+            final StageStatisticsCollectorFactory statisticsFactory) {
+        return ReportOnlyMissionHealthCheckEvaluator
+                .builder(matcher, new MissionStatisticsCollector(
+                        statisticsFactory.newCountdownStatistics(matcher),
+                        statisticsFactory.newMissionStatistics(matcher)));
     }
 
     /**

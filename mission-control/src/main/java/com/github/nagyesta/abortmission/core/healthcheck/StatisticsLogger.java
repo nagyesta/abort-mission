@@ -5,26 +5,6 @@ import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 public interface StatisticsLogger {
 
     /**
-     * Increases the number counting failures.
-     */
-    void incrementFailed();
-
-    /**
-     * Increases the number counting abortions.
-     */
-    void incrementAborted();
-
-    /**
-     * Increases the number counting successes.
-     */
-    void incrementSucceeded();
-
-    /**
-     * Increases the number counting suppression.
-     */
-    void incrementSuppressed();
-
-    /**
      * Captures the measurement instance provided for reporting purposes.
      *
      * @param timeMeasurement The measurement we observed.
@@ -37,5 +17,7 @@ public interface StatisticsLogger {
      *
      * @param timeMeasurement The measurement we observed.
      */
-    void logAndIncrement(StageTimeMeasurement timeMeasurement);
+    default void logAndIncrement(final StageTimeMeasurement timeMeasurement) {
+        logTimeMeasurement(timeMeasurement);
+    }
 }

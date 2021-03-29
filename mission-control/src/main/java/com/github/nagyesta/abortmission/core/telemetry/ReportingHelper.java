@@ -1,6 +1,9 @@
 package com.github.nagyesta.abortmission.core.telemetry;
 
+import com.github.nagyesta.abortmission.core.telemetry.stats.DefaultLaunchTelemetry;
+import com.github.nagyesta.abortmission.core.telemetry.stats.DefaultLaunchTelemetryDataSource;
 import com.github.nagyesta.abortmission.core.telemetry.stats.LaunchTelemetry;
+import com.github.nagyesta.abortmission.core.telemetry.stats.LaunchTelemetryDataSource;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -22,20 +25,33 @@ public class ReportingHelper {
      * Primary entry point of the class. Collects telemetry and saves to the designated folder.
      */
     public void report() {
+        report(launchTelemetryDataSource());
+    }
+
+    /**
+     * Collects telemetry and saves to the designated folder using the provided data source as input.
+     *
+     * @param dataSource The source of the telemetry data.
+     */
+    public void report(final LaunchTelemetryDataSource dataSource) {
         reportingRoot().ifPresent(r -> {
-            final LaunchTelemetry telemetry = launchTelemetry();
+            final LaunchTelemetry telemetry = launchTelemetry(dataSource);
             final File json = jsonFile(r);
             writeJson(telemetry, json);
         });
     }
 
     /**
-     * Returns ths collected launch telemetry.
+     * Returns ths collected launch telemetry data as a data source.
      *
      * @return telemetry
      */
-    protected LaunchTelemetry launchTelemetry() {
-        return LaunchTelemetry.collect();
+    protected LaunchTelemetryDataSource launchTelemetryDataSource() {
+        return DefaultLaunchTelemetryDataSource.collect();
+    }
+
+    private LaunchTelemetry launchTelemetry(final LaunchTelemetryDataSource dataSource) {
+        return new DefaultLaunchTelemetry(dataSource);
     }
 
     /**

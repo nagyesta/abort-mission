@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
 import static com.github.nagyesta.abortmission.core.MissionControl.*;
+import static com.github.nagyesta.abortmission.testkit.NoOpMatcher.NOOP;
 
 @SuppressWarnings({"checkstyle:JavadocVariable", "checkstyle:MagicNumber"})
 public final class StaticFireTestAssets {
@@ -24,24 +25,24 @@ public final class StaticFireTestAssets {
     public static final String PER_CLASS = "PerClass";
     public static final ReadOnlyMissionStatistics CENTER_CORE_NOMINAL_STATS =
             new MissionStatisticsCollector(
-                    new StageStatisticsCollector(0, 0, 0, 0),
-                    new StageStatisticsCollector(0, 0, 1, 0));
+                    new StageStatisticsCollector(NOOP, 0, 0, 0, 0),
+                    new StageStatisticsCollector(NOOP, 0, 0, 1, 0));
     public static final ReadOnlyMissionStatistics SIDE_BOOSTER_NOMINAL_STATS =
             new MissionStatisticsCollector(
-                    new StageStatisticsCollector(2, 499, 0, 0),
-                    new StageStatisticsCollector(0, 0, 0, 0));
+                    new StageStatisticsCollector(NOOP, 2, 499, 0, 0),
+                    new StageStatisticsCollector(NOOP, 0, 0, 0, 0));
     public static final ReadOnlyMissionStatistics SIDE_BOOSTER_NOMINAL_STATS_PER_CLASS =
             new MissionStatisticsCollector(
-                    new StageStatisticsCollector(1, 0, 0, 0),
-                    new StageStatisticsCollector(0, 0, 0, 0));
+                    new StageStatisticsCollector(NOOP, 1, 0, 0, 0),
+                    new StageStatisticsCollector(NOOP, 0, 0, 0, 0));
     public static final ReadOnlyMissionStatistics PARALLEL_NOMINAL_STATS =
             new MissionStatisticsCollector(
-                    new StageStatisticsCollector(0, 0, 201, 0),
-                    new StageStatisticsCollector(0, 0, 400, 0));
+                    new StageStatisticsCollector(NOOP, 0, 0, 201, 0),
+                    new StageStatisticsCollector(NOOP, 0, 0, 400, 0));
     public static final ReadOnlyMissionStatistics PARALLEL_NOMINAL_STATS_PER_CLASS =
             new MissionStatisticsCollector(
-                    new StageStatisticsCollector(0, 0, 1, 0),
-                    new StageStatisticsCollector(0, 0, 400, 0));
+                    new StageStatisticsCollector(NOOP, 0, 0, 1, 0),
+                    new StageStatisticsCollector(NOOP, 0, 0, 400, 0));
     public static final int DISABLED_CASES = 0;
     public static final int TOTAL_CASES = 503;
     public static final int SUCCESSFUL_CASES = 2;

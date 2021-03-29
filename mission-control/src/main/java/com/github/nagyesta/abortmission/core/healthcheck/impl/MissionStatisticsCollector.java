@@ -2,6 +2,8 @@ package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
 import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyMissionStatistics;
 import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyStageStatistics;
+import com.github.nagyesta.abortmission.core.healthcheck.StageStatistics;
+import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -11,15 +13,17 @@ import java.util.StringJoiner;
  */
 public final class MissionStatisticsCollector implements ReadOnlyMissionStatistics {
 
-    private final StageStatisticsCollector countdown;
-    private final StageStatisticsCollector mission;
+    private final StageStatistics countdown;
+    private final StageStatistics mission;
 
     /**
      * Default constructor using 0 as baseline all across the measurements.
      * Allows clean starts.
+     *
+     * @param matcher The matcher used by the evaluator owning this collector.
      */
-    public MissionStatisticsCollector() {
-        this(new StageStatisticsCollector(), new StageStatisticsCollector());
+    public MissionStatisticsCollector(final MissionHealthCheckMatcher matcher) {
+        this(new StageStatisticsCollector(matcher), new StageStatisticsCollector(matcher));
     }
 
     /**
@@ -28,17 +32,17 @@ public final class MissionStatisticsCollector implements ReadOnlyMissionStatisti
      * @param countdown The countdown specific statistics.
      * @param mission   The mission specific statistics.
      */
-    public MissionStatisticsCollector(final StageStatisticsCollector countdown,
-                                      final StageStatisticsCollector mission) {
+    public MissionStatisticsCollector(final StageStatistics countdown,
+                                      final StageStatistics mission) {
         this.countdown = Objects.requireNonNull(countdown, "Countdown statistics cannot be null.");
         this.mission = Objects.requireNonNull(mission, "Mission statistics cannot be null.");
     }
 
-    public StageStatisticsCollector getCountdown() {
+    public StageStatistics getCountdown() {
         return countdown;
     }
 
-    public StageStatisticsCollector getMission() {
+    public StageStatistics getMission() {
         return mission;
     }
 

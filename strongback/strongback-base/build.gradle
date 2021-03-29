@@ -1,0 +1,61 @@
+group = "${rootProject.group}.strongback"
+
+project.ext {
+    artifactDisplayName = "Abort Mission - Strongback Base"
+    artifactDescription = "Generic parts of supporting components (e.g. solving JVM forking problem)."
+}
+
+dependencies {
+    implementation project(":mission-control")
+    implementation "org.springframework:spring-context:${rootProject.ext.springVersion}"
+    implementation "org.springframework:spring-core:${rootProject.ext.springVersion}"
+    implementation "org.slf4j:slf4j-api:${rootProject.ext.slf4jApiVersion}"
+    implementation "ch.qos.logback:logback-classic:${rootProject.ext.logbackVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterPlatformVersion}"
+    testImplementation "org.mockito:mockito-core:${rootProject.ext.mockitoCoreVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId = "abort.${project.name}"
+            pom {
+                name = "${project.artifactDisplayName}"
+                description = "${project.artifactDescription}"
+                url = rootProject.ext.repoUrl
+                licenses {
+                    license {
+                        name = rootProject.ext.licenseName
+                        url = rootProject.ext.licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id = rootProject.ext.maintainerId
+                        name = rootProject.ext.maintainerName
+                        url = rootProject.ext.maintainerUrl
+                    }
+                }
+                scm {
+                    connection = rootProject.ext.scmConnection
+                    developerConnection = rootProject.ext.scmConnection
+                    url = rootProject.ext.scmProjectUrl
+                }
+                withXml {
+                    asNode().dependencies.'*'.findAll() {
+                        it.scope.text() == 'runtime'
+                    }.each { it.scope*.value = 'compile' }
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}

@@ -40,9 +40,19 @@ public class StaticFireBoosterTest {
         assertEquals(FAILED.get(), FAILED_CASES_CONFIG_ERROR_ONLY);
         assertEquals(SKIPPED.get(), CASES_SKIPPED_DUE_TO_CONFIG_ERROR);
         MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestWithSideBoosters.class)
-                .forEach(evaluator -> assertEquals(evaluator.getStats(), SIDE_BOOSTER_NOMINAL_STATS_PER_CLASS));
+                .forEach(evaluator -> {
+                    assertEquals(SIDE_BOOSTER_NOMINAL_STATS_PER_CLASS.getReadOnlyCountdown().getSnapshot(),
+                            evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                    assertEquals(SIDE_BOOSTER_NOMINAL_STATS_PER_CLASS.getReadOnlyMission().getSnapshot(),
+                            evaluator.getStats().getReadOnlyMission().getSnapshot());
+                });
         MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestCenterCoreOnly.class.getDeclaredMethod("testIsOnFire"))
-                .forEach(evaluator -> assertEquals(evaluator.getStats(), CENTER_CORE_NOMINAL_STATS));
+                .forEach(evaluator -> {
+                    assertEquals(CENTER_CORE_NOMINAL_STATS.getReadOnlyCountdown().getSnapshot(),
+                            evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                    assertEquals(CENTER_CORE_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
+                            evaluator.getStats().getReadOnlyMission().getSnapshot());
+                });
     }
 
     @Test(groups = "integration")
@@ -60,7 +70,12 @@ public class StaticFireBoosterTest {
         assertEquals(PARALLEL_FAILED.get(), 0);
         assertEquals(PARALLEL_SKIPPED.get(), 0);
         MissionControl.matchingHealthChecks(PARALLEL, ParallelStaticFireTestWithSideBoosters.class)
-                .forEach(evaluator -> assertEquals(evaluator.getStats(), PARALLEL_NOMINAL_STATS_PER_CLASS));
+                .forEach(evaluator -> {
+                    assertEquals(PARALLEL_NOMINAL_STATS_PER_CLASS.getReadOnlyCountdown().getSnapshot(),
+                            evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                    assertEquals(PARALLEL_NOMINAL_STATS_PER_CLASS.getReadOnlyMission().getSnapshot(),
+                            evaluator.getStats().getReadOnlyMission().getSnapshot());
+                });
     }
 
 

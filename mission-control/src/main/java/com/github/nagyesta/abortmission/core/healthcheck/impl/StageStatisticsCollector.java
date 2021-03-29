@@ -1,7 +1,9 @@
 package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
 import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyStageStatistics;
-import com.github.nagyesta.abortmission.core.healthcheck.StatisticsLogger;
+import com.github.nagyesta.abortmission.core.healthcheck.StageStatistics;
+import com.github.nagyesta.abortmission.core.healthcheck.StageStatisticsSnapshot;
+import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +18,7 @@ import java.util.stream.Stream;
 /**
  * The component counting mission success/failure events in order to aid abort decision making.
  */
-public class StageStatisticsCollector implements ReadOnlyStageStatistics, StatisticsLogger {
+public class StageStatisticsCollector extends AbstractStageStatisticsCollector implements StageStatistics {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StageStatisticsCollector.class);
     private final AtomicInteger failed;
@@ -28,20 +30,25 @@ public class StageStatisticsCollector implements ReadOnlyStageStatistics, Statis
     /**
      * Default constructor using 0 as baseline all across the measurements.
      * Allows clean starts.
+     *
+     * @param matcher The matcher held by the evaluator owning this collector as well..
      */
-    public StageStatisticsCollector() {
-        this(0, 0, 0, 0);
+    public StageStatisticsCollector(final MissionHealthCheckMatcher matcher) {
+        this(matcher, 0, 0, 0, 0);
     }
 
     /**
      * Constructor allowing us to start with some previous knowledge about successes or failures.
      *
+     * @param matcher    The matcher held by the evaluator owning this collector as well.
      * @param failed     The number of times test or preparation was failed.
      * @param aborted    The number of times test or preparation was aborted.
      * @param succeeded  The number of times test or preparation was completed successfully.
      * @param suppressed The number of times abort/failure reporting was suppressed.
      */
-    public StageStatisticsCollector(final int failed, final int aborted, final int succeeded, final int suppressed) {
+    public StageStatisticsCollector(final MissionHealthCheckMatcher matcher,
+                                    final int failed, final int aborted, final int succeeded, final int suppressed) {
+        super(matcher);
         this.failed = new AtomicInteger(failed);
         this.aborted = new AtomicInteger(aborted);
         this.succeeded = new AtomicInteger(succeeded);
@@ -49,58 +56,13 @@ public class StageStatisticsCollector implements ReadOnlyStageStatistics, Statis
     }
 
     @Override
-    public int getTotal() {
-        return failed.get() + aborted.get() + succeeded.get();
-    }
-
-    @Override
-    public int getNotSuccessful() {
-        return failed.get() + aborted.get();
-    }
-
-    @Override
-    public int getFailed() {
-        return failed.get();
-    }
-
-    @Override
-    public int getSucceeded() {
-        return succeeded.get();
-    }
-
-    @Override
-    public int getSuppressed() {
-        return suppressed.get();
-    }
-
-    @Override
-    public int getAborted() {
-        return aborted.get();
+    public StageStatisticsSnapshot getSnapshot() {
+        return new DefaultStageStatisticsSnapshot(failed.get(), succeeded.get(), aborted.get(), suppressed.get());
     }
 
     @Override
     public Stream<StageTimeMeasurement> timeSeriesStream() {
         return timeSeriesData.stream();
-    }
-
-    @Override
-    public void incrementFailed() {
-        failed.incrementAndGet();
-    }
-
-    @Override
-    public void incrementAborted() {
-        aborted.incrementAndGet();
-    }
-
-    @Override
-    public void incrementSucceeded() {
-        succeeded.incrementAndGet();
-    }
-
-    @Override
-    public void incrementSuppressed() {
-        suppressed.incrementAndGet();
     }
 
     @Override
@@ -121,16 +83,16 @@ public class StageStatisticsCollector implements ReadOnlyStageStatistics, Statis
         logTimeMeasurement(timeMeasurement);
         switch (timeMeasurement.getResult()) {
             case FAILURE:
-                incrementFailed();
+                failed.incrementAndGet();
                 break;
             case ABORT:
-                incrementAborted();
+                aborted.incrementAndGet();
                 break;
             case SUCCESS:
-                incrementSucceeded();
+                succeeded.incrementAndGet();
                 break;
             case SUPPRESSED:
-                incrementSuppressed();
+                suppressed.incrementAndGet();
                 break;
             default:
                 throw new UnsupportedOperationException("Unsupported stage result found: " + timeMeasurement.getResult());
@@ -146,10 +108,7 @@ public class StageStatisticsCollector implements ReadOnlyStageStatistics, Statis
             return false;
         }
         final ReadOnlyStageStatistics that = (ReadOnlyStageStatistics) o;
-        return failed.get() == that.getFailed()
-                && aborted.get() == that.getAborted()
-                && succeeded.get() == that.getSucceeded()
-                && suppressed.get() == that.getSuppressed();
+        return super.equals(o) && this.getSnapshot().equals(that.getSnapshot());
     }
 
     @Override

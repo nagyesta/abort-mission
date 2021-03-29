@@ -28,9 +28,8 @@ public class ParachuteDropTest {
                         .aborted(ABORTED_CASES)
                         .failed(FAILED_CASES));
         MissionControl.commandOps().allEvaluators()
-                .forEach(evaluator -> assertEquals(
-                        PARACHUTE_NOMINAL_STATS.getReadOnlyMission(),
-                        evaluator.getStats().getReadOnlyMission()));
+                .forEach(evaluator -> assertEquals(PARACHUTE_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
+                        evaluator.getStats().getReadOnlyMission().getSnapshot()));
     }
 
 }

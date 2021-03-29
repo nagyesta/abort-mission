@@ -25,7 +25,12 @@ public class FuelTankTest {
         engine.run();
         assertTrue(engine.hasFailure());
         MissionControl.matchingHealthChecks(CONTEXT_NAME, FuelTankTestContext.class)
-                .forEach(evaluator -> assertEquals(evaluator.getStats(), FUEL_TANK_NOMINAL_STATS_PER_CLASS));
+                .forEach(evaluator -> {
+                    assertEquals(FUEL_TANK_NOMINAL_STATS_PER_CLASS.getReadOnlyCountdown().getSnapshot(),
+                            evaluator.getStats().getReadOnlyCountdown().getSnapshot());
+                    assertEquals(FUEL_TANK_NOMINAL_STATS_PER_CLASS.getReadOnlyMission().getSnapshot(),
+                            evaluator.getStats().getReadOnlyMission().getSnapshot());
+                });
     }
 
     public static class ValidatingTestListener extends TestListenerAdapter {

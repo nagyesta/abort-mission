@@ -1,5 +1,6 @@
 package com.github.nagyesta.abortmission.core.telemetry;
 
+import java.beans.ConstructorProperties;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -30,6 +31,7 @@ public final class StageTimeMeasurement implements Comparable<StageTimeMeasureme
      * @param start       The start time of the stage execution.
      * @param end         The end time of the stage execution.
      */
+    @ConstructorProperties({"launchId", "testClassId", "testCaseId", "result", "start", "end"})
     public StageTimeMeasurement(final UUID launchId,
                                 final String testClassId,
                                 final String testCaseId,
