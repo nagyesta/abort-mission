@@ -23,7 +23,7 @@ coverage:
         flags: h2
       rmi:
         flags: rmi
-    patch: off
+    patch: false
 flags:
   core:
     paths:

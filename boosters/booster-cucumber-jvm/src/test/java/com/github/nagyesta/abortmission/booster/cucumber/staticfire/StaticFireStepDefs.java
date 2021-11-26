@@ -52,7 +52,7 @@ public final class StaticFireStepDefs implements ApplicationContextAware {
 
     @Given("Abort-Mission abort decisions are suppressed")
     public void abortMissionAbortDecisionsAreSuppressed() {
-        //TODO
+        throw new IllegalArgumentException();
     }
 
     @And("Center core and side boosters are ready")

@@ -28,11 +28,11 @@ project.ext {
 
     // internal build versions
     jupiterTestKitVersion = '1.6.2'
-    jupiterPlatformVersion = '5.7.0'
+    jupiterPlatformVersion = '5.8.0'
     latestTestNgVersion = '7.3.0'
     mockitoCoreVersion = '3.6.0'
-    springBootVersion = '2.4.3'
-    springVersion = '5.3.4'
+    springBootVersion = '2.5.5'
+    springVersion = '5.3.10'
     jdbiVersion = '3.18.0'
     h2Version = '1.4.200'
     gsonVersion = '2.8.6'
@@ -95,10 +95,11 @@ configure(subprojects.findAll({
 
     jacocoTestReport {
         reports {
-            xml.enabled true
+            xml.required.set(true)
             xml.destination file("$buildDir/reports/jacoco/report.xml")
-            csv.enabled false
-            html.enabled true
+            csv.required.set(false)
+            html.required.set(true)
+            html.destination file("$buildDir/reports/jacoco/html")
         }
     }
 
@@ -164,8 +165,8 @@ configure(subprojects.findAll({
     tasks.withType(Checkstyle) {
         configProperties = [base_dir: rootDir.toString(), cache_file: file("${buildDir}/checkstyle/cacheFile")]
         reports {
-            xml.enabled false
-            html.enabled true
+            xml.required.set(false)
+            html.required.set(true)
             html.stylesheet resources.text
                     .fromFile(rootProject.file('config/checkstyle/checkstyle-stylesheet.xsl') as String)
         }
