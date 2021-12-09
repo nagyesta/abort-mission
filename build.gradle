@@ -31,7 +31,7 @@ project.ext {
     jupiterPlatformVersion = '5.8.0'
     latestTestNgVersion = '7.3.0'
     mockitoCoreVersion = '3.6.0'
-    springBootVersion = '2.5.5'
+    springBootVersion = '2.6.1'
     springVersion = '5.3.13'
     jdbiVersion = '3.18.0'
     h2Version = '1.4.200'
