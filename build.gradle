@@ -32,7 +32,7 @@ project.ext {
     latestTestNgVersion = '7.3.0'
     mockitoCoreVersion = '3.6.0'
     springBootVersion = '2.5.5'
-    springVersion = '5.3.10'
+    springVersion = '5.3.13'
     jdbiVersion = '3.18.0'
     h2Version = '1.4.200'
     gsonVersion = '2.8.6'
