@@ -36,7 +36,7 @@ project.ext {
     jdbiVersion = '3.18.0'
     h2Version = '1.4.200'
     gsonVersion = '2.8.6'
-    cucumberVersion = '6.5.0'
+    cucumberVersion = '6.11.0'
     slf4jApiVersion = '1.7.30'
     logbackVersion = "1.2.3"
     jsonSchemaValidatorVersion = '1.0.43'
