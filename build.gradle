@@ -20,11 +20,11 @@ project.ext {
 
     // dependency versions
     // minimum supported dependency version
-    junit4Version = '4.13'
+    junit4Version = '4.13.2'
     jupiterVersion = '5.6.2'
     jupiterReportingVersion = '1.0.0'
     testNgVersion = '7.0.0'
-    testSpringBootVersion = '2.3.4.RELEASE'
+    testSpringBootVersion = '2.6.1'
 
     // internal build versions
     jupiterTestKitVersion = '1.6.2'
@@ -36,7 +36,7 @@ project.ext {
     jdbiVersion = '3.18.0'
     h2Version = '1.4.200'
     gsonVersion = '2.8.6'
-    cucumberVersion = '6.5.0'
+    cucumberVersion = '6.11.0'
     slf4jApiVersion = '1.7.30'
     logbackVersion = "1.2.3"
     jsonSchemaValidatorVersion = '1.0.43'
