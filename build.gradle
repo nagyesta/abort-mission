@@ -20,11 +20,11 @@ project.ext {
 
     // dependency versions
     // minimum supported dependency version
-    junit4Version = '4.13'
+    junit4Version = '4.13.2'
     jupiterVersion = '5.6.2'
     jupiterReportingVersion = '1.0.0'
     testNgVersion = '7.0.0'
-    testSpringBootVersion = '2.3.4.RELEASE'
+    testSpringBootVersion = '2.6.1'
 
     // internal build versions
     jupiterTestKitVersion = '1.6.2'
