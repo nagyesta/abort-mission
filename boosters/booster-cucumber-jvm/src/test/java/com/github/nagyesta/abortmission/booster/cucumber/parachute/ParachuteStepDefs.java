@@ -16,7 +16,7 @@ public final class ParachuteStepDefs {
         parachuteDrop = new ParachuteDrop();
     }
 
-    @When("^Activates (-?[0-9]+) parachutes$")
+    @When("Activates {int} parachutes")
     public void parachutesAreActivated(final int amount) {
         result = parachuteDrop.canOpenParachute(amount);
     }

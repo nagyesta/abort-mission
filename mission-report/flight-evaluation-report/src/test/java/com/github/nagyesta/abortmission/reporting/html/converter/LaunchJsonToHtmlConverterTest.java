@@ -44,7 +44,7 @@ class LaunchJsonToHtmlConverterTest {
                         .missionStats(StatsHtml.builder().worstResult(StageResultHtml.SUPPRESSED).build())
                         .build()))
                 .add(Arguments.of(full, LaunchHtml.builder()
-                        .classes(new TreeSet<>(Collections.singleton(ClassHtml.builder().classNameText(CLASS_NAME).build())))
+                        .classes(new TreeSet<>(Collections.singleton(ClassHtml.builder(CLASS_NAME).build())))
                         .stats(StatsHtml.builder().build())
                         .countdownStats(StatsHtml.builder().build())
                         .missionStats(StatsHtml.builder().build())

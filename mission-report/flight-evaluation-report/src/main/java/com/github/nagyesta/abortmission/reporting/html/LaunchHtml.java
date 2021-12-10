@@ -1,15 +1,17 @@
 package com.github.nagyesta.abortmission.reporting.html;
 
-import lombok.Builder;
 import lombok.Data;
+import org.springframework.lang.NonNull;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
-@Builder
 @Data
-public class LaunchHtml {
+@SuppressWarnings({"checkstyle:DesignForExtension", "checkstyle:JavadocVariable"})
+public final class LaunchHtml {
     /**
      * Empty string for HTML default value calculation.
      */
@@ -26,6 +28,13 @@ public class LaunchHtml {
     private StatsHtml stats;
     private StatsHtml countdownStats;
     private StatsHtml missionStats;
+
+    private LaunchHtml(@NonNull final LaunchHtmlBuilder builder) {
+        this.classes = builder.classes;
+        this.stats = builder.stats;
+        this.countdownStats = builder.countdownStats;
+        this.missionStats = builder.missionStats;
+    }
 
     /**
      * Hashes and shortens a given string (meant to be used for class/method Id generation).
@@ -63,5 +72,44 @@ public class LaunchHtml {
             builder.append(SPACE).append(millis % MILLIS_IN_A_SECOND).append(UNIT_MILLISECOND);
         }
         return builder.toString();
+    }
+
+    public static LaunchHtmlBuilder builder() {
+        return new LaunchHtmlBuilder();
+    }
+
+    @SuppressWarnings("checkstyle:HiddenField")
+    public static class LaunchHtmlBuilder {
+        private SortedSet<ClassHtml> classes;
+        private StatsHtml stats;
+        private StatsHtml countdownStats;
+        private StatsHtml missionStats;
+
+        LaunchHtmlBuilder() {
+        }
+
+        public LaunchHtmlBuilder classes(final SortedSet<ClassHtml> classes) {
+            this.classes = Optional.ofNullable(classes).map(TreeSet::new).orElse(null);
+            return this;
+        }
+
+        public LaunchHtmlBuilder stats(final StatsHtml stats) {
+            this.stats = stats;
+            return this;
+        }
+
+        public LaunchHtmlBuilder countdownStats(final StatsHtml countdownStats) {
+            this.countdownStats = countdownStats;
+            return this;
+        }
+
+        public LaunchHtmlBuilder missionStats(final StatsHtml missionStats) {
+            this.missionStats = missionStats;
+            return this;
+        }
+
+        public LaunchHtml build() {
+            return new LaunchHtml(this);
+        }
     }
 }

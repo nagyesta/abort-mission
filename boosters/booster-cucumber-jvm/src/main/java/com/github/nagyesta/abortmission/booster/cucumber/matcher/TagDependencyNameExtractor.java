@@ -20,7 +20,7 @@ public class TagDependencyNameExtractor implements DependencyNameExtractor {
                 .map(Scenario.class::cast)
                 .map(Scenario::getSourceTagNames)
                 .map(Collection::stream)
-                .map(s -> s.filter(tag -> !tag.startsWith("AbortMission_"))
+                .map(s -> s.filter(tag -> !tag.startsWith("@AbortMission_"))
                         .map(t -> t.replaceFirst("^@", ""))
                         .collect(Collectors.toSet()));
     }

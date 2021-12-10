@@ -1,6 +1,5 @@
 package com.github.nagyesta.abortmission.reporting.html;
 
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.lang.NonNull;
 
@@ -10,18 +9,29 @@ import java.time.ZoneOffset;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 import static com.github.nagyesta.abortmission.reporting.html.LaunchHtml.shortHash;
 
-@Builder
 @Data
 @SuppressWarnings({"checkstyle:DesignForExtension", "checkstyle:JavadocVariable"})
-public class ClassHtml implements Comparable<ClassHtml> {
+public final class ClassHtml implements Comparable<ClassHtml> {
     @lombok.NonNull
     private String classNameText;
     private StageLaunchStatsHtml countdown;
     private StatsHtml stats;
     private Map<String, StageLaunchStatsHtml> launches;
+
+    private ClassHtml(@NonNull final ClassHtmlBuilder builder) {
+        this.classNameText = builder.classNameText;
+        this.countdown = builder.countdown;
+        this.stats = builder.stats;
+        this.launches = builder.launches;
+    }
+
+    public static ClassHtmlBuilder builder(@lombok.NonNull final String classNameText) {
+        return new ClassHtmlBuilder(classNameText);
+    }
 
     public String getId() {
         return shortHash(classNameText);
@@ -55,5 +65,37 @@ public class ClassHtml implements Comparable<ClassHtml> {
         return Comparator.comparing(ClassHtml::startTimeEpochMillis)
                 .thenComparing(ClassHtml::getClassNameText)
                 .compare(this, o);
+    }
+
+    @SuppressWarnings("checkstyle:HiddenField")
+    public static class ClassHtmlBuilder {
+        private final String classNameText;
+        private StageLaunchStatsHtml countdown;
+        private StatsHtml stats;
+        private Map<String, StageLaunchStatsHtml> launches;
+
+        ClassHtmlBuilder(final String classNameText) {
+            this.classNameText = classNameText;
+        }
+
+        public ClassHtmlBuilder countdown(final StageLaunchStatsHtml countdown) {
+            this.countdown = countdown;
+            return this;
+        }
+
+        public ClassHtmlBuilder stats(final StatsHtml stats) {
+            this.stats = stats;
+            return this;
+        }
+
+        public ClassHtmlBuilder launches(final Map<String, StageLaunchStatsHtml> launches) {
+            this.launches = Optional.ofNullable(launches).map(TreeMap::new).orElse(null);
+            return this;
+        }
+
+        public ClassHtml build() {
+            return new ClassHtml(this);
+        }
+
     }
 }

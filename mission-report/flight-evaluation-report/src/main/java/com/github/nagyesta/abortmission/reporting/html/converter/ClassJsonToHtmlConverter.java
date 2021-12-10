@@ -34,8 +34,7 @@ public class ClassJsonToHtmlConverter implements Converter<ClassJson, ClassHtml>
     @Override
     public ClassHtml convert(@NonNull final ClassJson source) {
         final Map<String, StageLaunchStatsHtml> launchMap = convertLaunchMap(source);
-        return ClassHtml.builder()
-                .classNameText(source.getClassName())
+        return ClassHtml.builder(source.getClassName())
                 .countdown(Optional.ofNullable(source.getCountdown())
                         .map(c -> stageConverter.convert(Function.identity(), "Countdown", c))
                         .orElse(null))

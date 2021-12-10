@@ -29,17 +29,13 @@ class StageLaunchStatsJsonToHtmlConverterTest {
         withMap.setStats(new StatsJson());
         withMap.setMatcherNames(new TreeSet<>(Collections.singleton(MATCHER_NAME)));
         return Stream.<Arguments>builder()
-                .add(Arguments.of(empty, StageLaunchStatsHtml.builder()
-                        .displayName(METHOD_NAME)
+                .add(Arguments.of(empty, StageLaunchStatsHtml.builder(METHOD_NAME, StatsHtml.builder().build())
                         .titleName(METHOD_NAME.toLowerCase())
                         .matcherNames(Collections.emptySortedMap())
-                        .stats(StatsHtml.builder().build())
                         .build()))
-                .add(Arguments.of(withMap, StageLaunchStatsHtml.builder()
-                        .displayName(METHOD_NAME)
+                .add(Arguments.of(withMap, StageLaunchStatsHtml.builder(METHOD_NAME, StatsHtml.builder().build())
                         .titleName(METHOD_NAME.toLowerCase())
                         .matcherNames(new TreeMap<>(Collections.singletonMap(MATCHER_NAME, LaunchHtml.shortHash(MATCHER_NAME))))
-                        .stats(StatsHtml.builder().build())
                         .build()))
                 .build();
     }
