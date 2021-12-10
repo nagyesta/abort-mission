@@ -97,11 +97,5 @@ public final class ClassHtml implements Comparable<ClassHtml> {
             return new ClassHtml(this);
         }
 
-        public String toString() {
-            return "ClassHtml.ClassHtmlBuilder(classNameText=" + this.classNameText
-                    + ", countdown=" + this.countdown
-                    + ", stats=" + this.stats
-                    + ", launches=" + this.launches + ")";
-        }
     }
 }

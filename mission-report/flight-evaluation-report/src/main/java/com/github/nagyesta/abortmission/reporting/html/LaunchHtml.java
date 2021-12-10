@@ -111,12 +111,5 @@ public final class LaunchHtml {
         public LaunchHtml build() {
             return new LaunchHtml(this);
         }
-
-        public String toString() {
-            return "LaunchHtml.LaunchHtmlBuilder(classes=" + this.classes
-                    + ", stats=" + this.stats
-                    + ", countdownStats=" + this.countdownStats
-                    + ", missionStats=" + this.missionStats + ")";
-        }
     }
 }

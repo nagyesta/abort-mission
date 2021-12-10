@@ -63,12 +63,5 @@ public final class StageLaunchStatsHtml {
         public StageLaunchStatsHtml build() {
             return new StageLaunchStatsHtml(this);
         }
-
-        public String toString() {
-            return "StageLaunchStatsHtml.StageLaunchStatsHtmlBuilder(displayName=" + this.displayName
-                    + ", titleName=" + this.titleName
-                    + ", matcherNames=" + this.matcherNames
-                    + ", stats=" + this.stats + ")";
-        }
     }
 }

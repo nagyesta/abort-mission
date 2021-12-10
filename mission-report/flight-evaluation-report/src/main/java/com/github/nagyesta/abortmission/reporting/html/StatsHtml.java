@@ -145,20 +145,5 @@ public final class StatsHtml {
         public StatsHtml build() {
             return new StatsHtml(this);
         }
-
-        public String toString() {
-            return "StatsHtml.StatsHtmlBuilder(minStart=" + this.minStart
-                    + ", maxEnd=" + this.maxEnd
-                    + ", worstResult=" + this.worstResult
-                    + ", count=" + this.count
-                    + ", sumDuration=" + this.sumDuration
-                    + ", minDuration=" + this.minDuration
-                    + ", maxDuration=" + this.maxDuration
-                    + ", avgDuration=" + this.avgDuration
-                    + ", success=" + this.success
-                    + ", failure=" + this.failure
-                    + ", abort=" + this.abort
-                    + ", suppressed=" + this.suppressed + ")";
-        }
     }
 }
