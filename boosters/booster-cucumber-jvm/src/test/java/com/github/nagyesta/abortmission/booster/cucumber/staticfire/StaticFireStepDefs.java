@@ -45,7 +45,7 @@ public final class StaticFireStepDefs implements ApplicationContextAware {
         Assertions.assertTrue(onFire);
     }
 
-    @Given("Side booster is ready ([0-9]+)")
+    @Given("Side booster is ready {int}")
     public void sideBoosterIsReady(final int ignore) {
         this.sideBooster = applicationContext.getBean("sideBooster", Booster.class);
     }

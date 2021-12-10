@@ -21,26 +21,26 @@ project.ext {
     // dependency versions
     // minimum supported dependency version
     junit4Version = '4.13.2'
-    jupiterVersion = '5.6.2'
-    jupiterReportingVersion = '1.0.0'
-    testNgVersion = '7.0.0'
+    jupiterVersion = '5.8.2'
+    jupiterReportingVersion = '1.8.2'
+    testNgVersion = '7.4.0'
     testSpringBootVersion = '2.6.1'
 
     // internal build versions
-    jupiterTestKitVersion = '1.6.2'
-    jupiterPlatformVersion = '5.8.0'
-    latestTestNgVersion = '7.3.0'
-    mockitoCoreVersion = '3.6.0'
+    jupiterTestKitVersion = '1.8.2'
+    jupiterPlatformVersion = '5.8.2'
+    latestTestNgVersion = '7.4.0'
+    mockitoCoreVersion = '4.1.0'
     springBootVersion = '2.6.1'
     springVersion = '5.3.13'
     jdbiVersion = '3.18.0'
     h2Version = '1.4.200'
-    gsonVersion = '2.8.6'
-    cucumberVersion = '6.11.0'
-    slf4jApiVersion = '1.7.30'
-    logbackVersion = "1.2.3"
-    jsonSchemaValidatorVersion = '1.0.43'
-    lombokVersion = '1.18.12'
+    gsonVersion = '2.8.9'
+    cucumberVersion = '7.1.0'
+    slf4jApiVersion = '1.7.32'
+    logbackVersion = "1.2.7"
+    jsonSchemaValidatorVersion = '1.0.64'
+    lombokVersion = '1.18.20'
 }
 
 versioner {

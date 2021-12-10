@@ -1,7 +1,7 @@
 package com.github.nagyesta.abortmission.reporting.html;
 
-import lombok.Builder;
 import lombok.Data;
+import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -9,10 +9,9 @@ import java.util.Optional;
 import static com.github.nagyesta.abortmission.reporting.html.LaunchHtml.EMPTY;
 import static com.github.nagyesta.abortmission.reporting.html.LaunchHtml.formatTimeMillis;
 
-@Builder
 @Data
 @SuppressWarnings({"checkstyle:DesignForExtension", "checkstyle:JavadocVariable"})
-public class StatsHtml {
+public final class StatsHtml {
     private LocalDateTime minStart;
     private LocalDateTime maxEnd;
     private StageResultHtml worstResult;
@@ -25,6 +24,25 @@ public class StatsHtml {
     private int failure;
     private int abort;
     private int suppressed;
+
+    private StatsHtml(@NonNull final StatsHtmlBuilder builder) {
+        this.minStart = builder.minStart;
+        this.maxEnd = builder.maxEnd;
+        this.worstResult = builder.worstResult;
+        this.count = builder.count;
+        this.sumDuration = builder.sumDuration;
+        this.minDuration = builder.minDuration;
+        this.maxDuration = builder.maxDuration;
+        this.avgDuration = builder.avgDuration;
+        this.success = builder.success;
+        this.failure = builder.failure;
+        this.abort = builder.abort;
+        this.suppressed = builder.suppressed;
+    }
+
+    public static StatsHtmlBuilder builder() {
+        return new StatsHtmlBuilder();
+    }
 
     public String getSumDurationAsText() {
         return formatTimeMillis(sumDuration);
@@ -44,5 +62,103 @@ public class StatsHtml {
 
     public String cssIfSuppressedInactive(final String className) {
         return Optional.of(className).filter(i -> suppressed <= 0).orElse(EMPTY);
+    }
+
+    @SuppressWarnings("checkstyle:HiddenField")
+    public static class StatsHtmlBuilder {
+        private LocalDateTime minStart;
+        private LocalDateTime maxEnd;
+        private StageResultHtml worstResult;
+        private int count;
+        private int sumDuration;
+        private int minDuration;
+        private int maxDuration;
+        private double avgDuration;
+        private int success;
+        private int failure;
+        private int abort;
+        private int suppressed;
+
+        StatsHtmlBuilder() {
+        }
+
+        public StatsHtmlBuilder minStart(final LocalDateTime minStart) {
+            this.minStart = minStart;
+            return this;
+        }
+
+        public StatsHtmlBuilder maxEnd(final LocalDateTime maxEnd) {
+            this.maxEnd = maxEnd;
+            return this;
+        }
+
+        public StatsHtmlBuilder worstResult(final StageResultHtml worstResult) {
+            this.worstResult = worstResult;
+            return this;
+        }
+
+        public StatsHtmlBuilder count(final int count) {
+            this.count = count;
+            return this;
+        }
+
+        public StatsHtmlBuilder sumDuration(final int sumDuration) {
+            this.sumDuration = sumDuration;
+            return this;
+        }
+
+        public StatsHtmlBuilder minDuration(final int minDuration) {
+            this.minDuration = minDuration;
+            return this;
+        }
+
+        public StatsHtmlBuilder maxDuration(final int maxDuration) {
+            this.maxDuration = maxDuration;
+            return this;
+        }
+
+        public StatsHtmlBuilder avgDuration(final double avgDuration) {
+            this.avgDuration = avgDuration;
+            return this;
+        }
+
+        public StatsHtmlBuilder success(final int success) {
+            this.success = success;
+            return this;
+        }
+
+        public StatsHtmlBuilder failure(final int failure) {
+            this.failure = failure;
+            return this;
+        }
+
+        public StatsHtmlBuilder abort(final int abort) {
+            this.abort = abort;
+            return this;
+        }
+
+        public StatsHtmlBuilder suppressed(final int suppressed) {
+            this.suppressed = suppressed;
+            return this;
+        }
+
+        public StatsHtml build() {
+            return new StatsHtml(this);
+        }
+
+        public String toString() {
+            return "StatsHtml.StatsHtmlBuilder(minStart=" + this.minStart
+                    + ", maxEnd=" + this.maxEnd
+                    + ", worstResult=" + this.worstResult
+                    + ", count=" + this.count
+                    + ", sumDuration=" + this.sumDuration
+                    + ", minDuration=" + this.minDuration
+                    + ", maxDuration=" + this.maxDuration
+                    + ", avgDuration=" + this.avgDuration
+                    + ", success=" + this.success
+                    + ", failure=" + this.failure
+                    + ", abort=" + this.abort
+                    + ", suppressed=" + this.suppressed + ")";
+        }
     }
 }

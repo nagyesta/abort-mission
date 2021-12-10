@@ -39,10 +39,8 @@ public class StageLaunchStatsJsonToHtmlConverter {
                 .map(Collection::stream)
                 .map(s -> s.collect(Collectors.toMap(Function.identity(), LaunchHtml::shortHash)))
                 .orElse(Collections.emptyMap());
-        return StageLaunchStatsHtml.builder()
-                .displayName(name)
+        return StageLaunchStatsHtml.builder(name, statsConverter.convert(source.getStats()))
                 .matcherNames(new TreeMap<>(map))
-                .stats(statsConverter.convert(source.getStats()))
                 .titleName(titleConverter.apply(name))
                 .build();
     }

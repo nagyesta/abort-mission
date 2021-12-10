@@ -35,7 +35,7 @@ class ClassHtmlTest {
     void testGetClassNameTextShortShouldKeepOnlyTwoCharacterPrefixesOfPackagesWhenCalledWithValidClassNames(
             final String className, final String expected) {
         //given
-        final ClassHtml underTest = ClassHtml.builder().classNameText(className).build();
+        final ClassHtml underTest = ClassHtml.builder(className).build();
 
         //when
         final String actual = underTest.getClassNameTextShort();
@@ -48,8 +48,7 @@ class ClassHtmlTest {
     @MethodSource("statusProvider")
     void testIsCollapsedShouldReturnTrueOnlyWhenCalledForSuccess(final StageResultHtml input, final boolean expected) {
         //given
-        final ClassHtml underTest = ClassHtml.builder()
-                .classNameText(ClassHtml.class.getName())
+        final ClassHtml underTest = ClassHtml.builder(ClassHtml.class.getName())
                 .stats(StatsHtml.builder().worstResult(input).build())
                 .build();
 

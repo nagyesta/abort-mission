@@ -23,9 +23,8 @@ class StageLaunchStatsHtmlTest {
     @MethodSource("statusProvider")
     void testIsCollapsedShouldReturnTrueOnlyWhenCalledForSuccessOrSuppressed(final StageResultHtml input, final boolean expected) {
         //given
-        final StageLaunchStatsHtml underTest = StageLaunchStatsHtml.builder()
-                .displayName(input.lowerCaseName())
-                .stats(StatsHtml.builder().worstResult(input).build())
+        final StageLaunchStatsHtml underTest = StageLaunchStatsHtml.builder(input.lowerCaseName(),
+                        StatsHtml.builder().worstResult(input).build())
                 .build();
 
         //when
