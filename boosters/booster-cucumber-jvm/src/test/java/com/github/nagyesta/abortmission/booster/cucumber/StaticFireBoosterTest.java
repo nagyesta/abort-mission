@@ -15,7 +15,7 @@ public class StaticFireBoosterTest {
     @Test
     @Tag("integration")
     @SuppressWarnings("checkstyle:MagicNumber")
-    public void testAssumption() throws NoSuchMethodException {
+    public void testAssumption() {
         EngineTestKit
                 .engine("junit-vintage")
                 .selectors(selectClass(StaticFireTestContext.class))
@@ -29,8 +29,6 @@ public class StaticFireBoosterTest {
                         .failed(FAILED_CASES));
         MissionControl.commandOps(STATIC_FIRE).allEvaluators().forEach(evaluator -> {
             if (evaluator.getMatcher().getName().contains(CENTER_CORE)) {
-                assertEquals(CENTER_CORE_NOMINAL_STATS.getReadOnlyCountdown().getSnapshot(),
-                        evaluator.getStats().getReadOnlyCountdown().getSnapshot());
                 assertEquals(CENTER_CORE_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
                         evaluator.getStats().getReadOnlyMission().getSnapshot());
             } else {
