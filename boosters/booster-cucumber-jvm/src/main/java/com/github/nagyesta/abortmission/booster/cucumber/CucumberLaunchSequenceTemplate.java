@@ -2,6 +2,8 @@ package com.github.nagyesta.abortmission.booster.cucumber;
 
 import com.github.nagyesta.abortmission.core.AbstractMissionLaunchSequenceTemplate;
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
+import com.github.nagyesta.abortmission.core.telemetry.StageResult;
+import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 import com.github.nagyesta.abortmission.core.telemetry.watch.StageTimeStopwatch;
 import io.cucumber.java.Scenario;
 import org.slf4j.Logger;
@@ -42,7 +44,10 @@ public class CucumberLaunchSequenceTemplate extends AbstractMissionLaunchSequenc
      */
     public Optional<StageTimeStopwatch> launchImminent(final Scenario scenario) {
         LOGGER.debug("Preparing mission for scenario from URI: {} named: {}", scenario.getUri(), scenario.getName());
-        return evaluateLaunchAbort(scenarioBasedEvaluatorLookup.apply(scenario),
+        final Set<MissionHealthCheckEvaluator> evaluators = scenarioBasedEvaluatorLookup.apply(scenario);
+        final StageTimeStopwatch countdownStopwatch = new StageTimeStopwatch(scenario.getUri().toString(), StageTimeMeasurement.CLASS_ONLY);
+        evaluators.forEach(e -> e.countdownLogger().logAndIncrement(countdownStopwatch.stop().apply(StageResult.SUCCESS)));
+        return evaluateLaunchAbort(evaluators,
                 new StageTimeStopwatch(scenario.getUri().toString(), scenario.getName()),
                 () -> scenario.getSourceTagNames().stream().anyMatch("AbortMission_SuppressAbort"::equalsIgnoreCase)
         );
