@@ -6,7 +6,7 @@ create table LAUNCH_STATISTICS
     TEST_CLASS   VARCHAR2(1024) not null,
     TEST_METHOD  VARCHAR2(1024) not null,
     COUNTDOWN    boolean        not null,
-    TEST_RESULT  smallint(3)    not null,
+    TEST_RESULT  smallint       not null,
     START_MILLIS bigint         not null,
     END_MILLIS   bigint         not null
 );
