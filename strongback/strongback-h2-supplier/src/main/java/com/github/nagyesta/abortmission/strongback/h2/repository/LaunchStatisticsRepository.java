@@ -70,7 +70,7 @@ public interface LaunchStatisticsRepository {
             + "  TEST_METHOD as testCaseId,"
             + "  TEST_RESULT as result,"
             + "  START_MILLIS as start,"
-            + "  END_MILLIS as end "
+            + "  END_MILLIS as `end` "
             + "FROM LAUNCH_STATISTICS "
             + "WHERE MATCHER_NAME = :matcherName "
             + "ORDER BY START_MILLIS, END_MILLIS, TEST_CLASS, TEST_METHOD, LAUNCH_ID, TEST_RESULT")
@@ -93,7 +93,7 @@ public interface LaunchStatisticsRepository {
             + "  TEST_METHOD as testCaseId,"
             + "  TEST_RESULT as result,"
             + "  START_MILLIS as start,"
-            + "  END_MILLIS as end "
+            + "  END_MILLIS as `end` "
             + "FROM LAUNCH_STATISTICS "
             + "WHERE CONTEXT_NAME = :contextName"
             + " AND MATCHER_NAME = :matcherName"
