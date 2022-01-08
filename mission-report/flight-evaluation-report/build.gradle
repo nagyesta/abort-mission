@@ -4,7 +4,6 @@ plugins {
     //noinspection SpellCheckingInspection
     id "io.freefair.lombok" version "6.2.0"
     id "org.padler.gradle.minify" version "1.6.0"
-    id "org.sonatype.gradle.plugins.scan" version "2.0.4"
 }
 
 group = "${rootProject.group}.reports"
@@ -19,6 +18,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${rootProject.ext.springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-json:${rootProject.ext.springBootVersion}"
     implementation "com.networknt:json-schema-validator:${rootProject.ext.jsonSchemaValidatorVersion}"
+    implementation "ch.qos.logback:logback-core:${rootProject.ext.logbackVersion}"
+    implementation "ch.qos.logback:logback-classic:${rootProject.ext.logbackVersion}"
     annotationProcessor "org.projectlombok:lombok:${rootProject.ext.lombokVersion}"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${rootProject.ext.springBootVersion}"
     testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.springBootVersion}"
