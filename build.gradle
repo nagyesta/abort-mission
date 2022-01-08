@@ -1,5 +1,7 @@
 plugins {
     id 'io.toolebox.git-versioner' version '1.6.5'
+    id 'org.sonatype.gradle.plugins.scan' version '2.2.2' apply false
+    id 'org.owasp.dependencycheck' version '6.5.2' apply false
 }
 
 group = 'com.github.nagyesta.abort-mission'
@@ -24,21 +26,21 @@ project.ext {
     jupiterVersion = '5.8.2'
     jupiterReportingVersion = '1.8.2'
     testNgVersion = '7.4.0'
-    testSpringBootVersion = '2.6.1'
+    testSpringBootVersion = '2.6.2'
 
     // internal build versions
     jupiterTestKitVersion = '1.8.2'
     jupiterPlatformVersion = '5.8.2'
     latestTestNgVersion = '7.4.0'
     mockitoCoreVersion = '4.1.0'
-    springBootVersion = '2.6.1'
-    springVersion = '5.3.13'
+    springBootVersion = '2.6.2'
+    springVersion = '5.3.14'
     jdbiVersion = '3.18.0'
-    h2Version = '2.0.204'
+    h2Version = '2.0.206'
     gsonVersion = '2.8.9'
     cucumberVersion = '7.1.0'
     slf4jApiVersion = '1.7.32'
-    logbackVersion = "1.2.7"
+    logbackVersion = '1.2.10'
     jsonSchemaValidatorVersion = '1.0.64'
     lombokVersion = '1.18.20'
 }
@@ -71,13 +73,15 @@ versioner {
 }
 
 configure(subprojects.findAll({
-    !'boosters'.equalsIgnoreCase(it.name) && !'mission-report'.equalsIgnoreCase(it.name)
+    !'boosters'.equalsIgnoreCase(it.name) && !'strongback'.equalsIgnoreCase(it.name) && !'mission-report'.equalsIgnoreCase(it.name)
 })) {
     apply plugin: 'java'
     apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
     apply plugin: 'maven-publish'
     apply plugin: 'signing'
+    apply plugin: 'org.sonatype.gradle.plugins.scan'
+    apply plugin: 'org.owasp.dependencycheck'
 
     versioner.apply()
 
@@ -171,6 +175,7 @@ configure(subprojects.findAll({
                     .fromFile(rootProject.file('config/checkstyle/checkstyle-stylesheet.xsl') as String)
         }
     }
+    checkstyle.toolVersion = '9.2.1'
 
     publishing {
         repositories {
