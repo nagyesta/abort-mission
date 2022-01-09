@@ -18,6 +18,8 @@ on:
     paths-ignore:
       - 'README.md'
       - '**/README.md'
+      - '.lift/.toml'
+      - '**/.lift/.toml'
       - 'SECURITY.md'
       - 'LICENSE'
       - '.github/ISSUE_TEMPLATE/**'
@@ -28,6 +30,8 @@ on:
     paths-ignore:
       - 'README.md'
       - '**/README.md'
+      - '.lift/.toml'
+      - '**/.lift/.toml'
       - 'SECURITY.md'
       - 'LICENSE'
       - '.github/ISSUE_TEMPLATE/**'
@@ -64,4 +68,4 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@46110c361b7e9ea1b6f9c6ba2cc941fa7a106cca
       - name: Check dependencies with Gradle
-        run: ./gradlew ossIndexAudit --info
+        run: ./gradlew ossIndexAudit -PossIndexUsername=${{ secrets.OSS_INDEX_USER }} -PossIndexPassword=${{ secrets.OSS_INDEX_PASSWORD }}

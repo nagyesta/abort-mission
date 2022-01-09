@@ -10,6 +10,8 @@ on:
     paths-ignore:
       - 'README.md'
       - '**/README.md'
+      - '.lift/.toml'
+      - '**/.lift/.toml'
       - 'SECURITY.md'
       - 'LICENSE'
       - '.github/ISSUE_TEMPLATE/**'
@@ -61,67 +63,57 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./mission-control/build/reports/jacoco/report.xml
           flags: core
-          fail_ci_if_error: false
       - name: Upload coverage to Codecov - Boosters - JUnit4
         uses: codecov/codecov-action@11d69070bf0bb19a473235e011c7890707db52de # v2.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-junit4/build/reports/jacoco/report.xml
           flags: junit4
-          fail_ci_if_error: false
       - name: Upload coverage to Codecov - Boosters - Jupiter
         uses: codecov/codecov-action@11d69070bf0bb19a473235e011c7890707db52de # v2.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-junit-jupiter/build/reports/jacoco/report.xml
           flags: jupiter
-          fail_ci_if_error: false
       - name: Upload coverage to Codecov - Boosters - TestNG
         uses: codecov/codecov-action@11d69070bf0bb19a473235e011c7890707db52de # v2.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-testng/build/reports/jacoco/report.xml
           flags: testng
-          fail_ci_if_error: false
       - name: Upload coverage to Codecov - Boosters - Cucumber JVM
         uses: codecov/codecov-action@11d69070bf0bb19a473235e011c7890707db52de # v2.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-cucumber-jvm/build/reports/jacoco/report.xml
           flags: cucumber
-          fail_ci_if_error: false
       - name: Upload coverage to Codecov - Boosters - Testkit
         uses: codecov/codecov-action@11d69070bf0bb19a473235e011c7890707db52de # v2.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/testkit/build/reports/jacoco/report.xml
           flags: testkit
-          fail_ci_if_error: false
       - name: Upload coverage to Codecov - Reporting - Flight Evaluation Report
         uses: codecov/codecov-action@11d69070bf0bb19a473235e011c7890707db52de # v2.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./mission-report/flight-evaluation-report/build/reports/jacoco/report.xml
           flags: flighteval
-          fail_ci_if_error: false
       - name: Upload coverage to Codecov - Strongback - Base
         uses: codecov/codecov-action@11d69070bf0bb19a473235e011c7890707db52de # v2.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./strongback/strongback-base/build/reports/jacoco/report.xml
           flags: strongback
-          fail_ci_if_error: false
       - name: Upload coverage to Codecov - Strongback - H2 Supplier
         uses: codecov/codecov-action@11d69070bf0bb19a473235e011c7890707db52de # v2.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./strongback/strongback-h2-supplier/build/reports/jacoco/report.xml
           flags: h2
-          fail_ci_if_error: false
       - name: Upload coverage to Codecov - Strongback - RMI Supplier
         uses: codecov/codecov-action@11d69070bf0bb19a473235e011c7890707db52de # v2.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./strongback/strongback-rmi-supplier/build/reports/jacoco/report.xml
           flags: rmi
-          fail_ci_if_error: false
