@@ -6,10 +6,10 @@ project.ext {
 }
 
 dependencies {
-    implementation "com.google.code.gson:gson:${rootProject.ext.gsonVersion}"
-    implementation "org.slf4j:slf4j-api:${rootProject.ext.slf4jApiVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterPlatformVersion}"
-    testImplementation "org.mockito:mockito-core:${rootProject.ext.mockitoCoreVersion}"
+    implementation libs.gson
+    implementation libs.slf4j.api
+    testImplementation libs.jupiter.core
+    testImplementation libs.mockito.core
 }
 
 test {

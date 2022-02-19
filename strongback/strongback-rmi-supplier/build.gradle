@@ -10,14 +10,14 @@ dependencies {
         transitive = false
     }
     implementation project(":mission-control")
-    implementation "org.slf4j:slf4j-api:${rootProject.ext.slf4jApiVersion}"
+    implementation libs.slf4j.api
     testImplementation project(":boosters:testkit")
     testImplementation project(":boosters:booster-junit-jupiter")
-    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterVersion}"
-    testImplementation "org.mockito:mockito-core:${rootProject.ext.mockitoCoreVersion}"
-    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.testSpringBootVersion}"
-    testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.testSpringBootVersion}"
-    testImplementation "org.junit.platform:junit-platform-testkit:${rootProject.ext.jupiterTestKitVersion}"
+    testImplementation libs.jupiter.core
+    testImplementation libs.mockito.core
+    testImplementation libs.spring.boot.starter
+    testImplementation libs.spring.boot.starter.test
+    testImplementation libs.jupiter.platform.testkit
 }
 
 test {

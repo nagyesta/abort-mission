@@ -7,12 +7,11 @@ project.ext {
 
 dependencies {
     implementation project(":mission-control")
-    implementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.testSpringBootVersion}"
-    implementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.testSpringBootVersion}"
-    implementation "ch.qos.logback:logback-core:${rootProject.ext.logbackVersion}"
-    implementation "ch.qos.logback:logback-classic:${rootProject.ext.logbackVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${rootProject.ext.jupiterPlatformVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterPlatformVersion}"
+    implementation libs.spring.boot.starter
+    implementation libs.spring.boot.starter.test
+    implementation libs.bundles.logback
+    testImplementation libs.jupiter.api
+    testImplementation libs.jupiter.core
 }
 
 test {

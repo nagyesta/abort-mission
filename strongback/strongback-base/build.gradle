@@ -7,12 +7,12 @@ project.ext {
 
 dependencies {
     implementation project(":mission-control")
-    implementation "org.springframework:spring-context:${rootProject.ext.springVersion}"
-    implementation "org.springframework:spring-core:${rootProject.ext.springVersion}"
-    implementation "org.slf4j:slf4j-api:${rootProject.ext.slf4jApiVersion}"
-    implementation "ch.qos.logback:logback-classic:${rootProject.ext.logbackVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterPlatformVersion}"
-    testImplementation "org.mockito:mockito-core:${rootProject.ext.mockitoCoreVersion}"
+    implementation libs.spring.context
+    implementation libs.spring.core
+    implementation libs.slf4j.api
+    implementation libs.logback.classic
+    testImplementation libs.jupiter.core
+    testImplementation libs.mockito.core
 }
 
 test {

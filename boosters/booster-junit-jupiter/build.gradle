@@ -7,14 +7,14 @@ project.ext {
 
 dependencies {
     implementation project(":mission-control")
-    implementation "org.slf4j:slf4j-api:${rootProject.ext.slf4jApiVersion}"
-    implementation "org.junit.jupiter:junit-jupiter-api:${rootProject.ext.jupiterVersion}"
-    implementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterVersion}"
-    implementation "org.junit.platform:junit-platform-reporting:${rootProject.ext.jupiterReportingVersion}"
+    implementation libs.slf4j.api
+    implementation libs.jupiter.api
+    implementation libs.jupiter.core
+    implementation libs.jupiter.platform.reporting
     testImplementation project(":boosters:testkit")
-    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.testSpringBootVersion}"
-    testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.testSpringBootVersion}"
-    testImplementation "org.junit.platform:junit-platform-testkit:${rootProject.ext.jupiterTestKitVersion}"
+    testImplementation libs.spring.boot.starter
+    testImplementation libs.spring.boot.starter.test
+    testImplementation libs.jupiter.platform.testkit
 }
 
 test {

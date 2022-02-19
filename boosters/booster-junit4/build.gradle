@@ -7,13 +7,13 @@ project.ext {
 
 dependencies {
     implementation project(":mission-control")
-    implementation "junit:junit:${rootProject.ext.junit4Version}"
+    implementation libs.junit
     testImplementation project(":boosters:testkit")
-    testImplementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.testSpringBootVersion}"
-    testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.testSpringBootVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterVersion}"
-    testImplementation "org.junit.vintage:junit-vintage-engine:${rootProject.ext.jupiterVersion}"
-    testImplementation "org.junit.platform:junit-platform-testkit:${rootProject.ext.jupiterTestKitVersion}"
+    testImplementation libs.spring.boot.starter
+    testImplementation libs.spring.boot.starter.test
+    testImplementation libs.jupiter.core
+    testImplementation libs.jupiter.vintage.engine
+    testImplementation libs.jupiter.platform.testkit
 }
 
 test {
