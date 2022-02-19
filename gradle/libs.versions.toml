@@ -1,5 +1,5 @@
 [versions]
-spring = "5.3.15"
+spring = "5.3.16"
 springBoot = "2.6.3"
 logback = "1.2.10"
 jsonSchemaValidator = "1.0.64"
