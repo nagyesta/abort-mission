@@ -1,9 +1,9 @@
 plugins {
-    id 'org.springframework.boot' version '2.3.3.RELEASE'
+    alias(libs.plugins.spring.boot)
     id 'java'
     //noinspection SpellCheckingInspection
-    id "io.freefair.lombok" version "6.2.0"
-    id "org.padler.gradle.minify" version "1.6.0"
+    alias(libs.plugins.lombok)
+    alias(libs.plugins.minify)
 }
 
 group = "${rootProject.group}.reports"
@@ -14,36 +14,43 @@ project.ext {
 }
 
 dependencies {
-    implementation "org.springframework.boot:spring-boot-starter:${rootProject.ext.springBootVersion}"
-    implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${rootProject.ext.springBootVersion}"
-    implementation "org.springframework.boot:spring-boot-starter-json:${rootProject.ext.springBootVersion}"
-    implementation "com.networknt:json-schema-validator:${rootProject.ext.jsonSchemaValidatorVersion}"
-    implementation "ch.qos.logback:logback-core:${rootProject.ext.logbackVersion}"
-    implementation "ch.qos.logback:logback-classic:${rootProject.ext.logbackVersion}"
-    annotationProcessor "org.projectlombok:lombok:${rootProject.ext.lombokVersion}"
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${rootProject.ext.springBootVersion}"
-    testImplementation "org.springframework.boot:spring-boot-starter-test:${rootProject.ext.springBootVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.jupiterPlatformVersion}"
+    implementation libs.bundles.spring.boot.repoort
+    implementation libs.json.schema.validator
+    implementation libs.bundles.logback
+    annotationProcessor libs.lombok
+    annotationProcessor libs.spring.boot.configuration.processor
+    testImplementation libs.spring.boot.starter.test
+    testImplementation libs.jupiter.core
 }
 
 minification {
-    cssSrcDir = file("src/main/templates/css")
-    cssDstDir = file("${buildDir}/css")
-    jsSrcDir = file("src/main/templates/js")
-    jsDstDir = file("${buildDir}/js")
-
-    createCssSourceMaps = false
-    createJsSourceMaps = false
-
-    js {
-        compilationLevel = "WHITESPACE_ONLY"
+    task cssMinifyBase(type: org.gradlewebtools.minify.CssMinifyTask) {
+        inputs.files(fileTree("src/main/templates/css", {
+            include "**.css"
+            exclude "all.min.css"
+        }))
+        outputs.dir("${buildDir}/css")
+        srcDir = file("src/main/templates/css")
+        dstDir = file("${buildDir}/css")
+        options.createSourceMaps = false
+    }
+    task jsMinifyBase(type: org.gradlewebtools.minify.JsMinifyTask) {
+        inputs.files(fileTree("src/main/templates/js", {
+            include "**.js"
+            exclude "all.min.js"
+        }))
+        outputs.dir("${buildDir}/js")
+        srcDir = file("src/main/templates/js")
+        dstDir = file("${buildDir}/js")
+        options.compilationLevel = "WHITESPACE_ONLY"
+        options.createSourceMaps = false
     }
 }
 
 task combineCss {
     inputs.files(fileTree("${buildDir}/css", {
         include "**.min.css"
-    })).skipWhenEmpty()
+    })).ignoreEmptyDirectories()
     outputs.file("${buildDir}/resources/main/templates/css/all.min.css")
     doLast {
         outputs.files.singleFile.withOutputStream { out ->
@@ -64,13 +71,13 @@ task combineCss {
             }
         }
     }
-    dependsOn minify
+    dependsOn cssMinifyBase
 }
 
 task combineJs {
     inputs.files(fileTree("${buildDir}/js", {
         include "**.min.js"
-    })).skipWhenEmpty()
+    })).ignoreEmptyDirectories()
     outputs.file("${buildDir}/resources/main/templates/js/all.min.js")
     doLast {
         outputs.files.singleFile.withOutputStream { out ->
@@ -86,13 +93,13 @@ task combineJs {
             }
         }
     }
-    dependsOn minify
+    dependsOn jsMinifyBase
 }
 
 task processTemplates {
     inputs.file("${buildDir}/resources/main/templates/js/all.min.js")
     inputs.file("${buildDir}/resources/main/templates/css/all.min.css")
-    inputs.files(fileTree("src/main/templates/html")).skipWhenEmpty()
+    inputs.files(fileTree("src/main/templates/html")).ignoreEmptyDirectories()
     outputs.dir("${buildDir}/resources/main/templates/html")
     doLast {
         for (template in inputs.files) {
@@ -112,7 +119,7 @@ jar {
 }
 
 processResources.finalizedBy processTemplates
-bootJar.dependsOn processTemplates
+bootJarMainClassName.dependsOn processTemplates
 checkstyleMain.dependsOn processTemplates
 compileTestJava.dependsOn processTemplates
 javadoc.dependsOn processTemplates
