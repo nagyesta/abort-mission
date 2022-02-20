@@ -3,7 +3,7 @@ package com.github.nagyesta.abortmission.core.telemetry;
 import com.github.nagyesta.abortmission.core.MissionControl;
 import com.github.nagyesta.abortmission.core.telemetry.stats.DefaultLaunchTelemetry;
 import com.github.nagyesta.abortmission.core.telemetry.stats.LaunchTelemetryDataSource;
-import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -11,6 +11,7 @@ import org.mockito.ArgumentCaptor;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -53,7 +54,10 @@ class ReportingHelperTest {
         verify(underTest).launchTelemetryDataSource();
         final File file = fileCaptor.getValue();
         Files.readAllLines(file.toPath())
-                .forEach(line -> Assertions.assertEquals(new Gson().toJson(telemetry), line));
+                .forEach(line -> Assertions.assertEquals(new GsonBuilder()
+                        .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                        .create()
+                        .toJson(telemetry), line));
         Assertions.assertTrue(file.delete());
     }
 

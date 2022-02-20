@@ -4,12 +4,13 @@ import com.github.nagyesta.abortmission.core.telemetry.stats.DefaultLaunchTeleme
 import com.github.nagyesta.abortmission.core.telemetry.stats.DefaultLaunchTelemetryDataSource;
 import com.github.nagyesta.abortmission.core.telemetry.stats.LaunchTelemetry;
 import com.github.nagyesta.abortmission.core.telemetry.stats.LaunchTelemetryDataSource;
-import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.github.nagyesta.abortmission.core.MissionControl.ABORT_MISSION_REPORT_DIRECTORY;
@@ -75,7 +76,9 @@ public class ReportingHelper {
     protected void writeJson(final LaunchTelemetry telemetry, final File json) {
         try (FileOutputStream stream = new FileOutputStream(json);
              OutputStreamWriter jsonWriter = new OutputStreamWriter(stream, StandardCharsets.UTF_8)) {
-            final String jsonReport = new Gson().toJson(telemetry);
+            final String jsonReport = new GsonBuilder()
+                    .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                    .create().toJson(telemetry);
             jsonWriter.write(jsonReport);
         } catch (final Exception e) {
             e.printStackTrace();
