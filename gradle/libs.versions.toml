@@ -2,7 +2,7 @@
 spring = "5.3.16"
 springBoot = "2.6.4"
 logback = "1.2.10"
-jsonSchemaValidator = "1.0.66"
+jsonSchemaValidator = "1.0.67"
 gson = "2.9.0"
 slf4j = "1.7.36"
 h2 = "2.1.210"
