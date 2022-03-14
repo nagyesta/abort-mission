@@ -25,19 +25,23 @@ public class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
 
     @Override
     public void write(final JsonWriter out, final LocalDateTime value) throws IOException {
-        out.beginObject()
-                .name(DATE).beginObject()
-                .name(YEAR).value(value.getYear())
-                .name(MONTH).value(value.getMonthValue())
-                .name(DAY).value(value.getDayOfMonth())
-                .endObject()
-                .name(TIME).beginObject()
-                .name(HOUR).value(value.getHour())
-                .name(MINUTE).value(value.getMinute())
-                .name(SECOND).value(value.getSecond())
-                .name(NANO).value(value.getNano())
-                .endObject()
-                .endObject();
+        if (value == null) {
+            out.nullValue();
+        } else {
+            out.beginObject()
+                    .name(DATE).beginObject()
+                    .name(YEAR).value(value.getYear())
+                    .name(MONTH).value(value.getMonthValue())
+                    .name(DAY).value(value.getDayOfMonth())
+                    .endObject()
+                    .name(TIME).beginObject()
+                    .name(HOUR).value(value.getHour())
+                    .name(MINUTE).value(value.getMinute())
+                    .name(SECOND).value(value.getSecond())
+                    .name(NANO).value(value.getNano())
+                    .endObject()
+                    .endObject();
+        }
     }
 
     @Override
