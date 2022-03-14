@@ -20,6 +20,7 @@ on:
       - 'renovate.json'
       - '.whitesource'
       - 'gradle/libs.versions.toml'
+      - 'gradle/wrapper/gradle-wrapper.properties'
 
 permissions: read-all
 
