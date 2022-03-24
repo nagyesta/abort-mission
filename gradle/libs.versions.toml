@@ -1,6 +1,6 @@
 [versions]
 spring = "5.3.17"
-springBoot = "2.6.4"
+springBoot = "2.6.5"
 logback = "1.2.11"
 jsonSchemaValidator = "1.0.67"
 gson = "2.9.0"
