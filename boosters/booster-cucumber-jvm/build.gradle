@@ -17,6 +17,9 @@ dependencies {
     testImplementation libs.jupiter.core
     testImplementation libs.jupiter.vintage.engine
     testImplementation libs.jupiter.platform.testkit
+    constraints {
+        testImplementation libs.bundles.spring.test
+    }
 }
 
 test {

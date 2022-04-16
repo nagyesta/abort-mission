@@ -14,13 +14,17 @@ project.ext {
 }
 
 dependencies {
-    implementation libs.bundles.spring.boot.repoort
+    implementation libs.bundles.spring.boot.report
     implementation libs.json.schema.validator
     implementation libs.bundles.logback
     annotationProcessor libs.lombok
     annotationProcessor libs.spring.boot.configuration.processor
     testImplementation libs.spring.boot.starter.test
     testImplementation libs.jupiter.core
+    constraints {
+        implementation libs.bundles.spring.web
+        testImplementation libs.bundles.spring.test
+    }
 }
 
 minification {

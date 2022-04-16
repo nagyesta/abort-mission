@@ -16,6 +16,9 @@ dependencies {
         exclude group: "org.junit.vintage"
     }
     implementation libs.testng
+    constraints {
+        testImplementation libs.bundles.spring.test
+    }
 }
 
 test {

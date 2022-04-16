@@ -12,6 +12,9 @@ dependencies {
     implementation libs.bundles.logback
     testImplementation libs.jupiter.api
     testImplementation libs.jupiter.core
+    constraints {
+        implementation libs.bundles.spring.test
+    }
 }
 
 test {
