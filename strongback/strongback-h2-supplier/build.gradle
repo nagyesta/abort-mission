@@ -19,6 +19,9 @@ dependencies {
     testImplementation libs.spring.boot.starter
     testImplementation libs.spring.boot.starter.test
     testImplementation libs.jupiter.platform.testkit
+    constraints {
+        testImplementation libs.bundles.spring.test
+    }
 }
 
 test {

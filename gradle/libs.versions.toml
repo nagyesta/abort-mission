@@ -30,6 +30,8 @@ jacoco = "0.8.2"
 [libraries]
 spring-core = { module = "org.springframework:spring-core", version.ref = "spring" }
 spring-context = { module = "org.springframework:spring-context", version.ref = "spring" }
+spring-web = { module = "org.springframework:spring-web", version.ref = "spring" }
+spring-test = { module = "org.springframework:spring-test", version.ref = "spring" }
 
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "springBoot" }
 spring-boot-starter-json = { module = "org.springframework.boot:spring-boot-starter-json", version.ref = "springBoot" }
@@ -67,7 +69,9 @@ cucumber-junit = { module = "io.cucumber:cucumber-junit", version.ref = "cucumbe
 cucumber-spring = { module = "io.cucumber:cucumber-spring", version.ref = "cucumber" }
 
 [bundles]
-spring-boot-repoort = ["spring-boot-starter", "spring-boot-starter-json", "spring-boot-starter-thymeleaf"]
+spring-boot-report = ["spring-boot-starter", "spring-boot-starter-json", "spring-boot-starter-thymeleaf"]
+spring-web = ["spring-core", "spring-context", "spring-web"]
+spring-test = ["spring-core", "spring-context", "spring-test"]
 logback = ["logback-classic", "logback-core"]
 
 [plugins]
