@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 /**
- * The component counting mission success/failure events in order to aid abort decision making.
+ * The component counting mission success/failure events in order to aid abort decision-making.
  */
 public class StageStatisticsCollector extends AbstractStageStatisticsCollector implements StageStatistics {
 
@@ -31,7 +31,7 @@ public class StageStatisticsCollector extends AbstractStageStatisticsCollector i
      * Default constructor using 0 as baseline all across the measurements.
      * Allows clean starts.
      *
-     * @param matcher The matcher held by the evaluator owning this collector as well..
+     * @param matcher The matcher held by the evaluator owning this collector as well.
      */
     public StageStatisticsCollector(final MissionHealthCheckMatcher matcher) {
         this(matcher, 0, 0, 0, 0);

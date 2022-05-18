@@ -75,10 +75,10 @@ public abstract class AbstractMissionHealthCheckEvaluator implements MissionHeal
     }
 
     /**
-     * Determines whether the disarm switches are set or not.
+     * Determines whether the disarm-switches are set or not.
      *
      * @param switchName The property name of the switch.
-     * @return true is the switch is true (a.k.a disarmed) false otherwise
+     * @return true is the switch is true (a.k.a. disarmed) false otherwise
      */
     protected boolean isDisarmed(final String switchName) {
         return Boolean.TRUE.toString().equalsIgnoreCase(System.getProperty(switchName));

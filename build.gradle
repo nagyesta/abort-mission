@@ -59,13 +59,14 @@ configure(subprojects.findAll({
     apply plugin: 'maven-publish'
     apply plugin: 'signing'
     apply plugin: 'org.sonatype.gradle.plugins.scan'
+    //noinspection SpellCheckingInspection
     apply plugin: 'org.owasp.dependencycheck'
 
     versioner.apply()
 
     version = rootProject.version
     //noinspection GroovyUnusedAssignment
-    sourceCompatibility = '8'
+    sourceCompatibility = '11'
     repositories {
         mavenCentral()
     }
@@ -100,11 +101,13 @@ configure(subprojects.findAll({
             rule {
                 limit {
                     counter = 'LINE'
+                    //noinspection SpellCheckingInspection
                     value = 'COVEREDRATIO'
                     minimum = 0.8
                 }
                 limit {
                     counter = 'BRANCH'
+                    //noinspection SpellCheckingInspection
                     value = 'COVEREDRATIO'
                     minimum = 0.8
                 }
@@ -117,11 +120,13 @@ configure(subprojects.findAll({
                 element = 'CLASS'
                 limit {
                     counter = 'LINE'
+                    //noinspection SpellCheckingInspection
                     value = 'COVEREDRATIO'
                     minimum = 0.5
                 }
                 limit {
                     counter = 'BRANCH'
+                    //noinspection SpellCheckingInspection
                     value = 'COVEREDRATIO'
                     minimum = 0.5
                 }

@@ -1,7 +1,7 @@
 ![Abort-Mission](../.github/assets/Abort-Mission-logo_export_transparent_640.png)
 
 [![GitHub license](https://img.shields.io/github/license/nagyesta/abort-mission?color=informational)](https://raw.githubusercontent.com/nagyesta/abort-mission/main/LICENSE)
-[![Java version](https://img.shields.io/badge/Java%20version-8-yellow?logo=java)](https://img.shields.io/badge/Java%20version-8-yellow?logo=java)
+[![Java version](https://img.shields.io/badge/Java%20version-11-yellow?logo=java)](https://img.shields.io/badge/Java%20version-11-yellow?logo=java)
 [![latest-release](https://img.shields.io/github/v/tag/nagyesta/abort-mission?color=blue&logo=git&label=releases&sort=semver)](https://github.com/nagyesta/abort-mission/releases)
 [![JavaCI](https://img.shields.io/github/workflow/status/nagyesta/abort-mission/JavaCI?logo=github)](https://img.shields.io/github/workflow/status/nagyesta/abort-mission/JavaCI?logo=github)
 
@@ -14,7 +14,7 @@
 This module contains the core functionality offered by Abort-Mission. While the right kind of booster
 module is the recommended way to integrate Abort-Mission into your tests, this module can come handy
 in case you would like to create your own booster or use the low level API hidden by the boosters
-because you need more control. Either way, I hope you will find the one page quick-start leaflet below.
+because you need more control. Either way, I hope you will find the one-page quick-start leaflet below.
 
 In case you don't find enough information here, consider checking [the wiki](https://github.com/nagyesta/abort-mission/wiki) which will (eventually)
 give a full reference guide.

@@ -61,7 +61,7 @@ public class LaunchTelemetryConverter extends BaseLaunchTelemetryConverter {
     }
 
     /**
-     * Adds all matcher name from the evaluator to all of the classes and methods where it matched during the execution.
+     * Adds all matcher name from the evaluator to all the classes and methods where it matched during the execution.
      *
      * @param matchersByClassAndMethod The target map containing previous matches we knew about.
      * @param evaluator                The currently examined evaluator.
@@ -77,7 +77,7 @@ public class LaunchTelemetryConverter extends BaseLaunchTelemetryConverter {
     }
 
     /**
-     * Adds all matcher name from the evaluator to all of the classes and methods where it matched during the execution.
+     * Adds all matcher name from the evaluator to all the classes and methods where it matched during the execution.
      *
      * @param measurementsByClassName The target map containing time series data per class.
      * @param countdownStatistics     The currently examined countdown statistics.

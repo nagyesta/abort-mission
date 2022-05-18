@@ -25,7 +25,7 @@ class RunnableMissionTemplateSupportTest extends AbstractMissionTemplateSupportT
         final int countdownFail = evaluator.getCountdownStatistics().getSnapshot().getFailed();
         final int missionSuccess = evaluator.getMissionStatistics().getSnapshot().getSucceeded();
 
-        final RunnableMissionTemplateSupport<Boolean> underTest = new RunnableMissionTemplateSupport<Boolean>(
+        final RunnableMissionTemplateSupport<Boolean> underTest = new RunnableMissionTemplateSupport<>(
                 MissionOutlineDefinition.SELF_PROPELLED_RUNNABLE + fail,
                 this.getClass(), AbstractMissionTemplateSupportTest::abort) {
             @Override

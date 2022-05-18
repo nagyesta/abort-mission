@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
- * The base component counting mission success/failure events in order to aid abort decision making.
+ * The base component counting mission success/failure events in order to aid abort decision-making.
  */
 public abstract class ExternalStageStatisticsCollector extends AbstractStageStatisticsCollector implements StageStatistics {
 

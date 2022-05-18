@@ -112,7 +112,7 @@ public class AbstractMissionLaunchSequenceTemplate {
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     protected final boolean isNotSuppressed(final Optional<Throwable> rootCause,
                                             final Set<Class<? extends Exception>> suppressedExceptions) {
-        return !rootCause.isPresent()
+        return rootCause.isEmpty()
                 || suppressedExceptions.stream().noneMatch(exType -> exType.isInstance(rootCause.get()));
     }
 

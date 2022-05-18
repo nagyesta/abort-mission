@@ -91,7 +91,6 @@ class StageTimeMeasurementTest {
     @Test
     void testDurationShouldSubtractStartFromEndWhenCalled() {
         //given
-        //given
         @SuppressWarnings("UnnecessaryLocalVariable") final StageTimeMeasurement underTest = STAGE_TIME_MEASUREMENT;
 
         //when

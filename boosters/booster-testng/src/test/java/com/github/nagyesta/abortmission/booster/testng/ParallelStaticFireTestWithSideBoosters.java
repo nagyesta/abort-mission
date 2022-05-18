@@ -14,8 +14,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.PARALLEL;
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.SIDE_BOOSTER;
@@ -35,8 +37,12 @@ public class ParallelStaticFireTestWithSideBoosters extends AbstractTestNGSpring
     private Booster centerCore;
 
     @DataProvider(name = "attemptIndexProvider")
-    private static Object[] attemptIndexProvider() {
-        return StaticFireTestAssets.staticFireTestParallelInputProvider().boxed().toArray();
+    private static Object[][] attemptIndexProvider() {
+        return StaticFireTestAssets.staticFireTestParallelInputProvider().boxed()
+                .map(List::of)
+                .map(List::toArray)
+                .collect(Collectors.toList())
+                .toArray(new Object[(int) StaticFireTestAssets.staticFireTestParallelInputProvider().count()][1]);
     }
 
 

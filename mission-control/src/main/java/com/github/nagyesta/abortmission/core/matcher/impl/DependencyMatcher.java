@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * {@link MissionHealthCheckMatcher} implementation using dependency name based matching.
  * A dependency name would be typically based on an annotation/tag name provided by the test framework
- * you are using but we support plain text dependency names as well (although it would pose challenges).
+ * you are using, but we support plain text dependency names as well (although it would pose challenges).
  */
 public class DependencyMatcher implements MissionHealthCheckMatcher {
 

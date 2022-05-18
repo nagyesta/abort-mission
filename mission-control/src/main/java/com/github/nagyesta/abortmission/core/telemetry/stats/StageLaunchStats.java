@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 /**
  * Contains statistical information about a single stage pf the launch,
- * e.g. post processing stats related to the same single test class
+ * e.g. post-processing stats related to the same single test class
  * or stats collected related to the same test method (during all calls).
  */
 public final class StageLaunchStats {

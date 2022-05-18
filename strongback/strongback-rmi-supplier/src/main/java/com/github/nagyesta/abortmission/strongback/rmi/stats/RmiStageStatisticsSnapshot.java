@@ -26,7 +26,7 @@ public class RmiStageStatisticsSnapshot implements Serializable {
     }
 
     /**
-     * Construct the instance and sets all of the fields to let this instance represent the recorded outcome of a matcher.
+     * Construct the instance and sets all the fields to let this instance represent the recorded outcome of a matcher.
      *
      * @param failed     The number of failed measurements.
      * @param succeeded  The number of success measurements.

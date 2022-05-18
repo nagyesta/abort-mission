@@ -24,9 +24,9 @@ public final class StageTimeMeasurement implements Comparable<StageTimeMeasureme
     /**
      * The constructor allowing us to create a new instance capturing the time measured data.
      *
-     * @param launchId    The unique Id of the test method execution (must be unique even in case the same test is re-run).
-     * @param testClassId The unique Id of the test class.
-     * @param testCaseId  The unique Id of the test case (within the test class).
+     * @param launchId    The unique ID of the test method execution (must be unique even in case the same test is re-run).
+     * @param testClassId The unique ID of the test class.
+     * @param testCaseId  The unique ID of the test case (within the test class).
      * @param result      The outcome of the stage execution.
      * @param start       The start time of the stage execution.
      * @param end         The end time of the stage execution.

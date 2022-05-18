@@ -43,14 +43,14 @@ public interface MissionHealthCheckEvaluator {
     ReadOnlyStageStatistics getMissionStatistics();
 
     /**
-     * Tells the launch controller whether or not we should abort the launch after the preparation was done.
+     * Tells the launch controller whether we should abort the launch after the preparation was done.
      *
      * @return true if we are after burn-in and the number of failures is more than the threshold, false otherwise.
      */
     boolean shouldAbort();
 
     /**
-     * Tells the launch controller whether or not we should abort the launch before starting the preparation
+     * Tells the launch controller whether we should abort the launch before starting the preparation
      * steps (as they are assumed to be failing already).
      *
      * @return true if we are after burn-in and the countdown never completed, false otherwise.

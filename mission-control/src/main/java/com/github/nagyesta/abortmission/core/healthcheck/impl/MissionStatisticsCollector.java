@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * The component counting mission success/failure events in order to aid abort decision making.
+ * The component counting mission success/failure events in order to aid abort decision-making.
  */
 public final class MissionStatisticsCollector implements ReadOnlyMissionStatistics {
 

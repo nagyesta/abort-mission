@@ -37,7 +37,7 @@ public final class LaunchHtml {
     }
 
     /**
-     * Hashes and shortens a given string (meant to be used for class/method Id generation).
+     * Hashes and shortens a given string (meant to be used for class/method ID generation).
      *
      * @param displayName The display name of the item we need to hash.
      * @return The hashed and shortened value.
@@ -47,7 +47,7 @@ public final class LaunchHtml {
     }
 
     /**
-     * Formats the given millisecond value in a human readable way (hours, minutes, seconds).
+     * Formats the given millisecond value in a human-readable way (hours, minutes, seconds).
      *
      * @param millis The duration in milliseconds.
      * @return The human-readable format.
