@@ -11,8 +11,10 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.core.MissionControl.matcher;
 import static com.github.nagyesta.abortmission.core.MissionControl.percentageBasedEvaluator;
@@ -25,8 +27,11 @@ import static org.testng.Assert.assertTrue;
 public class ParachuteTestContext {
 
     @DataProvider(name = "parachuteIndexProvider")
-    private static Object[] parachuteIndexProvider() {
-        return parachuteDropTestInputProvider().boxed().toArray();
+    private static Object[][] parachuteIndexProvider() {
+        return parachuteDropTestInputProvider().boxed()
+                .map(List::of)
+                .map(List::toArray)
+                .collect(Collectors.toList()).toArray(new Object[(int) parachuteDropTestInputProvider().count()][1]);
     }
 
     @Test(dataProvider = "parachuteIndexProvider")

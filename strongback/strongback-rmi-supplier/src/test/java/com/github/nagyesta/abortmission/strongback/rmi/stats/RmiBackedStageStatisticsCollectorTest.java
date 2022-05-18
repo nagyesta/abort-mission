@@ -15,7 +15,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @Tag("unit")

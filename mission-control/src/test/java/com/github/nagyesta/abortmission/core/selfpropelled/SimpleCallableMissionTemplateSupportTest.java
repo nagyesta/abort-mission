@@ -25,7 +25,7 @@ class SimpleCallableMissionTemplateSupportTest extends AbstractMissionTemplateSu
         final int missionFail = evaluator.getMissionStatistics().getSnapshot().getFailed();
         final int missionSuccess = evaluator.getMissionStatistics().getSnapshot().getSucceeded();
 
-        final SimpleCallableMissionTemplateSupport<Boolean> underTest = new SimpleCallableMissionTemplateSupport<Boolean>(
+        final SimpleCallableMissionTemplateSupport<Boolean> underTest = new SimpleCallableMissionTemplateSupport<>(
                 MissionOutlineDefinition.SELF_PROPELLED_CALLABLE + fail,
                 this.getClass(), AbstractMissionTemplateSupportTest::abort) {
             @Override

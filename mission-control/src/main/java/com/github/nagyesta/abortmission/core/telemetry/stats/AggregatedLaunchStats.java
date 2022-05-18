@@ -4,6 +4,7 @@ import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -63,12 +64,13 @@ public final class AggregatedLaunchStats {
                 .filter(Objects::nonNull)
                 .max(Comparator.naturalOrder()).orElse(null);
         if (count > 0) {
-            final BigDecimal avg = new BigDecimal(sumDuration).divide(new BigDecimal(count), 1, BigDecimal.ROUND_HALF_EVEN);
+            final BigDecimal avg = new BigDecimal(sumDuration).divide(new BigDecimal(count), 1, RoundingMode.HALF_EVEN);
             this.avgDuration = avg.doubleValue();
         } else {
             this.avgDuration = null;
         }
         final Map<StageResult, AtomicInteger> accumulator = new HashMap<>();
+        //noinspection CodeBlock2Expr
         childStats.forEach(aggregate -> aggregate.resultCount.forEach((stageResult, integer) -> {
             accumulator.computeIfAbsent(stageResult, key -> new AtomicInteger()).addAndGet(integer);
         }));

@@ -67,7 +67,7 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     public void testFailed(final ExtensionContext context, final Throwable throwable) {
         final Optional<StageTimeStopwatch> stopwatch = optionalStopwatch(context, MISSION_START_PREFIX + Thread.currentThread().getName());
         final Optional<Throwable> rootCause = Optional.of(throwable);
-        if (!stopwatch.isPresent()) {
+        if (stopwatch.isEmpty()) {
             findClassContext(context).ifPresent(classContext -> {
                 //this is very challenging to test in this way, but can happen for sure
                 final Optional<StageTimeStopwatch> countdownStopwatch =
@@ -121,8 +121,7 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
             return Optional.empty();
         }
         //fall back either when recursion turned up empty or when we have no parent
-        return parent.map(recursion -> Optional.of(findClassContext(recursion).orElse(context)))
-                .orElseGet(() -> Optional.of(context));
+        return parent.map(recursion -> findClassContext(recursion).orElse(context)).or(() -> Optional.of(context));
     }
 
     private void markCountdownSuccessful(final ExtensionContext classContext) {
@@ -139,7 +138,7 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
                 launchSequenceTemplate.countdownSuccess(testClass, stopwatch);
                 putOptionalStopwatch(classContext, Optional.empty(), COUNTDOWN_START_PREFIX + Thread.currentThread().getName());
             });
-            if (!classContext.getTestClass().isPresent()) {
+            if (classContext.getTestClass().isEmpty()) {
                 LOGGER.warn("Test class is not found in store. Reporting is most probably incomplete.");
             }
             final boolean failed = classContext.getExecutionException()

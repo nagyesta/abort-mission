@@ -79,7 +79,7 @@ public class H2BackedStaticFireBoosterTest {
     @Test
     @Tag("integration")
     @SuppressWarnings("checkstyle:MagicNumber")
-    public void testParallelAssumption() throws NoSuchMethodException {
+    public void testParallelAssumption() {
         EngineTestKit
                 .engine("junit-jupiter")
                 .selectors(selectClass(ParallelStaticFireTestWithSideBoostersPerClassTest.class),

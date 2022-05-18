@@ -18,7 +18,7 @@ public final class ClassTelemetry {
     /**
      * Creates a new instance and evaluates the measurements we collected for the class.
      *
-     * @param converter    The converter we are using to help processing the data.
+     * @param converter    The converter we are using to help to process the data.
      * @param className    The fully qualified name of the test class.
      * @param measurements The measurements we recorded during test run.
      * @param matcherNames The matchers which were identified during run, collected for

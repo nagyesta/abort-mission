@@ -15,7 +15,7 @@ public class BaseLaunchTelemetryConverter {
     private final ClassTelemetryConverter classConverter;
 
     /**
-     * Creats a new instance and sets the class converter.
+     * Creates a new instance and sets the class converter.
      *
      * @param classConverter The class converter.
      */
@@ -41,7 +41,7 @@ public class BaseLaunchTelemetryConverter {
     }
 
     /**
-     * Adds all matcher name from the evaluator to all of the classes and methods where it matched during the execution.
+     * Adds all matcher name from the evaluator to all the classes and methods where it matched during the execution.
      *
      * @param matchersByClassAndMethod The names of all matchers applicable for the particular classes and methods.
      * @param countdownTimeSeries      The currently examined countdown statistics as a time series stream.
@@ -61,7 +61,7 @@ public class BaseLaunchTelemetryConverter {
     }
 
     /**
-     * Adds all matcher name from the evaluator to all of the classes and methods where it matched during the execution.
+     * Adds all matcher name from the evaluator to all the classes and methods where it matched during the execution.
      *
      * @param measurementsByClassName The target map containing time series data per class.
      * @param countdownTimeSeries     The currently examined countdown statistics as a time series stream.

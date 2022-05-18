@@ -17,7 +17,7 @@ public class DefaultLaunchTelemetryDataSource implements LaunchTelemetryDataSour
     /**
      * Constructor setting the converter and the namespaces needed for fetching the internal context telemetry.
      *
-     * @param converter  The converter we are using to help processing the data.
+     * @param converter  The converter we are using to help to process the data.
      * @param nameSpaces The namespaces used during test execution,
      */
     public DefaultLaunchTelemetryDataSource(final LaunchTelemetryConverter converter,

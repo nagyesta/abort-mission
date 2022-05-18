@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.*;
 
 class LaunchTelemetryConverterTest extends AbstractTelemetryTest {
@@ -80,9 +79,9 @@ class LaunchTelemetryConverterTest extends AbstractTelemetryTest {
 
     private static final class SimpleEvaluator extends AbstractMissionHealthCheckEvaluator {
 
-        protected SimpleEvaluator(final String matcherName,
-                                  final List<StageTimeMeasurement> countdown,
-                                  final List<StageTimeMeasurement> mission) {
+        private SimpleEvaluator(final String matcherName,
+                                final List<StageTimeMeasurement> countdown,
+                                final List<StageTimeMeasurement> mission) {
             super(new SimpleMatcher(matcherName), new MissionStatisticsCollector(new SimpleMatcher(matcherName)));
             countdown.forEach(m -> this.countdownLogger().logAndIncrement(m));
             mission.forEach(m -> this.missionLogger().logAndIncrement(m));

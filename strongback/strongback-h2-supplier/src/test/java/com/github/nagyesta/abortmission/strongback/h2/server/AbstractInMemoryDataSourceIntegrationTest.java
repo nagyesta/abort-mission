@@ -5,6 +5,7 @@ import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 import com.github.nagyesta.abortmission.strongback.h2.repository.LaunchStatisticsRepository;
 import org.h2.jdbcx.JdbcDataSource;
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.extension.ExtensionCallback;
 import org.junit.jupiter.api.AfterEach;
@@ -109,17 +110,23 @@ public class AbstractInMemoryDataSourceIntegrationTest {
     }
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         final JdbcDataSource jdbcDataSource = new JdbcDataSource();
         jdbcDataSource.setURL(url);
         this.dataSource = jdbcDataSource;
         jdbi = H2DataSourceProvider.jdbi(dataSource);
-        jdbi.open().createUpdate("DROP ALL OBJECTS").execute();
+        //noinspection LocalCanBeFinal
+        try (Handle handle = jdbi.open()) {
+            handle.createUpdate("DROP ALL OBJECTS").execute();
+        }
         new H2SchemaInitializer(dataSource).initialize();
     }
 
     @AfterEach
     void tearDown() throws SQLException {
-        jdbi.open().createUpdate("DROP ALL OBJECTS").execute();
+        //noinspection LocalCanBeFinal
+        try (Handle handle = jdbi.open()) {
+            handle.createUpdate("DROP ALL OBJECTS").execute();
+        }
     }
 }

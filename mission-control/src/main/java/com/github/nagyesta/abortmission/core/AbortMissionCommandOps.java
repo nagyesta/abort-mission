@@ -17,7 +17,7 @@ public final class AbortMissionCommandOps {
     private final AtomicBoolean finalized = new AtomicBoolean(false);
 
     /**
-     * Convenience method creating an new instance.
+     * Convenience method creating a new instance.
      *
      * @return a new {@link AbortMissionCommandOps}.
      */

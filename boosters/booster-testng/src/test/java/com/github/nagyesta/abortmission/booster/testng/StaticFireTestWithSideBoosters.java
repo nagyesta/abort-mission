@@ -13,6 +13,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.*;
 import static org.testng.Assert.assertTrue;
 
@@ -28,8 +31,12 @@ public class StaticFireTestWithSideBoosters extends AbstractTestNGSpringContextT
     private Booster sideBooster;
 
     @DataProvider(name = "attemptIndexProvider")
-    private static Object[] attemptIndexProvider() {
-        return StaticFireTestAssets.staticFireTestInputProvider().boxed().toArray();
+    private static Object[][] attemptIndexProvider() {
+        return StaticFireTestAssets.staticFireTestInputProvider().boxed()
+                .map(List::of)
+                .map(List::toArray)
+                .collect(Collectors.toList())
+                .toArray(new Object[(int) StaticFireTestAssets.staticFireTestInputProvider().count()][1]);
     }
 
     @Test(dataProvider = "attemptIndexProvider")

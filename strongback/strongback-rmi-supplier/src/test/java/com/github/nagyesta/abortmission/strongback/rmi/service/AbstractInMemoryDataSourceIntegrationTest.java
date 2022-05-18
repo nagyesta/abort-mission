@@ -129,7 +129,7 @@ public class AbstractInMemoryDataSourceIntegrationTest {
     }
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         try {
             service = new SingletonLaunchStatisticsService();
             final Remote abortMissionService = UnicastRemoteObject.exportObject(service, port);

@@ -25,7 +25,7 @@ public class CucumberLaunchSequenceTemplate extends AbstractMissionLaunchSequenc
     private final Function<Scenario, Set<MissionHealthCheckEvaluator>> scenarioBasedEvaluatorLookup;
 
     /**
-     * Constructor defining how the template can lookup the evaluators or abort the mission.
+     * Constructor defining how the template can look up the evaluators or abort the mission.
      *
      * @param abortSequence                The {@link Runnable} which aborts the tests (usually by throwing an exception)
      * @param scenarioBasedEvaluatorLookup The {@link Function} that will be used for evaluator lookup.

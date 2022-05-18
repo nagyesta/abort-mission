@@ -12,7 +12,6 @@ import org.mockito.InOrder;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.*;
 
 class ClassTelemetryTest extends AbstractTelemetryTest {

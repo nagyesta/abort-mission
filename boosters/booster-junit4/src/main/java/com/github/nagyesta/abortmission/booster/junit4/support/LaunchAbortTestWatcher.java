@@ -91,7 +91,7 @@ public class LaunchAbortTestWatcher extends TestWatcher {
 
     private Method findRequiredMethod(final Description description) {
         final Optional<Method> method = findMethodByDescription(description);
-        if (!method.isPresent()) {
+        if (method.isEmpty()) {
             throw new IllegalArgumentException("Method not found.");
         }
         return method.get();
@@ -100,7 +100,7 @@ public class LaunchAbortTestWatcher extends TestWatcher {
     private Optional<Method> findMethodByDescription(final Description description) {
         return Optional.ofNullable(description)
                 .map(Description::getMethodName)
-                .map(name -> name.replaceFirst("\\[[0-9]+]", ""))
+                .map(name -> name.replaceFirst("\\[\\d+]", ""))
                 .flatMap(name -> Arrays.stream(testClass.getMethods()).filter(m -> name.equals(m.getName())).findFirst());
     }
 

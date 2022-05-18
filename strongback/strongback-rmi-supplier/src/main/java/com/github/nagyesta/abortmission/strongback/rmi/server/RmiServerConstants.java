@@ -13,7 +13,7 @@ public final class RmiServerConstants {
      */
     public static final String SERVICE_NAME = "LaunchStatisticsService";
     /**
-     * The RMI service name used for lookup of the service that can shutdown the server.
+     * The RMI service name used for lookup of the service that can shut down the server.
      */
     public static final String EXIT_SERVICE_NAME = "ExitService";
 

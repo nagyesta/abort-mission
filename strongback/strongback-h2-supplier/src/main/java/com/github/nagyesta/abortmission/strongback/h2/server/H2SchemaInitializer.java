@@ -72,7 +72,7 @@ public class H2SchemaInitializer {
     /**
      * Returns the stream of the create schema script.
      *
-     * @return create script (or null if cannot be read).
+     * @return create script (or null if it cannot be read).
      */
     protected InputStream nullableCreateSchemaResourceAsStream() {
         return H2SchemaInitializer.class.getResourceAsStream(CREATE_TABLE_SQL);

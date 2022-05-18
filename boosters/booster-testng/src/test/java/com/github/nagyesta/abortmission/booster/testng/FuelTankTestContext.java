@@ -10,8 +10,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.testkit.vanilla.FuelTankTestAssets.*;
 
@@ -30,8 +32,11 @@ public class FuelTankTestContext {
     }
 
     @DataProvider(name = "fuelTankLoadAmountProvider")
-    private static Object[] fuelTankLoadAmountProvider() {
-        return fuelTankTestInputProvider().boxed().toArray();
+    private static Object[][] fuelTankLoadAmountProvider() {
+        return fuelTankTestInputProvider().boxed()
+                .map(List::of)
+                .map(List::toArray)
+                .collect(Collectors.toList()).toArray(new Object[(int) fuelTankTestInputProvider().count()][1]);
     }
 
     @Test(dataProvider = "fuelTankLoadAmountProvider")

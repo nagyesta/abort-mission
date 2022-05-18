@@ -1,7 +1,7 @@
 ![Abort-Mission](../../.github/assets/Abort-Mission-logo_export_transparent_640.png)
 
 [![GitHub license](https://img.shields.io/github/license/nagyesta/abort-mission?color=informational)](https://raw.githubusercontent.com/nagyesta/abort-mission/main/LICENSE)
-[![Java version](https://img.shields.io/badge/Java%20version-8-yellow?logo=java)](https://img.shields.io/badge/Java%20version-8-yellow?logo=java)
+[![Java version](https://img.shields.io/badge/Java%20version-11-yellow?logo=java)](https://img.shields.io/badge/Java%20version-11-yellow?logo=java)
 [![latest-release](https://img.shields.io/github/v/tag/nagyesta/abort-mission?color=blue&logo=git&label=releases&sort=semver)](https://github.com/nagyesta/abort-mission/releases)
 [![JavaCI](https://img.shields.io/github/workflow/status/nagyesta/abort-mission/JavaCI?logo=github)](https://img.shields.io/github/workflow/status/nagyesta/abort-mission/JavaCI?logo=github)
 
@@ -49,7 +49,7 @@ components as long as you fulfill a few simple rules. Please see these below:
 
 1. Implement the [StrongbackController](./src/main/java/com/github/nagyesta/abortmission/strongback/base/StrongbackController.java)
    interface which should:
-    1. Prepare the Strongback (such as starting an external component etc) when `erect()` is called.
+    1. Prepare the Strongback (such as starting an external component etc.) when `erect()` is called.
     2. Take care of publishing the launch report from the telemetry collected when `retract()` is called.
     3. Clean-up the Strongback (such as stopping the external service) when `retract()` is called.
 2. `strongback-blueprint.xml` must be created as a root Spring XML configuration, and it should define an instance of the controller you

@@ -35,7 +35,7 @@ public class ClassTelemetryConverter {
                                                             final Map<String, List<StageTimeMeasurement>> byMethods) {
         Objects.requireNonNull(matcherNames, "MatcherNames cannot be null.");
         Objects.requireNonNull(byMethods, "ByMethods cannot be null.");
-        final Map<String, StageLaunchStats> methodStats = new TreeMap<String, StageLaunchStats>();
+        final Map<String, StageLaunchStats> methodStats = new TreeMap<>();
         byMethods.forEach((method, measurementList) -> {
             if (StageTimeMeasurement.CLASS_ONLY.equals(method)) {
                 return;
@@ -47,11 +47,11 @@ public class ClassTelemetryConverter {
     }
 
     /**
-     * Processes statistical information of test instance post processing of the given class based on partitioned data.
+     * Processes statistical information of test instance post-processing of the given class based on partitioned data.
      *
      * @param matcherNames The names of matchers partitioned per method name.
      * @param byMethods    The time series information per method name.
-     * @return The parsed statistics of the test instance post processing.
+     * @return The parsed statistics of the test instance post-processing.
      */
     public StageLaunchStats processCountdownStats(final Map<String, Set<String>> matcherNames,
                                                   final Map<String, List<StageTimeMeasurement>> byMethods) {
@@ -65,9 +65,9 @@ public class ClassTelemetryConverter {
     }
 
     /**
-     * Merges instance post processing and test method stats into a single aggregation to have a class level total.
+     * Merges instance post-processing and test method stats into a single aggregation to have a class level total.
      *
-     * @param countdownStats The post processing stats.
+     * @param countdownStats The post-processing stats.
      * @param launchSet      The test method level statistics.
      * @return The merged class total.
      */

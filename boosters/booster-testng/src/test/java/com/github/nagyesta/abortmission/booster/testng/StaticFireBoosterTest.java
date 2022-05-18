@@ -57,7 +57,7 @@ public class StaticFireBoosterTest {
 
     @Test(groups = "integration")
     @SuppressWarnings("checkstyle:MagicNumber")
-    public void testParallelAssumption() throws NoSuchMethodException {
+    public void testParallelAssumption() {
         final TestNG engine = new TestNG();
         engine.setOutputDirectory(System.getProperty("java.io.tmpdir") + "/abort-mission/" + this.getClass().getSimpleName());
         engine.setTestClasses(new Class[] {ParallelStaticFireTestWithSideBoosters.class});

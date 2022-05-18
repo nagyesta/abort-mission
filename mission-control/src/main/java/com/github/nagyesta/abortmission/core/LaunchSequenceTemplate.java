@@ -23,7 +23,7 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
     private final Function<Method, Set<MissionHealthCheckEvaluator>> methodBasedEvaluatorLookup;
 
     /**
-     * Constructor defining how the template can lookup the evaluators or abort the mission.
+     * Constructor defining how the template can look up the evaluators or abort the mission.
      *
      * @param abortSequence              The {@link Runnable} which aborts the tests (usually by throwing an exception)
      * @param classBasedEvaluatorLookup  The {@link Function} that will be used for evaluator lookup when the tested component is a class.
