@@ -185,15 +185,16 @@ configure(subprojects.findAll({
     tasks.withType(GenerateModuleMetadata) {
         enabled = false
     }
+}
 
-    ossIndexAudit {
-        username = rootProject.ext.ossIndexUser
-        password = rootProject.ext.ossIndexPass
-        printBanner = false
-        colorEnabled = true
-        showAll = false
-        dependencyGraph = true
-    }
+ossIndexAudit {
+    username = rootProject.ext.ossIndexUser
+    password = rootProject.ext.ossIndexPass
+    printBanner = false
+    colorEnabled = true
+    showAll = false
+    dependencyGraph = true
+    excludeVulnerabilityIds = ["CVE-2016-1000027", "CVE-2018-14335", "sonatype-2020-1324"]
 }
 
 repositories {
