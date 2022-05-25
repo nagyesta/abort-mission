@@ -13,6 +13,7 @@ project.ext {
     ossrhPass = project.hasProperty('ossrhPassword') ? (project.property('ossrhPassword') as String) : ''
     ossIndexUser = project.hasProperty('ossIndexUsername') ? (project.property('ossIndexUsername') as String) : ''
     ossIndexPass = project.hasProperty('ossIndexPassword') ? (project.property('ossIndexPassword') as String) : ''
+    ossIndexExclusions = ["CVE-2016-1000027", "CVE-2018-14335", "sonatype-2020-1324"]
     repoUrl = 'https://github.com/nagyesta/abort-mission'
     licenseName = 'MIT License'
     licenseUrl = 'https://raw.githubusercontent.com/nagyesta/abort-mission/main/LICENSE'
@@ -181,11 +182,6 @@ configure(subprojects.findAll({
         }
     }
 
-    //Disable metadata publishing and rely on Maven only
-    tasks.withType(GenerateModuleMetadata) {
-        enabled = false
-    }
-
     ossIndexAudit {
         username = rootProject.ext.ossIndexUser
         password = rootProject.ext.ossIndexPass
@@ -193,7 +189,23 @@ configure(subprojects.findAll({
         colorEnabled = true
         showAll = false
         dependencyGraph = true
+        excludeVulnerabilityIds = rootProject.ext.ossIndexExclusions
     }
+
+    //Disable metadata publishing and rely on Maven only
+    tasks.withType(GenerateModuleMetadata) {
+        enabled = false
+    }
+}
+
+ossIndexAudit {
+    username = rootProject.ext.ossIndexUser
+    password = rootProject.ext.ossIndexPass
+    printBanner = false
+    colorEnabled = true
+    showAll = false
+    dependencyGraph = true
+    excludeVulnerabilityIds = rootProject.ext.ossIndexExclusions
 }
 
 repositories {
