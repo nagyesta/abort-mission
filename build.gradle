@@ -69,7 +69,13 @@ configure(subprojects.findAll({
     //noinspection GroovyUnusedAssignment
     sourceCompatibility = '11'
     repositories {
-        mavenCentral()
+        mavenCentral {
+            metadataSources {
+                mavenPom()
+                artifact()
+                ignoreGradleMetadataRedirection()
+            }
+        }
     }
 
     java {
@@ -209,6 +215,12 @@ ossIndexAudit {
 }
 
 repositories {
-    mavenCentral()
+    mavenCentral {
+        metadataSources {
+            mavenPom()
+            artifact()
+            ignoreGradleMetadataRedirection()
+        }
+    }
 }
 
