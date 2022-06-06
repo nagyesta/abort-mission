@@ -6,6 +6,7 @@
   "assignees": [
     "nagyesta"
   ],
+  "assigneesSampleSize": 1,
   "commitMessageSuffix": "{patch}",
   "github-actions": {
     "pinDigests": true
