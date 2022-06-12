@@ -1,12 +1,15 @@
 package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
+import com.github.nagyesta.abortmission.core.MissionControl;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.UUID;
@@ -46,6 +49,20 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     }
 
     @ParameterizedTest
+    @ValueSource(strings = {"a b", "a_Z"})
+    @NullAndEmptySource
+    void testBuilderShouldThrowExceptionWhenoverrideKeywordIsCalledWithInvalidData(final String input) {
+        //given
+        final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
+        final PercentageBasedMissionHealthCheckEvaluator.Builder underTest = MissionControl.percentageBasedEvaluator(anyClass);
+
+        //when
+        Assertions.assertThrows(IllegalArgumentException.class, () -> underTest.overrideKeyword(input));
+
+        //then + exception
+    }
+
+    @ParameterizedTest
     @MethodSource("countdownEvaluatorProvider")
     void testBurnInThresholdsAreWorkingWhenPreparationStepsAreUsed(final int burnInCount,
                                                                    final int countdownFailure,
@@ -58,6 +75,7 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
                 .builder(anyClass, new MissionStatisticsCollector(anyClass))
                 .abortThreshold(1)
                 .burnInTestCount(burnInCount)
+                .overrideKeyword("any")
                 .build();
 
         //when

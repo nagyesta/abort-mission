@@ -41,8 +41,10 @@ public abstract class AbstractLaunchSequenceTemplate extends AbstractMissionLaun
 
         final StageTimeStopwatch watch = new StageTimeStopwatch(testInstanceClass);
         final Set<MissionHealthCheckEvaluator> evaluators = classBasedEvaluatorLookup.apply(testInstanceClass);
+        final boolean hasSuppression = evaluators.stream().anyMatch(MissionHealthCheckEvaluator::shouldSuppressAbort);
         final boolean reportingDone = evaluateAndAbortIfNeeded(
-                partitionBy(evaluators, MissionHealthCheckEvaluator::shouldAbortCountdown),
+                partitionBy(evaluators, missionHealthCheckEvaluator
+                        -> !hasSuppression && missionHealthCheckEvaluator.shouldAbortCountdown()),
                 annotationContextEvaluator().isAbortSuppressed(testInstanceClass),
                 watch.stop(),
                 MissionHealthCheckEvaluator::countdownLogger);

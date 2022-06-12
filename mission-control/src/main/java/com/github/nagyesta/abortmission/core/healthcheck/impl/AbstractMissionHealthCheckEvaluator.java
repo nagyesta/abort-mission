@@ -6,8 +6,11 @@ import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyStageStatistics
 import com.github.nagyesta.abortmission.core.healthcheck.StatisticsLogger;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 
-import static com.github.nagyesta.abortmission.core.MissionControl.ABORT_MISSION_DISARM_COUNTDOWN;
-import static com.github.nagyesta.abortmission.core.MissionControl.ABORT_MISSION_DISARM_MISSION;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static com.github.nagyesta.abortmission.core.MissionControl.*;
 
 /**
  * Implements the common functionality of {@link MissionHealthCheckEvaluator} instances.
@@ -16,6 +19,7 @@ public abstract class AbstractMissionHealthCheckEvaluator implements MissionHeal
 
     private final MissionHealthCheckMatcher matcher;
     private final MissionStatisticsCollector stats;
+    private final String overrideKeyword;
 
     /**
      * Sets the matcher and the mission statistics collector.
@@ -23,9 +27,29 @@ public abstract class AbstractMissionHealthCheckEvaluator implements MissionHeal
      * @param matcher The health check matcher mentioned by {@link MissionHealthCheckEvaluator#getMatcher()}.
      * @param stats   The statistics collector mentioned by {@link MissionHealthCheckEvaluator#getStats()}.
      */
-    protected AbstractMissionHealthCheckEvaluator(final MissionHealthCheckMatcher matcher, final MissionStatisticsCollector stats) {
+    protected AbstractMissionHealthCheckEvaluator(final MissionHealthCheckMatcher matcher,
+                                                  final MissionStatisticsCollector stats) {
+        this(matcher, stats, null);
+    }
+
+    /**
+     * Sets the matcher and the mission statistics collector.
+     *
+     * @param matcher         The health check matcher mentioned by {@link MissionHealthCheckEvaluator#getMatcher()}.
+     * @param stats           The statistics collector mentioned by {@link MissionHealthCheckEvaluator#getStats()}.
+     * @param overrideKeyword The keyword used for fine-grained abort/disarm overrides.
+     */
+    protected AbstractMissionHealthCheckEvaluator(final MissionHealthCheckMatcher matcher,
+                                                  final MissionStatisticsCollector stats,
+                                                  final String overrideKeyword) {
         this.matcher = matcher;
         this.stats = stats;
+        this.overrideKeyword = overrideKeyword;
+    }
+
+    @Override
+    public String overrideKeyword() {
+        return overrideKeyword;
     }
 
     @Override
@@ -59,11 +83,23 @@ public abstract class AbstractMissionHealthCheckEvaluator implements MissionHeal
     }
 
     @Override
+    public boolean shouldSuppressAbort() {
+        return evaluateOverrideList(ABORT_MISSION_SUPPRESS_ABORT_EVALUATORS)
+                .contains(overrideKeyword);
+    }
+
+    @Override
+    public boolean shouldForceAbort() {
+        return evaluateOverrideList(ABORT_MISSION_FORCE_ABORT_EVALUATORS)
+                .contains(overrideKeyword);
+    }
+
+    @Override
     public boolean shouldAbort() {
         if (isDisarmed(ABORT_MISSION_DISARM_MISSION)) {
             return false;
         }
-        return shouldAbortInternal();
+        return shouldForceAbort() || shouldAbortInternal();
     }
 
     @Override
@@ -71,7 +107,20 @@ public abstract class AbstractMissionHealthCheckEvaluator implements MissionHeal
         if (isDisarmed(ABORT_MISSION_DISARM_COUNTDOWN)) {
             return false;
         }
-        return shouldAbortCountdownInternal();
+        return shouldForceAbort() || shouldAbortCountdownInternal();
+    }
+
+    /**
+     * Returns the set of evaluator keywords which are defined in the given System property.
+     *
+     * @param propertyName The name of the System property.
+     * @return The tokenized set of keywords defined by the property value or empty set if not defined.
+     */
+    protected Set<String> evaluateOverrideList(final String propertyName) {
+        final String property = System.getProperty(propertyName, "");
+        return Arrays.stream(property.split(","))
+                .filter(s -> !s.isBlank())
+                .collect(Collectors.toSet());
     }
 
     /**

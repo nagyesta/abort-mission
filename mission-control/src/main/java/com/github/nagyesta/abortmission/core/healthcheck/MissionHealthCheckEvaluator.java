@@ -43,6 +43,22 @@ public interface MissionHealthCheckEvaluator {
     ReadOnlyStageStatistics getMissionStatistics();
 
     /**
+     * Tells us whether this evaluator should never abort and suppress other matching evaluators if they would.
+     *
+     * @return true if the evaluator should suppress abort, false otherwise.
+     */
+    boolean shouldSuppressAbort();
+
+    /**
+     * Tells us whether this evaluator should always abort.
+     * <b>Important:</b> If two different evaluators are matching and one returns true for {@link #shouldSuppressAbort()} while
+     * the other returns true for {@code shouldForceAbort()}, then the "suppression" will take precedence and neither will abort.
+     *
+     * @return true if the evaluator should always abort.
+     */
+    boolean shouldForceAbort();
+
+    /**
      * Tells the launch controller whether we should abort the launch after the preparation was done.
      *
      * @return true if we are after burn-in and the number of failures is more than the threshold, false otherwise.
@@ -70,4 +86,11 @@ public interface MissionHealthCheckEvaluator {
      * @return mission
      */
     StatisticsLogger missionLogger();
+
+    /**
+     * Returns the keyword we can use for overriding abort/disarm decisions for the evaluator using command line parameters.
+     *
+     * @return override keyword
+     */
+    String overrideKeyword();
 }

@@ -43,7 +43,9 @@ public final class LaunchHtml {
      * @return The hashed and shortened value.
      */
     public static String shortHash(final String displayName) {
-        return Integer.toString(Math.abs(displayName.hashCode()), HASH_RADIX);
+        final String hash = Integer.toString(Math.abs(displayName.hashCode()), HASH_RADIX);
+        final String mask = "00000000";
+        return new StringBuilder(mask).replace(mask.length() - hash.length(), mask.length(), hash).toString();
     }
 
     /**

@@ -11,9 +11,9 @@ class LaunchHtmlTest {
 
     private static Stream<Arguments> hashProvider() {
         return Stream.<Arguments>builder()
-                .add(Arguments.of("input", "2vmlua"))
-                .add(Arguments.of(LaunchHtml.class.getName(), "5r0q71"))
-                .add(Arguments.of(LaunchHtmlTest.class.getName(), "1sneltf"))
+                .add(Arguments.of("input", "002vmlua"))
+                .add(Arguments.of(LaunchHtml.class.getName(), "005r0q71"))
+                .add(Arguments.of(LaunchHtmlTest.class.getName(), "01sneltf"))
                 .build();
     }
 

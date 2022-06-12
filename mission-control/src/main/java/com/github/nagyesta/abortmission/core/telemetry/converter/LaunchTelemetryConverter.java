@@ -73,7 +73,7 @@ public class LaunchTelemetryConverter extends BaseLaunchTelemetryConverter {
         mergeInto(matchersByClassAndMethod,
                 evaluator.getCountdownStatistics().timeSeriesStream(),
                 evaluator.getMissionStatistics().timeSeriesStream(),
-                evaluator.getMatcher().getName());
+                addoverrideKeywordIfPresent(evaluator.overrideKeyword(), evaluator.getMatcher().getName()));
     }
 
     /**
@@ -90,6 +90,12 @@ public class LaunchTelemetryConverter extends BaseLaunchTelemetryConverter {
         Objects.requireNonNull(countdownStatistics, "CountdownStatistics cannot be null.");
         Objects.requireNonNull(missionStatistics, "MissionStatistics cannot be null.");
         mergeInto(measurementsByClassName, countdownStatistics.timeSeriesStream(), missionStatistics.timeSeriesStream());
+    }
+
+    private String addoverrideKeywordIfPresent(final String overrideKeyword, final String name) {
+        return Optional.ofNullable(overrideKeyword)
+                .map(kw -> "[" + kw + "] " + name)
+                .orElse(name);
     }
 
 }

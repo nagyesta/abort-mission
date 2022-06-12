@@ -49,7 +49,7 @@ In order to configure Abort-Mission, the easiest option would be to follow these
 
 1. Implement [MissionOutline](./src/main/java/com/github/nagyesta/abortmission/core/outline/MissionOutline.java) named as `MissionOutlineDefinition`
 preferably in your root package
-2. Use tha annotations we provide [here](./src/main/java/com/github/nagyesta/abortmission/core/annotation/)
+2. Use the annotations we provide [here](./src/main/java/com/github/nagyesta/abortmission/core/annotation/)
 3. Make sure to hook our lifecycle methods by either
    1. using a [LaunchSequenceTemplate](./src/main/java/com/github/nagyesta/abortmission/core/LaunchSequenceTemplate.java) 
    2. or one of the [Callable/runnable implementations here](./src/main/java/com/github/nagyesta/abortmission/core/selfpropelled/) 
@@ -57,8 +57,10 @@ preferably in your root package
 
 ### System properties
 
-| Property                         | Type      | Meaning                                                                     |
-| -------------------------------- | --------- | --------------------------------------------------------------------------- |
-| `abort-mission.disarm.countdown` | `boolean` | Disables countdown aborts for all tests. Default: false                     |
-| `abort-mission.disarm.mission`   | `boolean` | Disables mission aborts for all tests. Default: false                       |
-| `abort-mission.report.directory` | `String`  | Output directory path where we want to save telemetry output. Default: null |
+| Property                                  | Type      | Meaning                                                                                              |
+|-------------------------------------------|-----------|------------------------------------------------------------------------------------------------------|
+| `abort-mission.disarm.countdown`          | `boolean` | Disables countdown aborts for all tests. Default: false                                              |
+| `abort-mission.disarm.mission`            | `boolean` | Disables mission aborts for all tests. Default: false                                                |
+| `abort-mission.report.directory`          | `String`  | Output directory path where we want to save telemetry output. Default: null                          |
+| `abort-mission.force.abort.evaluators`    | `String`  | Comma separated list of key words identifying evaluators which need to always abort. Default: null   | 
+| `abort-mission.suppress.abort.evaluators` | `String`  | Comma separated list of key words identifying evaluators which need to suppress abort. Default: null |

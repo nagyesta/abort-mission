@@ -5,13 +5,12 @@ import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import java.util.Objects;
 
 /**
- * {@link com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator} implementation intended to only collect
- * telemetry and never abort.
+ * {@link com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator} implementation intended to always abort.
  */
 @SuppressWarnings("checkstyle:FinalClass")
-public class ReportOnlyMissionHealthCheckEvaluator extends AbstractMissionHealthCheckEvaluator {
+public class AlwaysAbortingMissionHealthCheckEvaluator extends AbstractMissionHealthCheckEvaluator {
 
-    private ReportOnlyMissionHealthCheckEvaluator(final Builder builder) {
+    private AlwaysAbortingMissionHealthCheckEvaluator(final Builder builder) {
         super(Objects.requireNonNull(builder, "Builder cannot be null.").matcher,
                 builder.statisticsCollector, builder.overrideKeyword);
     }
@@ -28,12 +27,12 @@ public class ReportOnlyMissionHealthCheckEvaluator extends AbstractMissionHealth
 
     @Override
     protected boolean shouldAbortInternal() {
-        return false;
+        return true;
     }
 
     @Override
     protected boolean shouldAbortCountdownInternal() {
-        return false;
+        return true;
     }
 
     @SuppressWarnings({"checkstyle:HiddenField", "checkstyle:DesignForExtension"})
@@ -58,8 +57,8 @@ public class ReportOnlyMissionHealthCheckEvaluator extends AbstractMissionHealth
             return this;
         }
 
-        public ReportOnlyMissionHealthCheckEvaluator build() {
-            return new ReportOnlyMissionHealthCheckEvaluator(this);
+        public AlwaysAbortingMissionHealthCheckEvaluator build() {
+            return new AlwaysAbortingMissionHealthCheckEvaluator(this);
         }
     }
 }
