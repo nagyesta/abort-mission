@@ -1,6 +1,7 @@
 package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
 import com.github.nagyesta.abortmission.core.MissionControl;
+import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyMissionStatistics;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
@@ -18,11 +19,10 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("checkstyle:MagicNumber")
-class ReportOnlyMissionHealthCheckEvaluatorTest {
+class AlwaysAbortingMissionHealthCheckEvaluatorTest {
 
     private static final String DASH = "-";
 
@@ -52,7 +52,7 @@ class ReportOnlyMissionHealthCheckEvaluatorTest {
     void testBuilderShouldThrowExceptionWhenoverrideKeywordIsCalledWithInvalidData(final String input) {
         //given
         final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final ReportOnlyMissionHealthCheckEvaluator.Builder underTest = MissionControl.reportOnlyEvaluator(anyClass);
+        final AlwaysAbortingMissionHealthCheckEvaluator.Builder underTest = MissionControl.abortingEvaluator(anyClass);
 
         //when
         Assertions.assertThrows(IllegalArgumentException.class, () -> underTest.overrideKeyword(input));
@@ -67,7 +67,7 @@ class ReportOnlyMissionHealthCheckEvaluatorTest {
                                                                    final int failureCount) {
         //given
         final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final ReportOnlyMissionHealthCheckEvaluator underTest = MissionControl.reportOnlyEvaluator(anyClass)
+        final AlwaysAbortingMissionHealthCheckEvaluator underTest = MissionControl.abortingEvaluator(anyClass)
                 .overrideKeyword("all")
                 .build();
 
@@ -81,7 +81,7 @@ class ReportOnlyMissionHealthCheckEvaluatorTest {
         final boolean actual = underTest.shouldAbortCountdown();
 
         //then
-        assertFalse(actual);
+        assertTrue(actual);
     }
 
     @ParameterizedTest
@@ -91,7 +91,7 @@ class ReportOnlyMissionHealthCheckEvaluatorTest {
                                                           final int successCount) {
         //given
         final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final ReportOnlyMissionHealthCheckEvaluator underTest = MissionControl.reportOnlyEvaluator(anyClass).build();
+        final AlwaysAbortingMissionHealthCheckEvaluator underTest = MissionControl.abortingEvaluator(anyClass).build();
 
         //when
         IntStream.range(0, failureCount).parallel()
@@ -103,48 +103,61 @@ class ReportOnlyMissionHealthCheckEvaluatorTest {
         final boolean actual = underTest.shouldAbort();
 
         //then
-        assertFalse(actual);
+        assertTrue(actual);
     }
 
     @Test
-    void testShouldAbortShouldReturnTrueWhenForceAbortIsActivated() {
+    void testoverrideKeywordShouldReturnProvidedValueWhenCalled() {
         //given
-        final String keyWord = "all";
+        final String expected = "expected";
         final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final ReportOnlyMissionHealthCheckEvaluator underTest = spy(MissionControl.reportOnlyEvaluator(anyClass)
-                .overrideKeyword(keyWord).build());
-        doReturn(Set.of(keyWord)).when(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_FORCE_ABORT_EVALUATORS));
+        final AlwaysAbortingMissionHealthCheckEvaluator underTest = MissionControl.abortingEvaluator(anyClass)
+                .overrideKeyword(expected)
+                .build();
 
         //when
-        final boolean actual = underTest.shouldAbort();
+        final String actual = underTest.overrideKeyword();
 
         //then
-        assertTrue(actual);
-        verify(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_FORCE_ABORT_EVALUATORS));
+        assertEquals(expected, actual);
     }
 
     @Test
-    void testShouldAbortCountdownShouldReturnTrueWhenForceAbortIsActivated() {
+    void testGetStatsShouldReturnStatisticsWhenCalled() {
+        //given
+        final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
+        final AlwaysAbortingMissionHealthCheckEvaluator underTest = MissionControl.abortingEvaluator(anyClass).build();
+
+        //when
+        final ReadOnlyMissionStatistics actual = underTest.getStats();
+
+        //then
+        assertNotNull(actual.getReadOnlyMission());
+        assertNotNull(actual.getReadOnlyCountdown());
+    }
+
+    @Test
+    void testShouldSuppressAbortShouldReturnTrueWhenSuppressionIsActivated() {
         //given
         final String keyWord = "all";
         final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final ReportOnlyMissionHealthCheckEvaluator underTest = spy(MissionControl.reportOnlyEvaluator(anyClass)
+        final AlwaysAbortingMissionHealthCheckEvaluator underTest = spy(MissionControl.abortingEvaluator(anyClass)
                 .overrideKeyword(keyWord).build());
-        doReturn(Set.of(keyWord)).when(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_FORCE_ABORT_EVALUATORS));
+        doReturn(Set.of(keyWord)).when(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_SUPPRESS_ABORT_EVALUATORS));
 
         //when
-        final boolean actual = underTest.shouldAbortCountdown();
+        final boolean actual = underTest.shouldSuppressAbort();
 
         //then
         assertTrue(actual);
-        verify(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_FORCE_ABORT_EVALUATORS));
+        verify(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_SUPPRESS_ABORT_EVALUATORS));
     }
 
     @Test
     void testGetBurnInTestCountShouldReturnConstantValue() {
         //given
         final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final ReportOnlyMissionHealthCheckEvaluator underTest = MissionControl.reportOnlyEvaluator(anyClass).build();
+        final AlwaysAbortingMissionHealthCheckEvaluator underTest = MissionControl.abortingEvaluator(anyClass).build();
 
         //when
         final int actual = underTest.getBurnInTestCount();

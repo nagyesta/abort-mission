@@ -36,10 +36,12 @@ public class AbstractMissionLaunchSequenceTemplate {
     protected Optional<StageTimeStopwatch> evaluateLaunchAbort(final Set<MissionHealthCheckEvaluator> evaluators,
                                                                final StageTimeStopwatch stopwatch,
                                                                final Supplier<Boolean> abortSuppressionDecisionSupplier) {
-        final Boolean shouldSuppressAbortDecisions = Objects.requireNonNull(abortSuppressionDecisionSupplier).get();
+        final boolean hasEvaluatorThatSuppressesAbort = evaluators.stream().anyMatch(MissionHealthCheckEvaluator::shouldSuppressAbort);
+        final boolean shouldSuppressAbortDecisions = Boolean.TRUE.equals(Objects.requireNonNull(abortSuppressionDecisionSupplier).get());
         final boolean reportingDone = evaluateAndAbortIfNeeded(
-                partitionBy(evaluators, MissionHealthCheckEvaluator::shouldAbort),
-                Boolean.TRUE.equals(shouldSuppressAbortDecisions),
+                partitionBy(evaluators, missionHealthCheckEvaluator
+                        -> !hasEvaluatorThatSuppressesAbort && missionHealthCheckEvaluator.shouldAbort()),
+                shouldSuppressAbortDecisions,
                 stopwatch.stop(),
                 MissionHealthCheckEvaluator::missionLogger);
         return emptyIfTrue(reportingDone, stopwatch);

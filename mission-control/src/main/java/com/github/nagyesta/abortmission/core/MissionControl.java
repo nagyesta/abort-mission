@@ -3,10 +3,7 @@ package com.github.nagyesta.abortmission.core;
 import com.github.nagyesta.abortmission.core.annotation.AnnotationContextEvaluator;
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
 import com.github.nagyesta.abortmission.core.healthcheck.StageStatisticsCollectorFactory;
-import com.github.nagyesta.abortmission.core.healthcheck.impl.DefaultStageStatisticsCollectorFactory;
-import com.github.nagyesta.abortmission.core.healthcheck.impl.MissionStatisticsCollector;
-import com.github.nagyesta.abortmission.core.healthcheck.impl.PercentageBasedMissionHealthCheckEvaluator;
-import com.github.nagyesta.abortmission.core.healthcheck.impl.ReportOnlyMissionHealthCheckEvaluator;
+import com.github.nagyesta.abortmission.core.healthcheck.impl.*;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import com.github.nagyesta.abortmission.core.matcher.impl.MissionHealthCheckMatcherBuilder;
 import com.github.nagyesta.abortmission.core.matcher.impl.builder.InitialMissionHealthCheckMatcherBuilder;
@@ -20,7 +17,14 @@ import java.util.function.Function;
  * Provides shorthands for the core functionality of the library.
  */
 public final class MissionControl {
-
+    /**
+     * System property name we need to use to force aborts for the selected evaluators.
+     */
+    public static final String ABORT_MISSION_FORCE_ABORT_EVALUATORS = "abort-mission.force.abort.evaluators";
+    /**
+     * System property name we need to use to suppress aborts for the selected evaluators.
+     */
+    public static final String ABORT_MISSION_SUPPRESS_ABORT_EVALUATORS = "abort-mission.suppress.abort.evaluators";
     /**
      * System property name we need to use to disarm mission aborts.
      */
@@ -69,6 +73,32 @@ public final class MissionControl {
             final MissionHealthCheckMatcher matcher,
             final StageStatisticsCollectorFactory statisticsFactory) {
         return PercentageBasedMissionHealthCheckEvaluator
+                .builder(matcher, new MissionStatisticsCollector(
+                        statisticsFactory.newCountdownStatistics(matcher),
+                        statisticsFactory.newMissionStatistics(matcher)));
+    }
+
+    /**
+     * Creates a builder instance for always aborting evaluators.
+     *
+     * @param matcher The matcher we want to use for this evaluator.
+     * @return builder
+     */
+    public static AlwaysAbortingMissionHealthCheckEvaluator.Builder abortingEvaluator(final MissionHealthCheckMatcher matcher) {
+        return abortingEvaluator(matcher, new DefaultStageStatisticsCollectorFactory());
+    }
+
+    /**
+     * Creates a builder instance for always aborting evaluators.
+     *
+     * @param matcher           The matcher we want to use for this evaluator.
+     * @param statisticsFactory The factory instance that can provide statistics collectors.
+     * @return builder
+     */
+    public static AlwaysAbortingMissionHealthCheckEvaluator.Builder abortingEvaluator(
+            final MissionHealthCheckMatcher matcher,
+            final StageStatisticsCollectorFactory statisticsFactory) {
+        return AlwaysAbortingMissionHealthCheckEvaluator
                 .builder(matcher, new MissionStatisticsCollector(
                         statisticsFactory.newCountdownStatistics(matcher),
                         statisticsFactory.newMissionStatistics(matcher)));

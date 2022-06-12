@@ -36,6 +36,15 @@ public abstract class LaunchAbortHook {
     private final Map<String, StageTimeStopwatch> stopwatchMap = new HashMap<>();
 
     /**
+     * Returns a {@link MissionHealthCheckMatcher} matching any scenario URI.
+     *
+     * @return matcher
+     */
+    public static MissionHealthCheckMatcher anyScenarioMatcher() {
+        return new ScenarioUriMatcher(".*");
+    }
+
+    /**
      * Returns a {@link MissionHealthCheckMatcher} matching scenario URIs.
      *
      * @param regex The regular expression matching the URI of a feature file.

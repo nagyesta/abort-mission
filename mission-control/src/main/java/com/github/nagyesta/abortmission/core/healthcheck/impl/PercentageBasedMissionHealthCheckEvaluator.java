@@ -19,7 +19,7 @@ public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionH
 
     private PercentageBasedMissionHealthCheckEvaluator(final Builder builder) {
         super(Objects.requireNonNull(builder, "Builder cannot be null.").matcher,
-                builder.statisticsCollector);
+                builder.statisticsCollector, builder.overrideKeyword);
         this.burnInTestCount = builder.burnInTestCount;
         this.abortThreshold = builder.abortThreshold;
     }
@@ -65,6 +65,7 @@ public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionH
         private final MissionHealthCheckMatcher matcher;
         private int burnInTestCount = BURN_IN_LOWER_LIMIT;
         private int abortThreshold = PERCENTAGE_LOWER_LIMIT;
+        private String overrideKeyword;
 
         private Builder(final MissionHealthCheckMatcher matcher, final MissionStatisticsCollector statisticsCollector) {
             this.matcher = Objects.requireNonNull(matcher, "Matcher cannot be null.");
@@ -84,6 +85,16 @@ public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionH
                 throw new IllegalArgumentException("Abort threshold must be in the 0-99 range (inclusive).");
             }
             this.abortThreshold = abortThreshold;
+            return this;
+        }
+
+        public Builder overrideKeyword(final String overrideKeyword) {
+            if (overrideKeyword == null || overrideKeyword.isBlank()) {
+                throw new IllegalArgumentException("Override keyword must br non-blank.");
+            } else if (!overrideKeyword.matches("[\\da-zA-Z\\-]+")) {
+                throw new IllegalArgumentException("Override keyword must contain only alpha-numeric characters and dash (a-zA-Z0-9\\-).");
+            }
+            this.overrideKeyword = overrideKeyword;
             return this;
         }
 
