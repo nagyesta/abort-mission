@@ -5,7 +5,7 @@ logback = "1.2.11"
 jsonSchemaValidator = "1.0.70"
 gson = "2.9.0"
 slf4j = "1.7.36"
-h2 = "2.1.212"
+h2 = "2.1.214"
 jdbi3 = "3.30.0"
 
 lombok = "1.18.24"
