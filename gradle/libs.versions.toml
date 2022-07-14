@@ -17,7 +17,7 @@ mockitoCore = "4.6.1"
 cucumber = "7.4.1"
 testNg = "7.6.1"
 
-lombokPlugin = "6.5.0.2"
+lombokPlugin = "6.5.0.3"
 springBootPlugin = "2.7.1"
 minifyPlugin = "1.3.1"
 gitVersionerPlugin = "1.6.7"
