@@ -1,8 +1,8 @@
 package com.github.nagyesta.abortmission.reporting.html;
 
 import lombok.Data;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -22,7 +22,7 @@ public final class ClassHtml implements Comparable<ClassHtml> {
     private StatsHtml stats;
     private Map<String, StageLaunchStatsHtml> launches;
 
-    private ClassHtml(@NonNull final ClassHtmlBuilder builder) {
+    private ClassHtml(@Nonnull final ClassHtmlBuilder builder) {
         this.classNameText = builder.classNameText;
         this.countdown = builder.countdown;
         this.stats = builder.stats;
@@ -61,7 +61,7 @@ public final class ClassHtml implements Comparable<ClassHtml> {
     }
 
     @Override
-    public int compareTo(@NonNull final ClassHtml o) {
+    public int compareTo(@Nonnull final ClassHtml o) {
         return Comparator.comparing(ClassHtml::startTimeEpochMillis)
                 .thenComparing(ClassHtml::getClassNameText)
                 .compare(this, o);

@@ -69,24 +69,24 @@ class ClassJsonToHtmlConverterTest {
     void testConvertShouldConvertNonNullValuesWhenCalled(final ClassJson input, final ClassHtml expected) {
         //given
         final StatsJsonToHtmlConverter statsConverter = mock(StatsJsonToHtmlConverter.class);
-        when(statsConverter.convert(notNull())).thenReturn(expected.getStats());
-        when(statsConverter.convert(isNull())).thenThrow(new NullPointerException());
+        when(statsConverter.apply(notNull())).thenReturn(expected.getStats());
+        when(statsConverter.apply(isNull())).thenThrow(new NullPointerException());
 
         final StageLaunchStatsJsonToHtmlConverter stageConverter = mock(StageLaunchStatsJsonToHtmlConverter.class);
-        when(stageConverter.convert(any(), eq(COUNTDOWN), notNull())).thenReturn(expected.getCountdown());
-        when(stageConverter.convert(any(), anyString(), isNull())).thenThrow(new NullPointerException());
+        when(stageConverter.apply(any(), eq(COUNTDOWN), notNull())).thenReturn(expected.getCountdown());
+        when(stageConverter.apply(any(), anyString(), isNull())).thenThrow(new NullPointerException());
         final Optional<StageLaunchStatsHtml> optionalLaunch = Optional.ofNullable(expected.getLaunches())
                 .map(Map::values)
                 .map(Collection::stream)
                 .flatMap(Stream::findFirst);
         optionalLaunch.ifPresent(o ->
-                when(stageConverter.convert(any(), eq(METHOD_NAME), any(StageLaunchStatsJson.class)))
+                when(stageConverter.apply(any(), eq(METHOD_NAME), any(StageLaunchStatsJson.class)))
                         .thenReturn(o));
 
         final ClassJsonToHtmlConverter underTest = new ClassJsonToHtmlConverter(statsConverter, stageConverter);
 
         //when
-        final ClassHtml actual = underTest.convert(input);
+        final ClassHtml actual = underTest.apply(input);
 
         //then
         assertNotNull(actual);
@@ -96,12 +96,12 @@ class ClassJsonToHtmlConverterTest {
         if (expected.getLaunches() != null) {
             expected.getLaunches().forEach((k, v) -> {
                 assertSame(v, actual.getLaunches().get(k));
-                verify(stageConverter).convert(any(), eq(METHOD_NAME), same(input.getLaunches().get(k)));
+                verify(stageConverter).apply(any(), eq(METHOD_NAME), same(input.getLaunches().get(k)));
             });
         }
-        verify(statsConverter).convert(eq(input.getStats()));
+        verify(statsConverter).apply(eq(input.getStats()));
         if (input.getCountdown() != null) {
-            verify(stageConverter).convert(any(), eq(COUNTDOWN), same(input.getCountdown()));
+            verify(stageConverter).apply(any(), eq(COUNTDOWN), same(input.getCountdown()));
         }
     }
 

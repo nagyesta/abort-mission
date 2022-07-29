@@ -1,8 +1,8 @@
 package com.github.nagyesta.abortmission.reporting.html;
 
 import lombok.Data;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
@@ -29,7 +29,7 @@ public final class LaunchHtml {
     private StatsHtml countdownStats;
     private StatsHtml missionStats;
 
-    private LaunchHtml(@NonNull final LaunchHtmlBuilder builder) {
+    private LaunchHtml(@Nonnull final LaunchHtmlBuilder builder) {
         this.classes = builder.classes;
         this.stats = builder.stats;
         this.countdownStats = builder.countdownStats;

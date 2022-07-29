@@ -1,16 +1,33 @@
 package com.github.nagyesta.abortmission.reporting;
 
-import com.github.nagyesta.abortmission.reporting.controller.ConversionController;
+import com.github.nagyesta.abortmission.reporting.config.ConversionProperties;
 import com.github.nagyesta.abortmission.reporting.exception.RenderException;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import lombok.extern.slf4j.Slf4j;
 
-@SpringBootApplication
+import java.util.Arrays;
+import java.util.List;
+
 @SuppressWarnings("checkstyle:HideUtilityClassConstructor")
-public class AbortMissionFlightEvaluationReportApp {
+@Slf4j
+public final class AbortMissionFlightEvaluationReportApp {
 
     public static void main(final String[] args) throws RenderException {
-        SpringApplication.run(AbortMissionFlightEvaluationReportApp.class, args)
-                .getBean(ConversionController.class).convert();
+        final AbortMissionFlightEvaluationReportApp app = new AbortMissionFlightEvaluationReportApp();
+        app.execute(app.bootstrap(Arrays.asList(args)));
     }
+
+    AbortMissionAppContext bootstrap(final List<String> args) {
+        final ConversionProperties properties = new PropertiesParser(args).parseArguments();
+        return new AbortMissionAppContext(properties);
+    }
+
+    void execute(final AbortMissionAppContext context) {
+        try {
+            context.controller().convert();
+        } catch (final RenderException ex) {
+            log.error(ex.getMessage(), ex);
+            context.exitWithError();
+        }
+    }
+
 }

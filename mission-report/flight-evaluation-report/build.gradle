@@ -1,5 +1,4 @@
 plugins {
-    alias(libs.plugins.spring.boot)
     id 'java'
     //noinspection SpellCheckingInspection
     alias(libs.plugins.lombok)
@@ -14,17 +13,14 @@ project.ext {
 }
 
 dependencies {
-    implementation libs.bundles.spring.boot.report
     implementation libs.json.schema.validator
+    implementation libs.thymeleaf
+    implementation libs.thymeleaf.extras.java8time
     implementation libs.bundles.logback
+    implementation libs.findbugs.jsr305
     annotationProcessor libs.lombok
-    annotationProcessor libs.spring.boot.configuration.processor
-    testImplementation libs.spring.boot.starter.test
     testImplementation libs.jupiter.core
-    constraints {
-        implementation libs.bundles.spring.web
-        testImplementation libs.bundles.spring.test
-    }
+    testImplementation libs.mockito.core
 }
 
 minification {
@@ -119,11 +115,17 @@ task processTemplates {
 }
 
 jar {
-    enabled = false
+    manifest {
+        attributes "Main-Class": "com.github.nagyesta.abortmission.reporting.AbortMissionFlightEvaluationReportApp"
+    }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 processResources.finalizedBy processTemplates
-bootJarMainClassName.dependsOn processTemplates
+jar.dependsOn processTemplates
 checkstyleMain.dependsOn processTemplates
 compileTestJava.dependsOn processTemplates
 javadoc.dependsOn processTemplates
@@ -136,7 +138,6 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifact bootJar
             artifactId = "abort.${project.name}"
             pom {
                 name = "${project.artifactDisplayName}"

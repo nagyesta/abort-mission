@@ -13,18 +13,16 @@ import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-import org.springframework.util.StreamUtils;
+import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.Set;
 
-@Component
 @Slf4j
 public class ConversionController {
     private static final String ROOT_NODE = "$";
@@ -32,17 +30,18 @@ public class ConversionController {
     private final ConversionProperties properties;
     private final ObjectMapper objectMapper;
     private final LaunchJsonToHtmlConverter converter;
-    private final SpringTemplateEngine templateEngine;
+    private final TemplateEngine templateEngine;
 
-    @Autowired
     public ConversionController(final ConversionProperties properties,
                                 final ObjectMapper objectMapper,
                                 final LaunchJsonToHtmlConverter converter,
-                                final SpringTemplateEngine templateEngine) {
+                                final TemplateEngine templateEngine) {
         this.properties = properties;
         this.objectMapper = objectMapper;
         this.converter = converter;
         this.templateEngine = templateEngine;
+        templateEngine.addDialect(new Java8TimeDialect());
+        templateEngine.setTemplateResolver(new ClassLoaderTemplateResolver());
     }
 
     /**
@@ -51,7 +50,9 @@ public class ConversionController {
      * @throws RenderException When the conversion fails for any reason.
      */
     public void convert() throws RenderException {
-        Assert.isTrue(properties.getInput().exists(), "Input file does not exist.");
+        if (!properties.getInput().exists()) {
+            throw new IllegalArgumentException("Input file does not exist.");
+        }
         final LaunchJson json = readValidJson();
         render(prepareContext(json));
         if (properties.isFailOnError() && json.getStats().getWorstResult() == StageResultJson.FAILURE) {
@@ -64,7 +65,7 @@ public class ConversionController {
     private void render(final Context context) {
         try (FileOutputStream stream = new FileOutputStream(properties.getOutput());
              OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8)) {
-            templateEngine.process("html/launch-report", context, writer);
+            templateEngine.process("/templates/html/launch-report.html", context, writer);
         } catch (final Exception e) {
             log.error(e.getMessage(), e);
             throw new RenderException();
@@ -72,7 +73,7 @@ public class ConversionController {
     }
 
     private Context prepareContext(final LaunchJson launchJson) {
-        final LaunchHtml launchHtml = converter.convert(launchJson);
+        final LaunchHtml launchHtml = converter.apply(launchJson);
         final Context context = new Context();
         context.setVariable("launchModel", launchHtml);
         context.setVariable("allCss", readResource("/templates/css/all.min.css"));
@@ -81,8 +82,9 @@ public class ConversionController {
     }
 
     private String readResource(final String input) throws RenderException {
-        try {
-            return StreamUtils.copyToString(ConversionController.class.getResourceAsStream(input), StandardCharsets.UTF_8);
+        //noinspection LocalCanBeFinal
+        try (InputStream stream = ConversionController.class.getResourceAsStream(input)) {
+            return new String(Objects.requireNonNull(stream).readAllBytes(), StandardCharsets.UTF_8);
         } catch (final IOException e) {
             log.error(e.getMessage(), e);
             throw new RenderException();
