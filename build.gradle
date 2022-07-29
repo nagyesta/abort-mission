@@ -146,7 +146,8 @@ configure(subprojects.findAll({
                         "com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDropTestAssets",
                         "com.github.nagyesta.abortmission.testkit.NoOpMatcher",
                         "com.github.nagyesta.abortmission.booster.junit4.support.LaunchAbortTestWatcher.1",
-                        "com.github.nagyesta.abortmission.reporting.AbortMissionFlightEvaluationReportApp"
+                        "com.github.nagyesta.abortmission.reporting.AbortMissionFlightEvaluationReportApp",
+                        "org.springframework.boot.loader.JarLauncher"
                 ]
             }
         }

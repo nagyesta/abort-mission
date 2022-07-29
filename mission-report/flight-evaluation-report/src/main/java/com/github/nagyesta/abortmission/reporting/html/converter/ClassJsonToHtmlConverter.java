@@ -3,11 +3,8 @@ package com.github.nagyesta.abortmission.reporting.html.converter;
 import com.github.nagyesta.abortmission.reporting.html.ClassHtml;
 import com.github.nagyesta.abortmission.reporting.html.StageLaunchStatsHtml;
 import com.github.nagyesta.abortmission.reporting.json.ClassJson;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -16,15 +13,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-@Component
-public class ClassJsonToHtmlConverter implements Converter<ClassJson, ClassHtml> {
+public class ClassJsonToHtmlConverter implements Function<ClassJson, ClassHtml> {
 
     private static final String TEST_METHOD_REGEX = "^test(?<what>[a-zA-Z0-9]+)Should(?<doWhat>[a-zA-Z0-9]+)When(?<when>[a-zA-Z0-9]+)$";
 
     private final StatsJsonToHtmlConverter statsConverter;
     private final StageLaunchStatsJsonToHtmlConverter stageConverter;
 
-    @Autowired
     public ClassJsonToHtmlConverter(final StatsJsonToHtmlConverter statsConverter,
                                     final StageLaunchStatsJsonToHtmlConverter stageConverter) {
         this.statsConverter = statsConverter;
@@ -32,13 +27,13 @@ public class ClassJsonToHtmlConverter implements Converter<ClassJson, ClassHtml>
     }
 
     @Override
-    public ClassHtml convert(@NonNull final ClassJson source) {
+    public ClassHtml apply(@Nonnull final ClassJson source) {
         final Map<String, StageLaunchStatsHtml> launchMap = convertLaunchMap(source);
         return ClassHtml.builder(source.getClassName())
                 .countdown(Optional.ofNullable(source.getCountdown())
-                        .map(c -> stageConverter.convert(Function.identity(), "Countdown", c))
+                        .map(c -> stageConverter.apply(Function.identity(), "Countdown", c))
                         .orElse(null))
-                .stats(statsConverter.convert(source.getStats()))
+                .stats(statsConverter.apply(source.getStats()))
                 .launches(launchMap)
                 .build();
     }
@@ -49,7 +44,7 @@ public class ClassJsonToHtmlConverter implements Converter<ClassJson, ClassHtml>
      * @param s The name of the test method.
      * @return The tooltip
      */
-    protected String convertTestMethod(@NonNull final String s) {
+    protected String convertTestMethod(@Nonnull final String s) {
         final Pattern pattern = Pattern.compile(TEST_METHOD_REGEX);
         final Matcher matcher = pattern.matcher(s);
         if (!matcher.matches()) {
@@ -65,7 +60,7 @@ public class ClassJsonToHtmlConverter implements Converter<ClassJson, ClassHtml>
                 .map(Collection::stream)
                 .map(stream -> stream.collect(
                         Collectors.toMap(Map.Entry::getKey,
-                                e -> stageConverter.convert(this::convertTestMethod, e.getKey(), e.getValue()))))
+                                e -> stageConverter.apply(this::convertTestMethod, e.getKey(), e.getValue()))))
                 .orElse(null);
     }
 }

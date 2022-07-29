@@ -3,6 +3,7 @@ package com.github.nagyesta.abortmission.reporting.html;
 import lombok.Data;
 import lombok.NonNull;
 
+import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -19,7 +20,7 @@ public final class StageLaunchStatsHtml {
     @NonNull
     private StatsHtml stats;
 
-    private StageLaunchStatsHtml(@org.springframework.lang.NonNull final StageLaunchStatsHtmlBuilder builder) {
+    private StageLaunchStatsHtml(@Nonnull final StageLaunchStatsHtmlBuilder builder) {
         this.displayName = builder.displayName;
         this.titleName = builder.titleName;
         this.matcherNames = builder.matcherNames;

@@ -1,8 +1,8 @@
 package com.github.nagyesta.abortmission.reporting.html;
 
 import lombok.Data;
-import org.springframework.lang.NonNull;
 
+import javax.annotation.Nonnull;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ public final class StatsHtml {
     private int abort;
     private int suppressed;
 
-    private StatsHtml(@NonNull final StatsHtmlBuilder builder) {
+    private StatsHtml(@Nonnull final StatsHtmlBuilder builder) {
         this.minStart = builder.minStart;
         this.maxEnd = builder.maxEnd;
         this.worstResult = builder.worstResult;

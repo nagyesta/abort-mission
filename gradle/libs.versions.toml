@@ -1,6 +1,8 @@
 [versions]
 spring = "5.3.21"
 springBoot = "2.7.1"
+thymeleaf = "3.0.15.RELEASE"
+thymeleafExtrasTime = "3.0.4.RELEASE"
 logback = "1.2.11"
 jsonSchemaValidator = "1.0.71"
 gson = "2.9.0"
@@ -9,6 +11,7 @@ h2 = "2.1.214"
 jdbi3 = "3.30.0"
 
 lombok = "1.18.24"
+findbugs = "3.0.2"
 
 junit4 = "4.13.2"
 jupiter = "5.8.2"
@@ -18,7 +21,6 @@ cucumber = "7.4.1"
 testNg = "7.6.1"
 
 lombokPlugin = "6.5.0.3"
-springBootPlugin = "2.7.2"
 minifyPlugin = "1.3.1"
 gitVersionerPlugin = "1.6.7"
 indexScanPlugin = "2.3.0"
@@ -30,14 +32,13 @@ jacoco = "0.8.2"
 [libraries]
 spring-core = { module = "org.springframework:spring-core", version.ref = "spring" }
 spring-context = { module = "org.springframework:spring-context", version.ref = "spring" }
-spring-web = { module = "org.springframework:spring-web", version.ref = "spring" }
 spring-test = { module = "org.springframework:spring-test", version.ref = "spring" }
 
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "springBoot" }
-spring-boot-starter-json = { module = "org.springframework.boot:spring-boot-starter-json", version.ref = "springBoot" }
-spring-boot-starter-thymeleaf = { module = "org.springframework.boot:spring-boot-starter-thymeleaf", version.ref = "springBoot" }
-spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "springBoot" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "springBoot" }
+
+thymeleaf = { module = "org.thymeleaf:thymeleaf", version.ref = "thymeleaf" }
+thymeleaf-extras-java8time = { module = "org.thymeleaf.extras:thymeleaf-extras-java8time", version.ref = "thymeleafExtrasTime" }
 
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 logback-core = { module = "ch.qos.logback:logback-core", version.ref = "logback" }
@@ -51,6 +52,7 @@ h2 = { module = "com.h2database:h2", version.ref = "h2" }
 jdbi3-sqlobject = { module = "org.jdbi:jdbi3-sqlobject", version.ref = "jdbi3" }
 
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+findbugs-jsr305 = { module = "com.google.code.findbugs:jsr305", version.ref = "findbugs" }
 
 junit = { module = "junit:junit", version.ref = "junit4" }
 
@@ -69,13 +71,10 @@ cucumber-junit = { module = "io.cucumber:cucumber-junit", version.ref = "cucumbe
 cucumber-spring = { module = "io.cucumber:cucumber-spring", version.ref = "cucumber" }
 
 [bundles]
-spring-boot-report = ["spring-boot-starter", "spring-boot-starter-json", "spring-boot-starter-thymeleaf"]
-spring-web = ["spring-core", "spring-context", "spring-web"]
 spring-test = ["spring-core", "spring-context", "spring-test"]
 logback = ["logback-classic", "logback-core"]
 
 [plugins]
-spring-boot = { id = "org.springframework.boot", version.ref = "springBootPlugin" }
 lombok = { id = "io.freefair.lombok", version.ref = "lombokPlugin" }
 minify = { id = "org.gradlewebtools.minify", version.ref = "minifyPlugin" }
 versioner = { id = "io.toolebox.git-versioner", version.ref = "gitVersionerPlugin" }

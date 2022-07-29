@@ -3,14 +3,15 @@ package com.github.nagyesta.abortmission.reporting.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nagyesta.abortmission.reporting.config.ConversionProperties;
 import com.github.nagyesta.abortmission.reporting.exception.RenderException;
+import com.github.nagyesta.abortmission.reporting.html.converter.ClassJsonToHtmlConverter;
 import com.github.nagyesta.abortmission.reporting.html.converter.LaunchJsonToHtmlConverter;
+import com.github.nagyesta.abortmission.reporting.html.converter.StageLaunchStatsJsonToHtmlConverter;
+import com.github.nagyesta.abortmission.reporting.html.converter.StatsJsonToHtmlConverter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.TemplateEngine;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -21,14 +22,20 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SpringBootTest
 class ConversionControllerIntegrationTest {
-    @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
-    private LaunchJsonToHtmlConverter converter;
-    @Autowired
-    private SpringTemplateEngine templateEngine;
+
+    private final ObjectMapper objectMapper;
+    private final LaunchJsonToHtmlConverter launchConverter;
+    private final TemplateEngine templateEngine;
+
+    ConversionControllerIntegrationTest() {
+        final StatsJsonToHtmlConverter statsConverter = new StatsJsonToHtmlConverter();
+        final StageLaunchStatsJsonToHtmlConverter stageConverter = new StageLaunchStatsJsonToHtmlConverter(statsConverter);
+        final ClassJsonToHtmlConverter classConverter = new ClassJsonToHtmlConverter(statsConverter, stageConverter);
+        templateEngine = new TemplateEngine();
+        launchConverter = new LaunchJsonToHtmlConverter(statsConverter, classConverter);
+        objectMapper = new ObjectMapper();
+    }
 
     private static Stream<Arguments> validInputSource() {
         return Stream.<Arguments>builder()
@@ -48,15 +55,16 @@ class ConversionControllerIntegrationTest {
         //given
         final File inputFile = new File(this.getClass().getResource(jsonResource).getFile());
         final File expectedFile = new File(this.getClass().getResource(expectedHtml).getFile());
-        final ConversionProperties properties = new ConversionProperties();
-        properties.setInput(inputFile);
-        properties.setOutput(File.createTempFile("abort-mission-test", ".html"));
-        properties.setRelaxed(relaxed);
-        properties.setFailOnError(failOnError);
+        final ConversionProperties properties = ConversionProperties.builder()
+                .input(inputFile)
+                .output(File.createTempFile("abort-mission-test", ".html"))
+                .relaxed(relaxed)
+                .failOnError(failOnError)
+                .build();
 
         properties.getOutput().deleteOnExit();
 
-        final ConversionController underTest = new ConversionController(properties, objectMapper, converter, templateEngine);
+        final ConversionController underTest = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
 
         //when
         if (failOnError) {
@@ -75,14 +83,15 @@ class ConversionControllerIntegrationTest {
     void testConvertShouldThrowExceptionWhenCalledWithInvalidJson() throws Exception {
         //given
         final File inputFile = new File(this.getClass().getResource("/schema/abort-mission-telemetry-relaxed.json").getFile());
-        final ConversionProperties properties = new ConversionProperties();
-        properties.setInput(inputFile);
-        properties.setOutput(File.createTempFile("abort-mission-test", ".html"));
-        properties.setRelaxed(false);
+        final ConversionProperties properties = ConversionProperties.builder()
+                .input(inputFile)
+                .output(File.createTempFile("abort-mission-test", ".html"))
+                .relaxed(false)
+                .build();
 
         properties.getOutput().deleteOnExit();
 
-        final ConversionController underTest = new ConversionController(properties, objectMapper, converter, templateEngine);
+        final ConversionController underTest = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
 
         //when
         assertThrows(RuntimeException.class, underTest::convert);

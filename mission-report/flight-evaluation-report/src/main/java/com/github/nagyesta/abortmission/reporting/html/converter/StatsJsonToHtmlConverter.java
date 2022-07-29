@@ -4,17 +4,15 @@ import com.github.nagyesta.abortmission.reporting.html.StageResultHtml;
 import com.github.nagyesta.abortmission.reporting.html.StatsHtml;
 import com.github.nagyesta.abortmission.reporting.json.StageResultJson;
 import com.github.nagyesta.abortmission.reporting.json.StatsJson;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
 
+import javax.annotation.Nonnull;
 import java.util.Optional;
+import java.util.function.Function;
 
-@Component
-public class StatsJsonToHtmlConverter implements Converter<StatsJson, StatsHtml> {
+public class StatsJsonToHtmlConverter implements Function<StatsJson, StatsHtml> {
 
     @Override
-    public StatsHtml convert(@NonNull final StatsJson source) {
+    public StatsHtml apply(@Nonnull final StatsJson source) {
         return StatsHtml.builder()
                 .minStart(source.getMinStart())
                 .maxEnd(source.getMaxEnd())

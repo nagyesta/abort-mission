@@ -81,7 +81,7 @@ class StatsJsonToHtmlConverterTest {
         final StatsJsonToHtmlConverter underTest = new StatsJsonToHtmlConverter();
 
         //when
-        final StatsHtml actual = underTest.convert(input);
+        final StatsHtml actual = underTest.apply(input);
 
         //then
         assertNotNull(actual);
