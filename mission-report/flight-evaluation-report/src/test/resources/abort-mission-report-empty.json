@@ -1,0 +1,121 @@
+{
+  "classes": {},
+  "countdownStats": {
+    "minStart": {
+      "date": {
+        "year": 2020,
+        "month": 11,
+        "day": 30
+      },
+      "time": {
+        "hour": 22,
+        "minute": 54,
+        "second": 43,
+        "nano": 429000000
+      }
+    },
+    "maxEnd": {
+      "date": {
+        "year": 2020,
+        "month": 11,
+        "day": 30
+      },
+      "time": {
+        "hour": 22,
+        "minute": 54,
+        "second": 44,
+        "nano": 746000000
+      }
+    },
+    "worstResult": "FAILURE",
+    "count": 3,
+    "sumDuration": 947,
+    "minDuration": 2,
+    "maxDuration": 938,
+    "avgDuration": 315.7,
+    "resultCount": {
+      "FAILURE": 1,
+      "SUCCESS": 2
+    }
+  },
+  "missionStats": {
+    "minStart": {
+      "date": {
+        "year": 2020,
+        "month": 11,
+        "day": 30
+      },
+      "time": {
+        "hour": 22,
+        "minute": 54,
+        "second": 43,
+        "nano": 436000000
+      }
+    },
+    "maxEnd": {
+      "date": {
+        "year": 2020,
+        "month": 11,
+        "day": 30
+      },
+      "time": {
+        "hour": 22,
+        "minute": 54,
+        "second": 45,
+        "nano": 5000000
+      }
+    },
+    "worstResult": "FAILURE",
+    "count": 16,
+    "sumDuration": 11,
+    "minDuration": 0,
+    "maxDuration": 6,
+    "avgDuration": 0.7,
+    "resultCount": {
+      "FAILURE": 2,
+      "SUPPRESSED": 1,
+      "ABORT": 8,
+      "SUCCESS": 5
+    }
+  },
+  "stats": {
+    "minStart": {
+      "date": {
+        "year": 2020,
+        "month": 11,
+        "day": 30
+      },
+      "time": {
+        "hour": 22,
+        "minute": 54,
+        "second": 43,
+        "nano": 429000000
+      }
+    },
+    "maxEnd": {
+      "date": {
+        "year": 2020,
+        "month": 11,
+        "day": 30
+      },
+      "time": {
+        "hour": 22,
+        "minute": 54,
+        "second": 45,
+        "nano": 5000000
+      }
+    },
+    "worstResult": "FAILURE",
+    "count": 19,
+    "sumDuration": 958,
+    "minDuration": 0,
+    "maxDuration": 938,
+    "avgDuration": 50.4,
+    "resultCount": {
+      "FAILURE": 3,
+      "SUPPRESSED": 1,
+      "ABORT": 8,
+      "SUCCESS": 7
+    }
+  }
+}

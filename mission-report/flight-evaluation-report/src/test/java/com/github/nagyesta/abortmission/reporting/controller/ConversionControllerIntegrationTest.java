@@ -80,6 +80,26 @@ class ConversionControllerIntegrationTest {
     }
 
     @Test
+    void testConvertShouldThrowExceptionWhenCalledWithEmptyJson() throws Exception {
+        //given
+        final File inputFile = new File(this.getClass().getResource("/abort-mission-report-empty.json").getFile());
+        final ConversionProperties properties = ConversionProperties.builder()
+                .input(inputFile)
+                .output(File.createTempFile("abort-mission-test", ".html"))
+                .relaxed(false)
+                .build();
+
+        properties.getOutput().deleteOnExit();
+
+        final ConversionController underTest = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
+
+        //when
+        assertThrows(RuntimeException.class, underTest::convert);
+
+        //then + exception
+    }
+
+    @Test
     void testConvertShouldThrowExceptionWhenCalledWithInvalidJson() throws Exception {
         //given
         final File inputFile = new File(this.getClass().getResource("/schema/abort-mission-telemetry-relaxed.json").getFile());

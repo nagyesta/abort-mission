@@ -104,7 +104,12 @@ public class ConversionController {
                         .forEach(log::error);
                 throw new IllegalArgumentException("validation failed.");
             }
-            return objectMapper.treeToValue(rootNode, LaunchJson.class);
+            final LaunchJson launchJson = objectMapper.treeToValue(rootNode, LaunchJson.class);
+            if (launchJson.getClasses().isEmpty()) {
+                log.error("No measurements found in telemetry JSON. Please double-check your reporting configuration!");
+                throw new IllegalArgumentException("Telemetry has no measurements.");
+            }
+            return launchJson;
         } catch (final Exception e) {
             log.error(e.getMessage(), e);
             throw new RenderException();
