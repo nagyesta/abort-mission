@@ -1,6 +1,6 @@
 [versions]
 spring = "5.3.22"
-springBoot = "2.7.2"
+springBoot = "2.7.3"
 thymeleaf = "3.0.15.RELEASE"
 thymeleafExtrasTime = "3.0.4.RELEASE"
 logback = "1.2.11"
