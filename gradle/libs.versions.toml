@@ -1,7 +1,7 @@
 [versions]
 spring = "5.3.22"
 springBoot = "2.7.3"
-snakeYaml = "1.30"
+snakeYaml = "1.31"
 thymeleaf = "3.0.15.RELEASE"
 thymeleafExtrasTime = "3.0.4.RELEASE"
 logback = "1.2.11"
