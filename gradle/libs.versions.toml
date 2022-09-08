@@ -1,6 +1,7 @@
 [versions]
 spring = "5.3.22"
 springBoot = "2.7.3"
+snakeYaml = "1.30"
 thymeleaf = "3.0.15.RELEASE"
 thymeleafExtrasTime = "3.0.4.RELEASE"
 logback = "1.2.11"
@@ -36,6 +37,7 @@ spring-test = { module = "org.springframework:spring-test", version.ref = "sprin
 
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "springBoot" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "springBoot" }
+snake-yaml = { module = "org.yaml:snakeyaml", version.ref = "snakeYaml" }
 
 thymeleaf = { module = "org.thymeleaf:thymeleaf", version.ref = "thymeleaf" }
 thymeleaf-extras-java8time = { module = "org.thymeleaf.extras:thymeleaf-extras-java8time", version.ref = "thymeleafExtrasTime" }
@@ -71,7 +73,7 @@ cucumber-junit = { module = "io.cucumber:cucumber-junit", version.ref = "cucumbe
 cucumber-spring = { module = "io.cucumber:cucumber-spring", version.ref = "cucumber" }
 
 [bundles]
-spring-test = ["spring-core", "spring-context", "spring-test"]
+spring-test = ["spring-core", "spring-context", "spring-test", "snake-yaml"]
 logback = ["logback-classic", "logback-core"]
 
 [plugins]
