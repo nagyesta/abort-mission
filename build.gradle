@@ -6,6 +6,8 @@ plugins {
 
 group = 'com.github.nagyesta.abort-mission'
 
+apply from: "config/ossindex/ossIndexAudit.gradle"
+
 project.ext {
     gitToken = project.hasProperty('githubToken') ? (project.property('githubToken') as String) : ''
     gitUser = project.hasProperty('githubUser') ? (project.property('githubUser') as String) : ''
@@ -13,7 +15,6 @@ project.ext {
     ossrhPass = project.hasProperty('ossrhPassword') ? (project.property('ossrhPassword') as String) : ''
     ossIndexUser = project.hasProperty('ossIndexUsername') ? (project.property('ossIndexUsername') as String) : ''
     ossIndexPass = project.hasProperty('ossIndexPassword') ? (project.property('ossIndexPassword') as String) : ''
-    ossIndexExclusions = ["CVE-2016-1000027", "CVE-2018-14335", "sonatype-2020-1324", "sonatype-2018-0863", "CVE-2022-38752"]
     repoUrl = 'https://github.com/nagyesta/abort-mission'
     licenseName = 'MIT License'
     licenseUrl = 'https://raw.githubusercontent.com/nagyesta/abort-mission/main/LICENSE'

@@ -11,6 +11,7 @@ on:
       - 'gradle/libs.versions.toml'
       - 'gradle/verification-metadata.xml'
       - 'gradle/wrapper/gradle-wrapper.properties'
+      - 'config/ossindex/exclusions.txt'
 
 permissions: read-all
 
