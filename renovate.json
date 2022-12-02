@@ -12,6 +12,5 @@
   "separateMinorPatch" : true,
   "github-actions": {
     "pinDigests": true
-  },
-  "ignorePaths": [ ".github/workflows/**" ]
+  }
 }
