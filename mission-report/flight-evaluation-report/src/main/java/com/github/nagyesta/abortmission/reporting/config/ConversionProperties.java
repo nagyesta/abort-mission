@@ -1,10 +1,13 @@
 package com.github.nagyesta.abortmission.reporting.config;
 
 import lombok.Data;
-import lombok.NonNull;
 
 import javax.annotation.Nonnull;
 import java.io.File;
+import java.util.Optional;
+
+import static com.github.nagyesta.abortmission.reporting.PropertiesParser.INPUT;
+import static com.github.nagyesta.abortmission.reporting.PropertiesParser.OUTPUT;
 
 @Data
 public final class ConversionProperties {
@@ -13,9 +16,12 @@ public final class ConversionProperties {
     private boolean relaxed;
     private boolean failOnError;
 
-    private ConversionProperties(@NonNull final File input, @NonNull final File output, final boolean relaxed, final boolean failOnError) {
-        this.input = input;
+    private ConversionProperties(final File input, final File output, final boolean relaxed, final boolean failOnError) {
+        this.input = Optional.ofNullable(input)
+                .orElseThrow(() -> new IllegalArgumentException("Missing input parameter. Expected: " + INPUT + "=<file.json>"));
         this.output = output;
+        Optional.ofNullable(output)
+                .orElseThrow(() -> new IllegalArgumentException("Missing output parameter. Expected: " + OUTPUT + "=<file.html>"));
         this.relaxed = relaxed;
         this.failOnError = failOnError;
     }

@@ -10,8 +10,14 @@ import java.util.regex.Pattern;
 
 public final class PropertiesParser {
 
-    private static final String INPUT = "--report.input";
-    private static final String OUTPUT = "--report.output";
+    /**
+     * The parameter name of the input file.
+     */
+    public static final String INPUT = "--report.input";
+    /**
+     * The parameter name of the output file.
+     */
+    public static final String OUTPUT = "--report.output";
     private static final String RELAXED = "--report.relaxed";
     private static final String FAIL_ON_ERROR = "--report.failOnError";
     private static final String EQUALS = "=";

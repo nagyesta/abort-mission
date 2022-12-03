@@ -17,7 +17,7 @@ dependencies {
     implementation libs.jackson.databind
     implementation libs.thymeleaf
     implementation libs.thymeleaf.extras.java8time
-    implementation libs.bundles.logback
+    implementation libs.bundles.logback.report
     implementation libs.findbugs.jsr305
     annotationProcessor libs.lombok
     testImplementation libs.jupiter.core
