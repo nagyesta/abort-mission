@@ -9,7 +9,7 @@ dependencies {
     implementation project(":mission-control")
     implementation libs.spring.boot.starter
     implementation libs.spring.boot.starter.test
-    implementation libs.bundles.logback
+    implementation libs.bundles.logback.test
     testImplementation libs.jupiter.api
     testImplementation libs.jupiter.core
     constraints {

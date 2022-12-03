@@ -4,8 +4,9 @@ springBoot = "2.7.6"
 snakeYaml = "1.33"
 thymeleaf = "3.1.0.RELEASE"
 thymeleafExtrasTime = "3.0.4.RELEASE"
-logback = "1.2.11"
+logbackTest = "1.2.11"
 jsonSchemaValidator = "1.0.74"
+logbackReport = "1.4.5"
 jackson = "2.14.1"
 gson = "2.10"
 slf4j = "1.7.36"
@@ -43,8 +44,10 @@ snake-yaml = { module = "org.yaml:snakeyaml", version.ref = "snakeYaml" }
 thymeleaf = { module = "org.thymeleaf:thymeleaf", version.ref = "thymeleaf" }
 thymeleaf-extras-java8time = { module = "org.thymeleaf.extras:thymeleaf-extras-java8time", version.ref = "thymeleafExtrasTime" }
 
-logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
-logback-core = { module = "ch.qos.logback:logback-core", version.ref = "logback" }
+logback-classic-test = { module = "ch.qos.logback:logback-classic", version.ref = "logbackTest" }
+logback-core-test = { module = "ch.qos.logback:logback-core", version.ref = "logbackTest" }
+logback-classic-report = { module = "ch.qos.logback:logback-classic", version.ref = "logbackReport" }
+logback-core-report = { module = "ch.qos.logback:logback-core", version.ref = "logbackReport" }
 
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 json-schema-validator = { module = "com.networknt:json-schema-validator", version.ref = "jsonSchemaValidator" }
@@ -76,7 +79,8 @@ cucumber-spring = { module = "io.cucumber:cucumber-spring", version.ref = "cucum
 
 [bundles]
 spring-test = ["spring-core", "spring-context", "spring-test", "snake-yaml"]
-logback = ["logback-classic", "logback-core"]
+logback-test = ["logback-classic-test", "logback-core-test"]
+logback-report = ["logback-classic-report", "logback-core-report"]
 
 [plugins]
 lombok = { id = "io.freefair.lombok", version.ref = "lombokPlugin" }
