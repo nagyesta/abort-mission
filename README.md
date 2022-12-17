@@ -4,7 +4,7 @@
 [![Java version](https://img.shields.io/badge/Java%20version-11-yellow?logo=java)](https://img.shields.io/badge/Java%20version-11-yellow?logo=java)
 [![latest-release](https://img.shields.io/github/v/tag/nagyesta/abort-mission?color=blue&logo=git&label=releases&sort=semver)](https://github.com/nagyesta/abort-mission/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.nagyesta.abort-mission/abort.mission-control?logo=apache-maven)](https://search.maven.org/search?q=com.github.nagyesta.abort-mission)
-[![JavaCI](https://img.shields.io/github/workflow/status/nagyesta/abort-mission/JavaCI?logo=github)](https://img.shields.io/github/workflow/status/nagyesta/abort-mission/JavaCI?logo=github)
+[![JavaCI](https://img.shields.io/github/actions/workflow/status/nagyesta/abort-mission/gradle.yml?logo=github&branch=main)](https://img.shields.io/github/actions/workflow/status/nagyesta/abort-mission/gradle.yml?logo=github&branch=main)
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6017/badge)](https://bestpractices.coreinfrastructure.org/projects/6017)
 [![code-climate-maintainability](https://img.shields.io/codeclimate/maintainability/nagyesta/abort-mission?logo=code%20climate)](https://img.shields.io/codeclimate/maintainability/nagyesta/abort-mission?logo=code%20climate)
