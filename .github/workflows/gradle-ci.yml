@@ -4,21 +4,31 @@
 name: JavaCI-PR
 
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'gradle/libs.versions.toml'
+      - 'gradle/verification-metadata.xml'
+      - 'gradle/wrapper/gradle-wrapper.properties'
+      - 'config/ossindex/exclusions.txt'
+      - '.github/workflows/gradle-ci.yml'
   pull_request:
     branches: [ main ]
     paths-ignore:
       - 'README.md'
       - '**/README.md'
-      - '.lift/.toml'
-      - '**/.lift/.toml'
       - 'CODE_OF_CONDUCT.md'
       - 'CONTRIBUTING.md'
       - 'pull_request_template.md'
+      - '.lift/.toml'
+      - '**/.lift/.toml'
       - 'SECURITY.md'
       - 'LICENSE'
       - '.github/ISSUE_TEMPLATE/**'
       - '.github/assets/**'
       - '.github/workflows/**'
+      - '!.github/workflows/gradle-ci.yml'
+      - '.github/pr-labeler.yml'
       - 'renovate.json'
       - '.whitesource'
       - 'gradle/libs.versions.toml'
@@ -43,16 +53,33 @@ jobs:
         with:
           distribution: temurin
           java-version: 11
-      - uses: actions/cache@6998d139ddd3e68c71e9e398d8e40b71a2f39812 # v3.2.5
-        with:
-          path: |
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-wrapper-
+      - name: Decode key
+        run: |
+          mkdir -p ${{ runner.temp }}/.gnupg/
+          echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}" | base64 --decode > ${{ runner.temp }}/.gnupg/secring.gpg
       - name: Build with Gradle
-        run: >
-          ./gradlew printVersion build
+        uses: gradle/gradle-build-action@3fbe033aaae657f011f88f29be9e65ed26bd29ef # v2.3.3
+        with:
+          arguments: |
+            printVersion build sign
+            -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }}
+            -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+            -Psigning.secretKeyRingFile=${{ runner.temp }}/.gnupg/secring.gpg
+      - name: 'Clean-up GPG key'
+        if: always()
+        run: |
+          rm -rf ${{ runner.temp }}/.gnupg/
+      - name: 'Upload Test reports - All'
+        if: always()
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        with:
+          name: test-report-abort-mission-all
+          path: |
+            mission-control/build/reports/tests/test
+            boosters/**/build/reports/tests/test
+            mission-report/**/build/reports/tests/test
+            strongback/**/build/reports/tests/test
+          retention-days: 5
       - name: Upload coverage to Codecov - Core
         uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70 # tag=v3.1.1
         if: ${{ matrix.os == 'ubuntu-latest' }}
