@@ -53,20 +53,27 @@ jobs:
         with:
           distribution: temurin
           java-version: 11
-      - name: Decode key
+      - name: 'Decode key (if Ubuntu)'
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           mkdir -p ${{ runner.temp }}/.gnupg/
           echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}" | base64 --decode > ${{ runner.temp }}/.gnupg/secring.gpg
-      - name: Build with Gradle
+      - name: 'Build with Gradle (if Ubuntu)'
         uses: gradle/gradle-build-action@3fbe033aaae657f011f88f29be9e65ed26bd29ef # v2.3.3
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           arguments: |
             printVersion build sign
             -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }}
             -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
             -Psigning.secretKeyRingFile=${{ runner.temp }}/.gnupg/secring.gpg
-      - name: 'Clean-up GPG key'
-        if: always()
+      - name: 'Build with Gradle (if Windows)'
+        uses: gradle/gradle-build-action@3fbe033aaae657f011f88f29be9e65ed26bd29ef # v2.3.3
+        if: ${{ matrix.os != 'ubuntu-latest' }}
+        with:
+          arguments: printVersion build
+      - name: 'Clean-up GPG key (if Ubuntu)'
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           rm -rf ${{ runner.temp }}/.gnupg/
       - name: 'Upload Test reports - All'
