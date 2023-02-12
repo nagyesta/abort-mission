@@ -52,6 +52,7 @@ on:
       - '.github/pr-labeler.yml'
       - 'renovate.json'
       - '.whitesource'
+      - 'gradle/libs.versions.toml'
 
 permissions:
   # required for all workflows
