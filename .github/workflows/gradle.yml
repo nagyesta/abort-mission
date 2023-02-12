@@ -27,6 +27,7 @@ on:
       - 'gradle/verification-metadata.xml'
       - 'gradle/wrapper/gradle-wrapper.properties'
       - 'config/ossindex/exclusions.txt'
+      - 'gradle/verification-metadata-clean.xml'
 
 permissions: read-all
 
