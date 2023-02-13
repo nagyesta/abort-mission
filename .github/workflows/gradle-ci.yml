@@ -73,7 +73,7 @@ jobs:
         with:
           arguments: printVersion build
       - name: 'Clean-up GPG key (if Ubuntu)'
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: always() && ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           rm -rf ${{ runner.temp }}/.gnupg/
       - name: 'Upload Test reports - All'
