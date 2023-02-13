@@ -27,7 +27,7 @@ lombokPlugin = "6.6.1"
 minifyPlugin = "1.3.2"
 gitVersionerPlugin = "1.6.7"
 indexScanPlugin = "2.5.5"
-owaspPlugin = "8.0.2"
+owaspPlugin = "8.1.0"
 
 checkstyle = "9.2.1"
 jacoco = "0.8.2"
