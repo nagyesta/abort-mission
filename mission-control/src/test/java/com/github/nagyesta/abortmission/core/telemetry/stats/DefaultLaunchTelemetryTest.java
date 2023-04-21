@@ -40,7 +40,7 @@ class DefaultLaunchTelemetryTest {
         //given
         final LaunchTelemetryConverter converter = mock(LaunchTelemetryConverter.class);
         final Map<String, AbortMissionCommandOps> nameSpaces = spy(new HashMap<>());
-        final SortedMap<String, ClassTelemetry> classStats = spy(new TreeMap<>());
+        final SortedMap<String, ClassTelemetry> classStats = new TreeMap<>();
         when(converter.processClassStatistics(same(nameSpaces))).thenReturn(classStats);
         final LaunchTelemetryDataSource dataSource = mock(LaunchTelemetryDataSource.class);
         when(dataSource.fetchClassStatistics()).thenReturn(classStats);
@@ -51,12 +51,9 @@ class DefaultLaunchTelemetryTest {
         //then
         Assertions.assertNotNull(actual);
         Assertions.assertSame(classStats, actual.getClasses());
-        Assertions.assertNotNull(actual.getStats());
 
-        final InOrder inOrder = inOrder(dataSource, classStats);
+        final InOrder inOrder = inOrder(dataSource);
         inOrder.verify(dataSource).fetchClassStatistics();
-        //noinspection ResultOfMethodCallIgnored
-        inOrder.verify(classStats, times(2)).values();
         inOrder.verifyNoMoreInteractions();
         verifyNoInteractions(nameSpaces);
     }

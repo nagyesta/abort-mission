@@ -40,11 +40,12 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
      * The initial step of the mission before test instance initialization would start.
      *
      * @param testInstanceClass The class which will act as the test instance.
+     * @param displayName       The display name of the test case.
      * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
      */
-    public Optional<StageTimeStopwatch> launchGoNoGo(final Class<?> testInstanceClass) {
+    public Optional<StageTimeStopwatch> launchGoNoGo(final Class<?> testInstanceClass, final String displayName) {
         LOGGER.debug("Preparing countdown for class: {}", testInstanceClass.getSimpleName());
-        return this.performPreLaunchInit(testInstanceClass);
+        return this.performPreLaunchInit(testInstanceClass, displayName);
     }
 
     /**
@@ -78,12 +79,14 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
     /**
      * Marks completion of the test instance preparation.
      *
-     * @param method The test method which is ready for execution.
+     * @param method      The test method which is ready for execution.
+     * @param displayName The display name of the test case.
      * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
      */
-    public Optional<StageTimeStopwatch> launchImminent(final Method method) {
+    public Optional<StageTimeStopwatch> launchImminent(final Method method, final String displayName) {
         LOGGER.debug("Preparing mission for class: {} method: {}", method.getDeclaringClass().getSimpleName(), method.getName());
-        return evaluateLaunchAbort(methodBasedEvaluatorLookup.apply(method), new StageTimeStopwatch(method),
+        return evaluateLaunchAbort(methodBasedEvaluatorLookup.apply(method),
+                new StageTimeStopwatch(method).overrideDisplayName(displayName),
                 () -> annotationContextEvaluator().isAbortSuppressed(method)
         );
     }

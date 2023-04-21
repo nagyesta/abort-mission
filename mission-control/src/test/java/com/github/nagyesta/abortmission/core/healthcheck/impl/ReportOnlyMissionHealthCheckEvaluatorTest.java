@@ -4,6 +4,7 @@ import com.github.nagyesta.abortmission.core.MissionControl;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
+import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurementBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -154,6 +155,13 @@ class ReportOnlyMissionHealthCheckEvaluatorTest {
     }
 
     private StageTimeMeasurement with(final StageResult result) {
-        return new StageTimeMeasurement(UUID.randomUUID(), DASH, DASH, result, 0, 0);
+        return StageTimeMeasurementBuilder.builder()
+                .setLaunchId(UUID.randomUUID())
+                .setTestClassId(DASH)
+                .setTestCaseId(DASH)
+                .setResult(result)
+                .setStart(0)
+                .setEnd(0)
+                .build();
     }
 }

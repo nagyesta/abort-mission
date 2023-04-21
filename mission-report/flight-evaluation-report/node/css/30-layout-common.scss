@@ -1,0 +1,327 @@
+@import "01-variables";
+
+.help-button {
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+  padding: $padding-normal;
+  position: fixed;
+  right: 0;
+  bottom: 75px;
+  width: 40px;
+  max-width: 40px;
+  border-bottom-left-radius: 10%;
+  border-top-left-radius: 10%;
+  border: 2px solid;
+}
+
+.filter-module {
+  display: block;
+  vertical-align: top;
+  margin-bottom: 10px;
+
+  .filter-inputs {
+    display: block;
+    vertical-align: top;
+  }
+
+  .filter-button-base {
+    display: inline-block;
+    min-height: 28px;
+    height: 28px;
+    padding: 2px;
+    line-height: 24px;
+    border-radius: 3px;
+    border: 1px solid;
+    width: 36px;
+    min-width: 36px;
+    cursor: default;
+    text-align: center;
+  }
+
+  .filter-button {
+    @extend .filter-button-base;
+  }
+
+  .filter-box {
+    vertical-align: top;
+    height: 28px;
+    padding: 2px;
+    line-height: 24px;
+    border-radius: 3px;
+    border: 1px solid;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+  .filter-option-matches {
+    vertical-align: top;
+    padding: 2px;
+    line-height: 24px;
+    border: 1px solid;
+    position: relative;
+    top: 0;
+
+    .filter-option-common-base {
+      height: 3em;
+      min-height: 3em;
+      padding-top: 18px;
+      padding-left: 3px;
+      padding-right: 3px;
+      border: $border-width-normal $border-style-soft;
+      position: relative;
+    }
+
+    .filter-option-no-matches {
+      @extend .filter-option-common-base;
+      text-align: center;
+    }
+
+    .filter-option-thread {
+      @extend .filter-option-common-base;
+    }
+
+    .filter-option-result {
+      @extend .filter-option-common-base;
+    }
+
+    .filter-option-class {
+      @extend .filter-option-common-base;
+    }
+
+    .filter-option-method {
+      @extend .filter-option-common-base;
+    }
+
+    .filter-option-feature {
+      @extend .filter-option-common-base;
+    }
+
+    .filter-option-scenario {
+      @extend .filter-option-common-base;
+    }
+
+    .filter-option-matcher {
+      @extend .filter-option-common-base;
+    }
+
+    .filter-option-stage {
+      @extend .filter-option-common-base;
+    }
+
+    .filter-option-time {
+      @extend .filter-option-common-base;
+    }
+
+    .filter-option-entity-type-badge {
+      display: inline-block;
+      vertical-align: top;
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      line-height: 12px;
+      font-size: 10px;
+    }
+
+    .filter-option-name {
+      max-height: $line-height-normal;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .filter-option-actions {
+      display: inline-block;
+      vertical-align: top;
+      position: absolute;
+      right: 3px;
+      top: 3px;
+      line-height: 12px;
+      font-size: 10px;
+
+      a {
+        text-decoration: underline;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+
+      a:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .filter-rule-section-base {
+    @extend .filter-button-base;
+    height: 29px;
+    min-height: 29px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    vertical-align: top;
+    position: relative;
+  }
+
+  .filter-rule-section-include {
+    @extend .filter-rule-section-base;
+  }
+
+  .filter-rule-section-exclude {
+    @extend .filter-rule-section-base;
+  }
+
+  .filter-time-icon {
+    @extend .filter-rule-section-base;
+  }
+
+  .filter-times .filter-rule {
+    $width: 184px;
+    min-width: $width;
+
+    .invalid-range {
+      display: inline-block;
+      vertical-align: bottom;
+      position: absolute;
+      left: 0;
+      bottom: 3px;
+      line-height: 10px;
+      font-size: 8px;
+      color: red;
+      text-align: center;
+      min-width: $width;
+    }
+  }
+
+  .filter-rule {
+    display: inline-block;
+    height: 27px;
+    min-height: 27px;
+    min-width: 80px;
+    padding-top: 18px;
+    padding-left: 3px;
+    padding-right: 3px;
+    border: $border-width-normal $border-style-normal;
+    border-radius: 5px;
+    vertical-align: baseline;
+    position: relative;
+    margin-left: 2px;
+    margin-bottom: 5px;
+  }
+
+  .filter-rule-entity-type-badge {
+    display: inline-block;
+    vertical-align: top;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    line-height: 12px;
+    font-size: 10px;
+  }
+
+  .filter-rule-prefix {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+    font-size: 10px;
+  }
+
+  .filter-rule-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .filter-rule-actions {
+    display: inline-block;
+    vertical-align: top;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    line-height: 12px;
+    font-size: 10px;
+
+    a {
+      text-decoration: underline;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+
+body.light {
+  .filter-time-icon {
+    color: $light-border-color-filter-range;
+    border-color: $light-border-color-filter-range;
+    background-color: $light-background-color-suppressed;
+  }
+}
+
+body.dark {
+  .filter-time-icon {
+    color: $dark-border-color-filter-range;
+    border-color: $dark-border-color-filter-range;
+    background-color: $dark-background-color-suppressed;
+  }
+}
+
+@media only screen and (max-width: $break-point-medium-screen-width-max) {
+  body .root-container {
+    width: $break-point-medium-root-width;
+    min-width: $break-point-medium-root-width;
+    max-width: $break-point-medium-root-width;
+
+    .filter-module .filter-box {
+      $width: $break-point-medium-root-width - 2 * (42px + 2px) - 6px;
+      width: $width;
+      max-width: $width;
+    }
+
+    .filter-option-name {
+      max-width: $break-point-medium-root-width - 10px;
+    }
+  }
+}
+
+@media only screen and (min-width: $break-point-large-screen-width-min) and (max-width: $break-point-large-screen-width-max) {
+  body .root-container {
+    width: $break-point-large-root-width;
+    min-width: $break-point-large-root-width;
+    max-width: $break-point-large-root-width;
+
+    .filter-module .filter-box {
+      $width: $break-point-large-root-width - 2 * (42px + 2px) - 6px;
+      width: $width;
+      max-width: $width;
+    }
+
+    .filter-option-name {
+      max-width: $break-point-large-root-width - 10px;
+    }
+  }
+}
+
+@media only screen and (min-width: $break-point-xl-screen-width-min) {
+  body .root-container {
+    width: $break-point-xl-root-width;
+    min-width: $break-point-xl-root-width;
+    max-width: $break-point-xl-root-width;
+
+    .filter-module .filter-box {
+      $width: $break-point-xl-root-width - 2 * (42px + 2px) - 6px;
+      width: $width;
+      max-width: $width;
+    }
+
+    .filter-option-name {
+      max-width: $break-point-xl-root-width - 10px;
+    }
+  }
+}

@@ -1,28 +1,4 @@
 {
-    "from": {
-        "date": {
-            "year": 2022,
-            "month": 2,
-            "day": 20
-        },
-        "time": {
-            "hour": 13,
-            "minute": 49,
-            "second": 10,
-            "nano": 862000000
-        }
-    },
-    "to": {
-        "date": {
-            "year": 2022,
-            "month": 3,
-            "day": 10
-        },
-        "time": {
-            "hour": 11,
-            "minute": 11,
-            "second": 50,
-            "nano": 100000000
-        }
-    }
+    "from": 978307199,
+    "to": 978307499
 }

@@ -1,6 +1,5 @@
 package com.github.nagyesta.abortmission.strongback.rmi.telemetry;
 
-import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 import com.github.nagyesta.abortmission.core.telemetry.stats.ClassTelemetry;
 import com.github.nagyesta.abortmission.core.telemetry.stats.StageLaunchStats;
@@ -77,10 +76,6 @@ class RmiBackedLaunchTelemetryDataSourceIntegrationTest extends AbstractInMemory
                     .sorted()
                     .collect(Collectors.toList());
             Assertions.assertIterableEquals(expectedMeasurements, actualLaunch.getTimeMeasurements());
-
-            final Map<StageResult, Integer> actualResultCount = actualLaunch.getStats().getResultCount();
-            final Map<StageResult, Integer> expectedResultCount = countResults(expectedMeasurements);
-            Assertions.assertIterableEquals(expectedResultCount.entrySet(), actualResultCount.entrySet());
         });
 
         final StageLaunchStats actualCountdown = toCountdown(actual);
@@ -90,18 +85,6 @@ class RmiBackedLaunchTelemetryDataSourceIntegrationTest extends AbstractInMemory
                 .sorted()
                 .collect(Collectors.toList());
         Assertions.assertIterableEquals(expectedCountdowns, actualCountdown.getTimeMeasurements());
-
-        final Map<StageResult, Integer> actualResultCount = actualCountdown.getStats().getResultCount();
-        final Map<StageResult, Integer> expectedResultCount = countResults(expectedCountdowns);
-        Assertions.assertIterableEquals(expectedResultCount.entrySet(), actualResultCount.entrySet());
-    }
-
-    private Map<StageResult, Integer> countResults(final List<TestRunTelemetry> expectedMeasurements) {
-        return new TreeMap<>(expectedMeasurements.stream()
-                .collect(Collectors.groupingBy(TestRunTelemetry::getResult))
-                .entrySet()
-                .stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().size())));
     }
 
     private Map<String, StageLaunchStats> toLaunches(final SortedMap<String, ClassTelemetry> actual) {

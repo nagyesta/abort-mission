@@ -12,5 +12,4 @@ import java.util.TreeSet;
 public class StageLaunchStatsJson {
     private SortedSet<String> matcherNames = new TreeSet<>();
     private SortedSet<TestRunJson> timeMeasurements = new TreeSet<>();
-    private StatsJson stats;
 }

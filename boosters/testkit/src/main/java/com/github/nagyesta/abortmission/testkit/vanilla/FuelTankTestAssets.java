@@ -6,6 +6,7 @@ import com.github.nagyesta.abortmission.core.healthcheck.impl.MissionStatisticsC
 import com.github.nagyesta.abortmission.core.healthcheck.impl.StageStatisticsCollector;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
@@ -33,6 +34,9 @@ public final class FuelTankTestAssets {
     public static final int ABORTED_CASES = 2;
     public static final int FAILED_CASES = 2;
 
+    public static final List<String> EXPECTED_EXCEPTIONS = List.of(IllegalStateException.class.getName());
+
+    public static final List<String> EXPECTED_MESSAGES = List.of("Fuel tank exploded.");
     private FuelTankTestAssets() {
         throw new UnsupportedOperationException("Utility.");
     }

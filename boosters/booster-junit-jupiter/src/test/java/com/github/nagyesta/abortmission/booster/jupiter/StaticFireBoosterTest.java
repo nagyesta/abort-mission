@@ -1,16 +1,30 @@
 package com.github.nagyesta.abortmission.booster.jupiter;
 
 import com.github.nagyesta.abortmission.core.MissionControl;
+import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.testkit.engine.EngineTestKit;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static com.github.nagyesta.abortmission.testkit.LaunchEvaluationUtil.*;
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
 public class StaticFireBoosterTest {
+
+    private static final List<String> EXPECTED_DISPLAY_NAMES_COUNTDOWN_SIDE = IntStream
+            .range(0, (int) staticFireTestInputProvider().count() + 1)
+            .mapToObj(i -> "StaticFireTestWithSideBoosters")
+            .collect(Collectors.toList());
+    private static final List<String> EXPECTED_DISPLAY_NAMES_COUNTDOWN_PER_CLASS = List.of("StaticFireTestWithSideBoostersPerClass");
+    private static final List<String> EXPECTED_DISPLAY_NAMES_SIDE = List.of();
+    private static final List<String> EXPECTED_DISPLAY_NAMES_CENTER = List.of("testIsOnFire()");
 
     @Test
     @Tag("integration")
@@ -35,6 +49,12 @@ public class StaticFireBoosterTest {
                             evaluator.getStats().getReadOnlyCountdown().getSnapshot());
                     assertEquals(SIDE_BOOSTER_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
                             evaluator.getStats().getReadOnlyMission().getSnapshot());
+                    //check display names
+                    assertIterableEquals(EXPECTED_DISPLAY_NAMES_COUNTDOWN_SIDE, findCountdownDisplayNamesForMeasurementsOf(evaluator));
+                    assertIterableEquals(EXPECTED_DISPLAY_NAMES_SIDE, findMissionDisplayNamesForMeasurementsOf(evaluator));
+                    //check exception details
+                    assertIterableEquals(List.of(), findExceptionsForMissionFailuresOf(evaluator));
+                    assertIterableEquals(List.of(), findThrowableMessagesForMissionFailuresOf(evaluator));
                 });
         MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestWithSideBoostersPerClass.class)
                 .forEach(evaluator -> {
@@ -42,6 +62,14 @@ public class StaticFireBoosterTest {
                             evaluator.getStats().getReadOnlyCountdown().getSnapshot());
                     assertEquals(SIDE_BOOSTER_NOMINAL_STATS_PER_CLASS.getReadOnlyMission().getSnapshot(),
                             evaluator.getStats().getReadOnlyMission().getSnapshot());
+                    //check display names
+                    assertIterableEquals(EXPECTED_DISPLAY_NAMES_COUNTDOWN_PER_CLASS, findCountdownDisplayNamesForMeasurementsOf(evaluator));
+                    assertIterableEquals(EXPECTED_DISPLAY_NAMES_SIDE, findMissionDisplayNamesForMeasurementsOf(evaluator));
+                    //check exception details
+                    assertIterableEquals(EXPECTED_EXCEPTIONS, findExceptionsForMissionFailuresOf(evaluator));
+                    assertIterableEquals(EXPECTED_MESSAGES, findThrowableMessagesForMissionFailuresOf(evaluator));
+                    forEachNonFilteredStackTraceElementOfMissionFailures(evaluator,
+                            e -> Assertions.assertTrue(e.startsWith("com.github.nagyesta"), "Unexpected stack trace: " + e));
                 });
         MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestCenterCoreOnly.class.getDeclaredMethod("testIsOnFire"))
                 .forEach(evaluator -> {
@@ -49,6 +77,12 @@ public class StaticFireBoosterTest {
                             evaluator.getStats().getReadOnlyCountdown().getSnapshot());
                     assertEquals(CENTER_CORE_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
                             evaluator.getStats().getReadOnlyMission().getSnapshot());
+                    //check display names
+                    assertIterableEquals(List.of(), findCountdownDisplayNamesForMeasurementsOf(evaluator));
+                    assertIterableEquals(EXPECTED_DISPLAY_NAMES_CENTER, findMissionDisplayNamesForMeasurementsOf(evaluator));
+                    //check exception details
+                    assertIterableEquals(List.of(), findExceptionsForMissionFailuresOf(evaluator));
+                    assertIterableEquals(List.of(), findThrowableMessagesForMissionFailuresOf(evaluator));
                 });
     }
 
@@ -73,14 +107,24 @@ public class StaticFireBoosterTest {
                         .succeeded(SUCCESSFUL_PARALLEL_CASES)
                         .aborted(0)
                         .failed(0));
+        final List<String> threadNamesFromTestMethods = ThreadTracker.THREADS_USED.stream()
+                .sorted().collect(Collectors.toList());
         MissionControl.matchingHealthChecks(PARALLEL, StaticFireTestWithSideBoosters.class)
                 .forEach(evaluator -> {
                     assertEquals(PARALLEL_NOMINAL_STATS.getReadOnlyCountdown().getSnapshot(),
                             evaluator.getStats().getReadOnlyCountdown().getSnapshot());
                     assertEquals(PARALLEL_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
                             evaluator.getStats().getReadOnlyMission().getSnapshot());
+                    //check thread names
+                    final List<String> capturedThreads = evaluator.getStats().getReadOnlyMission()
+                            .timeSeriesStream()
+                            .map(StageTimeMeasurement::getThreadName)
+                            .distinct()
+                            .sorted()
+                            .collect(Collectors.toList());
+                    assertIterableEquals(threadNamesFromTestMethods, capturedThreads);
                 });
-        assertTrue(ParallelStaticFireTestWithSideBoostersTest.THREADS_USED.size() > 1);
+        assertTrue(threadNamesFromTestMethods.size() > 1);
     }
 
 }

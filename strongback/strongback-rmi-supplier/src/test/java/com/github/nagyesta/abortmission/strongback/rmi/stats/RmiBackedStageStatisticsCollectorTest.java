@@ -3,6 +3,7 @@ package com.github.nagyesta.abortmission.strongback.rmi.stats;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
+import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurementBuilder;
 import com.github.nagyesta.abortmission.strongback.base.StrongbackException;
 import com.github.nagyesta.abortmission.strongback.rmi.server.RmiServerConstants;
 import com.github.nagyesta.abortmission.strongback.rmi.service.LaunchStatisticsService;
@@ -22,13 +23,14 @@ class RmiBackedStageStatisticsCollectorTest {
 
     private static final String CONTEXT = "context";
     private static final String MATCHER = "matcher";
-    private static final StageTimeMeasurement ABORTED = new StageTimeMeasurement(
-            UUID.randomUUID(),
-            "testClassId",
-            "testCaseId",
-            StageResult.ABORT,
-            0,
-            1);
+    private static final StageTimeMeasurement ABORTED = StageTimeMeasurementBuilder.builder()
+            .setLaunchId(UUID.randomUUID())
+            .setTestClassId("testClassId")
+            .setTestCaseId("testCaseId")
+            .setResult(StageResult.ABORT)
+            .setStart(0)
+            .setEnd(1)
+            .build();
 
     @Test
     void testDoGetSnapshotShouldThrowStrongbackExceptionWhenCaughtException() throws Exception {

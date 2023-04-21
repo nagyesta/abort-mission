@@ -11,7 +11,9 @@ import java.util.TreeMap;
 @SuppressWarnings({"checkstyle:DesignForExtension", "checkstyle:JavadocVariable"})
 public class LaunchJson {
     private Map<String, ClassJson> classes = new TreeMap<>();
-    private StatsJson stats;
-    private StatsJson countdownStats;
-    private StatsJson missionStats;
+
+    public boolean isFailure() {
+        return classes.values().stream()
+                .anyMatch(c -> c.streamAllTimeMeasurements().anyMatch(TestRunJson::isFailure));
+    }
 }

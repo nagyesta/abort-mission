@@ -3,6 +3,7 @@ package com.github.nagyesta.abortmission.booster.cucumber.staticfire;
 import com.github.nagyesta.abortmission.booster.cucumber.LaunchAbortHook;
 import com.github.nagyesta.abortmission.booster.cucumber.matcher.TagDependencyNameExtractor;
 import com.github.nagyesta.abortmission.core.AbortMissionCommandOps;
+import com.github.nagyesta.abortmission.core.AbortMissionGlobalConfiguration;
 import com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -17,6 +18,11 @@ public class AbortMissionHook extends LaunchAbortHook {
     @Override
     protected Map<String, Consumer<AbortMissionCommandOps>> defineOutline() {
         return StaticFireTestAssets.getMissionPlan(new TagDependencyNameExtractor());
+    }
+
+    @Override
+    protected void overrideGlobalConfig(final AbortMissionGlobalConfiguration config) {
+        config.setStackTraceFilter(stackTraceElement -> stackTraceElement.getClassName().startsWith("com.github."));
     }
 
     @Before

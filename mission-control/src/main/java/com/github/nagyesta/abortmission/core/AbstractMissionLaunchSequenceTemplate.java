@@ -60,7 +60,7 @@ public class AbstractMissionLaunchSequenceTemplate {
                                           final Optional<StageTimeStopwatch> stopwatch,
                                           final Optional<Throwable> rootCause,
                                           final Set<Class<? extends Exception>> suppressedExceptions) {
-        failureDetected(isNotSuppressed(rootCause, suppressedExceptions), evaluators, stopwatch,
+        failureDetected(isNotSuppressed(rootCause, suppressedExceptions), evaluators, stopwatch.map(s -> s.addThrowable(rootCause)),
                 MissionHealthCheckEvaluator::missionLogger);
     }
 

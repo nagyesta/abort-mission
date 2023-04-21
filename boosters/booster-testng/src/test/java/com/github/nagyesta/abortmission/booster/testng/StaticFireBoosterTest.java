@@ -2,6 +2,7 @@ package com.github.nagyesta.abortmission.booster.testng;
 
 import com.github.nagyesta.abortmission.booster.testng.listener.AbortMissionListener;
 import com.github.nagyesta.abortmission.core.MissionControl;
+import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 import org.testng.ITestContext;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
@@ -9,8 +10,11 @@ import org.testng.annotations.Test;
 import org.testng.xml.XmlSuite;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
+import static com.github.nagyesta.abortmission.testkit.LaunchEvaluationUtil.*;
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -26,6 +30,9 @@ public class StaticFireBoosterTest {
     private static final AtomicInteger PARALLEL_PASSED = new AtomicInteger(0);
     private static final int CASES_SKIPPED_DUE_TO_CONFIG_ERROR = 501;
     private static final int FAILED_CASES_CONFIG_ERROR_ONLY = 1;
+    private static final List<String> EXPECTED_DISPLAY_NAMES_COUNTDOWN = List
+            .of("StaticFireTestWithSideBoosters");
+    private static final List<String> EXPECTED_DISPLAY_NAMES = List.of("testIsOnFire");
 
     @Test(groups = "integration")
     @SuppressWarnings("checkstyle:MagicNumber")
@@ -45,6 +52,20 @@ public class StaticFireBoosterTest {
                             evaluator.getStats().getReadOnlyCountdown().getSnapshot());
                     assertEquals(SIDE_BOOSTER_NOMINAL_STATS_PER_CLASS.getReadOnlyMission().getSnapshot(),
                             evaluator.getStats().getReadOnlyMission().getSnapshot());
+                    //check display names
+                    assertEquals(findCountdownDisplayNamesForMeasurementsOf(evaluator), EXPECTED_DISPLAY_NAMES_COUNTDOWN);
+                    assertEquals(findMissionDisplayNamesForMeasurementsOf(evaluator), List.of());
+                    //check exception details
+                    assertEquals(findExceptionsForCountdownFailuresOf(evaluator),
+                            List.of("org.springframework.beans.factory.UnsatisfiedDependencyException"));
+                    assertEquals(findThrowableMessagesForCountdownFailuresOf(evaluator), List.of("Error creating bean with name "
+                            + "'com.github.nagyesta.abortmission.booster.testng.StaticFireTestWithSideBoosters': Unsatisfied dependency "
+                            + "expressed through field 'sideBooster'; nested exception is org.springframework.beans.factory."
+                            + "BeanCreationException: Error creating bean with name 'sideBooster' defined in com.github.nagyesta."
+                            + "abortmission.testkit.spring.StaticFire: Bean instantiation via factory method failed; nested exception "
+                            + "is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.github.nagyesta."
+                            + "abortmission.testkit.spring.Booster]: Factory method 'sideBooster' threw exception; nested exception is "
+                            + "java.lang.UnsupportedOperationException: Side boosters are not supported."));
                 });
         MissionControl.matchingHealthChecks(STATIC_FIRE, StaticFireTestCenterCoreOnly.class.getDeclaredMethod("testIsOnFire"))
                 .forEach(evaluator -> {
@@ -52,6 +73,12 @@ public class StaticFireBoosterTest {
                             evaluator.getStats().getReadOnlyCountdown().getSnapshot());
                     assertEquals(CENTER_CORE_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
                             evaluator.getStats().getReadOnlyMission().getSnapshot());
+                    //check display names
+                    assertEquals(findCountdownDisplayNamesForMeasurementsOf(evaluator), List.of());
+                    assertEquals(findMissionDisplayNamesForMeasurementsOf(evaluator), EXPECTED_DISPLAY_NAMES);
+                    //check exception details
+                    assertEquals(findExceptionsForMissionFailuresOf(evaluator), List.of());
+                    assertEquals(findThrowableMessagesForMissionFailuresOf(evaluator), List.of());
                 });
     }
 
@@ -75,6 +102,17 @@ public class StaticFireBoosterTest {
                             evaluator.getStats().getReadOnlyCountdown().getSnapshot());
                     assertEquals(PARALLEL_NOMINAL_STATS_PER_CLASS.getReadOnlyMission().getSnapshot(),
                             evaluator.getStats().getReadOnlyMission().getSnapshot());
+                    final List<String> threadNames = evaluator.getStats().getReadOnlyMission().timeSeriesStream()
+                            .map(StageTimeMeasurement::getThreadName)
+                            .distinct()
+                            .sorted()
+                            .collect(Collectors.toList());
+                    assertTrue(threadNames.size() > 1, "We should have more than one thread name: " + threadNames);
+                    final List<String> threadsFromTestMethods = ParallelStaticFireTestWithSideBoosters.THREADS_USED.stream()
+                            .sorted().collect(Collectors.toList());
+                    assertEquals(threadsFromTestMethods, threadNames);
+                    forEachNonFilteredStackTraceElementOfMissionFailures(evaluator,
+                            e -> assertTrue(e.startsWith("com.github.nagyesta"), "Unexpected stack trace: " + e));
                 });
     }
 

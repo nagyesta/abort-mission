@@ -5,7 +5,7 @@ name: JavaCI-PR
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main]
     paths:
       - 'gradle/libs.versions.toml'
       - 'gradle/verification-metadata.xml'
@@ -134,7 +134,7 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./mission-report/flight-evaluation-report/build/reports/jacoco/report.xml
+          files: ./mission-report/flight-evaluation-report/build/reports/jacoco/report.xml,./mission-report/flight-evaluation-report/node/build/coverage/cobertura-coverage.xml
           flags: flighteval
       - name: Upload coverage to Codecov - Strongback - Base
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4

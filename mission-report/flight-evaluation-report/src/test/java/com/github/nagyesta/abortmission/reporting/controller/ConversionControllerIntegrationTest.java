@@ -3,10 +3,7 @@ package com.github.nagyesta.abortmission.reporting.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nagyesta.abortmission.reporting.config.ConversionProperties;
 import com.github.nagyesta.abortmission.reporting.exception.RenderException;
-import com.github.nagyesta.abortmission.reporting.html.converter.ClassJsonToHtmlConverter;
 import com.github.nagyesta.abortmission.reporting.html.converter.LaunchJsonToHtmlConverter;
-import com.github.nagyesta.abortmission.reporting.html.converter.StageLaunchStatsJsonToHtmlConverter;
-import com.github.nagyesta.abortmission.reporting.html.converter.StatsJsonToHtmlConverter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -29,29 +26,27 @@ class ConversionControllerIntegrationTest {
     private final TemplateEngine templateEngine;
 
     ConversionControllerIntegrationTest() {
-        final StatsJsonToHtmlConverter statsConverter = new StatsJsonToHtmlConverter();
-        final StageLaunchStatsJsonToHtmlConverter stageConverter = new StageLaunchStatsJsonToHtmlConverter(statsConverter);
-        final ClassJsonToHtmlConverter classConverter = new ClassJsonToHtmlConverter(statsConverter, stageConverter);
         templateEngine = new TemplateEngine();
-        launchConverter = new LaunchJsonToHtmlConverter(statsConverter, classConverter);
+        launchConverter = new LaunchJsonToHtmlConverter();
         objectMapper = new ObjectMapper();
     }
 
     private static Stream<Arguments> validInputSource() {
         return Stream.<Arguments>builder()
-                .add(Arguments.of("/abort-mission-report.json", true, true, "/abort-mission-report.txt"))
-                .add(Arguments.of("/abort-mission-report.json", true, false, "/abort-mission-report.txt"))
-                .add(Arguments.of("/abort-mission-report.json", false, true, "/abort-mission-report.txt"))
-                .add(Arguments.of("/abort-mission-report.json", false, false, "/abort-mission-report.txt"))
+                .add(Arguments.of("/abort-mission-report.json", true, true, "/abort-mission-report-html-json.txt"))
+                .add(Arguments.of("/abort-mission-report.json", true, false, "/abort-mission-report-html-json.txt"))
+                .add(Arguments.of("/abort-mission-report.json", false, true, "/abort-mission-report-html-json.txt"))
+                .add(Arguments.of("/abort-mission-report.json", false, false, "/abort-mission-report-html-json.txt"))
+                .add(Arguments.of("/abort-mission-report-cucumber.json", true, false, "/abort-mission-report-cucumber-html-json.txt"))
                 .build();
     }
 
     @ParameterizedTest
     @MethodSource("validInputSource")
-    void testConvertShouldConvertAndRenderDataWhenCalledWithValidJson(final String jsonResource,
-                                                                      final boolean relaxed,
-                                                                      final boolean failOnError,
-                                                                      final String expectedHtml) throws Exception {
+    void testConvertJsonShouldConvertJsonDataWhenCalledWithValidJson(final String jsonResource,
+                                                                     final boolean relaxed,
+                                                                     final boolean failOnError,
+                                                                     final String expectedHtml) throws Exception {
         //given
         final File inputFile = new File(this.getClass().getResource(jsonResource).getFile());
         final File expectedFile = new File(this.getClass().getResource(expectedHtml).getFile());
@@ -70,19 +65,39 @@ class ConversionControllerIntegrationTest {
         if (failOnError) {
             assertThrows(RenderException.class, underTest::convert);
         } else {
-            underTest.convert();
-        }
+            final String actual = underTest.convertJson();
 
-        //then
-        final List<String> actualLines = Files.readAllLines(properties.getOutput().toPath(), StandardCharsets.UTF_8);
-        final List<String> expectedLines = Files.readAllLines(expectedFile.toPath(), StandardCharsets.UTF_8);
-        assertIterableEquals(expectedLines, actualLines);
+            //then
+            final List<String> actualLines = List.of(actual.split("\n"));
+            final List<String> expectedLines = Files.readAllLines(expectedFile.toPath(), StandardCharsets.UTF_8);
+            assertIterableEquals(expectedLines, actualLines);
+        }
     }
 
     @Test
-    void testConvertShouldThrowExceptionWhenCalledWithEmptyJson() throws Exception {
+    void testConvertJsonShouldThrowExceptionWhenCalledWithEmptyJson() throws Exception {
         //given
         final File inputFile = new File(this.getClass().getResource("/abort-mission-report-empty.json").getFile());
+        final ConversionProperties properties = ConversionProperties.builder()
+                .input(inputFile)
+                .output(File.createTempFile("abort-mission-test", ".html"))
+                .relaxed(false)
+                .build();
+
+        properties.getOutput().deleteOnExit();
+
+        final ConversionController underTest = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
+
+        //when
+        assertThrows(RenderException.class, underTest::convertJson);
+
+        //then + exception
+    }
+
+    @Test
+    void testConvertShouldThrowExceptionWhenCalledWithInvalidJson() throws Exception {
+        //given
+        final File inputFile = new File(this.getClass().getResource("/schema/abort-mission-telemetry-relaxed.json").getFile());
         final ConversionProperties properties = ConversionProperties.builder()
                 .input(inputFile)
                 .output(File.createTempFile("abort-mission-test", ".html"))
@@ -100,9 +115,9 @@ class ConversionControllerIntegrationTest {
     }
 
     @Test
-    void testConvertShouldThrowExceptionWhenCalledWithInvalidJson() throws Exception {
+    void testConvertShouldThrowExceptionWhenCalledWithNonExistingInputJson() throws Exception {
         //given
-        final File inputFile = new File(this.getClass().getResource("/schema/abort-mission-telemetry-relaxed.json").getFile());
+        final File inputFile = new File("/not-a-real-path.json");
         final ConversionProperties properties = ConversionProperties.builder()
                 .input(inputFile)
                 .output(File.createTempFile("abort-mission-test", ".html"))

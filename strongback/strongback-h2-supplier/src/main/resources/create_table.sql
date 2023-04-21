@@ -8,7 +8,12 @@ create table LAUNCH_STATISTICS
     COUNTDOWN    boolean        not null,
     TEST_RESULT  smallint       not null,
     START_MILLIS bigint         not null,
-    END_MILLIS   bigint         not null
+    END_MILLIS   bigint         not null,
+    DISPLAY_NAME VARCHAR2(1024) not null,
+    THREAD_NAME  VARCHAR2(256)  not null,
+    THROWABLE_TYPE VARCHAR2(1024),
+    THROWABLE_MESSAGE VARCHAR2(1024),
+    THROWABLE_STACK_TRACE TEXT
 );
 
 alter table LAUNCH_STATISTICS

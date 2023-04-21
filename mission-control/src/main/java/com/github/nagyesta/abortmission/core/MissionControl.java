@@ -208,4 +208,8 @@ public final class MissionControl {
     public static Set<MissionHealthCheckEvaluator> matchingHealthChecks(final String contextName, final Object component) {
         return AbortMissionCommandOps.named(contextName).matchingEvaluators(component);
     }
+
+    public static AbortMissionGlobalConfiguration globalConfiguration() {
+        return AbortMissionGlobalConfiguration.shared();
+    }
 }

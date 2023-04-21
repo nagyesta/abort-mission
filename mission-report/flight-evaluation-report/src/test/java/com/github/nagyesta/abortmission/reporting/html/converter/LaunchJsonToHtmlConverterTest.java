@@ -1,122 +1,33 @@
 package com.github.nagyesta.abortmission.reporting.html.converter;
 
-import com.github.nagyesta.abortmission.reporting.html.ClassHtml;
 import com.github.nagyesta.abortmission.reporting.html.LaunchHtml;
-import com.github.nagyesta.abortmission.reporting.html.StageResultHtml;
-import com.github.nagyesta.abortmission.reporting.html.StatsHtml;
-import com.github.nagyesta.abortmission.reporting.json.ClassJson;
-import com.github.nagyesta.abortmission.reporting.json.LaunchJson;
-import com.github.nagyesta.abortmission.reporting.json.StatsJson;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.TreeSet;
 import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class LaunchJsonToHtmlConverterTest {
 
-    private static final String CLASS_NAME = "className";
-
-    private static Stream<Arguments> validInputProvider() {
-        final LaunchJson nullContent = json(null);
-        final LaunchJson empty = json(Collections.emptyMap());
-        final LaunchJson full = json(Collections.singletonMap(CLASS_NAME, new ClassJson()));
-        full.setMissionStats(new StatsJson());
-        full.setCountdownStats(new StatsJson());
+    private static Stream<Arguments> hashProvider() {
         return Stream.<Arguments>builder()
-                .add(Arguments.of(nullContent, LaunchHtml.builder()
-                        .classes(Collections.emptySortedSet())
-                        .stats(StatsHtml.builder().build())
-                        .countdownStats(StatsHtml.builder().worstResult(StageResultHtml.SUPPRESSED).build())
-                        .missionStats(StatsHtml.builder().worstResult(StageResultHtml.SUPPRESSED).build())
-                        .build()))
-                .add(Arguments.of(empty, LaunchHtml.builder()
-                        .classes(Collections.emptySortedSet())
-                        .stats(StatsHtml.builder().build())
-                        .countdownStats(StatsHtml.builder().worstResult(StageResultHtml.SUPPRESSED).build())
-                        .missionStats(StatsHtml.builder().worstResult(StageResultHtml.SUPPRESSED).build())
-                        .build()))
-                .add(Arguments.of(full, LaunchHtml.builder()
-                        .classes(new TreeSet<>(Collections.singleton(ClassHtml.builder(CLASS_NAME).build())))
-                        .stats(StatsHtml.builder().build())
-                        .countdownStats(StatsHtml.builder().build())
-                        .missionStats(StatsHtml.builder().build())
-                        .build()))
+                .add(Arguments.of("input", "140f86aae51a"))
+                .add(Arguments.of(LaunchHtml.class.getName(), "7571833edf4a"))
+                .add(Arguments.of(LaunchJsonToHtmlConverterTest.class.getName(), "63a7b0fb0864"))
                 .build();
     }
 
-    private static LaunchJson json(final Map<String, ClassJson> classes) {
-        final LaunchJson nullContent = new LaunchJson();
-        nullContent.setClasses(classes);
-        nullContent.setStats(new StatsJson());
-        return nullContent;
-    }
-
     @ParameterizedTest
-    @MethodSource("validInputProvider")
-    void testConvertShouldConvertNonNullValuesWhenCalled(final LaunchJson input, final LaunchHtml expected) {
+    @MethodSource("hashProvider")
+    void testShortHashShouldHashContentTo32RadixNumbersWhenCalledWithValidString(final String input, final String expected) {
         //given
-        final StatsJsonToHtmlConverter statsConverter = mock(StatsJsonToHtmlConverter.class);
-        when(statsConverter.apply(same(input.getStats()))).thenReturn(expected.getStats());
-        if (input.getCountdownStats() != null) {
-            when(statsConverter.apply(same(input.getCountdownStats()))).thenReturn(expected.getCountdownStats());
-        }
-        if (input.getMissionStats() != null) {
-            when(statsConverter.apply(same(input.getMissionStats()))).thenReturn(expected.getMissionStats());
-        }
-        when(statsConverter.apply(isNull())).thenThrow(NullPointerException.class);
-        final ClassJsonToHtmlConverter classConverter = mock(ClassJsonToHtmlConverter.class);
-        if (expected.getClasses() != null && !expected.getClasses().isEmpty()) {
-            when(classConverter.apply(notNull())).thenReturn(expected.getClasses().first());
-        }
-        when(classConverter.apply(isNull())).thenThrow(NullPointerException.class);
-
-        final LaunchJsonToHtmlConverter underTest = new LaunchJsonToHtmlConverter(statsConverter, classConverter);
+        final LaunchJsonToHtmlConverter underTest = new LaunchJsonToHtmlConverter();
 
         //when
-        final LaunchHtml actual = underTest.apply(input);
+        final String actual = underTest.shortHash(input);
 
         //then
-        assertNotNull(actual);
-        assertEquals(expected, actual);
-        assertSame(expected.getStats(), actual.getStats());
-        if (expected.getClasses() != null && !expected.getClasses().isEmpty()) {
-            assertSame(expected.getClasses().first(), actual.getClasses().first());
-            verify(classConverter).apply(same(input.getClasses().get(CLASS_NAME)));
-        }
-        verify(statsConverter).apply(same(input.getStats()));
-        if (input.getCountdownStats() != null) {
-            assertSame(expected.getCountdownStats(), actual.getCountdownStats());
-            verify(statsConverter).apply(same(input.getCountdownStats()));
-        }
-        if (input.getMissionStats() != null) {
-            assertSame(expected.getMissionStats(), actual.getMissionStats());
-            verify(statsConverter).apply(same(input.getMissionStats()));
-        }
-        verify(statsConverter).apply(same(input.getStats()));
-    }
-
-    @Test
-    void testConvertShouldThrowExceptionWhenCalledWithNullStats() {
-        //given
-        final LaunchJson input = new LaunchJson();
-        final StatsJsonToHtmlConverter statsConverter = mock(StatsJsonToHtmlConverter.class);
-        final ClassJsonToHtmlConverter classConverter = mock(ClassJsonToHtmlConverter.class);
-
-        final LaunchJsonToHtmlConverter underTest = new LaunchJsonToHtmlConverter(statsConverter, classConverter);
-
-        //when
-        Assertions.assertThrows(IllegalArgumentException.class, () -> underTest.apply(input));
-
-        //then + exception
-        verifyNoInteractions(statsConverter, classConverter);
+        Assertions.assertEquals(expected, actual);
     }
 }

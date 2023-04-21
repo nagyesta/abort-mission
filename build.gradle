@@ -152,6 +152,10 @@ configure(subprojects.findAll({
     }
     jar.dependsOn check
 
+    tasks.withType(Javadoc).configureEach {
+        options.addBooleanOption("Xdoclint:-missing", true)
+    }
+
     tasks.withType(Checkstyle).configureEach {
         configProperties = [base_dir: rootDir.toString(), cache_file: file("${buildDir}/checkstyle/cacheFile")]
         reports {

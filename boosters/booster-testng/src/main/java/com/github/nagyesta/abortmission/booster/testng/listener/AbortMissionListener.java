@@ -11,8 +11,10 @@ import org.testng.*;
 import org.testng.internal.ConstructorOrMethod;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.core.MissionControl.annotationContextEvaluator;
 import static com.github.nagyesta.abortmission.core.MissionControl.matchingHealthChecks;
@@ -39,9 +41,18 @@ public class AbortMissionListener implements ITestListener, IClassListener, ISui
                     stopwatch.map(StageTimeStopwatch::getLaunchId).orElse(null));
             launchSequenceTemplate.countdownSuccess(testInstanceClass, stopwatch);
             optionalMethod(result).ifPresent(method -> {
-                STORE.set(launchSequenceTemplate.launchImminent(method));
+                final String displayName = resolveDisplayName(result, method);
+                STORE.set(launchSequenceTemplate.launchImminent(method, displayName));
             });
         }
+    }
+
+    private String resolveDisplayName(final ITestResult result, final Method method) {
+        return method.getName() + Optional.ofNullable(result.getParameters())
+                .filter(p -> p.length > 0)
+                .map(p -> Arrays.stream(p).map(Object::toString).collect(Collectors.joining(",")))
+                .map(s -> " " + s)
+                .orElse("");
     }
 
     @Override
@@ -71,7 +82,7 @@ public class AbortMissionListener implements ITestListener, IClassListener, ISui
     public void onBeforeClass(final ITestClass testClass) {
         final Class<?> testInstanceClass = testClass.getRealClass();
         LOGGER.trace("Preparing test instance for class: {}", testInstanceClass.getSimpleName());
-        STORE.set(launchSequenceTemplate.launchGoNoGo(testInstanceClass));
+        STORE.set(launchSequenceTemplate.launchGoNoGo(testInstanceClass, testInstanceClass.getSimpleName()));
     }
 
     @Override

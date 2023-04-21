@@ -28,6 +28,8 @@ on:
       - 'gradle/wrapper/gradle-wrapper.properties'
       - 'config/ossindex/exclusions.txt'
       - 'gradle/verification-metadata-clean.xml'
+      - 'mission-report/flight-evaluation-report/node/package.json'
+      - 'mission-report/flight-evaluation-report/node/package-lock.json'
 
 permissions: read-all
 
@@ -114,7 +116,7 @@ jobs:
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./mission-report/flight-evaluation-report/build/reports/jacoco/report.xml
+          files: ./mission-report/flight-evaluation-report/build/reports/jacoco/report.xml,./mission-report/flight-evaluation-report/node/build/coverage/cobertura-coverage.xml
           flags: flighteval
       - name: Upload coverage to Codecov - Strongback - Base
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4

@@ -1,0 +1,730 @@
+@use "sass:map";
+@import "01-variables";
+
+$time-stamp-col-width: 120px;
+$thread-col-widths: (
+        "t1": 20px,
+        "t2": 40px,
+        "t4": 60px,
+        "t8": 120px,
+        "t16": 240px,
+        "t32": 320px,
+        "t64": 360px,
+);
+$details-action-padding: 3px;
+$details-action-col-width-internal: 15px;
+$details-action-col-width: $details-action-padding * 2 + $details-action-col-width-internal + $border-width-normal;
+
+body.light .log-view {
+  .thread.highlighted {
+    box-shadow: $light-thread-color-highlight 0 0 50px 1px inset;
+  }
+
+  .filter-range-start {
+    border-top-color: $light-border-color-filter-range;
+  }
+
+  .filter-range-end {
+    border-bottom-color: $light-border-color-filter-range;
+  }
+
+  .details-action a {
+    color: $light-link-color;
+    text-decoration: none;
+  }
+
+  .details-action a:hover {
+    color: $light-link-color;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+body.dark .log-view {
+  .thread.highlighted {
+    box-shadow: $dark-thread-color-highlight 0 0 50px 1px inset;
+  }
+
+  .filter-range-start {
+    border-top-color: $dark-border-color-filter-range;
+  }
+
+  .filter-range-end {
+    border-bottom-color: $dark-border-color-filter-range;
+  }
+
+  .details-action a {
+    color: $dark-link-color;
+    text-decoration: none;
+  }
+
+  .details-action a:hover {
+    color: $dark-link-color;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.log-view {
+
+  .filtered-row {
+    font-size: 0 !important;
+    line-height: 0 !important;
+    border-top-style: dashed;
+    border-bottom-style: dashed;
+  }
+
+  .filtered .execution-details {
+    @extend .filtered-row;
+  }
+
+  .filtered .filtered.time-stamp {
+    @extend .filtered-row;
+  }
+
+  .filtered .thread {
+    @extend .filtered-row;
+  }
+
+  .filtered .thread-spacer {
+    @extend .filtered-row;
+  }
+
+  .filtered .details-action {
+    @extend .filtered-row;
+
+    a {
+      display: none;
+    }
+  }
+
+  .filter-out-of-range {
+    font-style: italic;
+    font-weight: lighter;
+  }
+
+  tr.filter-range-start {
+    border-top-width: $border-width-normal * 3;
+    border-top-style: solid;
+  }
+
+  tr.filter-range-end {
+    border-bottom-width: $border-width-normal * 3;
+    border-bottom-style: solid;
+  }
+
+  .execution-details.highlighted {
+    font-weight: bold;
+  }
+
+  .column-base {
+  }
+
+  .table-header-base {
+    @extend .column-base;
+    padding-left: $padding-normal;
+    font-size: $font-size-normal;
+    line-height: $line-height-normal;
+    font-weight: bold;
+  }
+
+  .text-column-base {
+    @extend .column-base;
+    padding-left: $padding-normal;
+    font-size: $font-size-normal;
+    line-height: $line-height-normal;
+  }
+
+  .time-stamp {
+    @extend .text-column-base;
+    width: $time-stamp-col-width;
+    max-width: $time-stamp-col-width;
+  }
+
+  .thread {
+    @extend .column-base;
+  }
+
+  .thread.thread-start {
+    border-left-width: $border-width-normal;
+    border-right-width: $border-width-normal;
+    border-top-width: $border-width-normal;
+  }
+
+  .thread.thread-end {
+    border-left-width: $border-width-normal;
+    border-right-width: $border-width-normal;
+    border-bottom-width: $border-width-normal;
+  }
+
+  .thread.thread-cont {
+    border-left-width: $border-width-normal;
+    border-right-width: $border-width-normal;
+  }
+
+  .thread-spacer {
+    @extend .column-base;
+  }
+
+  .execution-details {
+    @extend .text-column-base;
+    overflow-wrap: break-word;
+
+    .stack-trace {
+      line-break: anywhere;
+      padding-left: $padding-xl;
+    }
+  }
+
+  .details-action {
+    @extend .text-column-base;
+    width: $details-action-col-width-internal;
+    min-width: $details-action-col-width-internal;
+    max-width: $details-action-col-width-internal;
+    padding-left: $details-action-padding;
+    padding-right: $details-action-padding;
+  }
+
+  .time-stamp-header {
+    @extend .table-header-base;
+  }
+
+  .thread-header {
+    @extend .table-header-base;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .threads-t1 {
+    .thread-header {
+      max-width: map.get($thread-col-widths, "t1");
+      width: map.get($thread-col-widths, "t1");
+    }
+  }
+
+  .threads-t2 {
+    .thread-header {
+      max-width: map.get($thread-col-widths, "t2");
+      width: map.get($thread-col-widths, "t2");
+    }
+  }
+
+  .threads-t4 {
+    .thread-header {
+      max-width: map.get($thread-col-widths, "t4");
+      width: map.get($thread-col-widths, "t4");
+    }
+  }
+
+  .threads-t8 {
+    .thread-header {
+      max-width: map.get($thread-col-widths, "t8");
+      width: map.get($thread-col-widths, "t8");
+    }
+  }
+
+  .threads-t16 {
+    .thread-header {
+      max-width: map.get($thread-col-widths, "t16");
+      width: map.get($thread-col-widths, "t16");
+    }
+  }
+
+  .threads-t32 {
+    .thread-header {
+      max-width: map.get($thread-col-widths, "t32");
+      width: map.get($thread-col-widths, "t32");
+    }
+  }
+
+  .threads-t64 {
+    .thread-header {
+      max-width: map.get($thread-col-widths, "t64");
+      width: map.get($thread-col-widths, "t64");
+    }
+  }
+
+  .execution-details-header {
+    @extend .table-header-base;
+  }
+}
+
+$log-view-space-used-by-borders: 4 * $border-width-normal;
+
+@media only screen and (max-width: $break-point-medium-screen-width-max) {
+  body .root-container {
+    $root-width: $break-point-medium-root-width;
+
+    .log-view {
+      .time-stamp {
+
+      }
+
+      .threads-t1 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t1");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t2 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t2");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t4 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t4");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t8 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t8");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t16 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t16");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t32 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t32");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t64 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t64");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: $break-point-large-screen-width-min) and (max-width: $break-point-large-screen-width-max) {
+  body .root-container {
+    $root-width: $break-point-large-root-width;
+
+    .log-view {
+      .time-stamp {
+
+      }
+
+      .threads-t1 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t1");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t2 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t2");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t4 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t4");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t8 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t8");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t16 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t16");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t32 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t32");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t64 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t64");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+    }
+  }
+}
+
+
+@media only screen and (min-width: $break-point-xl-screen-width-min) {
+  body .root-container {
+    $root-width: $break-point-xl-root-width;
+
+    .log-view {
+      .time-stamp {
+
+      }
+
+      .threads-t1 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t1");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t2 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t2");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t4 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t4");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t8 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t8");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t16 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t16");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t32 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t32");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+
+      .threads-t64 {
+        $thread-spacer-width: 2px;
+        $total-threads-col-width: map.get($thread-col-widths, "t64");
+        $details-col-width: $root-width - $time-stamp-col-width - $total-threads-col-width - $log-view-space-used-by-borders - $details-action-col-width;
+
+        .thread {
+          /* width will be defined by JS */
+
+        }
+
+        .thread-spacer {
+          width: $thread-spacer-width;
+          max-width: $thread-spacer-width;
+        }
+
+        .execution-details {
+          width: $details-col-width;
+          max-width: $details-col-width;
+        }
+      }
+    }
+  }
+}

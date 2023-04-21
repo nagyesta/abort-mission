@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Random;
-import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Stream;
 
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.PARALLEL;
@@ -26,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag(SIDE_BOOSTER)
 public class ParallelStaticFireTestWithSideBoostersTest {
 
-    static final CopyOnWriteArraySet<String> THREADS_USED = new CopyOnWriteArraySet<>();
     private static final Random RANDOM = new Random();
     private static final Logger LOGGER = LoggerFactory.getLogger(ParallelStaticFireTestWithSideBoostersTest.class);
 
@@ -63,7 +61,7 @@ public class ParallelStaticFireTestWithSideBoostersTest {
 
     private void executeTest(final int wait) throws InterruptedException {
         //given
-        THREADS_USED.add(Thread.currentThread().getName());
+        ThreadTracker.THREADS_USED.add(Thread.currentThread().getName());
         LOGGER.info("Running test with max wait: " + wait);
         Thread.sleep(RANDOM.nextInt(wait));
 

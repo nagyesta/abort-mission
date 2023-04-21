@@ -51,7 +51,7 @@ class LaunchSequenceTemplateTest {
         }, c -> evaluators, m -> null);
 
         //when
-        underTest.performPreLaunchInit(LaunchSequenceTemplate.class);
+        underTest.performPreLaunchInit(LaunchSequenceTemplate.class, LaunchSequenceTemplate.class.getSimpleName());
 
         //then
         evaluators.forEach(evaluator -> {
@@ -260,13 +260,13 @@ class LaunchSequenceTemplateTest {
     void testLaunchGoNoGoShouldPerformPreLaunchInitWhenCalled() {
         //given
         final LaunchSequenceTemplate underTest = spy(underTestWithNullFunctions());
-        doReturn(Optional.empty()).when(underTest).performPreLaunchInit(any());
+        doReturn(Optional.empty()).when(underTest).performPreLaunchInit(any(), anyString());
 
         //when
-        underTest.launchGoNoGo(this.getClass());
+        underTest.launchGoNoGo(this.getClass(), this.getClass().getSimpleName());
 
         //then
-        verify(underTest).performPreLaunchInit(eq(this.getClass()));
+        verify(underTest).performPreLaunchInit(eq(this.getClass()), eq(this.getClass().getSimpleName()));
     }
 
     @Test
@@ -305,7 +305,7 @@ class LaunchSequenceTemplateTest {
                 .when(underTest).evaluateLaunchAbort(same(matching), any(StageTimeStopwatch.class), any());
 
         //when
-        underTest.launchImminent(this.getClass().getDeclaredMethod(METHOD_NAME));
+        underTest.launchImminent(this.getClass().getDeclaredMethod(METHOD_NAME), METHOD_NAME);
 
         //then
         verify(underTest).evaluateLaunchAbort(same(matching), any(StageTimeStopwatch.class), any());

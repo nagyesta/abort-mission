@@ -12,14 +12,28 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import static com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurementBuilder.builder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SuppressWarnings("checkstyle:MagicNumber")
 class TestRunTelemetryTest {
 
     private static final StageTimeMeasurement MEASUREMENT_1 =
-            new StageTimeMeasurement(UUID.randomUUID(), "class", "method", StageResult.ABORT, 0, 1);
+            builder().setLaunchId(UUID.randomUUID())
+                    .setTestClassId("class")
+                    .setTestCaseId("method")
+                    .setResult(StageResult.ABORT)
+                    .setStart(0)
+                    .setEnd(1)
+                    .build();
     private static final StageTimeMeasurement MEASUREMENT_2 =
-            new StageTimeMeasurement(UUID.randomUUID(), "class", "method", StageResult.ABORT, 2, 4);
+            builder().setLaunchId(UUID.randomUUID())
+                    .setTestClassId("class")
+                    .setTestCaseId("method")
+                    .setResult(StageResult.ABORT)
+                    .setStart(2)
+                    .setEnd(4)
+                    .build();
 
     public static Stream<Arguments> equalsProvider() {
         final TestRunTelemetry testRunTelemetry = new TestRunTelemetry(MEASUREMENT_1);

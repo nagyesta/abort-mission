@@ -62,6 +62,5 @@ class StageLaunchStatsTest extends AbstractTelemetryTest {
         Assertions.assertThrows(UnsupportedOperationException.class, () -> actual.getTimeMeasurements().clear());
         Assertions.assertIterableEquals(matcherNames, actual.getMatcherNames());
         Assertions.assertIterableEquals(testRunTelemetries, actual.getTimeMeasurements());
-        Assertions.assertNotNull(actual.getStats());
     }
 }
