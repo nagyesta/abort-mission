@@ -88,70 +88,70 @@ jobs:
             strongback/**/build/reports/tests/test
           retention-days: 5
       - name: Upload coverage to Codecov - Core
-        uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3.1.3
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./mission-control/build/reports/jacoco/report.xml
           flags: core
       - name: Upload coverage to Codecov - Boosters - JUnit4
-        uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3.1.3
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-junit4/build/reports/jacoco/report.xml
           flags: junit4
       - name: Upload coverage to Codecov - Boosters - Jupiter
-        uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3.1.3
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-junit-jupiter/build/reports/jacoco/report.xml
           flags: jupiter
       - name: Upload coverage to Codecov - Boosters - TestNG
-        uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3.1.3
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-testng/build/reports/jacoco/report.xml
           flags: testng
       - name: Upload coverage to Codecov - Boosters - Cucumber JVM
-        uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3.1.3
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-cucumber-jvm/build/reports/jacoco/report.xml
           flags: cucumber
       - name: Upload coverage to Codecov - Boosters - Testkit
-        uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3.1.3
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/testkit/build/reports/jacoco/report.xml
           flags: testkit
       - name: Upload coverage to Codecov - Reporting - Flight Evaluation Report
-        uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3.1.3
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./mission-report/flight-evaluation-report/build/reports/jacoco/report.xml
           flags: flighteval
       - name: Upload coverage to Codecov - Strongback - Base
-        uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3.1.3
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./strongback/strongback-base/build/reports/jacoco/report.xml
           flags: strongback
       - name: Upload coverage to Codecov - Strongback - H2 Supplier
-        uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3.1.3
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./strongback/strongback-h2-supplier/build/reports/jacoco/report.xml
           flags: h2
       - name: Upload coverage to Codecov - Strongback - RMI Supplier
-        uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3.1.3
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
