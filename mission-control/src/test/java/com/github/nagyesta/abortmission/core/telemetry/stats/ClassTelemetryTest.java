@@ -57,28 +57,22 @@ class ClassTelemetryTest extends AbstractTelemetryTest {
         final StageLaunchStats countdown = new StageLaunchStats(Collections.emptySortedSet(), Collections.emptySet());
         when(converter.processCountdownStats(same(matcherNames), same(byMethods))).thenReturn(countdown);
 
-        final Map<String, StageLaunchStats> methodStats = spy(new HashMap<>());
+        final Map<String, StageLaunchStats> methodStats = new HashMap<>();
         when(converter.processLaunchStats(same(matcherNames), same(byMethods))).thenReturn(methodStats);
-
-        when(converter.summarizeDescendantStats(same(countdown), anyCollection())).thenReturn(null);
 
         //when
         final ClassTelemetry actual = new ClassTelemetry(converter, CLASS, measurements, matcherNames);
 
         //then
         Assertions.assertNotNull(actual);
-        Assertions.assertNull(actual.getStats());
         Assertions.assertSame(countdown, actual.getCountdown());
         Assertions.assertSame(methodStats, actual.getLaunches());
         Assertions.assertSame(CLASS, actual.getClassName());
 
-        final InOrder inOrder = inOrder(converter, methodStats);
+        final InOrder inOrder = inOrder(converter);
         inOrder.verify(converter).partitionByMethods(same(measurements));
         inOrder.verify(converter).processCountdownStats(same(matcherNames), same(byMethods));
         inOrder.verify(converter).processLaunchStats(same(matcherNames), same(byMethods));
-        //noinspection ResultOfMethodCallIgnored
-        inOrder.verify(methodStats).values();
-        inOrder.verify(converter).summarizeDescendantStats(same(countdown), anyCollection());
         inOrder.verifyNoMoreInteractions();
         verifyNoInteractions(byMethods, matcherNames, measurements);
     }

@@ -8,19 +8,27 @@ import org.testng.TestNG;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import static com.github.nagyesta.abortmission.testkit.LaunchEvaluationUtil.*;
 import static com.github.nagyesta.abortmission.testkit.vanilla.FuelTankTestAssets.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class FuelTankTest {
 
+    private static final List<String> EXPECTED_DISPLAY_NAMES_COUNTDOWN = List.of("FuelTankTestContext");
+    private static final List<String> EXPECTED_DISPLAY_NAMES = fuelTankTestInputProvider()
+            .mapToObj(i -> "testFuelTankShouldFillWhenCalled " + i)
+            .collect(Collectors.toList());
+
     @Test(groups = "integration")
     @SuppressWarnings("checkstyle:MagicNumber")
     public void testAssumption() {
         final TestNG engine = new TestNG();
         engine.setOutputDirectory(System.getProperty("java.io.tmpdir") + "/abort-mission/" + this.getClass().getSimpleName());
-        engine.setTestClasses(new Class[] {FuelTankTestContext.class});
+        engine.setTestClasses(new Class[]{FuelTankTestContext.class});
         engine.setListenerClasses(Arrays.asList(AbortMissionListener.class, ValidatingTestListener.class));
         engine.run();
         assertTrue(engine.hasFailure());
@@ -30,6 +38,14 @@ public class FuelTankTest {
                             evaluator.getStats().getReadOnlyCountdown().getSnapshot());
                     assertEquals(FUEL_TANK_NOMINAL_STATS_PER_CLASS.getReadOnlyMission().getSnapshot(),
                             evaluator.getStats().getReadOnlyMission().getSnapshot());
+                    //check display names
+                    assertEquals(findCountdownDisplayNamesForMeasurementsOf(evaluator), EXPECTED_DISPLAY_NAMES_COUNTDOWN);
+                    assertEquals(findMissionDisplayNamesForMeasurementsOf(evaluator), EXPECTED_DISPLAY_NAMES);
+                    //check exception details
+                    assertEquals(findExceptionsForMissionFailuresOf(evaluator), EXPECTED_EXCEPTIONS);
+                    assertEquals(findThrowableMessagesForMissionFailuresOf(evaluator), EXPECTED_MESSAGES);
+                    forEachNonFilteredStackTraceElementOfMissionFailures(evaluator,
+                            e -> assertTrue(e.startsWith("com.github.nagyesta"), "Unexpected stack trace: " + e));
                 });
     }
 

@@ -45,10 +45,12 @@ public class CucumberLaunchSequenceTemplate extends AbstractMissionLaunchSequenc
     public Optional<StageTimeStopwatch> launchImminent(final Scenario scenario) {
         LOGGER.debug("Preparing mission for scenario from URI: {} named: {}", scenario.getUri(), scenario.getName());
         final Set<MissionHealthCheckEvaluator> evaluators = scenarioBasedEvaluatorLookup.apply(scenario);
-        final StageTimeStopwatch countdownStopwatch = new StageTimeStopwatch(scenario.getUri().toString(), StageTimeMeasurement.CLASS_ONLY);
+        final StageTimeStopwatch countdownStopwatch = new StageTimeStopwatch(scenario.getUri().toString(), StageTimeMeasurement.CLASS_ONLY)
+                .overrideDisplayName(scenario.getName() + " (" + scenario.getUri() + ":" + scenario.getLine() + ")");
         evaluators.forEach(e -> e.countdownLogger().logAndIncrement(countdownStopwatch.stop().apply(StageResult.SUCCESS)));
         return evaluateLaunchAbort(evaluators,
-                new StageTimeStopwatch(scenario.getUri().toString(), scenario.getName()),
+                new StageTimeStopwatch(scenario.getUri().toString(), scenario.getName())
+                        .overrideDisplayName(scenario.getName() + " (" + scenario.getUri() + ":" + scenario.getLine() + ")"),
                 () -> scenario.getSourceTagNames().stream().anyMatch("AbortMission_SuppressAbort"::equalsIgnoreCase)
         );
     }

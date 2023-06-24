@@ -24,7 +24,7 @@ cucumber = "7.12.1"
 testNg = "7.8.0"
 
 lombokPlugin = "8.0.1"
-minifyPlugin = "1.3.2"
+nodePlugin =  "4.0.0"
 gitVersionerPlugin = "1.6.7"
 indexScanPlugin = "2.6.0"
 owaspPlugin = "8.3.1"
@@ -84,7 +84,7 @@ logback-report = ["logback-classic-report", "logback-core-report"]
 
 [plugins]
 lombok = { id = "io.freefair.lombok", version.ref = "lombokPlugin" }
-minify = { id = "org.gradlewebtools.minify", version.ref = "minifyPlugin" }
+node = { id = "com.github.node-gradle.node", version.ref = "nodePlugin" }
 versioner = { id = "io.toolebox.git-versioner", version.ref = "gitVersionerPlugin" }
 index-scan = { id = "org.sonatype.gradle.plugins.scan", version.ref = "indexScanPlugin" }
 owasp-dependencycheck = { id = "org.owasp.dependencycheck", version.ref = "owaspPlugin" }

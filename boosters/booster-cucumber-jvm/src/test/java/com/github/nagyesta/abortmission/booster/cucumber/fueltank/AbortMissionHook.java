@@ -2,6 +2,7 @@ package com.github.nagyesta.abortmission.booster.cucumber.fueltank;
 
 import com.github.nagyesta.abortmission.booster.cucumber.LaunchAbortHook;
 import com.github.nagyesta.abortmission.core.AbortMissionCommandOps;
+import com.github.nagyesta.abortmission.core.AbortMissionGlobalConfiguration;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -23,6 +24,11 @@ public class AbortMissionHook extends LaunchAbortHook {
                     .abortThreshold(1)
                     .build());
         });
+    }
+
+    @Override
+    protected void overrideGlobalConfig(final AbortMissionGlobalConfiguration config) {
+        config.setStackTraceFilter(stackTraceElement -> stackTraceElement.getClassName().startsWith("com.github."));
     }
 
     @Before

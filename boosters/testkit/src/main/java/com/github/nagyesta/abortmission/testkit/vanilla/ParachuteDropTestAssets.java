@@ -3,7 +3,9 @@ package com.github.nagyesta.abortmission.testkit.vanilla;
 import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyMissionStatistics;
 import com.github.nagyesta.abortmission.core.healthcheck.impl.MissionStatisticsCollector;
 import com.github.nagyesta.abortmission.core.healthcheck.impl.StageStatisticsCollector;
+import org.opentest4j.AssertionFailedError;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.github.nagyesta.abortmission.testkit.NoOpMatcher.NOOP;
@@ -25,6 +27,8 @@ public final class ParachuteDropTestAssets {
     public static final int SUCCESSFUL_CASES = 3;
     public static final int ABORTED_CASES = 6;
     public static final int FAILED_CASES = 1;
+    public static final List<String> EXPECTED_EXCEPTIONS = List.of(AssertionFailedError.class.getName());
+    public static final List<String> EXPECTED_MESSAGES = List.of("Parachutes should open. ==> expected: <true> but was: <false>");
 
     private ParachuteDropTestAssets() {
         throw new UnsupportedOperationException("Utility.");

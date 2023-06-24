@@ -34,12 +34,13 @@ public abstract class AbstractLaunchSequenceTemplate extends AbstractMissionLaun
      * starting the countdown for the matching evaluators and aborting the countdown if needed.
      *
      * @param testInstanceClass The test class.
+     * @param displayName       The display name of the test case.
      * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
      */
-    protected Optional<StageTimeStopwatch> performPreLaunchInit(final Class<?> testInstanceClass) {
+    protected Optional<StageTimeStopwatch> performPreLaunchInit(final Class<?> testInstanceClass, final String displayName) {
         annotationContextEvaluator().findAndApplyLaunchPlanDefinition(testInstanceClass);
 
-        final StageTimeStopwatch watch = new StageTimeStopwatch(testInstanceClass);
+        final StageTimeStopwatch watch = new StageTimeStopwatch(testInstanceClass).overrideDisplayName(displayName);
         final Set<MissionHealthCheckEvaluator> evaluators = classBasedEvaluatorLookup.apply(testInstanceClass);
         final boolean hasSuppression = evaluators.stream().anyMatch(MissionHealthCheckEvaluator::shouldSuppressAbort);
         final boolean reportingDone = evaluateAndAbortIfNeeded(
@@ -64,7 +65,7 @@ public abstract class AbstractLaunchSequenceTemplate extends AbstractMissionLaun
                                             final Optional<StageTimeStopwatch> stopwatch,
                                             final Optional<Throwable> rootCause,
                                             final Set<Class<? extends Exception>> suppressedExceptions) {
-        failureDetected(isNotSuppressed(rootCause, suppressedExceptions), evaluators, stopwatch,
+        failureDetected(isNotSuppressed(rootCause, suppressedExceptions), evaluators, stopwatch.map(s -> s.addThrowable(rootCause)),
                 MissionHealthCheckEvaluator::countdownLogger);
     }
 

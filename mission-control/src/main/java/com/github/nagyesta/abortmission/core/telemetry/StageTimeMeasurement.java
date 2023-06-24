@@ -1,10 +1,8 @@
 package com.github.nagyesta.abortmission.core.telemetry;
 
-import java.beans.ConstructorProperties;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.StringJoiner;
-import java.util.UUID;
+import com.github.nagyesta.abortmission.core.telemetry.watch.StageTimeMeasurementDataProvider;
+
+import java.util.*;
 
 /**
  * Captures the timings and outcome of one stage of the launch (countdown/mission).
@@ -14,36 +12,41 @@ public final class StageTimeMeasurement implements Comparable<StageTimeMeasureme
      * Name used to indicate that this is the class level measurement and not a test method.
      */
     public static final String CLASS_ONLY = " - CLASS - ";
+    /**
+     * The line separator used when stack trace is serialized as a single string.
+     */
+    public static final String STACKTRACE_LINE_SEPARATOR = "|";
     private final StageResult result;
     private final long start;
     private final long end;
     private final String testClassId;
     private final String testCaseId;
     private final UUID launchId;
+    private final String displayName;
+    private final String threadName;
+    private final String throwableClass;
+    private final String throwableMessage;
+    private final List<String> stackTrace;
 
     /**
      * The constructor allowing us to create a new instance capturing the time measured data.
      *
-     * @param launchId    The unique ID of the test method execution (must be unique even in case the same test is re-run).
-     * @param testClassId The unique ID of the test class.
-     * @param testCaseId  The unique ID of the test case (within the test class).
-     * @param result      The outcome of the stage execution.
-     * @param start       The start time of the stage execution.
-     * @param end         The end time of the stage execution.
+     * @param measurementDataProvider The data provider for the measurement.
+     * @param stageResult             The outcome of the stage execution.
      */
-    @ConstructorProperties({"launchId", "testClassId", "testCaseId", "result", "start", "end"})
-    public StageTimeMeasurement(final UUID launchId,
-                                final String testClassId,
-                                final String testCaseId,
-                                final StageResult result,
-                                final long start,
-                                final long end) {
-        this.launchId = Objects.requireNonNull(launchId, "Launch Id cannot be null.");
-        this.testClassId = Objects.requireNonNull(testClassId, "TestClassId cannot be null.");
-        this.testCaseId = Objects.requireNonNull(testCaseId, "TestCaseId cannot be null.");
-        this.result = Objects.requireNonNull(result, "Result cannot be null.");
-        this.start = start;
-        this.end = end;
+    public StageTimeMeasurement(final StageTimeMeasurementDataProvider measurementDataProvider, final StageResult stageResult) {
+        Objects.requireNonNull(measurementDataProvider, "StageTimeMeasurementDataProvider cannot be null.");
+        this.launchId = Objects.requireNonNull(measurementDataProvider.getLaunchId(), "Launch Id cannot be null.");
+        this.testClassId = Objects.requireNonNull(measurementDataProvider.getTestClassId(), "TestClassId cannot be null.");
+        this.testCaseId = Objects.requireNonNull(measurementDataProvider.getTestCaseId(), "TestCaseId cannot be null.");
+        this.displayName = Objects.requireNonNull(measurementDataProvider.getDisplayName(), "DisplayName cannot be null.");
+        this.result = Objects.requireNonNull(stageResult, "StageResult cannot be null.");
+        this.start = measurementDataProvider.getStart();
+        this.end = Objects.requireNonNull(measurementDataProvider.getEnd(), "End cannot be null.");
+        this.threadName = Objects.requireNonNull(measurementDataProvider.getThreadName(), "ThreadName cannot be null.");
+        this.throwableClass = measurementDataProvider.getThrowableClass();
+        this.throwableMessage = measurementDataProvider.getThrowableMessage();
+        this.stackTrace = Optional.ofNullable(measurementDataProvider.getStackTrace()).map(List::copyOf).orElse(null);
     }
 
     public UUID getLaunchId() {
@@ -74,6 +77,32 @@ public final class StageTimeMeasurement implements Comparable<StageTimeMeasureme
         return end - start;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getThreadName() {
+        return threadName;
+    }
+
+    public String getThrowableClass() {
+        return throwableClass;
+    }
+
+    public String getThrowableMessage() {
+        return throwableMessage;
+    }
+
+    public List<String> getStackTrace() {
+        return stackTrace;
+    }
+
+    public String getStackTraceAsString() {
+        return Optional.ofNullable(stackTrace)
+                .map(list -> String.join(STACKTRACE_LINE_SEPARATOR, list))
+                .orElse(null);
+    }
+
     @SuppressWarnings("NullableProblems")
     @Override
     public int compareTo(final StageTimeMeasurement o) {
@@ -100,18 +129,24 @@ public final class StageTimeMeasurement implements Comparable<StageTimeMeasureme
         return areFieldValuesEqual((StageTimeMeasurement) o);
     }
 
-    private boolean areFieldValuesEqual(final StageTimeMeasurement that) {
-        return launchId.equals(that.launchId)
-                && start == that.start
-                && end == that.end
-                && result == that.result
-                && testClassId.equals(that.testClassId)
-                && testCaseId.equals(that.testCaseId);
-    }
-
     @Override
     public int hashCode() {
-        return Objects.hash(launchId, result, start, end, testClassId, testCaseId);
+        return Objects.hash(result, start, end, testClassId, testCaseId, launchId, displayName, threadName, throwableClass,
+                throwableMessage, stackTrace);
+    }
+
+    private boolean areFieldValuesEqual(final StageTimeMeasurement that) {
+        return start == that.start
+                && end == that.end
+                && result == that.result
+                && Objects.equals(testClassId, that.testClassId)
+                && Objects.equals(testCaseId, that.testCaseId)
+                && Objects.equals(launchId, that.launchId)
+                && Objects.equals(displayName, that.displayName)
+                && Objects.equals(threadName, that.threadName)
+                && Objects.equals(throwableClass, that.throwableClass)
+                && Objects.equals(throwableMessage, that.throwableMessage)
+                && Objects.equals(stackTrace, that.stackTrace);
     }
 
     @Override
@@ -123,6 +158,8 @@ public final class StageTimeMeasurement implements Comparable<StageTimeMeasureme
                 .add("result=" + result)
                 .add("start=" + start)
                 .add("end=" + end)
+                .add("threadName=" + threadName)
+                .add("throwableClass=" + throwableClass)
                 .toString();
     }
 

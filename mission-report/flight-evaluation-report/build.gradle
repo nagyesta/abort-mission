@@ -2,7 +2,7 @@ plugins {
     id 'java'
     //noinspection SpellCheckingInspection
     alias(libs.plugins.lombok)
-    alias(libs.plugins.minify)
+    alias(libs.plugins.node)
 }
 
 group = "${rootProject.group}.reports"
@@ -24,95 +24,44 @@ dependencies {
     testImplementation libs.mockito.core
 }
 
-minification {
-    task cssMinifyBase(type: org.gradlewebtools.minify.CssMinifyTask) {
-        inputs.files(fileTree("src/main/templates/css", {
-            include "**.css"
-            exclude "all.min.css"
-        }))
-        outputs.dir("${buildDir}/css")
-        srcDir = file("src/main/templates/css")
-        dstDir = file("${buildDir}/css")
-        options.createSourceMaps = false
-    }
-    task jsMinifyBase(type: org.gradlewebtools.minify.JsMinifyTask) {
-        inputs.files(fileTree("src/main/templates/js", {
-            include "**.js"
-            exclude "all.min.js"
-        }))
-        outputs.dir("${buildDir}/js")
-        srcDir = file("src/main/templates/js")
-        dstDir = file("${buildDir}/js")
-        options.compilationLevel = "WHITESPACE_ONLY"
-        options.createSourceMaps = false
-    }
+node {
+    download.set(true)
+    nodeProjectDir.set(file("${project.projectDir}/node"))
 }
 
-task combineCss {
-    inputs.files(fileTree("${buildDir}/css", {
-        include "**.min.css"
-    })).ignoreEmptyDirectories()
-    outputs.file("${buildDir}/resources/main/templates/css/all.min.css")
-    doLast {
-        outputs.files.singleFile.withOutputStream { out ->
-            def cssRoot = "${buildDir}/css"
-            def includes = [
-                    file("${cssRoot}/reset.min.css"),
-                    file("${cssRoot}/base.min.css"),
-                    file("${cssRoot}/colors.min.css"),
-                    file("${cssRoot}/columns.min.css"),
-                    file("${cssRoot}/rows.min.css"),
-                    file("${cssRoot}/stats.min.css")
-            ]
-            for (file in includes) {
-                file.withInputStream {
-                    out << "/* ${file.name} */"
-                    out << it << '\n'
-                }
-            }
-        }
-    }
-    dependsOn cssMinifyBase
+tasks.register('javascriptTest', NpxTask) {
+    inputs.files(fileTree("node/src/", {
+        include "**.js"
+    }))
+    inputs.files(fileTree("node/test/", {
+        include "**.test.js"
+    }))
+    command = 'npm'
+    group = 'build'
+    args = ['test']
+    dependsOn nodeSetup
+    dependsOn npmSetup
+    dependsOn npmInstall
 }
 
-task combineJs {
-    inputs.files(fileTree("${buildDir}/js", {
-        include "**.min.js"
-    })).ignoreEmptyDirectories()
-    outputs.file("${buildDir}/resources/main/templates/js/all.min.js")
-    doLast {
-        outputs.files.singleFile.withOutputStream { out ->
-            def jsRoot = "${buildDir}/js"
-            def includes = [
-                    file("${jsRoot}/toggle.min.js")
-            ]
-            for (file in includes) {
-                file.withInputStream {
-                    out << "/* ${file.name} */"
-                    out << it << '\n'
-                }
-            }
-        }
-    }
-    dependsOn jsMinifyBase
+tasks.register('cleanTemplates', Delete) {
+    delete fileTree("${buildDir}/html-view")
+    delete fileTree("${buildDir}/resources/main/templates/html")
 }
 
-task processTemplates {
-    inputs.file("${buildDir}/resources/main/templates/js/all.min.js")
-    inputs.file("${buildDir}/resources/main/templates/css/all.min.css")
-    inputs.files(fileTree("src/main/templates/html")).ignoreEmptyDirectories()
+tasks.register('processTemplates', NpxTask) {
+    inputs.files(fileTree("node/src/", {
+        include "**.js"
+    }))
+    inputs.files(fileTree("node/css/", {
+        include "**.css"
+    }))
+    outputs.dir("${buildDir}/html-view")
     outputs.dir("${buildDir}/resources/main/templates/html")
-    doLast {
-        for (template in inputs.files) {
-            def outFile = file("${buildDir}/resources/main/templates/html/${template.name}")
-            outFile.delete()
-            template.eachLine { line ->
-                outFile.append(line.replaceAll("<!-- [a-zA-Z0-9 ]+ -->", "").trim())
-            }
-        }
-    }
-    dependsOn combineCss
-    dependsOn combineJs
+    command = 'grunt'
+    group = 'build'
+    args = []
+    dependsOn javascriptTest
 }
 
 jar {

@@ -3,10 +3,10 @@ package com.github.nagyesta.abortmission.strongback.h2.repository;
 import com.github.nagyesta.abortmission.core.healthcheck.StageStatisticsSnapshot;
 import com.github.nagyesta.abortmission.core.healthcheck.impl.DefaultStageStatisticsSnapshot;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
+import com.github.nagyesta.abortmission.strongback.h2.repository.mapper.StageTimeMeasurementMapper;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
 import org.jdbi.v3.core.transaction.TransactionIsolationLevel;
-import org.jdbi.v3.sqlobject.config.RegisterConstructorMapper;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -40,7 +40,13 @@ public interface LaunchStatisticsRepository {
             + "  TEST_METHOD,"
             + "  TEST_RESULT,"
             + "  START_MILLIS,"
-            + "  END_MILLIS) "
+            + "  END_MILLIS,"
+            + "  DISPLAY_NAME,"
+            + "  THREAD_NAME,"
+            + "  THROWABLE_TYPE,"
+            + "  THROWABLE_MESSAGE,"
+            + "  THROWABLE_STACK_TRACE"
+            + ") "
             + "VALUES ("
             + "  :contextName,"
             + "  :matcherName,"
@@ -50,7 +56,13 @@ public interface LaunchStatisticsRepository {
             + "  :testCaseId,"
             + "  :result,"
             + "  :start,"
-            + "  :end)")
+            + "  :end,"
+            + "  :displayName,"
+            + "  :threadName,"
+            + "  :throwableClass,"
+            + "  :throwableMessage,"
+            + "  :stackTraceAsString"
+            + ")")
     @Transaction(value = TransactionIsolationLevel.READ_COMMITTED)
     void insertStageTimeMeasurement(@Bind("contextName") String contextName,
                                     @Bind("matcherName") String matcherName,
@@ -70,11 +82,16 @@ public interface LaunchStatisticsRepository {
             + "  TEST_METHOD as testCaseId,"
             + "  TEST_RESULT as result,"
             + "  START_MILLIS as start,"
-            + "  END_MILLIS as `end` "
+            + "  END_MILLIS as `end`,"
+            + "  DISPLAY_NAME as displayName,"
+            + "  THREAD_NAME as threadName,"
+            + "  THROWABLE_TYPE as throwableClass,"
+            + "  THROWABLE_MESSAGE as throwableMessage,"
+            + "  THROWABLE_STACK_TRACE as stackTraceAsString "
             + "FROM LAUNCH_STATISTICS "
             + "WHERE MATCHER_NAME = :matcherName "
             + "ORDER BY START_MILLIS, END_MILLIS, TEST_CLASS, TEST_METHOD, LAUNCH_ID, TEST_RESULT")
-    @RegisterConstructorMapper(StageTimeMeasurement.class)
+    @RegisterRowMapper(StageTimeMeasurementMapper.class)
     @Transaction(value = TransactionIsolationLevel.READ_COMMITTED, readOnly = true)
     List<StageTimeMeasurement> fetchAllMeasurementsForMatcher(@Bind("matcherName") String matcherName);
 
@@ -93,13 +110,18 @@ public interface LaunchStatisticsRepository {
             + "  TEST_METHOD as testCaseId,"
             + "  TEST_RESULT as result,"
             + "  START_MILLIS as start,"
-            + "  END_MILLIS as `end` "
+            + "  END_MILLIS as `end`,"
+            + "  DISPLAY_NAME as displayName,"
+            + "  THREAD_NAME as threadName,"
+            + "  THROWABLE_TYPE as throwableClass,"
+            + "  THROWABLE_MESSAGE as throwableMessage,"
+            + "  THROWABLE_STACK_TRACE as stackTraceAsString "
             + "FROM LAUNCH_STATISTICS "
             + "WHERE CONTEXT_NAME = :contextName"
             + " AND MATCHER_NAME = :matcherName"
             + " AND COUNTDOWN = :countdown "
             + "ORDER BY START_MILLIS, END_MILLIS, TEST_CLASS, TEST_METHOD, LAUNCH_ID, TEST_RESULT")
-    @RegisterConstructorMapper(StageTimeMeasurement.class)
+    @RegisterRowMapper(StageTimeMeasurementMapper.class)
     @Transaction(value = TransactionIsolationLevel.READ_COMMITTED, readOnly = true)
     List<StageTimeMeasurement> fetchMeasurementsFor(@Bind("contextName") String contextName,
                                                     @Bind("matcherName") String matcherName,

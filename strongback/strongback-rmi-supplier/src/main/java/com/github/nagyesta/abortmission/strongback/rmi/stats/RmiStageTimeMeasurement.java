@@ -2,12 +2,10 @@ package com.github.nagyesta.abortmission.strongback.rmi.stats;
 
 import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
+import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurementBuilder;
 
 import java.io.Serializable;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.StringJoiner;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Captures the timings and outcome of one stage of the launch (countdown/mission).
@@ -24,6 +22,11 @@ public final class RmiStageTimeMeasurement implements Comparable<RmiStageTimeMea
     private String testClassId;
     private String testCaseId;
     private UUID launchId;
+    private String displayName;
+    private String threadName;
+    private String throwableClass;
+    private String throwableMessage;
+    private List<String> stackTrace;
 
     /**
      * Default contructor for serialization.
@@ -43,6 +46,11 @@ public final class RmiStageTimeMeasurement implements Comparable<RmiStageTimeMea
         this.result = measurement.getResult();
         this.start = measurement.getStart();
         this.end = measurement.getEnd();
+        this.displayName = measurement.getDisplayName();
+        this.threadName = measurement.getThreadName();
+        this.throwableClass = measurement.getThrowableClass();
+        this.throwableMessage = measurement.getThrowableMessage();
+        this.stackTrace = measurement.getStackTrace();
     }
 
     public UUID getLaunchId() {
@@ -93,13 +101,70 @@ public final class RmiStageTimeMeasurement implements Comparable<RmiStageTimeMea
         this.testCaseId = testCaseId;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public RmiStageTimeMeasurement setDisplayName(final String displayName) {
+        this.displayName = displayName;
+        return this;
+    }
+
+    public String getThreadName() {
+        return threadName;
+    }
+
+    public RmiStageTimeMeasurement setThreadName(final String threadName) {
+        this.threadName = threadName;
+        return this;
+    }
+
+    public String getThrowableClass() {
+        return throwableClass;
+    }
+
+    public RmiStageTimeMeasurement setThrowableClass(final String throwableClass) {
+        this.throwableClass = throwableClass;
+        return this;
+    }
+
+    public String getThrowableMessage() {
+        return throwableMessage;
+    }
+
+    public RmiStageTimeMeasurement setThrowableMessage(final String throwableMessage) {
+        this.throwableMessage = throwableMessage;
+        return this;
+    }
+
+    public List<String> getStackTrace() {
+        return stackTrace;
+    }
+
+    public RmiStageTimeMeasurement setStackTrace(final List<String> stackTrace) {
+        this.stackTrace = stackTrace;
+        return this;
+    }
+
     /**
      * Converts the values back to {@link StageTimeMeasurement}.
      *
      * @return measurement
      */
     public StageTimeMeasurement toStageTimeMeasurement() {
-        return new StageTimeMeasurement(launchId, testClassId, testCaseId, result, start, end);
+        return StageTimeMeasurementBuilder.builder()
+                .setLaunchId(launchId)
+                .setTestClassId(testClassId)
+                .setTestCaseId(testCaseId)
+                .setResult(result)
+                .setStart(start)
+                .setEnd(end)
+                .setDisplayName(displayName)
+                .setThreadName(threadName)
+                .setThrowableClass(throwableClass)
+                .setThrowableMessage(throwableMessage)
+                .setStackTrace(stackTrace)
+                .build();
     }
 
     @SuppressWarnings("NullableProblems")
@@ -128,18 +193,24 @@ public final class RmiStageTimeMeasurement implements Comparable<RmiStageTimeMea
         return areFieldValuesEqual((RmiStageTimeMeasurement) o);
     }
 
-    private boolean areFieldValuesEqual(final RmiStageTimeMeasurement that) {
-        return launchId.equals(that.launchId)
-                && start == that.start
-                && end == that.end
-                && result == that.result
-                && testClassId.equals(that.testClassId)
-                && testCaseId.equals(that.testCaseId);
-    }
-
     @Override
     public int hashCode() {
-        return Objects.hash(launchId, result, start, end, testClassId, testCaseId);
+        return Objects.hash(result, start, end, testClassId, testCaseId, launchId, displayName, threadName, throwableClass,
+                throwableMessage, stackTrace);
+    }
+
+    private boolean areFieldValuesEqual(final RmiStageTimeMeasurement that) {
+        return start == that.start
+                && end == that.end
+                && result == that.result
+                && Objects.equals(testClassId, that.getTestClassId())
+                && Objects.equals(testCaseId, that.getTestCaseId())
+                && Objects.equals(launchId, that.getLaunchId())
+                && Objects.equals(displayName, that.getDisplayName())
+                && Objects.equals(threadName, that.getThreadName())
+                && Objects.equals(throwableClass, that.getThrowableClass())
+                && Objects.equals(throwableMessage, that.getThrowableMessage())
+                && Objects.equals(stackTrace, that.getStackTrace());
     }
 
     @Override
@@ -151,6 +222,9 @@ public final class RmiStageTimeMeasurement implements Comparable<RmiStageTimeMea
                 .add("result=" + result)
                 .add("start=" + start)
                 .add("end=" + end)
+                .add("threadName='" + threadName + "'")
+                .add("displayName='" + displayName + "'")
+                .add("throwableClass='" + throwableClass + "'")
                 .toString();
     }
 

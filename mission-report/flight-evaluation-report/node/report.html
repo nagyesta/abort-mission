@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Abort-Mission Flight Evaluation Report</title>
+    <link rel="stylesheet" type="text/css" href="../build/html-view/css/all.min.css">
+</head>
+<body>
+    <div class="root-container" th:data-jsonData="${launchModel}">
+    <div class="center logo"></div>
+    <h1 class="header center">Flight Evaluation Report</h1>
+    <div class="theme-toggle-container">
+        <a class="header" id="theme-toggle" href="javascript:uiToggle.toggleTheme()" title="Toggle theme">Toggle theme</a>
+    </div>
+    <script src="../build/html-view/js/ui-toggle.min.js"></script>
+    <div id="loading-root">
+        <div class="loader center"></div>
+        <h1 class="header center">Loading telemetry...</h1>
+    </div>
+    <div id="binding-root" class="hidden" data-bind="css: {hidden: false}">
+        <div class="help-button">
+            <a href="https://github.com/nagyesta/abort-mission/wiki/Flight-Evaluation-Report-explained" target="_blank">
+                <!-- Help icon under MIT license from https://feathericons.com/ -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </a>
+        </div>
+        <p class="header">Countdown started: <span data-bind="text: testStart"></span></p>
+        <p class="header header-last">Mission concluded: <span data-bind="text: testEnd"></span></p>
+        <div class="filter-module">
+            <div class="filter-inputs" data-bind="with: filter">
+                <label for="filter-box" class="filter-button">
+                    <!-- Filter icon under MIT license from https://feathericons.com/ -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                    </svg>
+                </label><input id="filter-box" class="filter-box" type="text"
+                               data-bind="textInput: input, valueUpdate: 'afterkeydown', event: {keyup: showAllOptions}, attr: {placeholder: placeholder}, click: toggleOptions"/><a
+                    class="filter-button" data-bind="click: clear">
+                <!-- Delete icon under MIT license from https://feathericons.com/ -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/>
+                    <line x1="18" y1="9" x2="12" y2="15"/>
+                    <line x1="12" y1="9" x2="18" y2="15"/>
+                </svg>
+            </a>
+            </div>
+            <ul class="filter-option-matches"
+                data-bind="css: {hidden: filter.hideList}">
+                <!-- ko foreach: {data: filter.matchingOptions, as: 'matching'} -->
+                    <!-- ko if: matching.entityType.toLowerCase() === 'time' -->
+                        <li data-bind="with: matching, class: cssEntityTypeName()">
+                            <span class="filter-option-entity-type-badge" data-bind="text: entityType.toLowerCase()"></span>
+                            <span class="filter-option-name" data-bind="text: value, attr: {title: value}"></span>
+                            <span class="filter-option-actions">
+                                <a data-bind="click: rootModel.filter.setStartTime(key), text: 'Include runs ending after', attr: {title: 'Include a run only if it ends after the selected time.'}"></a>
+                                <a data-bind="click: rootModel.filter.setEndTime(key), text: 'Include runs starting before', attr: {title: 'Include a run only if it starts before the selected time.'}"></a>
+                                <a data-bind="click: rootModel.filter.setRange(key, 1), text: 'Include ±1s', attr: {title: 'Include a run if it is active anytime in the ±1s range of the selected time.'}"></a>
+                                <a data-bind="click: rootModel.filter.setRange(key, 5), text: 'Include ±5s', attr: {title: 'Include a run if it is active anytime in the ±5s range of the selected time.'} "></a>
+                                <a data-bind="click: rootModel.filter.setRange(key, 10), text: 'Include ±10s', attr: {title: 'Include a run if it is active anytime in the ±10s range of the selected time.'}"></a>
+                            </span>
+                        </li>
+                    <!-- /ko -->
+                    <!-- ko if: matching.entityType.toLowerCase() !== 'time' -->
+                        <li data-bind="class: matching.cssEntityTypeName()">
+                            <span class="filter-option-entity-type-badge" data-bind="text: matching.entityType.toLowerCase()"></span>
+                            <span class="filter-option-name" data-bind="text: matching.value, attr: {title: matching.value}"></span>
+                            <span class="filter-option-actions" data-bind="with: matching">
+                                <a data-bind="click: toggleInclude(), text: include() ? 'Remove rule' : 'Add to inclusions' "></a>
+                                <a data-bind="click: toggleExclude(), text: exclude() ? 'Remove rule' : 'Add to exclusions' "></a>
+                            </span>
+                        </li>
+                    <!-- /ko -->
+                <!-- /ko -->
+                <!-- ko if: filter.matchingOptions().length === 0 -->
+                <li class="filter-option-no-matches">No matches</li>
+                <!-- /ko -->
+            </ul>
+            <div>
+            </div>
+            <div class="filter-active-rules">
+                <!-- ko if: filter.isFiltered() -->
+                <h2>Filter test runs</h2>
+                <div class="filter-times">
+                    <span class="filter-time-icon" title="Filter by time">
+                        <!-- Clock icon under MIT license from https://feathericons.com/ -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-clock">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </span><div class="filter-rule" data-bind="with: filter"><span
+                            class="filter-rule-entity-type-badge">End after</span>
+                        <span class="filter-rule-name" data-bind="text: startTimeAsString, attr: {title: 'Run ends after ' + startTimeAsString()}"></span>
+                        <span data-bind="if: startTimeIsNotDefault()" class="filter-rule-actions">
+                            <a data-bind="click: resetStartTime">Reset</a>
+                        </span>
+                        <span class="invalid-range" data-bind="visible: invalidRange()">"Start before" must be later!</span>
+                    </div><div class="filter-rule" data-bind="with: filter"><span
+                        class="filter-rule-entity-type-badge">Start before</span>
+                        <span class="filter-rule-name" data-bind="text: endTimeAsString, attr: {title: 'Run starts before ' + endTimeAsString()}"></span>
+                        <span data-bind="if: endTimeIsNotDefault()" class="filter-rule-actions">
+                            <a data-bind="click: resetEndTime">Reset</a>
+                        </span>
+                        <span class="invalid-range" data-bind="visible: invalidRange()">"End after" must be earlier!</span>
+                    </div>
+                </div>
+                <div class="filter-rule-selection" data-bind="if: filter.allIncludes().length > 0">
+                    <span class="filter-rule-section-include" title="Including runs matching ANY of these rules...">
+                        <!-- Check-Circle icon under MIT license from https://feathericons.com/ -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-check-circle">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </span><!-- ko foreach: filter.allIncludes --><div
+                        class="filter-rule"><span
+                        class="filter-rule-entity-type-badge" data-bind="text: $data.entityType.toLowerCase()"></span>
+                        <!-- ko if: $data.valuePrefix() !== null -->
+                        <span class="filter-rule-prefix"
+                              data-bind="text: valuePrefixShort(), attr: {title: value}"></span><!-- /ko --><span
+                            class="filter-rule-name" data-bind="text: valueMain(), attr: {title: value}"></span>
+                        <span class="filter-rule-actions">
+                            <a data-bind="click: $data.toggleInclude()">Remove</a>
+                        </span>
+                    </div><!-- /ko -->
+                </div>
+                <div class="filter-rule-selection" data-bind="if: filter.allExcludes().length > 0">
+                    <span class="filter-rule-section-exclude" title="Excluding runs matching ANY of these rules...">
+                        <!-- X-Circle icon under MIT license from https://feathericons.com/ -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-x-circle">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="15" y1="9" x2="9" y2="15"/>
+                            <line x1="9" y1="9" x2="15" y2="15"/>
+                        </svg>
+                    </span><!-- ko foreach: filter.allExcludes --><div
+                            class="filter-rule"><span
+                            class="filter-rule-entity-type-badge" data-bind="text: $data.entityType.toLowerCase()"></span>
+                        <!-- ko if: $data.valuePrefix() !== null -->
+                        <span class="filter-rule-prefix"
+                              data-bind="text: valuePrefixShort(), attr: {title: value}"></span><!-- /ko --><span
+                            class="filter-rule-name" data-bind="text: valueMain(), attr: {title: value}"></span>
+                        <span class="filter-rule-actions">
+                            <a data-bind="click: $data.toggleExclude()">Remove</a>
+                        </span>
+                    </div><!-- /ko -->
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <!-- ko with: detailView -->
+        <div id="detail-view" class="detail-view" data-bind="visible: visible()">
+            <h2>Execution overview</h2>
+            <div class="detail-view-actions">
+                <a class="link" data-bind="click: toggleFiltering, text: filteringText()"></a>
+                <a class="link" data-bind="click: hide">Close overview</a>
+            </div>
+            <p class="method-times">
+                <span>First run started: </span>
+                <span data-bind="text: summary().startTimeAsString()"></span>
+                <!-- ko if: summary().canFilterStartTime() -->
+                <a class="link" data-bind="click: summary().filterStartTime()">Exclude runs ending before</a>
+                <!-- /ko -->
+            </p>
+            <p class="method-times">
+                <span>Latest run ended : </span>
+                <span data-bind="text: summary().endTimeAsString()"></span>
+                <!-- ko if: summary().canFilterEndTime() -->
+                <a class="link" data-bind="click: summary().filterEndTime()">Exclude runs starting after</a>
+                <!-- /ko -->
+            </p>
+            <table class="class-reports">
+                <thead>
+                <tr class="hidden">
+                    <th class="col-spacer"></th>
+                    <th class="col-name"></th>
+                    <th class="col-count"></th>
+                    <th class="col-time"></th>
+                    <th class="col-count"></th>
+                    <th class="col-count"></th>
+                    <th class="col-count"></th>
+                    <th class="col-count"></th>
+                    <th class="col-count"></th>
+                    <th class="col-count"></th>
+                    <th class="col-count"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="class-row">
+                    <td colspan="3" class="top-row row-start border class-name" data-bind="attr: {title: className()}, class: css()">
+                        <span data-bind="text: classNameShort()"></span>
+                        <span class="details-actions">
+                            <!-- ko if: classEntity() && !classEntity().exclude() -->
+                                <a class="link" data-bind="click: classEntity().toggleExclude(), text: 'Add ' + classEntity().entityType.toLowerCase() + ' to exclusions'"></a>
+                            <!-- /ko -->
+                            <!-- ko if: classEntity() && classEntity().exclude() -->
+                                <a class="link" data-bind="click: classEntity().toggleExclude(), text: 'Remove ' + classEntity().entityType.toLowerCase() + ' exclusion'"></a>
+                            <!-- /ko -->
+                        </span>
+                    </td>
+                    <td colspan="4" class="top-row border center class-times" data-bind="class: css()">Times</td>
+                    <td colspan="4" class="top-row border center class-results" data-bind="class: css()">Results</td>
+                </tr>
+                <!-- ko foreach: methods -->
+                    <tr class="class-row">
+                        <td colspan="1" class="col-spacer center link" data-bind="html: collapseExpandIcon(), click: toggleMethod"></td>
+                        <td colspan="1" class="row-start border exec-title" data-bind="class: css(), attr: {title: methodName}">
+                            <span data-bind="text: methodName, click: toggleMethod"></span>
+                            <span class="details-actions">
+                                <!-- ko if: !countdown && !methodEntity().exclude() -->
+                                    <a class="link" data-bind="click: methodEntity().toggleExclude(), text: 'Add ' + methodEntity().entityType.toLowerCase() + ' to exclusions'"></a>
+                                <!-- /ko -->
+                                <!-- ko if: !countdown && methodEntity().exclude() -->
+                                    <a class="link" data-bind="click: methodEntity().toggleExclude(), text: 'Remove ' + methodEntity().entityType.toLowerCase() + ' exclusion'"></a>
+                                <!-- /ko -->
+                                <!-- ko if: countdown && !missionStageEntity().exclude() -->
+                                    <a class="link" data-bind="click: missionStageEntity().toggleExclude(), text: 'Add stage to exclusions'"></a>
+                                <!-- /ko -->
+                                <!-- ko if: countdown && missionStageEntity().exclude() -->
+                                    <a class="link" data-bind="click: missionStageEntity().toggleExclude(), text: 'Remove stage exclusion'"></a>
+                                <!-- /ko -->
+                            </span>
+                        </td>
+                        <!-- ko with: selectedData(), as: 'm' -->
+                        <td colspan="1" class="border center exec-stat exec-count" data-bind="text: m.runs"></td>
+                        <td colspan="1" class="border center exec-time exec-total" data-bind="html: m.totalSum()"></td>
+                        <td colspan="1" class="border center exec-stat exec-min" data-bind="html: m.minimum()"></td>
+                        <td colspan="1" class="border center exec-stat exec-avg" data-bind="html: m.average()"></td>
+                        <td colspan="1" class="border center exec-stat exec-max" data-bind="html: m.maximum()"></td>
+                        <td colspan="1" class="border center exec-stat exec-success" data-bind="text: m.success, css: {focus: m.success > 0}"></td>
+                        <td colspan="1" class="border center exec-stat exec-failure" data-bind="text: m.failure, css: {focus: m.failure > 0}"></td>
+                        <td colspan="1" class="border center exec-stat exec-abort" data-bind="text: m.aborted, css: {focus: m.aborted > 0}"></td>
+                        <td colspan="1" class="border center exec-stat exec-suppress" data-bind="text: m.suppressed, css: {focus: m.suppressed > 0}"></td>
+                        <!-- /ko -->
+                    </tr>
+                    <tr class="class-row" data-bind="css: {hidden: collapsed()}">
+                        <td colspan="1" class="col-spacer"></td>
+                        <td colspan="10" class="class-matchers row-start border">
+                            <p class="method-times">
+                                <span>First run started: </span>
+                                <span data-bind="text: selectedData().startTimeAsString()"></span>
+                                <!-- ko if: selectedData().canFilterStartTime() -->
+                                    <a class="link" data-bind="click: selectedData().filterStartTime()">Exclude runs ending before</a>
+                                <!-- /ko -->
+                            </p>
+                            <p class="method-times">
+                                <span>Latest run ended : </span>
+                                <span data-bind="text: selectedData().endTimeAsString()"></span>
+                                <!-- ko if: selectedData().canFilterEndTime() -->
+                                    <a class="link" data-bind="click: selectedData().filterEndTime()">Exclude runs starting after</a>
+                                <!-- /ko -->
+                            </p>
+                            <p class="matcher-title">
+                                <span data-bind="text: countdown ? 'Countdown matchers' : 'Mission matchers'"></span>
+                            </p>
+                            <ul class="matcher-list" data-bind="foreach: {data: total.matchers, as: 'ma'}">
+                                <li>
+                                    <span data-bind="text: ma.value"></span>
+                                    <!-- ko if: ma.exclude() -->
+                                        <a class="link" data-bind="click: $data.toggleExclude()">Remove exclusion</a>
+                                    <!-- /ko -->
+                                    <!-- ko if: !ma.exclude() -->
+                                        <a class="link" data-bind="click: $data.toggleExclude()">Add to exclusions</a>
+                                    <!-- /ko -->
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                <!-- /ko -->
+                <!-- ko if: classEntity() -->
+                <tr class="class-row">
+                    <td colspan="1" class="col-spacer"></td>
+                    <td colspan="1" class="row-start border exec-title" data-bind="text: 'Total for ' + classEntity().entityType.toLowerCase() + ':'"></td>
+                    <!-- ko with: summary(), as: 's' -->
+                    <td colspan="1" class="border center exec-stat exec-count" data-bind="text: s.runs"></td>
+                    <td colspan="1" class="border center exec-time exec-total" data-bind="html: s.totalSum()"></td>
+                    <td colspan="1" class="border center exec-stat exec-min" data-bind="html: s.minimum()"></td>
+                    <td colspan="1" class="border center exec-stat exec-avg" data-bind="html: s.average()"></td>
+                    <td colspan="1" class="border center exec-stat exec-max" data-bind="html: s.maximum()"></td>
+                    <td colspan="1" class="border center exec-stat exec-success" data-bind="text: s.success, css: {focus: s.success > 0}"></td>
+                    <td colspan="1" class="border center exec-stat exec-failure" data-bind="text: s.failure, css: {focus: s.failure > 0}"></td>
+                    <td colspan="1" class="border center exec-stat exec-abort" data-bind="text: s.aborted, css: {focus: s.aborted > 0}"></td>
+                    <td colspan="1" class="border center exec-stat exec-suppress" data-bind="text: s.suppressed, css: {focus: s.suppressed > 0}"></td>
+                    <!-- /ko -->
+                </tr>
+                <!-- /ko -->
+                </tbody>
+            </table>
+        </div>
+        <!-- /ko -->
+        <h2>Event log</h2>
+        <div class="log-view">
+            <table data-bind="class: logViewTimeline.threadColumnCategoryCss()">
+                <thead>
+                <tr>
+                    <th class="center top-row row-start border low-padding time-stamp-header">Time stamps</th>
+                    <th class="center top-row border low-padding thread-header" title="Threads"
+                        data-bind="attr: {colspan: (threadNames.length + 2)}">Threads
+                    </th>
+                    <th class="center top-row border low-padding execution-details-header" colspan="2">Runs</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- ko foreach: { data: logViewTimeline.logEntryMultiMap, as: 'time' } -->
+                <!-- ko foreach: { data: time.rows, as: 'r' } -->
+                <tr data-bind="class: r.rowCss">
+                    <!-- ko if: r.timeStampAsString !== null -->
+                    <td class="time-stamp center row-start border low-padding"
+                        data-bind="text: r.timeStampAsString, attr: {rowspan: r.timeStampRowSpan}, css: {filtered: time.noneVisible()}"></td>
+                    <!-- /ko -->
+                    <td class="thread-spacer" data-bind="css: {'border-bottom': r.lastStarting, 'soft-border-bottom': r.lastEnding}"></td>
+                    <!-- ko foreach: { data: r.threads, as: 't' } -->
+                        <!-- ko if: t.run === null -->
+                        <td class="thread"
+                            data-bind="class: r.categoryBoundaryCss(), attr: {rowspan: t.rowSpan}, style: { width: time.threadWidth() }"></td>
+                        <!-- /ko -->
+                        <!-- ko if: t.run !== null -->
+                        <td class="thread thread-start thread-end"
+                            data-bind="class: t.css, attr: {rowspan: t.rowSpan, title: t.title}, style: { width: time.threadWidth() }, click: t.toggleSelected, css: {highlighted: t.selected()}"></td>
+                        <!-- /ko -->
+                    <!-- /ko -->
+                    <td class="thread-spacer" data-bind="class: r.categoryBoundaryCss()"></td>
+                    <td class="row-start border-bottom low-padding execution-details"
+                        data-bind="html: r.detailsHtml, attr: {title: r.detailsTitle}, class: r.detailsCss, css: {highlighted: r.selected()}, click: r.toggleSelected"></td>
+                    <td class="border low-padding details-action"><a data-bind="click: r.toggleDetails">
+                        <!-- Menu icon under MIT license from https://feathericons.com/ -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </a></td>
+                </tr>
+                <!-- /ko -->
+                <!-- /ko -->
+                <tr class="summary-row">
+                    <td class="row-start top-row border low-padding" data-bind="attr: {colspan: (threadNames.length + 5)}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <p class="footer center">Thank you for trusting Abort-Mission with your launch!</p>
+</div>
+<script src="../build/html-view/js/app-bundle.min.js"></script>
+<script>
+    const jsonData = JSON.parse(document.getElementsByClassName('root-container')[0].getAttribute('data-jsonData'));
+    // process the JSON data here
+    let model = new FlightEvaluationReportModel();
+    model.initData(jsonData);
+    model.initBindings();
+    document.getElementById('loading-root').classList.toggle('hidden');
+</script>
+</body>
+</html>

@@ -1,3 +1,5 @@
+codecov:
+  max_report_age: off
 coverage:
   status:
     project:
@@ -45,7 +47,7 @@ flags:
       - ./boosters/testkit
   flighteval:
     paths:
-      - ./s/flight-evaluation-report
+      - ./mission-report/flight-evaluation-report
   strongback:
     paths:
       - ./strongback/strongback-base

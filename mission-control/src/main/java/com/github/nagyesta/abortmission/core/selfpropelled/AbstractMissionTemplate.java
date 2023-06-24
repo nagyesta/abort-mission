@@ -49,7 +49,7 @@ public abstract class AbstractMissionTemplate<P, T> extends AbstractLaunchSequen
      * @return The end result of the test (optional)
      */
     protected final Optional<T> executeTemplate() {
-        final Optional<StageTimeStopwatch> countdownStopWatch = performPreLaunchInit(evaluationScope);
+        final Optional<StageTimeStopwatch> countdownStopWatch = performPreLaunchInit(evaluationScope, evaluationScope.getSimpleName());
         final P preparedContext = executePreLaunchPreparation(countdownStopWatch);
         return executeLaunch(preparedContext);
     }

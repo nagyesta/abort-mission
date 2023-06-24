@@ -23,6 +23,6 @@ public final class ParachuteStepDefs {
 
     @Then("Parachutes are deployed")
     public void parachutesAreDeployed() {
-        Assertions.assertTrue(result);
+        Assertions.assertTrue(result, "Parachutes should open.");
     }
 }

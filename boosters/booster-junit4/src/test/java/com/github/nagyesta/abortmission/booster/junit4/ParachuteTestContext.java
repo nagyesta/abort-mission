@@ -3,6 +3,7 @@ package com.github.nagyesta.abortmission.booster.junit4;
 import com.github.nagyesta.abortmission.booster.junit4.annotation.LaunchAbortArmed;
 import com.github.nagyesta.abortmission.booster.junit4.support.LaunchAbortTestWatcher;
 import com.github.nagyesta.abortmission.core.AbortMissionCommandOps;
+import com.github.nagyesta.abortmission.core.AbortMissionGlobalConfiguration;
 import com.github.nagyesta.abortmission.core.annotation.LaunchSequence;
 import com.github.nagyesta.abortmission.core.outline.MissionOutline;
 import com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDrop;
@@ -48,10 +49,15 @@ public class ParachuteTestContext {
         final boolean actual = underTest.canOpenParachute(index);
 
         //then
-        assertTrue(actual);
+        assertTrue("Parachutes should open.", actual);
     }
 
     public static class MissionOutlineDef extends MissionOutline {
+
+        @Override
+        protected void overrideGlobalConfig(final AbortMissionGlobalConfiguration config) {
+            config.setStackTraceFilter(stackTraceElement -> stackTraceElement.getClassName().startsWith("com.github."));
+        }
 
         @Override
         protected Map<String, Consumer<AbortMissionCommandOps>> defineOutline() {

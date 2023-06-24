@@ -7,6 +7,7 @@ import com.github.nagyesta.abortmission.core.healthcheck.impl.MissionStatisticsC
 import com.github.nagyesta.abortmission.core.healthcheck.impl.StageStatisticsCollector;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
@@ -49,6 +50,15 @@ public final class StaticFireTestAssets {
     public static final int ABORTED_CASES = 499;
     public static final int FAILED_CASES = 2;
     public static final int SUCCESSFUL_PARALLEL_CASES = 400;
+
+    public static final List<String> EXPECTED_EXCEPTIONS = List
+            .of("org.springframework.beans.factory.BeanCreationException", "org.springframework.beans.factory.BeanCreationException");
+    private static final String MESSAGE = "Error creating bean with name 'sideBooster' defined in com.github.nagyesta.abortmission."
+            + "testkit.spring.StaticFire: Bean instantiation via factory method failed; nested exception is org.springframework.beans."
+            + "BeanInstantiationException: Failed to instantiate [com.github.nagyesta.abortmission.testkit.spring.Booster]: Factory method"
+            + " 'sideBooster' threw exception; nested exception is java.lang.UnsupportedOperationException: Side boosters are not "
+            + "supported.";
+    public static final List<String> EXPECTED_MESSAGES = List.of(MESSAGE, MESSAGE);
 
     private StaticFireTestAssets() {
         throw new UnsupportedOperationException("Utility.");

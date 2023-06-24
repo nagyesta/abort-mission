@@ -12,7 +12,6 @@ public final class ClassTelemetry {
 
     private final String className;
     private final StageLaunchStats countdown;
-    private final AggregatedLaunchStats stats;
     private final Map<String, StageLaunchStats> launches;
 
     /**
@@ -36,7 +35,6 @@ public final class ClassTelemetry {
         final Map<String, List<StageTimeMeasurement>> byMethods = converter.partitionByMethods(measurements);
         this.countdown = converter.processCountdownStats(matcherNames, byMethods);
         this.launches = converter.processLaunchStats(matcherNames, byMethods);
-        this.stats = converter.summarizeDescendantStats(countdown, launches.values());
     }
 
     public String getClassName() {
@@ -45,10 +43,6 @@ public final class ClassTelemetry {
 
     public StageLaunchStats getCountdown() {
         return countdown;
-    }
-
-    public AggregatedLaunchStats getStats() {
-        return stats;
     }
 
     public Map<String, StageLaunchStats> getLaunches() {

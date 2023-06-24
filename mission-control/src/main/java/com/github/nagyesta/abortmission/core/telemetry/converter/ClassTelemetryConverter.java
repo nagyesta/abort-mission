@@ -1,7 +1,6 @@
 package com.github.nagyesta.abortmission.core.telemetry.converter;
 
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
-import com.github.nagyesta.abortmission.core.telemetry.stats.AggregatedLaunchStats;
 import com.github.nagyesta.abortmission.core.telemetry.stats.StageLaunchStats;
 
 import java.util.*;
@@ -41,7 +40,7 @@ public class ClassTelemetryConverter {
                 return;
             }
             final Set<String> names = matcherNames.getOrDefault(method, Collections.emptySet());
-            methodStats.put(method, new StageLaunchStats(AggregatedLaunchStats.filter(measurementList), names));
+            methodStats.put(method, new StageLaunchStats(filter(measurementList), names));
         });
         return Collections.unmodifiableMap(methodStats);
     }
@@ -61,23 +60,26 @@ public class ClassTelemetryConverter {
                 .getOrDefault(StageTimeMeasurement.CLASS_ONLY, Collections.emptyList());
         final Set<String> classMatcherNames = matcherNames
                 .getOrDefault(StageTimeMeasurement.CLASS_ONLY, Collections.emptySet());
-        return new StageLaunchStats(AggregatedLaunchStats.filter(classMeasurements), classMatcherNames);
+        return new StageLaunchStats(filter(classMeasurements), classMatcherNames);
     }
 
+
+
     /**
-     * Merges instance post-processing and test method stats into a single aggregation to have a class level total.
+     * Filters time series data and throws out duplicates of the same launch (in case
+     * multiple matchers match at the same run). Keeps only the worst outcome per each
+     * launch (The first item from: Fail, Abort, Suppress, Succeed).
      *
-     * @param countdownStats The post-processing stats.
-     * @param launchSet      The test method level statistics.
-     * @return The merged class total.
+     * @param inputMeasurements The measurement list we want to filter.
+     * @return The filtered set without duplicates.
      */
-    public AggregatedLaunchStats summarizeDescendantStats(final StageLaunchStats countdownStats,
-                                                          final Collection<StageLaunchStats> launchSet) {
-        Objects.requireNonNull(countdownStats, "CountdownStats cannot be null.");
-        Objects.requireNonNull(launchSet, "LaunchSet cannot be null.");
-        final Set<AggregatedLaunchStats> allStats = launchSet.stream()
-                .map(StageLaunchStats::getStats).collect(Collectors.toSet());
-        allStats.add(countdownStats.getStats());
-        return new AggregatedLaunchStats(allStats);
+    public static SortedSet<StageTimeMeasurement> filter(final Collection<StageTimeMeasurement> inputMeasurements) {
+        Objects.requireNonNull(inputMeasurements, "Input cannot be null.");
+        final Map<UUID, List<StageTimeMeasurement>> uuidListMap = inputMeasurements.stream()
+                .collect(Collectors.groupingBy(StageTimeMeasurement::getLaunchId));
+        return uuidListMap.values().stream()
+                .map(measurementList -> measurementList.stream().min(Comparator.comparing(StageTimeMeasurement::getResult)))
+                .filter(Optional::isPresent)
+                .map(Optional::get).collect(Collectors.toCollection(TreeSet::new));
     }
 }

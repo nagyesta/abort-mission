@@ -1,5 +1,6 @@
 package com.github.nagyesta.abortmission.reporting.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nagyesta.abortmission.reporting.config.ConversionProperties;
@@ -7,7 +8,6 @@ import com.github.nagyesta.abortmission.reporting.exception.RenderException;
 import com.github.nagyesta.abortmission.reporting.html.LaunchHtml;
 import com.github.nagyesta.abortmission.reporting.html.converter.LaunchJsonToHtmlConverter;
 import com.github.nagyesta.abortmission.reporting.json.LaunchJson;
-import com.github.nagyesta.abortmission.reporting.json.StageResultJson;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersion;
@@ -20,11 +20,10 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 import java.util.Set;
 
 @Slf4j
-public class ConversionController {
+public final class ConversionController {
     private static final String ROOT_NODE = "$";
 
     private final ConversionProperties properties;
@@ -50,13 +49,26 @@ public class ConversionController {
      * @throws RenderException When the conversion fails for any reason.
      */
     public void convert() throws RenderException {
+        render(prepareContext(convertJson()));
+    }
+
+    String convertJson() {
         if (!properties.getInput().exists()) {
             throw new IllegalArgumentException("Input file does not exist.");
         }
         final LaunchJson json = readValidJson();
-        render(prepareContext(json));
-        if (properties.isFailOnError() && json.getStats().getWorstResult() == StageResultJson.FAILURE) {
+        if (properties.isFailOnError() && json.isFailure()) {
             log.error("Failure detected in execution data and build is set to fail on error.");
+            throw new RenderException();
+        }
+        return writeAsJson(converter.apply(json));
+    }
+
+    private String writeAsJson(final LaunchHtml launchHtml) {
+        try {
+            return objectMapper.writer().writeValueAsString(launchHtml);
+        } catch (final JsonProcessingException e) {
+            log.error("Unable to serialize launch telemetry: " + e.getMessage(), e);
             throw new RenderException();
         }
     }
@@ -72,23 +84,10 @@ public class ConversionController {
         }
     }
 
-    private Context prepareContext(final LaunchJson launchJson) {
-        final LaunchHtml launchHtml = converter.apply(launchJson);
+    private Context prepareContext(final String launchTelemetryJson) {
         final Context context = new Context();
-        context.setVariable("launchModel", launchHtml);
-        context.setVariable("allCss", readResource("/templates/css/all.min.css"));
-        context.setVariable("allJs", readResource("/templates/js/all.min.js"));
+        context.setVariable("launchModel", launchTelemetryJson);
         return context;
-    }
-
-    private String readResource(final String input) throws RenderException {
-        //noinspection LocalCanBeFinal
-        try (InputStream stream = ConversionController.class.getResourceAsStream(input)) {
-            return new String(Objects.requireNonNull(stream).readAllBytes(), StandardCharsets.UTF_8);
-        } catch (final IOException e) {
-            log.error(e.getMessage(), e);
-            throw new RenderException();
-        }
     }
 
     @SuppressWarnings("LocalCanBeFinal")

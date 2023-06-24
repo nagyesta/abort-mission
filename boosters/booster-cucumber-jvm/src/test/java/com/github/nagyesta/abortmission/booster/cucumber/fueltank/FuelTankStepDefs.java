@@ -24,6 +24,6 @@ public final class FuelTankStepDefs {
 
     @Then("Fuel tank is intact")
     public void fuelTankIsIntact() {
-        Assertions.assertTrue(success);
+        Assertions.assertTrue(success, "Fuel tank should fill successfully.");
     }
 }

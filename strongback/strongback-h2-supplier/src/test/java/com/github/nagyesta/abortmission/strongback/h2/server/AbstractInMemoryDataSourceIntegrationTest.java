@@ -3,6 +3,7 @@ package com.github.nagyesta.abortmission.strongback.h2.server;
 import com.github.nagyesta.abortmission.core.healthcheck.StageStatisticsSnapshot;
 import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
+import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurementBuilder;
 import com.github.nagyesta.abortmission.strongback.h2.repository.LaunchStatisticsRepository;
 import org.h2.jdbcx.JdbcDataSource;
 import org.jdbi.v3.core.Handle;
@@ -31,6 +32,8 @@ public class AbstractInMemoryDataSourceIntegrationTest {
     protected static final String METHOD_PREFIX = "methodName";
     protected static final String CLASS_NAME = "com.github.nagyesta.abortmission."
             + "strongback.h2.repository.AbstractInMemoryDataSourceIntegrationTest";
+    private static final String DISPLAY_NAME_PREFIX = "DN_";
+    private static final String EXCEPTION_MESSAGE = "This is a test exception.";
 
     protected final String contextName;
     private final String url;
@@ -62,11 +65,25 @@ public class AbstractInMemoryDataSourceIntegrationTest {
                 .filter(n -> n != 0)
                 .map(n -> METHOD_PREFIX + n)
                 .orElse(CLASS_ONLY);
-        return new StageTimeMeasurement(UUID.randomUUID(),
-                CLASS_NAME,
-                testCaseId,
-                StageResult.values()[i % StageResult.values().length],
-                i, i + i);
+        final StageResult stageResult = StageResult.values()[i % StageResult.values().length];
+        final Optional<Throwable> throwable = Optional.of(stageResult)
+                .filter(r -> StageResult.FAILURE == r || StageResult.SUPPRESSED == r)
+                .map(n -> new RuntimeException(EXCEPTION_MESSAGE).fillInStackTrace());
+        return StageTimeMeasurementBuilder.builder()
+                .setLaunchId(UUID.randomUUID())
+                .setTestClassId(CLASS_NAME)
+                .setTestCaseId(testCaseId)
+                .setDisplayName(DISPLAY_NAME_PREFIX + testCaseId)
+                .setStart(i)
+                .setEnd(i + i)
+                .setThreadName(Thread.currentThread().getName())
+                .setThrowableClass(throwable.map(Throwable::getClass).map(Class::getName).orElse(null))
+                .setThrowableMessage(throwable.map(Throwable::getMessage).orElse(null))
+                .setStackTrace(throwable.map(Throwable::getStackTrace)
+                        .map(s -> Arrays.stream(s).map(StackTraceElement::toString).collect(Collectors.toList()))
+                        .orElse(null))
+                .setResult(stageResult)
+                .build();
     }
 
     protected void assertSnapshotCountersMatch(final List<StageTimeMeasurement> expected,

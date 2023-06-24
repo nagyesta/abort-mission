@@ -33,7 +33,8 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     @SuppressWarnings("RedundantThrows")
     @Override
     public void postProcessTestInstance(final Object testInstance, final ExtensionContext context) throws Exception {
-        final Optional<StageTimeStopwatch> stopwatch = launchSequenceTemplate.launchGoNoGo(testInstance.getClass());
+        final Optional<StageTimeStopwatch> stopwatch = launchSequenceTemplate
+                .launchGoNoGo(testInstance.getClass(), getDisplayNameOfContext(context));
         LOGGER.trace("Post-processing test instance of class: {} for launch id: {}",
                 testInstance.getClass(), stopwatch.map(StageTimeStopwatch::getLaunchId).orElse(null));
         context.getStore(NAMESPACE).put(CLASS_LEVEL_MARKER_PREFIX + Thread.currentThread().getName(), testInstance.getClass());
@@ -109,9 +110,17 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     public void beforeEach(final ExtensionContext context) throws Exception {
         findClassContext(context).ifPresent(this::markCountdownSuccessful);
         context.getTestMethod().ifPresent(method -> {
-            final Optional<StageTimeStopwatch> stopwatch = launchSequenceTemplate.launchImminent(method);
+            final String displayName = getDisplayNameOfContext(context);
+            final Optional<StageTimeStopwatch> stopwatch = launchSequenceTemplate.launchImminent(method, displayName);
             putOptionalStopwatch(context, stopwatch, MISSION_START_PREFIX + Thread.currentThread().getName());
         });
+    }
+
+    private String getDisplayNameOfContext(final ExtensionContext context) {
+        return context.getParent()
+                .filter(parent -> parent.getTestMethod().isPresent())
+                .map(parent -> parent.getDisplayName() + " " + context.getDisplayName())
+                .orElse(context.getDisplayName());
     }
 
     private Optional<ExtensionContext> findClassContext(final ExtensionContext context) {

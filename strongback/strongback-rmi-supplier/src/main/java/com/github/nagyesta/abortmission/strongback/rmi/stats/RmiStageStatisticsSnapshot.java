@@ -130,10 +130,10 @@ public class RmiStageStatisticsSnapshot implements Serializable {
             return false;
         }
         final RmiStageStatisticsSnapshot that = (RmiStageStatisticsSnapshot) o;
-        return failed == that.failed
-                && succeeded == that.succeeded
-                && aborted == that.aborted
-                && suppressed == that.suppressed;
+        return failed == that.getFailed()
+                && succeeded == that.getSucceeded()
+                && aborted == that.getAborted()
+                && suppressed == that.getSuppressed();
     }
 
     @Override

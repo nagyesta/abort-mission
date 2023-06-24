@@ -62,3 +62,7 @@ out/
 
 ### VS Code ###
 */.vscode/
+
+### Node modules ###
+mission-report/flight-evaluation-report/node/node_modules/
+

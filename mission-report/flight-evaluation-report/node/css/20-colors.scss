@@ -1,0 +1,432 @@
+@import "01-variables";
+
+body.light {
+  background: $light-background-color;
+  color: $light-text-color;
+  border-color: $light-border-color;
+
+  .help-button {
+    background-color: $light-background-color-suppressed;
+    color: $light-text-color-suppressed;
+
+    a {
+      color: $light-text-color-suppressed;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: $light-text-color-suppressed;
+      text-decoration: none;
+    }
+  }
+
+  .default-border-color {
+    border-color: $light-border-color;
+  }
+
+  .link,a {
+    color: $light-link-color;
+  }
+
+  .link:hover,a:hover {
+    color: $light-link-color-hover;
+  }
+
+  .filter-button {
+    color: $light-text-color;
+    border-color: $light-border-color;
+    text-decoration: none;
+  }
+
+  .filter-button:hover {
+    color: $light-text-color;
+    border-color: $light-border-color;
+    text-decoration: none;
+  }
+
+  .filter-rule-section-include {
+    color: $light-border-color-success;
+    border-color: $light-border-color-success;
+    background-color: $light-background-color-success;
+  }
+
+  .filter-rule-section-exclude {
+    color: $light-border-color-failure;
+    border-color: $light-border-color-failure;
+    background-color: $light-background-color-failure;
+  }
+
+  .text-success {
+    @extend .default-border-color;
+    color: $light-text-color-success;
+  }
+
+  .text-failure {
+    @extend .default-border-color;
+    color: $light-text-color-failure;
+  }
+
+  .text-abort {
+    @extend .default-border-color;
+    color: $light-text-color-abort;
+  }
+
+  .text-suppressed {
+    @extend .default-border-color;
+    color: $light-text-color-suppressed
+  }
+
+  .mission-success {
+    background-color: $light-background-color-success;
+    border: 0 $border-style-normal $light-border-color-success;
+    opacity: $light-thread-bar-opacity
+  }
+
+  .mission-failure {
+    background-color: $light-background-color-failure;
+    border: 0 $border-style-normal $light-border-color-failure;
+    opacity: $light-thread-bar-opacity
+  }
+
+  .mission-abort {
+    background-color: $light-background-color-abort;
+    border: 0 $border-style-normal $light-border-color-abort;
+    opacity: $light-thread-bar-opacity
+  }
+
+  .mission-suppressed {
+    background-color: $light-background-color-suppressed;
+    border: 0 $border-style-normal $light-border-color-suppressed;
+    opacity: $light-thread-bar-opacity
+  }
+
+  .countdown-success {
+    @extend .mission-success;
+    background-color: $light-background-color-success-alt
+  }
+
+  .countdown-failure {
+    @extend .mission-failure;
+    background-color: $light-background-color-failure-alt
+  }
+
+  .countdown-abort {
+    @extend .mission-abort;
+    background-color: $light-background-color-abort-alt
+  }
+
+  .countdown-suppressed {
+    @extend .mission-suppressed;
+    background-color: $light-background-color-suppressed-alt
+  }
+
+  .detail-view {
+
+    .result-success {
+      background-color: $light-background-color-success-detail;
+    }
+
+    .result-failure {
+      background-color: $light-background-color-failure-detail;
+    }
+
+    .result-aborted {
+      background-color: $light-background-color-abort-detail;
+    }
+
+    .result-suppressed {
+      background-color: $light-background-color-suppressed-detail;
+    }
+
+    .result-empty {
+
+    }
+
+    .result-success .link,
+    .result-failure .link,
+    .result-aborted .link,
+    .result-suppressed .link {
+      color: $light-link-color-over-background;
+    }
+
+    .result-success .link:hover,
+    .result-failure .link:hover,
+    .result-aborted .link:hover,
+    .result-suppressed .link:hover {
+      color: $light-link-color-hover-over-background;
+    }
+
+    .class-row {
+
+      .exec-success.focus {
+        background-color: $light-background-color-success-detail;
+        color: $light-exec-text-color-over-background;
+      }
+
+      .exec-failure.focus {
+        background-color: $light-background-color-failure-detail;
+        color: $light-exec-text-color-over-background;
+      }
+
+      .exec-abort.focus {
+        background-color: $light-background-color-abort-detail;
+        color: $light-exec-text-color-over-background;
+      }
+
+      .exec-suppress.focus {
+        background-color: $light-background-color-suppressed-detail;
+        color: $light-exec-text-color-over-background;
+      }
+
+      .exec-success:before {
+        color: $light-text-color-success-prominent-over-background;
+      }
+
+      .exec-failure:before {
+        color: $light-text-color-failure-over-background;
+      }
+
+      .exec-abort:before {
+        color: $light-text-color-abort-over-background;
+      }
+
+      .exec-suppress:before {
+        color: $light-text-color-suppressed-over-background;
+      }
+    }
+  }
+}
+
+body.dark {
+  background: $dark-background-color;
+  color: $dark-text-color;
+  border-color: $dark-border-color;
+
+
+  .help-button {
+    background-color: $dark-background-color-suppressed-alt;
+    color: $dark-text-color-suppressed;
+
+    a {
+      color: $dark-text-color-suppressed;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: $dark-text-color-suppressed;
+      text-decoration: none;
+    }
+  }
+
+  .default-border-color {
+    border-color: $dark-border-color;
+  }
+
+  .link,a {
+    color: $dark-link-color;
+  }
+
+  .link:hover,a:hover {
+    color: $dark-link-color-hover;
+  }
+
+  input {
+    background-color: $dark-input-color;
+  }
+
+  .filter-button {
+    color: $dark-text-color;
+    border-color: $dark-border-color;
+    text-decoration: none;
+  }
+
+  .filter-button:hover {
+    color: $dark-text-color;
+    border-color: $dark-border-color;
+    text-decoration: none;
+  }
+
+  .filter-rule-section-include {
+    color: $dark-border-color-success;
+    border-color: $dark-border-color-success;
+    background-color: $dark-background-color-success;
+  }
+
+  .filter-rule-section-exclude {
+    color: $dark-border-color-failure;
+    border-color: $dark-border-color-failure;
+    background-color: $dark-background-color-failure;
+  }
+
+  .text-success {
+    @extend .default-border-color;
+    color: $dark-text-color-success;
+  }
+
+  .text-failure {
+    @extend .default-border-color;
+    color: $dark-text-color-failure;
+  }
+
+  .text-abort {
+    @extend .default-border-color;
+    color: $dark-text-color-abort;
+  }
+
+  .text-suppressed {
+    @extend .default-border-color;
+    color: $dark-text-color-suppressed
+  }
+
+  .mission-success {
+    background-color: $dark-background-color-success;
+    border: 0 $border-style-normal $dark-border-color-success;
+    opacity: $dark-thread-bar-opacity
+  }
+
+  .mission-failure {
+    background-color: $dark-background-color-failure;
+    border: 0 $border-style-normal $dark-border-color-failure;
+    opacity: $dark-thread-bar-opacity
+  }
+
+  .mission-abort {
+    background-color: $dark-background-color-abort;
+    border: 0 $border-style-normal $dark-border-color-abort;
+    opacity: $dark-thread-bar-opacity
+  }
+
+  .mission-suppressed {
+    background-color: $dark-background-color-suppressed;
+    border: 0 $border-style-normal $dark-border-color-suppressed;
+    opacity: $dark-thread-bar-opacity
+  }
+
+  .countdown-success {
+    @extend .mission-success;
+    background-color: $dark-background-color-success-alt
+  }
+
+  .countdown-failure {
+    @extend .mission-failure;
+    background-color: $dark-background-color-failure-alt
+  }
+
+  .countdown-abort {
+    @extend .mission-abort;
+    background-color: $dark-background-color-abort-alt
+  }
+
+  .countdown-suppressed {
+    @extend .mission-suppressed;
+    background-color: $dark-background-color-suppressed-alt
+  }
+
+  .detail-view {
+
+    .result-success {
+      background-color: $dark-background-color-success-detail;
+      color: $dark-exec-text-color-over-background;
+      border-color: $dark-border-color-over-background;
+    }
+
+    .result-failure {
+      background-color: $dark-background-color-failure-detail;
+      color: $dark-exec-text-color-over-background;
+      border-color: $dark-border-color-over-background;
+    }
+
+    .result-aborted {
+      background-color: $dark-background-color-abort-detail;
+      color: $dark-exec-text-color-over-background;
+      border-color: $dark-border-color-over-background;
+    }
+
+    .result-suppressed {
+      background-color: $dark-background-color-suppressed-detail;
+      color: $dark-exec-text-color-over-background;
+      border-color: $dark-border-color-over-background;
+    }
+
+    .result-empty {
+    }
+
+    .exec-title.result-success,
+    .exec-title.result-failure,
+    .exec-title.result-aborted,
+    .exec-title.result-suppressed {
+      border-left-color: $dark-border-color;
+    }
+
+    .result-success .link,
+    .result-failure .link,
+    .result-aborted .link,
+    .result-suppressed .link {
+      color: $dark-link-color-over-background;
+    }
+
+    .result-success .link:hover,
+    .result-failure .link:hover,
+    .result-aborted .link:hover,
+    .result-suppressed .link:hover {
+      color: $dark-link-color-hover-over-background;
+    }
+
+    .class-row {
+      .exec-success.focus {
+        background-color: $dark-background-color-success-detail;
+        color: $dark-exec-text-color-over-background;
+        border-color: $dark-border-color-over-background;
+      }
+
+      .exec-failure.focus {
+        background-color: $dark-background-color-failure-detail;
+        color: $dark-exec-text-color-over-background;
+        border-color: $dark-border-color-over-background;
+      }
+
+      .exec-abort.focus {
+        background-color: $dark-background-color-abort-detail;
+        color: $dark-exec-text-color-over-background;
+        border-color: $dark-border-color-over-background;
+      }
+
+      .exec-suppress.focus {
+        background-color: $dark-background-color-suppressed-detail;
+        color: $dark-exec-text-color-over-background;
+        border-left-color: $dark-border-color-over-background;
+        border-top-color: $dark-border-color-over-background;
+        border-bottom-color: $dark-border-color-over-background;
+        border-right-color: $dark-border-color;
+      }
+
+      .exec-success:before {
+        color: $dark-text-color-success-prominent;
+      }
+      .exec-success.focus:before {
+        color: $dark-text-color-success-prominent-over-background;
+      }
+
+      .exec-failure:before {
+        color: $dark-text-color-failure;
+      }
+      .exec-failure.focus:before {
+        color: $dark-text-color-failure-over-background;
+      }
+
+      .exec-abort:before {
+        color: $dark-text-color-abort;
+      }
+      .exec-abort.focus:before {
+         color: $dark-text-color-abort-over-background;
+      }
+
+      .exec-suppress:before {
+        color: $dark-text-color-suppressed;
+      }
+      .exec-suppress.focus:before {
+        color: $dark-text-color-suppressed-over-background;
+      }
+    }
+  }
+}

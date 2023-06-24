@@ -1,6 +1,7 @@
 package com.github.nagyesta.abortmission.core.outline;
 
 import com.github.nagyesta.abortmission.core.AbortMissionCommandOps;
+import com.github.nagyesta.abortmission.core.AbortMissionGlobalConfiguration;
 import com.github.nagyesta.abortmission.core.MissionControl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,22 @@ public abstract class MissionOutline {
      * The name of the shared context.
      */
     public static final String SHARED_CONTEXT = "";
+
+    /**
+     * Default constructor calling the global config configuration method.
+     */
+    protected MissionOutline() {
+        overrideGlobalConfig(MissionControl.globalConfiguration());
+    }
+
+    /**
+     * Override this method to configure the global config.
+     *
+     * @param config The global config.
+     */
+    protected void overrideGlobalConfig(final AbortMissionGlobalConfiguration config) {
+        //override this method to configure the global config
+    }
 
     /**
      * Implementing this method is the recommended way for mission context configuration.

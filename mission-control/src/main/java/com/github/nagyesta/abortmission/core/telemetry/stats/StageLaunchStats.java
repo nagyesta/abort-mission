@@ -14,7 +14,6 @@ public final class StageLaunchStats {
 
     private final SortedSet<String> matcherNames;
     private final SortedSet<TestRunTelemetry> timeMeasurements;
-    private final AggregatedLaunchStats stats;
 
     /**
      * Creates a new instance and aggregates statistical data for easy rendering.
@@ -30,7 +29,6 @@ public final class StageLaunchStats {
         this.timeMeasurements = Collections.unmodifiableSortedSet(stageTimeMeasurements.stream()
                 .map(TestRunTelemetry::new)
                 .collect(Collectors.toCollection(TreeSet::new)));
-        this.stats = new AggregatedLaunchStats(stageTimeMeasurements);
     }
 
     public SortedSet<String> getMatcherNames() {
@@ -41,7 +39,4 @@ public final class StageLaunchStats {
         return timeMeasurements;
     }
 
-    public AggregatedLaunchStats getStats() {
-        return stats;
-    }
 }

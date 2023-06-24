@@ -13,25 +13,4 @@ public interface LaunchTelemetry {
      * @return class data
      */
     SortedMap<String, ClassTelemetry> getClasses();
-
-    /**
-     * Returns the aggregated stats based on all data points.
-     *
-     * @return stats
-     */
-    AggregatedLaunchStats getStats();
-
-    /**
-     * Returns the aggregated stats based on countdown data points only.
-     *
-     * @return stats
-     */
-    AggregatedLaunchStats getCountdownStats();
-
-    /**
-     * Returns the aggregated stats based on mission data points only.
-     *
-     * @return stats
-     */
-    AggregatedLaunchStats getMissionStats();
 }

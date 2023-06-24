@@ -29,7 +29,10 @@ public class NoOpMatcher implements MissionHealthCheckMatcher {
 
     @Override
     public int compareTo(final MissionHealthCheckMatcher o) {
-        return 0;
+        if (o instanceof NoOpMatcher) {
+            return 0;
+        }
+        return -1;
     }
 
 }

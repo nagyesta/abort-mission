@@ -4,6 +4,7 @@ import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -16,6 +17,11 @@ public final class TestRunTelemetry implements Comparable<TestRunTelemetry> {
     private final StageResult result;
     private final long start;
     private final long end;
+    private final String displayName;
+    private final String threadName;
+    private final String throwableClass;
+    private final String throwableMessage;
+    private final List<String> stackTrace;
 
     /**
      * The constructor allowing us to create a new instance capturing the time measured data.
@@ -28,6 +34,11 @@ public final class TestRunTelemetry implements Comparable<TestRunTelemetry> {
         this.result = original.getResult();
         this.start = original.getStart();
         this.end = original.getEnd();
+        this.displayName = original.getDisplayName();
+        this.threadName = original.getThreadName();
+        this.throwableClass = original.getThrowableClass();
+        this.throwableMessage = original.getThrowableMessage();
+        this.stackTrace = original.getStackTrace();
     }
 
     public UUID getLaunchId() {
@@ -48,6 +59,26 @@ public final class TestRunTelemetry implements Comparable<TestRunTelemetry> {
 
     public long getDurationMillis() {
         return end - start;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getThreadName() {
+        return threadName;
+    }
+
+    public String getThrowableClass() {
+        return throwableClass;
+    }
+
+    public String getThrowableMessage() {
+        return throwableMessage;
+    }
+
+    public List<String> getStackTrace() {
+        return stackTrace;
     }
 
     @SuppressWarnings("NullableProblems")
@@ -72,15 +103,19 @@ public final class TestRunTelemetry implements Comparable<TestRunTelemetry> {
             return false;
         }
         final TestRunTelemetry that = (TestRunTelemetry) o;
-        return launchId.equals(that.launchId)
-                && start == that.start
+        return start == that.start
                 && end == that.end
-                && result == that.result;
+                && Objects.equals(launchId, that.launchId)
+                && result == that.result
+                && Objects.equals(displayName, that.displayName)
+                && Objects.equals(threadName, that.threadName)
+                && Objects.equals(throwableClass, that.throwableClass)
+                && Objects.equals(throwableMessage, that.throwableMessage)
+                && Objects.equals(stackTrace, that.stackTrace);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(launchId, result, start, end);
+        return Objects.hash(launchId, result, start, end, displayName, threadName, throwableClass, throwableMessage, stackTrace);
     }
-
 }

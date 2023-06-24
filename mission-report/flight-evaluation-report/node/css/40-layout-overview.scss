@@ -1,0 +1,311 @@
+@import "01-variables";
+
+body .root-container .detail-view {
+  position: relative;
+  margin-bottom: $padding-xl;
+
+  .float-right {
+    position: absolute;
+    right: $padding-normal;
+    top: $padding-normal;
+  }
+
+  .detail-view-actions {
+    @extend .float-right;
+    top: $padding-xl;
+  }
+
+  .method-times {
+    padding-top: $padding-normal;
+    padding-bottom: $padding-normal;
+  }
+
+  .class-row {
+    .no-overflow {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .class-name {
+      padding-left: $padding-normal;
+      position: relative;
+      @extend .no-overflow;
+
+      .details-actions {
+        position: absolute;
+        right: $padding-normal;
+        top: $padding-normal;
+        font-size: $font-size-small;
+      }
+    }
+
+    .method-times,.matcher-title {
+      padding-top: $padding-normal;
+      padding-bottom: $padding-normal;
+    }
+
+    td {
+      padding-top: 1.5em;
+      padding-bottom: 1em;
+    }
+
+    .matcher-list {
+      list-style-type: square;
+    }
+
+    .class-matchers {
+      padding-left: $padding-normal * 5;
+
+      ul {
+        padding-left: $padding-normal * 4;
+
+        li {
+          padding-top: $padding-normal;
+        }
+      }
+    }
+
+    .exec-title {
+      padding-left: $padding-normal;
+      position: relative;
+      @extend .no-overflow;
+
+      span {
+        cursor: pointer;
+      }
+
+      .details-actions {
+        position: absolute;
+        right: $padding-normal;
+        top: $padding-normal;
+        font-size: $font-size-small;
+      }
+    }
+
+    .exec-stat {
+      position: relative;
+    }
+
+    .exec-time {
+      position: relative;
+    }
+
+    .exec-stat-before {
+      position: absolute;
+      top: $padding-normal;
+      left: $padding-normal;
+      font-size: $font-size-smaller;
+    }
+
+    .exec-count:before {
+      content: "count";
+      @extend .exec-stat-before;
+    }
+
+    .exec-time:before {
+      content: "execution time";
+      @extend .exec-stat-before;
+    }
+
+    .exec-sum:before {
+      content: "sum";
+      @extend .exec-stat-before;
+    }
+
+    .exec-avg:before {
+      content: "avg";
+      @extend .exec-stat-before;
+    }
+
+    .exec-min:before {
+      content: "min";
+      @extend .exec-stat-before;
+    }
+
+    .exec-max:before {
+      content: "max";
+      @extend .exec-stat-before;
+    }
+
+    .exec-success:before {
+      content: "success";
+      @extend .exec-stat-before;
+    }
+
+    .exec-failure:before {
+      content: "failure";
+      @extend .exec-stat-before;
+    }
+
+    .exec-abort:before {
+      content: "abort";
+      @extend .exec-stat-before;
+    }
+
+    .exec-suppress:before {
+      content: "suppress";
+      @extend .exec-stat-before;
+    }
+  }
+}
+
+$exec-spacer-width: 16px;
+@media only screen and (max-width: $break-point-medium-screen-width-max) {
+  body .root-container {
+    $root-width: $break-point-medium-root-width;
+    $exec-time-width: calc($root-width / 10);
+    $exec-stat-width: calc($root-width / 20);
+    $exec-title-width: $root-width - $exec-time-width - 8 * $exec-stat-width - 11 * $border-width-normal;
+    $exec-class-name-width: $exec-title-width - $exec-spacer-width;
+    $class-report-width: $root-width - 2 * $border-width-normal;
+
+    width: $root-width;
+    min-width: $root-width;
+    max-width: $root-width;
+
+    .detail-view {
+      .class-reports {
+        width: $class-report-width;
+        max-width: $class-report-width;
+        font-size: 8pt;
+      }
+
+      .class-name {
+        width: $exec-class-name-width + $exec-stat-width;
+        max-width: $exec-class-name-width + $exec-stat-width;
+        padding: 0;
+      }
+
+      .col-spacer {
+        width: $exec-spacer-width;
+        max-width: $exec-spacer-width;
+        padding: 0;
+      }
+
+      .col-name, .exec-title {
+        width: $exec-title-width;
+        max-width: $exec-title-width;
+        padding: 0;
+      }
+
+      .col-time, .exec-time {
+        width: $exec-time-width;
+        max-width: $exec-time-width;
+        padding: 0;
+      }
+
+      .col-count, .exec-stat {
+        width: $exec-stat-width;
+        max-width: $exec-stat-width;
+        padding: 0;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: $break-point-large-screen-width-min) and (max-width: $break-point-large-screen-width-max) {
+  body .root-container {
+    $root-width: $break-point-large-root-width;
+    $exec-time-width: calc($root-width / 10);
+    $exec-stat-width: calc($root-width / 20);
+    $exec-title-width: $root-width - $exec-time-width - 8 * $exec-stat-width - 11 * $border-width-normal;
+    $exec-class-name-width: $exec-title-width - $exec-spacer-width;
+    $class-report-width: $root-width - 2 * $border-width-normal;
+
+    width: $root-width;
+    min-width: $root-width;
+    max-width: $root-width;
+
+    .detail-view {
+      .class-reports {
+        width: $class-report-width;
+        max-width: $class-report-width;
+        font-size: 9pt;
+      }
+
+      .class-name {
+        width: $exec-class-name-width + $exec-stat-width;
+        max-width: $exec-class-name-width + $exec-stat-width;
+        padding: 0;
+      }
+
+      .col-spacer {
+        width: $exec-spacer-width;
+        max-width: $exec-spacer-width;
+        padding: 0;
+      }
+
+      .col-name, .exec-title {
+        width: $exec-title-width;
+        max-width: $exec-title-width;
+        padding: 0;
+      }
+
+      .col-time, .exec-time {
+        width: $exec-time-width;
+        max-width: $exec-time-width;
+        padding: 0;
+      }
+
+      .col-count, .exec-stat {
+        width: $exec-stat-width;
+        max-width: $exec-stat-width;
+        padding: 0;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: $break-point-xl-screen-width-min) {
+  body .root-container {
+    $root-width: $break-point-xl-root-width;
+    $exec-time-width: calc($root-width / 15);
+    $exec-stat-width: calc($root-width / 25);
+    $exec-title-width: $root-width - $exec-time-width - 8 * $exec-stat-width - 11 * $border-width-normal;
+    $exec-class-name-width: $exec-title-width - $exec-spacer-width;
+    $class-report-width: $root-width - 2 * $border-width-normal;
+
+    width: $root-width;
+    min-width: $root-width;
+    max-width: $root-width;
+
+    .detail-view {
+      .class-reports {
+        width: $class-report-width;
+        max-width: $class-report-width;
+        font-size: 10pt;
+      }
+
+      .class-name {
+        width: $exec-class-name-width + $exec-stat-width;
+        max-width: $exec-class-name-width + $exec-stat-width;
+        padding: 0;
+      }
+
+      .col-spacer {
+        width: $exec-spacer-width;
+        max-width: $exec-spacer-width;
+        padding: 0;
+      }
+
+      .col-name, .exec-title {
+        width: $exec-title-width;
+        max-width: $exec-title-width;
+        padding: 0;
+      }
+
+      .col-time, .exec-time {
+        width: $exec-time-width;
+        max-width: $exec-time-width;
+        padding: 0;
+      }
+
+      .col-count, .exec-stat {
+        width: $exec-stat-width;
+        max-width: $exec-stat-width;
+        padding: 0;
+      }
+    }
+  }
+}

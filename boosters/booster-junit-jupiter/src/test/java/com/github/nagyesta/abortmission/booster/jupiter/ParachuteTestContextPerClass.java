@@ -2,6 +2,7 @@ package com.github.nagyesta.abortmission.booster.jupiter;
 
 import com.github.nagyesta.abortmission.booster.jupiter.annotation.LaunchAbortArmed;
 import com.github.nagyesta.abortmission.core.AbortMissionCommandOps;
+import com.github.nagyesta.abortmission.core.AbortMissionGlobalConfiguration;
 import com.github.nagyesta.abortmission.core.annotation.LaunchSequence;
 import com.github.nagyesta.abortmission.core.outline.MissionOutline;
 import com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDrop;
@@ -40,10 +41,15 @@ public class ParachuteTestContextPerClass {
         final boolean actual = underTest.canOpenParachute(index);
 
         //then
-        assertTrue(actual);
+        assertTrue(actual, "Parachutes should open.");
     }
 
     public static class MissionOutlineDef extends MissionOutline {
+
+        @Override
+        protected void overrideGlobalConfig(final AbortMissionGlobalConfiguration config) {
+            config.setStackTraceFilter(e -> e.getClassName().startsWith("com.github."));
+        }
 
         @Override
         protected Map<String, Consumer<AbortMissionCommandOps>> defineOutline() {

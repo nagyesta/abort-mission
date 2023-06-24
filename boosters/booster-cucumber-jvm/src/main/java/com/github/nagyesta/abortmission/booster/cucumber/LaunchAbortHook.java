@@ -3,6 +3,7 @@ package com.github.nagyesta.abortmission.booster.cucumber;
 import com.github.nagyesta.abortmission.booster.cucumber.matcher.ScenarioNameMatcher;
 import com.github.nagyesta.abortmission.booster.cucumber.matcher.ScenarioUriMatcher;
 import com.github.nagyesta.abortmission.core.AbortMissionCommandOps;
+import com.github.nagyesta.abortmission.core.AbortMissionGlobalConfiguration;
 import com.github.nagyesta.abortmission.core.MissionControl;
 import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
@@ -106,6 +107,7 @@ public abstract class LaunchAbortHook {
      */
     protected void doBeforeScenario(final Scenario scenario) {
         missionOutline.initialBriefing();
+        overrideGlobalConfig(MissionControl.globalConfiguration());
         storeOptionalStopwatch(scenario, launchSequenceTemplate.launchImminent(scenario));
     }
 
@@ -120,6 +122,15 @@ public abstract class LaunchAbortHook {
         } else {
             launchSequenceTemplate.launchSuccess(scenario, getOptionalStopwatch(scenario));
         }
+    }
+
+    /**
+     * This method should be overridden if you want to provide custom global configuration.
+     *
+     * @param config The global configuration.
+     */
+    protected void overrideGlobalConfig(final AbortMissionGlobalConfiguration config) {
+        //noop
     }
 
     @SuppressWarnings("unchecked")

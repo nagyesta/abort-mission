@@ -4,6 +4,7 @@ import com.github.nagyesta.abortmission.core.healthcheck.StageStatisticsSnapshot
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
+import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurementBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -53,13 +54,16 @@ class ExternalStageStatisticsCollectorTest {
     @ValueSource(booleans = {true, false})
     void testLogTimeMeasurementShouldCallDoLogTimeMeasurementWhenCalled(final boolean countdown) {
         //given
-        final StageTimeMeasurement measurement = new StageTimeMeasurement(
-                UUID.randomUUID(),
-                ExternalStageStatisticsCollectorTest.class.getName(),
-                StageTimeMeasurement.CLASS_ONLY,
-                StageResult.SUCCESS,
-                0,
-                0);
+        final StageTimeMeasurement measurement = StageTimeMeasurementBuilder.builder()
+                .setLaunchId(UUID.randomUUID())
+                .setTestClassId(ExternalStageStatisticsCollectorTest.class.getName())
+                .setTestCaseId(StageTimeMeasurement.CLASS_ONLY)
+                .setDisplayName(StageTimeMeasurement.CLASS_ONLY)
+                .setStart(0)
+                .setEnd(0)
+                .setThreadName(Thread.currentThread().getName())
+                .setResult(StageResult.SUCCESS)
+                .build();
         final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
         when(matcher.getName()).thenReturn(MATCHER);
         final ExternalStageStatisticsCollector underTest =

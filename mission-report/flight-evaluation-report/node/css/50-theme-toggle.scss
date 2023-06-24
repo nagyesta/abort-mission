@@ -1,0 +1,53 @@
+@import "01-variables";
+
+body .theme-toggle-container {
+  position: relative;
+  display: block;
+}
+
+body a#theme-toggle {
+  font-size: $font-size-normal;
+  vertical-align: middle;
+  right: 0;
+  position: absolute;
+  padding: $padding-small;
+  width: $font-size-normal * 3;
+  height: 16px;
+  display: inline-block;
+  border-radius: $line-height-normal * 0.75;
+  text-decoration: none;
+}
+
+body.light {
+  a#theme-toggle {
+    color: $light-text-color;
+    border: $border-width-normal $border-style-normal $light-border-color;
+    background: $light-background-color;
+    text-align: left;
+  }
+
+  a#theme-toggle:hover {
+    box-shadow: 0 0 10px 10px $dark-background-color;
+    color: $dark-text-color;
+    background: $dark-background-color;
+    border-color: $dark-border-color;
+    text-decoration: none;
+  }
+}
+
+body.dark {
+  a#theme-toggle {
+    color: $dark-text-color;
+    border: $border-width-normal $border-style-normal $dark-border-color;
+    background: $dark-background-color;
+    text-align: right;
+  }
+
+  a#theme-toggle:hover {
+    box-shadow: 0 0 10px 10px $light-background-color;
+    color: $light-text-color;
+    background: $light-background-color;
+    border-color: $light-border-color;
+    text-decoration: none;
+  }
+}

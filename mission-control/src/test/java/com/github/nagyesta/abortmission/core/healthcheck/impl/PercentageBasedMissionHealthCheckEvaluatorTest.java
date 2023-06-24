@@ -4,6 +4,7 @@ import com.github.nagyesta.abortmission.core.MissionControl;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
+import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurementBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -181,10 +182,24 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     }
 
     private StageTimeMeasurement failure() {
-        return new StageTimeMeasurement(UUID.randomUUID(), DASH, DASH, StageResult.FAILURE, 0, 0);
+        return StageTimeMeasurementBuilder.builder()
+                .setLaunchId(UUID.randomUUID())
+                .setTestClassId(DASH)
+                .setTestCaseId(DASH)
+                .setResult(StageResult.FAILURE)
+                .setStart(0)
+                .setEnd(0)
+                .build();
     }
 
     private StageTimeMeasurement success() {
-        return new StageTimeMeasurement(UUID.randomUUID(), DASH, DASH, StageResult.SUCCESS, 0, 0);
+        return StageTimeMeasurementBuilder.builder()
+                .setLaunchId(UUID.randomUUID())
+                .setTestClassId(DASH)
+                .setTestCaseId(DASH)
+                .setResult(StageResult.SUCCESS)
+                .setStart(0)
+                .setEnd(0)
+                .build();
     }
 }

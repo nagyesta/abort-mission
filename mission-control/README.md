@@ -54,6 +54,7 @@ preferably in your root package
    1. using a [LaunchSequenceTemplate](./src/main/java/com/github/nagyesta/abortmission/core/LaunchSequenceTemplate.java) 
    2. or one of the [Callable/runnable implementations here](./src/main/java/com/github/nagyesta/abortmission/core/selfpropelled/) 
 4. Figure out how to group your tests and limit the blast radius of each dependency as you go
+5. If you want filter the information collected related to the exceptions thrown by each test, make sure to configure using [AbortMissionGlobalConfiguration](./src/main/java/com/github/nagyesta/abortmission/core/AbortMissionGlobalConfiguration.java). Please ensure that it will execute before your tests start (e.g. you can use your `MissionOutlineDefinition` or set these values in a snippet running exactly once at the beginning of your test suite).
 
 ### System properties
 

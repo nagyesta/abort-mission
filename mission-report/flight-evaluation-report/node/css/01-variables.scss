@@ -1,0 +1,145 @@
+/* start - print basics */
+
+$print-background-color: #ffffff;
+$print-text-color: #000000;
+$print-border-color: #000000;
+$print-opacity: 100%;
+
+/* start - light mode */
+$light-background-color: #ffffff;
+$light-text-color: #222222;
+$light-exec-text-color-over-background: #222222;
+$light-border-color: #222222;
+$light-thread-color-highlight: rgba(34, 34, 34, 0.5);
+$light-accent-color: #efefef;
+
+$light-background-color-success: #d5e8d4;
+$light-background-color-failure: #f8cecc;
+$light-background-color-abort: #fff2cc;
+$light-background-color-suppressed: #dae8fc;
+$light-background-color-success-alt: darken(#d5e8d4, 25%);
+$light-background-color-failure-alt: darken(#f8cecc, 25%);
+$light-background-color-abort-alt: darken(#fff2cc, 25%);
+$light-background-color-suppressed-alt: darken(#dae8fc, 25%);
+$light-background-color-success-detail: $light-background-color-success;
+$light-background-color-failure-detail: $light-background-color-failure;
+$light-background-color-abort-detail: $light-background-color-abort;
+$light-background-color-suppressed-detail: $light-background-color-suppressed;
+
+$light-text-color-success: $light-text-color;
+$light-text-color-success-prominent: darkgreen;
+$light-text-color-success-prominent-over-background: $light-text-color-success-prominent;
+$light-text-color-failure: darkred;
+$light-text-color-failure-over-background: $light-text-color-failure;
+$light-text-color-abort: #746404;
+$light-text-color-abort-over-background: $light-text-color-abort;
+$light-text-color-suppressed: #246bce;
+$light-text-color-suppressed-over-background: $light-text-color-suppressed;
+
+$light-border-color-success: darkgreen;
+$light-border-color-failure: $light-text-color-failure;
+$light-border-color-abort: $light-text-color-abort;
+$light-border-color-suppressed: $light-text-color-suppressed;
+$light-border-color-filter-range: $light-border-color-suppressed;
+
+$light-link-color: #246bce;
+$light-link-color-hover: $light-link-color;
+$light-link-color-over-background: $light-link-color;
+$light-link-color-hover-over-background: $light-link-color-hover;
+
+$light-thread-bar-opacity: 80%;
+
+/* start - dark mode */
+
+$dark-background-color: #333333;
+$dark-text-color: #efefef;
+$dark-exec-text-color-over-background: #222222;
+$dark-border-color: #efefef;
+$dark-border-color-over-background: #666666;
+$dark-thread-color-highlight: rgba(239, 239, 239, 0.7);
+$dark-accent-color: #efefef;
+$dark-input-color: lighten(rgba(51, 51, 51, 1), 60%);
+
+$dark-background-color-success: darken(#d5e8d4, 2%);
+$dark-background-color-failure: darken(#f8cecc, 2%);
+$dark-background-color-abort: darken(#fff2cc, 2%);
+$dark-background-color-suppressed: darken(#dae8fc, 2%);
+$dark-background-color-success-alt: $light-background-color-success-alt;
+$dark-background-color-failure-alt: $light-background-color-failure-alt;
+$dark-background-color-abort-alt: $light-background-color-abort-alt;
+$dark-background-color-suppressed-alt: $light-background-color-suppressed-alt;
+$dark-background-color-success-detail: $dark-background-color-success;
+$dark-background-color-failure-detail: $dark-background-color-failure;
+$dark-background-color-abort-detail: $dark-background-color-abort;
+$dark-background-color-suppressed-detail: $dark-background-color-suppressed;
+
+$dark-text-color-success: $dark-text-color;
+$dark-text-color-success-prominent: #d5e8d4;
+$dark-text-color-success-prominent-over-background: darkgreen;
+$dark-text-color-failure: #f8cecc;
+$dark-text-color-failure-over-background: darkred;
+$dark-text-color-abort: #fff2cc;
+$dark-text-color-abort-over-background: #746404;
+$dark-text-color-suppressed: #dae8fc;
+$dark-text-color-suppressed-over-background: #246bce;
+
+$dark-border-color-success: darkgreen;
+$dark-border-color-failure: darkred;
+$dark-border-color-abort: #746404;
+$dark-border-color-suppressed: #246bce;
+$dark-border-color-filter-range: $dark-border-color-suppressed;
+
+$dark-link-color: #dae8fc;
+$dark-link-color-hover: $dark-link-color;
+$dark-link-color-over-background: #246bce;
+$dark-link-color-hover-over-background: $dark-link-color-over-background;
+
+$dark-thread-bar-opacity: $light-thread-bar-opacity;
+
+/* start - typography */
+$font-family: monospace;
+
+$font-size-normal: 10pt;
+$font-size-h1: 16pt;
+$font-size-h2: 14pt;
+$font-size-h3: 12pt;
+$font-size-small: 7pt;
+$font-size-smaller: 6pt;
+
+$line-height-normal: 1.5em;
+$line-height-h1: 2.7em;
+$line-height-h2: 2.4em;
+$line-height-h3: 2.0em;
+$line-height-footer: 2.7em;
+
+$height-header: 2.0em;
+$height-header-h1: 3.2em;
+$height-footer: 3.0em;
+
+/* start - spacing */
+
+$padding-xl: 1.5em;
+$padding-large: 1.0em;
+$padding-normal: 0.5em;
+$padding-small: 0.25em;
+
+/* start - borders */
+$border-width-normal: 1px;
+$border-width-prominent: 1px;
+$border-width-normal-print: $border-width-normal;
+$border-width-prominent-print: 3px;
+$border-style-normal: solid;
+$border-style-soft: dotted;
+$border-style-normal-print: $border-style-normal;
+$border-style-soft-print: $border-style-soft;
+
+/* start - layout */
+$break-point-medium-screen-width-max: 1280px;
+$break-point-large-screen-width-min: $break-point-medium-screen-width-max + 1px;
+$break-point-large-screen-width-max: 1680px;
+$break-point-xl-screen-width-min: $break-point-large-screen-width-max + 1px;
+
+$break-point-medium-root-width: 902px;
+$break-point-large-root-width: 1202px;
+$break-point-xl-root-width: 1602px;
+

@@ -10,6 +10,8 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import static com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurementBuilder.builder;
+
 class StageTimeMeasurementTest {
 
     public static final String METHOD_NAME = "methodName";
@@ -21,8 +23,14 @@ class StageTimeMeasurementTest {
     public static final int END = 25;
     public static final int END_2 = 20;
     public static final UUID LAUNCH_ID = UUID.randomUUID();
-    public static final StageTimeMeasurement STAGE_TIME_MEASUREMENT =
-            new StageTimeMeasurement(LAUNCH_ID, CLASS_NAME, METHOD_NAME, StageResult.SUPPRESSED, START, END);
+    public static final StageTimeMeasurement STAGE_TIME_MEASUREMENT = builder()
+                    .setLaunchId(LAUNCH_ID)
+                    .setTestClassId(CLASS_NAME)
+                    .setTestCaseId(METHOD_NAME)
+                    .setResult(StageResult.SUPPRESSED)
+                    .setStart(START)
+                    .setEnd(END)
+                    .build();
 
     private static Stream<Arguments> objectPairProvider() {
         return Stream.<Arguments>builder()
@@ -32,12 +40,24 @@ class StageTimeMeasurementTest {
                         -1
                 ))
                 .add(Arguments.of(
-                        new StageTimeMeasurement(LAUNCH_ID, CLASS_NAME, METHOD_NAME, StageResult.ABORT, START, END),
+                        builder().setLaunchId(LAUNCH_ID)
+                                .setTestClassId(CLASS_NAME)
+                                .setTestCaseId(METHOD_NAME)
+                                .setResult(StageResult.ABORT)
+                                .setStart(START)
+                                .setEnd(END)
+                                .build(),
                         STAGE_TIME_MEASUREMENT,
                         -1
                 ))
                 .add(Arguments.of(
-                        new StageTimeMeasurement(LAUNCH_ID, CLASS_NAME, METHOD_NAME_2, StageResult.SUPPRESSED, START, END),
+                        builder().setLaunchId(LAUNCH_ID)
+                                .setTestClassId(CLASS_NAME)
+                                .setTestCaseId(METHOD_NAME_2)
+                                .setResult(StageResult.SUPPRESSED)
+                                .setStart(START)
+                                .setEnd(END)
+                                .build(),
                         STAGE_TIME_MEASUREMENT,
                         1
                 ))
@@ -48,22 +68,46 @@ class StageTimeMeasurementTest {
                 ))
                 .add(Arguments.of(
                         STAGE_TIME_MEASUREMENT,
-                        new StageTimeMeasurement(LAUNCH_ID, CLASS_NAME, METHOD_NAME, StageResult.SUPPRESSED, START, END),
+                        builder().setLaunchId(LAUNCH_ID)
+                                .setTestClassId(CLASS_NAME)
+                                .setTestCaseId(METHOD_NAME)
+                                .setResult(StageResult.SUPPRESSED)
+                                .setStart(START)
+                                .setEnd(END)
+                                .build(),
                         0
                 ))
                 .add(Arguments.of(
                         STAGE_TIME_MEASUREMENT,
-                        new StageTimeMeasurement(LAUNCH_ID, CLASS_NAME, METHOD_NAME, StageResult.SUPPRESSED, START_2, END),
+                        builder().setLaunchId(LAUNCH_ID)
+                                .setTestClassId(CLASS_NAME)
+                                .setTestCaseId(METHOD_NAME)
+                                .setResult(StageResult.SUPPRESSED)
+                                .setStart(START_2)
+                                .setEnd(END)
+                                .build(),
                         -1
                 ))
                 .add(Arguments.of(
                         STAGE_TIME_MEASUREMENT,
-                        new StageTimeMeasurement(LAUNCH_ID, CLASS_NAME, METHOD_NAME, StageResult.SUPPRESSED, START, END_2),
+                        builder().setLaunchId(LAUNCH_ID)
+                                .setTestClassId(CLASS_NAME)
+                                .setTestCaseId(METHOD_NAME)
+                                .setResult(StageResult.SUPPRESSED)
+                                .setStart(START)
+                                .setEnd(END_2)
+                                .build(),
                         1
                 ))
                 .add(Arguments.of(
                         STAGE_TIME_MEASUREMENT,
-                        new StageTimeMeasurement(LAUNCH_ID, CLASS_NAME_2, METHOD_NAME, StageResult.SUPPRESSED, START, END),
+                        builder().setLaunchId(LAUNCH_ID)
+                                .setTestClassId(CLASS_NAME_2)
+                                .setTestCaseId(METHOD_NAME)
+                                .setResult(StageResult.SUPPRESSED)
+                                .setStart(START)
+                                .setEnd(END)
+                                .build(),
                         -1
                 ))
                 .build();
