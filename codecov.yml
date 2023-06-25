@@ -19,12 +19,6 @@ coverage:
         flags: testkit
       flighteval:
         flags: flighteval
-      strongback:
-        flags: strongback
-      h2:
-        flags: h2
-      rmi:
-        flags: rmi
     patch: false
 flags:
   core:
@@ -48,12 +42,3 @@ flags:
   flighteval:
     paths:
       - ./mission-report/flight-evaluation-report
-  strongback:
-    paths:
-      - ./strongback/strongback-base
-  h2:
-    paths:
-      - ./strongback/strongback-h2-supplier
-  rmi:
-    paths:
-      - ./strongback/strongback-rmi-supplier

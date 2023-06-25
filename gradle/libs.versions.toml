@@ -10,8 +10,6 @@ logbackReport = "1.4.8"
 jackson = "2.15.2"
 gson = "2.10.1"
 slf4j = "1.7.36"
-h2 = "2.1.214"
-jdbi3 = "3.39.1"
 
 lombok = "1.18.28"
 findbugs = "3.0.2"
@@ -54,9 +52,6 @@ json-schema-validator = { module = "com.networknt:json-schema-validator", versio
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
-
-h2 = { module = "com.h2database:h2", version.ref = "h2" }
-jdbi3-sqlobject = { module = "org.jdbi:jdbi3-sqlobject", version.ref = "jdbi3" }
 
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 findbugs-jsr305 = { module = "com.google.code.findbugs:jsr305", version.ref = "findbugs" }

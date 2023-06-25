@@ -53,7 +53,7 @@ versioner {
 }
 
 configure(subprojects.findAll({
-    !'boosters'.equalsIgnoreCase(it.name) && !'strongback'.equalsIgnoreCase(it.name) && !'mission-report'.equalsIgnoreCase(it.name)
+    !'boosters'.equalsIgnoreCase(it.name) && !'mission-report'.equalsIgnoreCase(it.name)
 })) {
     apply plugin: 'java'
     apply plugin: 'checkstyle'

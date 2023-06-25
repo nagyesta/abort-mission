@@ -85,7 +85,6 @@ jobs:
             mission-control/build/reports/tests/test
             boosters/**/build/reports/tests/test
             mission-report/**/build/reports/tests/test
-            strongback/**/build/reports/tests/test
           retention-days: 5
       - name: Upload coverage to Codecov - Core
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
@@ -136,24 +135,3 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./mission-report/flight-evaluation-report/build/reports/jacoco/report.xml,./mission-report/flight-evaluation-report/node/build/coverage/cobertura-coverage.xml
           flags: flighteval
-      - name: Upload coverage to Codecov - Strongback - Base
-        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./strongback/strongback-base/build/reports/jacoco/report.xml
-          flags: strongback
-      - name: Upload coverage to Codecov - Strongback - H2 Supplier
-        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./strongback/strongback-h2-supplier/build/reports/jacoco/report.xml
-          flags: h2
-      - name: Upload coverage to Codecov - Strongback - RMI Supplier
-        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./strongback/strongback-rmi-supplier/build/reports/jacoco/report.xml
-          flags: rmi
