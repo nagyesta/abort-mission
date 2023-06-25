@@ -54,10 +54,8 @@ will at least take a look.
   - [Booster Test Kit](boosters/testkit)
 - Mission Report
     - [Flight Evaluation Report](mission-report/flight-evaluation-report)
-- Strongback
-    - [Strongback Base](strongback/strongback-base)
-    - [Strongback H2 Supplier](strongback/strongback-h2-supplier)
-    - [Strongback RMI Supplier](strongback/strongback-rmi-supplier)
+- Strongback (All modules removed in 4.1.x)
+    - Strongback functionality is completely removed in 4.1.x release as Strongbacks were very slow and hard to maintain.
 
 ## Terminology and Lifecycle
 
