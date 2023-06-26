@@ -61,6 +61,8 @@ class FlightEvaluationReportInitializer {
 
     addRun(run) {
         this.rootModel.runs.push(run);
+        const result = run.result.toLowerCase();
+        this.rootModel.resultCounts[result] = (this.rootModel.resultCounts[result] || 0) + 1;
     }
 
     initStaticData() {
@@ -127,6 +129,7 @@ class FlightEvaluationReportModel {
         this.results = [];
         this.allRules = [];
         this.runs = [];
+        this.resultCounts = {success: 0, failure: 0, abort: 0, suppressed: 0};
         this.logViewTimeline = new LogViewTimelineModel(this);
         this.detailView = new DetailViewModel(this);
         this.filter = new TestRunFilter(this);

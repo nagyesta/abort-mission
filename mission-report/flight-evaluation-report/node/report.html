@@ -350,6 +350,12 @@
                 </tr>
                 </tbody>
             </table>
+            <div class="total-stats center">
+                <span data-bind="text: 'Total success: ' + resultCounts.success"></span> / <span
+                    data-bind="text: 'Total failure: ' + resultCounts.failure"></span> / <span
+                    data-bind="text: 'Total abort: ' + resultCounts.abort"></span> / <span
+                    data-bind="text: 'Total suppressed: ' + resultCounts.suppressed"></span>
+            </div>
         </div>
     </div>
     <p class="footer center">Thank you for trusting Abort-Mission with your launch!</p>
