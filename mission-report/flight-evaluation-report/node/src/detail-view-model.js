@@ -31,8 +31,8 @@ class DetailViewStatModel {
         this.runs += other.runs;
         this.start = this.start === null ? other.start : Math.min(other.start, this.start);
         this.end = this.end === null ? other.end : Math.max(other.end, this.end);
-        this.min = Math.min(other.min, this.min);
-        this.max = Math.max(other.max, this.max);
+        this.min = this.min === null ? other.min : Math.min(this.min, other.min);
+        this.max = this.max === null ? other.max : Math.max(this.max, other.max);
         this.sum += other.sum;
         this.success += other.success;
         this.failure += other.failure;
