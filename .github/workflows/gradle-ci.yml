@@ -59,7 +59,7 @@ jobs:
           mkdir -p ${{ runner.temp }}/.gnupg/
           echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}" | base64 --decode > ${{ runner.temp }}/.gnupg/secring.gpg
       - name: 'Build with Gradle (if Ubuntu)'
-        uses: gradle/gradle-build-action@8e02c8272aba4650563824b7012f8a86158901c6 # v2.5.0
+        uses: gradle/gradle-build-action@40b6781dcdec2762ad36556682ac74e31030cfe2 # v2.5.1
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           arguments: |
@@ -68,7 +68,7 @@ jobs:
             -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
             -Psigning.secretKeyRingFile=${{ runner.temp }}/.gnupg/secring.gpg
       - name: 'Build with Gradle (if Windows)'
-        uses: gradle/gradle-build-action@8e02c8272aba4650563824b7012f8a86158901c6 # v2.5.0
+        uses: gradle/gradle-build-action@40b6781dcdec2762ad36556682ac74e31030cfe2 # v2.5.1
         if: ${{ matrix.os != 'ubuntu-latest' }}
         with:
           arguments: printVersion build
