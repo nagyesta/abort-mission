@@ -16,6 +16,7 @@ module.exports = function (grunt) {
                     '../build/html-view/css/raw/30-layout-common.css': 'css/30-layout-common.scss',
                     '../build/html-view/css/raw/35-layout-log-view.css': 'css/35-layout-log-view.scss',
                     '../build/html-view/css/raw/40-layout-overview.css': 'css/40-layout-overview.scss',
+                    '../build/html-view/css/raw/45-layout-summary.css': 'css/45-layout-summary.scss',
                     '../build/html-view/css/raw/50-theme-toggle.css': 'css/50-theme-toggle.scss',
                     '../build/html-view/css/raw/60-print.css': 'css/60-print.scss',
                 }

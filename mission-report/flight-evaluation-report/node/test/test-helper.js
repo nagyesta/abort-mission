@@ -41,6 +41,8 @@ function expectStartAndEndDateMatches(actualModel, inputData) {
     expect(actualModel.testEnd())
             .toEqual(new Date(inputData.timestamps[inputData.timestamps.length - 1])
                     .toISOString().replaceAll("T", " ").replaceAll("Z", ""));
+    expect(actualModel.getTotalRunTime())
+            .toEqual(inputData.totalRunTime)
 }
 
 

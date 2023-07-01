@@ -271,7 +271,7 @@ const input = {
         }
     ]
 }
-
+const totalRunTime = "187<small>ms</small>"
 
 module.exports.fuelTankCucumber = {
     name: "FuelTankTest (Cucumber)",
@@ -280,6 +280,7 @@ module.exports.fuelTankCucumber = {
     matcherNames: matcherNames,
     threadNames: threadNames,
     timestamps: times,
+    totalRunTime: totalRunTime,
     input: input,
     filters: filters,
     timeFilterScenarios: timeFilterScenarios,

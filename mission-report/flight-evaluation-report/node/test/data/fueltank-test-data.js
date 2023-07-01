@@ -625,6 +625,7 @@ const input = {
         }
     ]
 }
+const totalRunTime = "234<small>ms</small>"
 
 module.exports.fuelTank = {
     name: "FuelTankTest",
@@ -633,6 +634,7 @@ module.exports.fuelTank = {
     matcherNames: matcherNames,
     threadNames: threadNames,
     timestamps: times,
+    totalRunTime: totalRunTime,
     input: input,
     filters: filters,
     timeFilterScenarios: timeFilterScenarios,

@@ -6,6 +6,8 @@ const {TestRunModel} = require('../src/test-run-model');
 const {LogViewTimelineModel} = require('../src/log-view-timeline-model');
 const {TestRunFilter} = require('../src/filter');
 const {DetailViewModel} = require('../src/detail-view-model');
+const {formatDuration} = require('../src/stat-model');
+const {SummaryViewModel} = require('../src/summary-view-model');
 
 class FlightEvaluationReportInitializer {
 
@@ -61,8 +63,7 @@ class FlightEvaluationReportInitializer {
 
     addRun(run) {
         this.rootModel.runs.push(run);
-        const result = run.result.toLowerCase();
-        this.rootModel.resultCounts[result] = (this.rootModel.resultCounts[result] || 0) + 1;
+        this.rootModel.summaryView.addRun(run);
     }
 
     initStaticData() {
@@ -129,7 +130,7 @@ class FlightEvaluationReportModel {
         this.results = [];
         this.allRules = [];
         this.runs = [];
-        this.resultCounts = {success: 0, failure: 0, abort: 0, suppressed: 0};
+        this.summaryView = new SummaryViewModel(this);
         this.logViewTimeline = new LogViewTimelineModel(this);
         this.detailView = new DetailViewModel(this);
         this.filter = new TestRunFilter(this);
@@ -190,6 +191,11 @@ class FlightEvaluationReportModel {
 
     getLastEndDate() {
         return this.runs.length > 0 ? this.runs[this.runs.length - 1].end : null;
+    }
+
+    getTotalRunTime() {
+        const duration = this.runs.length > 0 ? this.getLastEndDate() - this.getFirstStartDate() : null;
+        return formatDuration(duration, 2);
     }
 
     testStart = ko.pureComputed(function () {

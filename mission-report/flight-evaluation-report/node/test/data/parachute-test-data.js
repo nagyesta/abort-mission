@@ -684,6 +684,7 @@ const input = {
         }
     ]
 }
+const totalRunTime = "73<small>ms</small>"
 
 module.exports.parachute = {
     name: "ParachuteTest",
@@ -692,6 +693,7 @@ module.exports.parachute = {
     matcherNames: matcherNames,
     threadNames: threadNames,
     timestamps: times,
+    totalRunTime: totalRunTime,
     input: input,
     filters: filters,
     timeFilterScenarios: timeFilterScenarios,

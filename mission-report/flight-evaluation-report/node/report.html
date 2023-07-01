@@ -31,7 +31,48 @@
             </a>
         </div>
         <p class="header">Countdown started: <span data-bind="text: testStart"></span></p>
-        <p class="header header-last">Mission concluded: <span data-bind="text: testEnd"></span></p>
+        <p class="header">Mission concluded: <span data-bind="text: testEnd"></span></p>
+        <p class="header header-last">Total execution time: <span data-bind="html: getTotalRunTime()"></span></p>
+        <!-- ko with: summaryView -->
+        <div id="summary-view" class="summary-view">
+            <table class="result-summary">
+                <thead>
+                <tr>
+                    <th class="col-sum-name" title="Result name"></th>
+                    <th class="col-sum-count" title="Count">Count</th>
+                    <th class="col-sum-time" title="Execution time">Exec. time</th>
+                    <th class="col-sum-count" title="Minimum">Minimum</th>
+                    <th class="col-sum-count" title="Average">Average</th>
+                    <th class="col-sum-count" title="Maximum">Maximum</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- ko foreach: results -->
+                <tr data-bind="if: $data.total.runs > 0">
+                    <td colspan="1" class="summary-name" data-bind="text: name, attr: {title: name}, class: 'summary-' + name.toLowerCase()"></td>
+                    <!-- ko with: total, as: 'd' -->
+                    <td colspan="1" class="center sum-stat sum-count" data-bind="text: d.runs"></td>
+                    <td colspan="1" class="center sum-time sum-total" data-bind="html: d.totalSum()"></td>
+                    <td colspan="1" class="center sum-stat sum-min" data-bind="html: d.minimum()"></td>
+                    <td colspan="1" class="center sum-stat sum-avg" data-bind="html: d.average()"></td>
+                    <td colspan="1" class="center sum-stat sum-max" data-bind="html: d.maximum()"></td>
+                    <!-- /ko -->
+                </tr>
+                <!-- /ko -->
+                <tr class="top-row">
+                    <td colspan="1" class="summary-name" data-bind="text: 'Total', attr: {title: 'Total'}"></td>
+                    <!-- ko with: summary, as: 'd' -->
+                    <td colspan="1" class="center sum-stat sum-count" data-bind="text: d.runs"></td>
+                    <td colspan="1" class="center sum-stat sum-time sum-total" data-bind="html: d.totalSum()"></td>
+                    <td colspan="1" class="center sum-stat sum-min" data-bind="html: d.minimum()"></td>
+                    <td colspan="1" class="center sum-stat sum-avg" data-bind="html: d.average()"></td>
+                    <td colspan="1" class="center sum-stat sum-max" data-bind="html: d.maximum()"></td>
+                    <!-- /ko -->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /ko -->
         <div class="filter-module">
             <div class="filter-inputs" data-bind="with: filter">
                 <label for="filter-box" class="filter-button">
@@ -350,12 +391,6 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="total-stats center">
-                <span data-bind="text: 'Total success: ' + resultCounts.success"></span> / <span
-                    data-bind="text: 'Total failure: ' + resultCounts.failure"></span> / <span
-                    data-bind="text: 'Total abort: ' + resultCounts.abort"></span> / <span
-                    data-bind="text: 'Total suppressed: ' + resultCounts.suppressed"></span>
-            </div>
         </div>
     </div>
     <p class="footer center">Thank you for trusting Abort-Mission with your launch!</p>

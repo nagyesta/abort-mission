@@ -30,7 +30,7 @@
             }
         }
     },
-    "author": "Istvan zoltan Nagy <nagyesta@gmail.com>",
+    "author": "Istvan Zoltan Nagy <nagyesta@gmail.com>",
     "license": "MIT",
     "devDependencies": {
         "@jest/globals": "^29.5.0",
