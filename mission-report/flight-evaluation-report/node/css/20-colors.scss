@@ -195,6 +195,24 @@ body.light {
       }
     }
   }
+
+  .summary-view {
+    .summary-success {
+      color: $light-text-color-success-prominent;
+    }
+
+    .summary-failure {
+      color: $light-text-color-failure;
+    }
+
+    .summary-abort {
+      color: $light-text-color-abort;
+    }
+
+    .summary-suppress {
+      color: $light-text-color-suppressed;
+    }
+  }
 }
 
 body.dark {
@@ -427,6 +445,24 @@ body.dark {
       .exec-suppress.focus:before {
         color: $dark-text-color-suppressed-over-background;
       }
+    }
+  }
+
+  .summary-view {
+    .summary-success {
+      color: $dark-text-color-success-prominent;
+    }
+
+    .summary-failure {
+      color: $dark-text-color-failure;
+    }
+
+    .summary-abort {
+      color: $dark-text-color-abort;
+    }
+
+    .summary-suppress {
+      color: $dark-text-color-suppressed;
     }
   }
 }
