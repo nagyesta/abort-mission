@@ -12,6 +12,8 @@ on:
       - 'gradle/wrapper/gradle-wrapper.properties'
       - 'config/ossindex/exclusions.txt'
       - '.github/workflows/gradle-ci.yml'
+      - 'mission-report/flight-evaluation-report/node/package.json'
+      - 'mission-report/flight-evaluation-report/node/package-lock.json'
   pull_request:
     branches: [ main ]
     paths-ignore:
