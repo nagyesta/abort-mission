@@ -8,7 +8,7 @@
 # TestNG Booster
 
 [![codecov testng](https://img.shields.io/codecov/c/github/nagyesta/abort-mission?label=Coverage:%20TestNG&flag=testng&token=I832ZCIONI)](https://img.shields.io/codecov/c/github/nagyesta/abort-mission?label=Coverage:%20TestNG&flag=testng&token=I832ZCIONI)
-![[Beta](https://img.shields.io/badge/Maturity-beta-blue)](https://img.shields.io/badge/Maturity-beta-blue)
+![[Stable](https://img.shields.io/badge/Maturity-stable-green)](https://img.shields.io/badge/Maturity-stable-green)
 
 Please find the essentials below or check out [the wiki](https://github.com/nagyesta/abort-mission/wiki) for more details. 
 
@@ -48,4 +48,5 @@ preferably in your root package
 
 ## Examples
 
-In case you need some basic examples, please feel free to check out [this package](./src/test/java/com/github/nagyesta/abortmission/booster/testng)
+- In case you need some basic examples, please feel free to check out [this package](./src/test/java/com/github/nagyesta/abortmission/booster/testng)
+- Alternatively, you can take a look at the following example project: [Abort-Mission Examples](https://github.com/nagyesta/abort-mission-examples)
