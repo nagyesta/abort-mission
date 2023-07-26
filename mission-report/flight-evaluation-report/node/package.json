@@ -41,7 +41,7 @@
         "grunt-contrib-htmlmin": "^3.1.0",
         "grunt-contrib-sass": "^2.0.0",
         "grunt-contrib-uglify": "^5.2.2",
-        "grunt-webpack": "^5.0.0",
+        "grunt-webpack": "^6.0.0",
         "jest": "^29.5.0",
         "jest-cli": "^29.5.0",
         "load-grunt-tasks": "^5.1.0",
