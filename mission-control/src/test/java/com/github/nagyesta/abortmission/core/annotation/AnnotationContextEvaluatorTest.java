@@ -195,7 +195,7 @@ class AnnotationContextEvaluatorTest {
         }
     }
 
-    private static class TestClass {
+    private static final class TestClass {
 
         @SuppressAbortDecisions
         private void method() {
@@ -204,7 +204,7 @@ class AnnotationContextEvaluatorTest {
     }
 
     @DisplayName(EMPTY_CONTEXT_NAME)
-    private static class EmptyTestClass {
+    private static final class EmptyTestClass {
 
         @SuppressLaunchFailureReporting(forExceptions = NullPointerException.class)
         private void method() {
@@ -216,7 +216,7 @@ class AnnotationContextEvaluatorTest {
     @SuppressLaunchFailureReporting(forExceptions = NullPointerException.class)
     @SuppressAbortDecisions
     @LaunchSequence(MissionOutlineDef.class)
-    private static class AnnotatedTestClass {
+    private static final class AnnotatedTestClass {
 
         @SuppressLaunchFailureReporting(forExceptions = IllegalStateException.class)
         private void method() {
