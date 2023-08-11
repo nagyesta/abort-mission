@@ -77,7 +77,7 @@ class MissionDependenciesDependencyNameExtractorTest {
     }
 
     @MissionDependencies({A, B})
-    private static class InputProvider {
+    private static final class InputProvider {
 
         @MissionDependencies({A, B, C, D})
         public void methodABCD() {

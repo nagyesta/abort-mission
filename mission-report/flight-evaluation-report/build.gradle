@@ -21,6 +21,7 @@ dependencies {
     implementation libs.findbugs.jsr305
     annotationProcessor libs.lombok
     testImplementation libs.jupiter.core
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation libs.mockito.core
 }
 

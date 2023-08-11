@@ -12,6 +12,7 @@ dependencies {
     implementation libs.bundles.logback.test
     testImplementation libs.jupiter.api
     testImplementation libs.jupiter.core
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     constraints {
         implementation libs.bundles.spring.test
     }

@@ -51,6 +51,6 @@ class AnnotationSimpleNameDependencyExtractorTest {
         Assertions.assertTrue(actual.isEmpty());
     }
 
-    private static class NotAnnotated {
+    private static final class NotAnnotated {
     }
 }

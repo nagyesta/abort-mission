@@ -27,8 +27,8 @@ gitVersionerPlugin = "1.6.7"
 indexScanPlugin = "2.6.0"
 owaspPlugin = "8.3.1"
 
-checkstyle = "9.2.1"
-jacoco = "0.8.2"
+checkstyle = "10.12.2"
+jacoco = "0.8.10"
 
 [libraries]
 spring-core = { module = "org.springframework:spring-core", version.ref = "spring" }
