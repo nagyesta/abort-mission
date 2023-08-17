@@ -22,7 +22,7 @@ cucumber = "7.13.0"
 testNg = "7.8.0"
 
 lombokPlugin = "8.2.2"
-nodePlugin =  "6.0.0"
+nodePlugin =  "7.0.0"
 gitVersionerPlugin = "1.6.7"
 indexScanPlugin = "2.6.0"
 owaspPlugin = "8.3.1"
