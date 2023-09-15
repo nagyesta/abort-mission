@@ -24,7 +24,7 @@ testNg = "7.8.0"
 lombokPlugin = "8.3"
 nodePlugin =  "7.0.0"
 gitVersionerPlugin = "1.6.7"
-indexScanPlugin = "2.6.0"
+indexScanPlugin = "2.6.1"
 owaspPlugin = "8.4.0"
 
 checkstyle = "10.12.2"
