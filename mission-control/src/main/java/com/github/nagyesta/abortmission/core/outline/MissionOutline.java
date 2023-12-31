@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 /**
@@ -22,6 +23,7 @@ public abstract class MissionOutline {
      * The name of the shared context.
      */
     public static final String SHARED_CONTEXT = "";
+    private static final ReentrantLock LOCK = new ReentrantLock();
 
     /**
      * Default constructor calling the global config configuration method.
@@ -50,7 +52,8 @@ public abstract class MissionOutline {
      * Entry point for context configuration.
      */
     public final void initialBriefing() {
-        synchronized (MissionOutlineHolder.NAMED_CONTEXTS) {
+        LOCK.lock();
+        try {
             final Map<String, Consumer<AbortMissionCommandOps>> map = defineOutline();
             map.forEach((k, v) -> {
                 if (!MissionOutlineHolder.NAMED_CONTEXTS.contains(k)) {
@@ -71,6 +74,8 @@ public abstract class MissionOutline {
                     MissionOutlineHolder.NAMED_CONTEXTS.add(k);
                 }
             });
+        } finally {
+            LOCK.unlock();
         }
     }
 

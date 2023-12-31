@@ -5,6 +5,7 @@ import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 /**
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
  */
 public final class AbortMissionCommandOps {
 
+    private static final ReentrantLock LOCK = new ReentrantLock();
     private final Map<MissionHealthCheckMatcher, MissionHealthCheckEvaluator> status = new TreeMap<>();
     private final AtomicBoolean finalized = new AtomicBoolean(false);
 
@@ -119,10 +121,13 @@ public final class AbortMissionCommandOps {
     }
 
     private void doFinalizeSetup(final String contextName) {
-        synchronized (MissionControlHolder.NAMED_CONTEXTS) {
+        LOCK.lock();
+        try {
             MissionControlHolder.NAMED_CONTEXTS.putIfAbsent(contextName, this);
+            this.finalized.set(true);
+        } finally {
+            LOCK.unlock();
         }
-        this.finalized.set(true);
     }
 
     private static final class MissionControlHolder {

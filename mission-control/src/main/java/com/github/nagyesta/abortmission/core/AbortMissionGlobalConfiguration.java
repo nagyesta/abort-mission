@@ -1,5 +1,6 @@
 package com.github.nagyesta.abortmission.core;
 
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Predicate;
 
 /**
@@ -9,6 +10,7 @@ public final class AbortMissionGlobalConfiguration {
 
     static final int DEFAULT_STACK_TRACE_DEPTH = 10;
     static final Predicate<StackTraceElement> DEFAULT_STACK_TRACE_FILTER = e -> true;
+    private static final ReentrantLock LOCK = new ReentrantLock();
     private int stackTraceDepth = DEFAULT_STACK_TRACE_DEPTH;
 
     private Predicate<StackTraceElement> stackTraceFilter = DEFAULT_STACK_TRACE_FILTER;
@@ -61,8 +63,11 @@ public final class AbortMissionGlobalConfiguration {
      * @return the shared instance.
      */
     public static AbortMissionGlobalConfiguration shared() {
-        synchronized (AbortMissionGlobalConfigurationHolder.SHARED_INSTANCE) {
+        LOCK.lock();
+        try {
             return AbortMissionGlobalConfigurationHolder.SHARED_INSTANCE;
+        } finally {
+            LOCK.unlock();
         }
     }
 

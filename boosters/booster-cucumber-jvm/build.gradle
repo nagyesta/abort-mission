@@ -24,7 +24,7 @@ dependencies {
 
 test {
     useJUnitPlatform {
-        systemProperty("abort-mission.report.directory", file("${buildDir}/reports/abort-mission/"))
+        systemProperty("abort-mission.report.directory", layout.buildDirectory.dir("reports/abort-mission/").get().getAsFile())
         includeTags 'unit', 'integration'
     }
 }
