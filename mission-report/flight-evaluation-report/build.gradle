@@ -46,8 +46,8 @@ tasks.register('javascriptTest', NpxTask) {
 }
 
 tasks.register('cleanTemplates', Delete) {
-    delete fileTree("${buildDir}/html-view")
-    delete fileTree("${buildDir}/resources/main/templates/html")
+    delete layout.buildDirectory.dir("html-view").get().getAsFileTree()
+    delete layout.buildDirectory.dir("resources/main/templates/html").get().getAsFileTree()
 }
 
 tasks.register('processTemplates', NpxTask) {
@@ -57,8 +57,8 @@ tasks.register('processTemplates', NpxTask) {
     inputs.files(fileTree("node/css/", {
         include "**.css"
     }))
-    outputs.dir("${buildDir}/html-view")
-    outputs.dir("${buildDir}/resources/main/templates/html")
+    outputs.dir(layout.buildDirectory.dir("html-view").get().getAsFile())
+    outputs.dir(layout.buildDirectory.dir("resources/main/templates/html").get().getAsFile())
     command = 'grunt'
     group = 'build'
     args = []

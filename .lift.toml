@@ -18,7 +18,7 @@ disableTools = ["errorprone"]
 # customTools = <list of user-provided tools conforming to a tool API>
 # allow = <list of users whose pull requests can trigger analysis>
 # jdkVersion = <jdk version>
-jdkVersion = "11"
+jdkVersion = "17"
 
 # summaryComments = <true or false (defaults to false)
 summaryComments = false

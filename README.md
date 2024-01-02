@@ -1,7 +1,7 @@
 ![Abort-Mission](.github/assets/Abort-Mission-logo_export_transparent_640.png)
 
 [![GitHub license](https://img.shields.io/github/license/nagyesta/abort-mission?color=informational)](https://raw.githubusercontent.com/nagyesta/abort-mission/main/LICENSE)
-[![Java version](https://img.shields.io/badge/Java%20version-11-yellow?logo=java)](https://img.shields.io/badge/Java%20version-11-yellow?logo=java)
+[![Java version](https://img.shields.io/badge/Java%20version-17-yellow?logo=java)](https://img.shields.io/badge/Java%20version-17-yellow?logo=java)
 [![latest-release](https://img.shields.io/github/v/tag/nagyesta/abort-mission?color=blue&logo=git&label=releases&sort=semver)](https://github.com/nagyesta/abort-mission/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.nagyesta.abort-mission/abort.mission-control?logo=apache-maven)](https://search.maven.org/search?q=com.github.nagyesta.abort-mission)
 [![JavaCI](https://img.shields.io/github/actions/workflow/status/nagyesta/abort-mission/gradle.yml?logo=github&branch=main)](https://github.com/nagyesta/abort-mission/actions/workflows/gradle.yml)
@@ -31,7 +31,8 @@ save the Planet too! Cool, right?
 
 If you are still not convinced, you can trust the ancient proverb saying:
 
->"Shoot for the Moon, and even if you miss, you can at least stop running your failing tests early."
+> [!TIP]
+> "Shoot for the Moon, and even if you miss, you can at least stop running your failing tests early."
 
 ## Installation
 

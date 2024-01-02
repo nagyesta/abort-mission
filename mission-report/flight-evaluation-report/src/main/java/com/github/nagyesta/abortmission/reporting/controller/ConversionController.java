@@ -8,10 +8,7 @@ import com.github.nagyesta.abortmission.reporting.exception.RenderException;
 import com.github.nagyesta.abortmission.reporting.html.LaunchHtml;
 import com.github.nagyesta.abortmission.reporting.html.converter.LaunchJsonToHtmlConverter;
 import com.github.nagyesta.abortmission.reporting.json.LaunchJson;
-import com.networknt.schema.JsonSchema;
-import com.networknt.schema.JsonSchemaFactory;
-import com.networknt.schema.SpecVersion;
-import com.networknt.schema.ValidationMessage;
+import com.networknt.schema.*;
 import lombok.extern.slf4j.Slf4j;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -96,7 +93,7 @@ public final class ConversionController {
              InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
             final JsonNode rootNode = objectMapper.readTree(reader);
             final JsonSchema schema = getSchema(properties.isRelaxed());
-            final Set<ValidationMessage> violations = schema.validate(rootNode, rootNode, ROOT_NODE);
+            final Set<ValidationMessage> violations = schema.validate(new ExecutionContext(), rootNode, rootNode, ROOT_NODE);
             if (!violations.isEmpty()) {
                 violations.stream()
                         .map(ValidationMessage::getMessage)
