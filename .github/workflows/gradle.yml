@@ -52,7 +52,7 @@ jobs:
           distribution: temurin
           java-version: 17
       - name: 'Build with Gradle'
-        uses: gradle/gradle-build-action@982da8e78c05368c70dac0351bb82647a9e9a5d2 # v2.11.1
+        uses: gradle/gradle-build-action@a8f75513eafdebd8141bd1cd4e30fcd194af8dfa # v2.12.0
         with:
           gradle-home-cache-cleanup: true
           arguments: |
@@ -64,7 +64,7 @@ jobs:
           mkdir -p ${{ runner.temp }}/.gnupg/
           echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}" | base64 --decode > ${{ runner.temp }}/.gnupg/secring.gpg
       - name: 'Publish with Gradle'
-        uses: gradle/gradle-build-action@982da8e78c05368c70dac0351bb82647a9e9a5d2 # v2.11.1
+        uses: gradle/gradle-build-action@a8f75513eafdebd8141bd1cd4e30fcd194af8dfa # v2.12.0
         with:
           arguments: |
             publish
