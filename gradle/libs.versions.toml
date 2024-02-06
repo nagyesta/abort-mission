@@ -9,7 +9,7 @@ jsonSchemaValidator = "1.1.0"
 logbackReport = "1.4.14"
 jackson = "2.16.1"
 gson = "2.10.1"
-slf4j = "2.0.11"
+slf4j = "2.0.12"
 
 lombok = "1.18.30"
 findbugs = "3.0.2"
