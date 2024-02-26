@@ -89,49 +89,49 @@ jobs:
             mission-report/**/build/reports/tests/test
           retention-days: 5
       - name: Upload coverage to Codecov - Core
-        uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4.0.2
+        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab # v4.1.0
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./mission-control/build/reports/jacoco/report.xml
           flags: core
       - name: Upload coverage to Codecov - Boosters - JUnit4
-        uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4.0.2
+        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab # v4.1.0
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-junit4/build/reports/jacoco/report.xml
           flags: junit4
       - name: Upload coverage to Codecov - Boosters - Jupiter
-        uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4.0.2
+        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab # v4.1.0
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-junit-jupiter/build/reports/jacoco/report.xml
           flags: jupiter
       - name: Upload coverage to Codecov - Boosters - TestNG
-        uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4.0.2
+        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab # v4.1.0
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-testng/build/reports/jacoco/report.xml
           flags: testng
       - name: Upload coverage to Codecov - Boosters - Cucumber JVM
-        uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4.0.2
+        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab # v4.1.0
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-cucumber-jvm/build/reports/jacoco/report.xml
           flags: cucumber
       - name: Upload coverage to Codecov - Boosters - Testkit
-        uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4.0.2
+        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab # v4.1.0
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/testkit/build/reports/jacoco/report.xml
           flags: testkit
       - name: Upload coverage to Codecov - Reporting - Flight Evaluation Report
-        uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4.0.2
+        uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab # v4.1.0
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
