@@ -11,7 +11,7 @@ jackson = "2.17.0"
 gson = "2.10.1"
 slf4j = "2.0.12"
 
-lombok = "1.18.30"
+lombok = "1.18.32"
 findbugs = "3.0.2"
 
 junit4 = "4.13.2"
