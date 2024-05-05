@@ -3,6 +3,17 @@ const path = require('path');
 
 module.exports = function (grunt) {
     grunt.initConfig({
+        license_finder: {
+            all: {
+                options: {
+                    production: true,
+                    depth: 5,
+                    directory: './',
+                    out: '../build/nodejs-dependency-licenses.csv',
+                    csv: true
+                }
+            }
+        },
         sass: {
             options: {
                 sourceMap: true
@@ -96,6 +107,6 @@ module.exports = function (grunt) {
 
     loadGruntTasks(grunt);
 
-    grunt.registerTask('default', ['sass', 'concat:css', 'cssmin', 'webpack', 'uglify', 'assets_inline', 'htmlmin']);
+    grunt.registerTask('default', ['license_finder', 'sass', 'concat:css', 'cssmin', 'webpack', 'uglify', 'assets_inline', 'htmlmin']);
 }
 ;

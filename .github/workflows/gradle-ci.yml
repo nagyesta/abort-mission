@@ -33,7 +33,6 @@ on:
       - '.github/pr-labeler.yml'
       - 'renovate.json'
       - '.whitesource'
-      - 'gradle/libs.versions.toml'
       - 'config/ossindex/exclusions.txt'
 
 permissions: read-all
@@ -47,7 +46,8 @@ jobs:
 
     steps:
       # Set up build environment
-      - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+      - name: Checkout
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
         with:
           fetch-depth: 0
       - name: Set up JDK 17
@@ -55,30 +55,30 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - name: 'Decode key (if Ubuntu)'
+      - name: Decode key (if Ubuntu)
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           mkdir -p ${{ runner.temp }}/.gnupg/
           echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}" | base64 --decode > ${{ runner.temp }}/.gnupg/secring.gpg
-      - name: 'Build with Gradle (if Ubuntu)'
-        uses: gradle/gradle-build-action@4c39dd82cd5e1ec7c6fa0173bb41b4b6bb3b86ff # v3.3.2
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@db19848a5fa7950289d3668fb053140cf3028d43 # v3.3.2
+        with:
+          cache-disabled: true
+      - name: Build with Gradle (if Ubuntu)
         if: ${{ matrix.os == 'ubuntu-latest' }}
-        with:
-          arguments: |
-            printVersion build sign
-            -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }}
-            -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-            -Psigning.secretKeyRingFile=${{ runner.temp }}/.gnupg/secring.gpg
-      - name: 'Build with Gradle (if Windows)'
-        uses: gradle/gradle-build-action@4c39dd82cd5e1ec7c6fa0173bb41b4b6bb3b86ff # v3.3.2
+        run: >
+          ./gradlew printVersion build sign
+          -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }}
+          -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+          -Psigning.secretKeyRingFile=${{ runner.temp }}/.gnupg/secring.gpg
+      - name: Build with Gradle (if Windows)
         if: ${{ matrix.os != 'ubuntu-latest' }}
-        with:
-          arguments: printVersion build
-      - name: 'Clean-up GPG key (if Ubuntu)'
+        run: ./gradlew printVersion build
+      - name: Clean-up GPG key (if Ubuntu)
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           rm -rf ${{ runner.temp }}/.gnupg/
-      - name: 'Upload Test reports - All'
+      - name: Upload Test reports - All
         if: always()
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
