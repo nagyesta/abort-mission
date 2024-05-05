@@ -29,6 +29,9 @@ owaspPlugin = "9.1.0"
 
 checkstyle = "10.12.2"
 jacoco = "0.8.10"
+cycloneDxBomPlugin = "1.8.2"
+licenseePlugin = "1.11.0"
+nexusPublishPlugin = "2.0.0"
 
 [libraries]
 spring-core = { module = "org.springframework:spring-core", version.ref = "spring" }
@@ -83,3 +86,6 @@ node = { id = "com.github.node-gradle.node", version.ref = "nodePlugin" }
 versioner = { id = "io.toolebox.git-versioner", version.ref = "gitVersionerPlugin" }
 index-scan = { id = "org.sonatype.gradle.plugins.scan", version.ref = "indexScanPlugin" }
 owasp-dependencycheck = { id = "org.owasp.dependencycheck", version.ref = "owaspPlugin" }
+cyclonedx-bom = { id = "org.cyclonedx.bom", version.ref = "cycloneDxBomPlugin" }
+licensee-plugin = { id = "app.cash.licensee", version.ref = "licenseePlugin" }
+nexus-publish-plugin = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexusPublishPlugin" }

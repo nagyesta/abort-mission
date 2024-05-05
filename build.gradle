@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.versioner)
     alias(libs.plugins.index.scan)
     alias(libs.plugins.owasp.dependencycheck)
+    alias(libs.plugins.nexus.publish.plugin)
+    alias libs.plugins.cyclonedx.bom apply false
+    alias libs.plugins.licensee.plugin apply false
 }
 
 group = 'com.github.nagyesta.abort-mission'
@@ -63,6 +66,8 @@ configure(subprojects.findAll({
     apply plugin: 'org.sonatype.gradle.plugins.scan'
     //noinspection SpellCheckingInspection
     apply plugin: 'org.owasp.dependencycheck'
+    apply plugin: 'org.cyclonedx.bom'
+    apply plugin: 'app.cash.licensee'
 
     versioner.apply()
 
@@ -170,6 +175,66 @@ configure(subprojects.findAll({
     }
     checkstyle.toolVersion = libs.versions.checkstyle.get()
 
+    cyclonedxBom {
+        includeConfigs = ["runtimeClasspath"]
+        skipConfigs = ["compileClasspath", "testCompileClasspath"]
+        skipProjects = []
+        projectType = "library"
+        schemaVersion = "1.5"
+        destination = file("build/reports")
+        outputName = "bom"
+        outputFormat = "json"
+        //noinspection UnnecessaryQualifiedReference
+        final def attachmentText = new org.cyclonedx.model.AttachmentText()
+        attachmentText.setText(file("${project.rootProject.projectDir}/LICENSE").readBytes().encodeBase64().toString())
+        attachmentText.setEncoding("base64")
+        attachmentText.setContentType("text/plain")
+        //noinspection UnnecessaryQualifiedReference
+        final def license = new org.cyclonedx.model.License()
+        license.setName(project.rootProject.ext.licenseName)
+        license.setLicenseText(attachmentText)
+        license.setUrl(project.rootProject.ext.licenseUrl)
+        setLicenseChoice {
+            it.addLicense(license)
+        }
+    }
+
+    licensee {
+        allow("Apache-2.0")
+        allow("MIT")
+        allow("EPL-1.0")
+        allow("BSD-2-Clause")
+        allow("BSD-3-Clause")
+        allowUrl("https://opensource.org/licenses/MIT")
+        allowUrl("http://www.opensource.org/licenses/mit-license")
+        allowUrl("https://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt")
+        allowUrl("https://www.eclipse.org/legal/epl-v20.html")
+        allowUrl("http://www.eclipse.org/legal/epl-2.0")
+        allowUrl("http://www.eclipse.org/org/documents/edl-v10.php")
+        allowUrl("https://asm.ow2.io/license.html")
+        unusedAction("IGNORE")
+    }
+
+    tasks.register('copyLegalDocs', Copy.class) {
+        from file("${project.rootProject.projectDir}/LICENSE")
+        from layout.buildDirectory.file("reports/licensee/artifacts.json").get().asFile
+        from layout.buildDirectory.file("reports/bom.json").get().asFile
+        from layout.buildDirectory.file("nodejs-dependency-licenses.csv").get().asFile
+        into layout.buildDirectory.dir("resources/main/META-INF").get().asFile
+        rename('artifacts.json', 'dependency-licenses.json')
+        rename('bom.json', 'SBOM.json')
+    }
+    //noinspection ConfigurationAvoidance
+    if (project.name == "flight-evaluation-report") {
+        tasks.copyLegalDocs.dependsOn("processTemplates")
+    }
+    tasks.copyLegalDocs.dependsOn(tasks.licensee)
+    tasks.copyLegalDocs.dependsOn(tasks.cyclonedxBom)
+    tasks.javadoc.dependsOn(tasks.copyLegalDocs)
+    tasks.compileTestJava.dependsOn(tasks.copyLegalDocs)
+    tasks.checkstyleMain.dependsOn(tasks.copyLegalDocs)
+    tasks.processResources.finalizedBy(tasks.copyLegalDocs)
+
     publishing {
         repositories {
             maven {
@@ -178,14 +243,6 @@ configure(subprojects.findAll({
                 credentials {
                     username = rootProject.ext.gitUser
                     password = rootProject.ext.gitToken
-                }
-            }
-            maven {
-                name = "ossrh"
-                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
-                credentials {
-                    username = rootProject.ext.ossrhUser
-                    password = rootProject.ext.ossrhPass
                 }
             }
         }
@@ -204,6 +261,15 @@ configure(subprojects.findAll({
     //Disable metadata publishing and rely on Maven only
     tasks.withType(GenerateModuleMetadata).configureEach {
         enabled = false
+    }
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            username = project.ext.ossrhUser
+            password = project.ext.ossrhPass
+        }
     }
 }
 
