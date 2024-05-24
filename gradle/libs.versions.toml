@@ -1,6 +1,6 @@
 [versions]
 spring = "6.1.8"
-springBoot = "3.2.5"
+springBoot = "3.3.0"
 snakeYaml = "2.2"
 thymeleaf = "3.1.2.RELEASE"
 thymeleafExtrasTime = "3.0.4.RELEASE"
