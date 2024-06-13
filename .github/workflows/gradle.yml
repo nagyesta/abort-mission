@@ -81,43 +81,43 @@ jobs:
         run: |
           rm -rf ${{ runner.temp }}/.gnupg/
       - name: Upload coverage to Codecov - Core
-        uses: codecov/codecov-action@125fc84a9a348dbcf27191600683ec096ec9021c # v4.4.1
+        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./mission-control/build/reports/jacoco/report.xml
           flags: core
       - name: Upload coverage to Codecov - Boosters - JUnit4
-        uses: codecov/codecov-action@125fc84a9a348dbcf27191600683ec096ec9021c # v4.4.1
+        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-junit4/build/reports/jacoco/report.xml
           flags: junit4
       - name: Upload coverage to Codecov - Boosters - Jupiter
-        uses: codecov/codecov-action@125fc84a9a348dbcf27191600683ec096ec9021c # v4.4.1
+        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-junit-jupiter/build/reports/jacoco/report.xml
           flags: jupiter
       - name: Upload coverage to Codecov - Boosters - TestNG
-        uses: codecov/codecov-action@125fc84a9a348dbcf27191600683ec096ec9021c # v4.4.1
+        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-testng/build/reports/jacoco/report.xml
           flags: testng
       - name: Upload coverage to Codecov - Boosters - Cucumber JVM
-        uses: codecov/codecov-action@125fc84a9a348dbcf27191600683ec096ec9021c # v4.4.1
+        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/booster-cucumber-jvm/build/reports/jacoco/report.xml
           flags: cucumber
       - name: Upload coverage to Codecov - Boosters - Testkit
-        uses: codecov/codecov-action@125fc84a9a348dbcf27191600683ec096ec9021c # v4.4.1
+        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./boosters/testkit/build/reports/jacoco/report.xml
           flags: testkit
       - name: Upload coverage to Codecov - Reporting - Flight Evaluation Report
-        uses: codecov/codecov-action@125fc84a9a348dbcf27191600683ec096ec9021c # v4.4.1
+        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4.5.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./mission-report/flight-evaluation-report/build/reports/jacoco/report.xml,./mission-report/flight-evaluation-report/node/build/coverage/cobertura-coverage.xml
