@@ -87,6 +87,6 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -x test
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@b611370bb5703a7efb587f9d136a52ea24c5c38c # v3.25.11
+        uses: github/codeql-action/analyze@fd3190bba58b65cbefb742009518a03a07af24d7 # v1.0.18
       - name: Check dependencies with Gradle
         run: ./gradlew ossIndexAudit -PossIndexUsername=${{ secrets.OSS_INDEX_USER }} -PossIndexPassword=${{ secrets.OSS_INDEX_PASSWORD }}
