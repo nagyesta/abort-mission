@@ -6,14 +6,6 @@ name: JavaCI-PR
 on:
   push:
     branches: [ main]
-    paths:
-      - 'gradle/libs.versions.toml'
-      - 'gradle/verification-metadata.xml'
-      - 'gradle/wrapper/gradle-wrapper.properties'
-      - 'config/ossindex/exclusions.txt'
-      - '.github/workflows/gradle-ci.yml'
-      - 'mission-report/flight-evaluation-report/node/package.json'
-      - 'mission-report/flight-evaluation-report/node/package-lock.json'
   pull_request:
     branches: [ main ]
     paths-ignore:
@@ -35,7 +27,8 @@ on:
       - '.whitesource'
       - 'config/ossindex/exclusions.txt'
 
-permissions: read-all
+permissions:
+  contents: read
 
 jobs:
   build:
