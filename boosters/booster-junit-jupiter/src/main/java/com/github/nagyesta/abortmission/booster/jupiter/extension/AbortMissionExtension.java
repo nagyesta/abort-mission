@@ -174,7 +174,7 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     }
 
     private Optional<StageTimeStopwatch> optionalStopwatch(final ExtensionContext context, final String key) {
-        return Optional.ofNullable(context.getStore(NAMESPACE).getOrDefault(key, StageTimeStopwatch.class, null));
+        return Optional.ofNullable(getTestInstanceContext(context).getStore(NAMESPACE).getOrDefault(key, StageTimeStopwatch.class, null));
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
@@ -182,9 +182,17 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
         LOGGER.trace("Storing stopwatch for key: {} with launchId: {}",
                 key, stopwatch.map(StageTimeStopwatch::getLaunchId).orElse(null));
         if (stopwatch.isPresent()) {
-            context.getStore(NAMESPACE).put(key, stopwatch.get());
+            getTestInstanceContext(context).getStore(NAMESPACE).put(key, stopwatch.get());
         } else {
-            context.getStore(NAMESPACE).remove(key);
+            getTestInstanceContext(context).getStore(NAMESPACE).remove(key);
         }
+    }
+
+    private ExtensionContext getTestInstanceContext(final ExtensionContext context) {
+        ExtensionContext result = context;
+        if (context.getTestMethod().isPresent() && context.getParent().isPresent()) {
+            result = context.getParent().get();
+        }
+        return result;
     }
 }
