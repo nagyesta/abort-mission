@@ -73,7 +73,7 @@ jobs:
           rm -rf ${{ runner.temp }}/.gnupg/
       - name: Upload Test reports - All
         if: always()
-        uses: actions/upload-artifact@604373da6381bf24206979c74d06a550515601b9 # v4.4.1
+        uses: actions/upload-artifact@84480863f228bb9747b473957fcc9e309aa96097 # v4.4.2
         with:
           name: test-report-abort-mission-${{ matrix.os }}
           path: |
