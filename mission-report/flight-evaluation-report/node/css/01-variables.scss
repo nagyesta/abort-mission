@@ -1,3 +1,4 @@
+@use "sass:color";
 /* start - print basics */
 
 $print-background-color: #ffffff;
@@ -17,10 +18,10 @@ $light-background-color-success: #d5e8d4;
 $light-background-color-failure: #f8cecc;
 $light-background-color-abort: #fff2cc;
 $light-background-color-suppressed: #dae8fc;
-$light-background-color-success-alt: darken(#d5e8d4, 25%);
-$light-background-color-failure-alt: darken(#f8cecc, 25%);
-$light-background-color-abort-alt: darken(#fff2cc, 25%);
-$light-background-color-suppressed-alt: darken(#dae8fc, 25%);
+$light-background-color-success-alt: color.adjust(#d5e8d4, $lightness: -25%);
+$light-background-color-failure-alt: color.adjust(#f8cecc, $lightness: -25%);
+$light-background-color-abort-alt: color.adjust(#fff2cc, $lightness: -25%);
+$light-background-color-suppressed-alt: color.adjust(#dae8fc, $lightness: -25%);
 $light-background-color-success-detail: $light-background-color-success;
 $light-background-color-failure-detail: $light-background-color-failure;
 $light-background-color-abort-detail: $light-background-color-abort;
@@ -58,12 +59,12 @@ $dark-border-color: #efefef;
 $dark-border-color-over-background: #666666;
 $dark-thread-color-highlight: rgba(239, 239, 239, 0.7);
 $dark-accent-color: #efefef;
-$dark-input-color: lighten(rgba(51, 51, 51, 1), 60%);
+$dark-input-color: color.adjust(rgba(51, 51, 51, 1), $lightness: 60%);
 
-$dark-background-color-success: darken(#d5e8d4, 2%);
-$dark-background-color-failure: darken(#f8cecc, 2%);
-$dark-background-color-abort: darken(#fff2cc, 2%);
-$dark-background-color-suppressed: darken(#dae8fc, 2%);
+$dark-background-color-success: color.adjust(#d5e8d4, $lightness: -2%);
+$dark-background-color-failure: color.adjust(#f8cecc, $lightness: -2%);
+$dark-background-color-abort: color.adjust(#fff2cc, $lightness: -2%);
+$dark-background-color-suppressed: color.adjust(#dae8fc, $lightness: -2%);
 $dark-background-color-success-alt: $light-background-color-success-alt;
 $dark-background-color-failure-alt: $light-background-color-failure-alt;
 $dark-background-color-abort-alt: $light-background-color-abort-alt;
