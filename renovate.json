@@ -1,6 +1,6 @@
 {
   "extends": [
-    "config:base",
+    "config:recommended",
     ":gitSignOff"
   ],
   "assignees": [
@@ -8,8 +8,8 @@
   ],
   "assigneesSampleSize": 1,
   "commitMessageSuffix": "{patch}",
-  "separateMajorMinor" : true,
-  "separateMinorPatch" : true,
+  "separateMajorMinor": true,
+  "separateMinorPatch": true,
   "github-actions": {
     "pinDigests": true
   }
