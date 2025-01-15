@@ -29,7 +29,7 @@ owaspPlugin = "12.0.0"
 
 checkstyle = "10.12.2"
 jacoco = "0.8.10"
-cycloneDxBomPlugin = "1.10.0"
+cycloneDxBomPlugin = "2.0.0"
 licenseePlugin = "1.12.0"
 nexusPublishPlugin = "2.0.0"
 
