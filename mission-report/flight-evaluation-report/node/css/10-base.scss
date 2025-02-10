@@ -1,54 +1,54 @@
-@import "01-variables";
+@use "01-variables" as v;
 
 /* Layout */
 
 body .root-container {
   margin-left: auto;
   margin-right: auto;
-  font-family: $font-family;
-  font-size: $font-size-normal;
+  font-family: v.$font-family;
+  font-size: v.$font-size-normal;
 }
 
 /* Base styles */
 
 body .root-container {
   h1.header {
-    font-size: $font-size-h1;
+    font-size: v.$font-size-h1;
     font-weight: bold;
-    line-height: $line-height-h1;
+    line-height: v.$line-height-h1;
     vertical-align: center;
-    height: $height-header-h1;
+    height: v.$height-header-h1;
   }
 
   h2 {
-    font-size: $font-size-h2;
+    font-size: v.$font-size-h2;
     font-weight: bold;
-    line-height: $line-height-h2;
+    line-height: v.$line-height-h2;
   }
 
   p.header {
-    height: $height-header;
+    height: v.$height-header;
   }
 
   p.header-last {
-    padding-bottom: $padding-xl;
+    padding-bottom: v.$padding-xl;
   }
 
   div.header {
-    height: $height-header;
-    padding-bottom: $padding-xl;
+    height: v.$height-header;
+    padding-bottom: v.$padding-xl;
   }
 
   p.footer {
-    line-height: $line-height-footer;
+    line-height: v.$line-height-footer;
     vertical-align: center;
-    height: $height-footer;
-    padding-top: $padding-large;
-    padding-bottom: $padding-large;
+    height: v.$height-footer;
+    padding-top: v.$padding-large;
+    padding-bottom: v.$padding-large;
   }
 
   small {
-    font-size: $font-size-small;
+    font-size: v.$font-size-small;
     padding-left: 0.1em;
     padding-right: 0.3em;
   }
@@ -85,24 +85,24 @@ body .root-container {
 /* Borders */
 
 .top-row {
-  border-top: $border-width-normal $border-style-normal;
+  border-top: v.$border-width-normal v.$border-style-normal;
 }
 
 .row-start {
-  border-left: $border-width-normal $border-style-normal;
+  border-left: v.$border-width-normal v.$border-style-normal;
 }
 
 .border {
-  border-bottom: $border-width-normal $border-style-normal;
-  border-right: $border-width-normal $border-style-normal;
+  border-bottom: v.$border-width-normal v.$border-style-normal;
+  border-right: v.$border-width-normal v.$border-style-normal;
 }
 
 .soft-border-bottom {
-  border-bottom: $border-width-normal $border-style-soft;
+  border-bottom: v.$border-width-normal v.$border-style-soft;
 }
 
 .border-bottom {
-  border-bottom: $border-width-normal $border-style-normal;
+  border-bottom: v.$border-width-normal v.$border-style-normal;
 }
 
 /* Positioning */

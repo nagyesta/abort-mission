@@ -1,141 +1,141 @@
-@import "01-variables";
+@use "01-variables" as v;
 
 body.light {
-  background: $light-background-color;
-  color: $light-text-color;
-  border-color: $light-border-color;
+  background: v.$light-background-color;
+  color: v.$light-text-color;
+  border-color: v.$light-border-color;
 
   .help-button {
-    background-color: $light-background-color-suppressed;
-    color: $light-text-color-suppressed;
+    background-color: v.$light-background-color-suppressed;
+    color: v.$light-text-color-suppressed;
 
     a {
-      color: $light-text-color-suppressed;
+      color: v.$light-text-color-suppressed;
       text-decoration: none;
     }
 
     a:hover {
-      color: $light-text-color-suppressed;
+      color: v.$light-text-color-suppressed;
       text-decoration: none;
     }
   }
 
   .default-border-color {
-    border-color: $light-border-color;
+    border-color: v.$light-border-color;
   }
 
   .link,a {
-    color: $light-link-color;
+    color: v.$light-link-color;
   }
 
   .link:hover,a:hover {
-    color: $light-link-color-hover;
+    color: v.$light-link-color-hover;
   }
 
   .filter-button {
-    color: $light-text-color;
-    border-color: $light-border-color;
+    color: v.$light-text-color;
+    border-color: v.$light-border-color;
     text-decoration: none;
   }
 
   .filter-button:hover {
-    color: $light-text-color;
-    border-color: $light-border-color;
+    color: v.$light-text-color;
+    border-color: v.$light-border-color;
     text-decoration: none;
   }
 
   .filter-rule-section-include {
-    color: $light-border-color-success;
-    border-color: $light-border-color-success;
-    background-color: $light-background-color-success;
+    color: v.$light-border-color-success;
+    border-color: v.$light-border-color-success;
+    background-color: v.$light-background-color-success;
   }
 
   .filter-rule-section-exclude {
-    color: $light-border-color-failure;
-    border-color: $light-border-color-failure;
-    background-color: $light-background-color-failure;
+    color: v.$light-border-color-failure;
+    border-color: v.$light-border-color-failure;
+    background-color: v.$light-background-color-failure;
   }
 
   .text-success {
     @extend .default-border-color;
-    color: $light-text-color-success;
+    color: v.$light-text-color-success;
   }
 
   .text-failure {
     @extend .default-border-color;
-    color: $light-text-color-failure;
+    color: v.$light-text-color-failure;
   }
 
   .text-abort {
     @extend .default-border-color;
-    color: $light-text-color-abort;
+    color: v.$light-text-color-abort;
   }
 
   .text-suppressed {
     @extend .default-border-color;
-    color: $light-text-color-suppressed
+    color: v.$light-text-color-suppressed
   }
 
   .mission-success {
-    background-color: $light-background-color-success;
-    border: 0 $border-style-normal $light-border-color-success;
-    opacity: $light-thread-bar-opacity
+    background-color: v.$light-background-color-success;
+    border: 0 v.$border-style-normal v.$light-border-color-success;
+    opacity: v.$light-thread-bar-opacity
   }
 
   .mission-failure {
-    background-color: $light-background-color-failure;
-    border: 0 $border-style-normal $light-border-color-failure;
-    opacity: $light-thread-bar-opacity
+    background-color: v.$light-background-color-failure;
+    border: 0 v.$border-style-normal v.$light-border-color-failure;
+    opacity: v.$light-thread-bar-opacity
   }
 
   .mission-abort {
-    background-color: $light-background-color-abort;
-    border: 0 $border-style-normal $light-border-color-abort;
-    opacity: $light-thread-bar-opacity
+    background-color: v.$light-background-color-abort;
+    border: 0 v.$border-style-normal v.$light-border-color-abort;
+    opacity: v.$light-thread-bar-opacity
   }
 
   .mission-suppressed {
-    background-color: $light-background-color-suppressed;
-    border: 0 $border-style-normal $light-border-color-suppressed;
-    opacity: $light-thread-bar-opacity
+    background-color: v.$light-background-color-suppressed;
+    border: 0 v.$border-style-normal v.$light-border-color-suppressed;
+    opacity: v.$light-thread-bar-opacity
   }
 
   .countdown-success {
     @extend .mission-success;
-    background-color: $light-background-color-success-alt
+    background-color: v.$light-background-color-success-alt
   }
 
   .countdown-failure {
     @extend .mission-failure;
-    background-color: $light-background-color-failure-alt
+    background-color: v.$light-background-color-failure-alt
   }
 
   .countdown-abort {
     @extend .mission-abort;
-    background-color: $light-background-color-abort-alt
+    background-color: v.$light-background-color-abort-alt
   }
 
   .countdown-suppressed {
     @extend .mission-suppressed;
-    background-color: $light-background-color-suppressed-alt
+    background-color: v.$light-background-color-suppressed-alt
   }
 
   .detail-view {
 
     .result-success {
-      background-color: $light-background-color-success-detail;
+      background-color: v.$light-background-color-success-detail;
     }
 
     .result-failure {
-      background-color: $light-background-color-failure-detail;
+      background-color: v.$light-background-color-failure-detail;
     }
 
     .result-aborted {
-      background-color: $light-background-color-abort-detail;
+      background-color: v.$light-background-color-abort-detail;
     }
 
     .result-suppressed {
-      background-color: $light-background-color-suppressed-detail;
+      background-color: v.$light-background-color-suppressed-detail;
     }
 
     .result-empty {
@@ -146,224 +146,224 @@ body.light {
     .result-failure .link,
     .result-aborted .link,
     .result-suppressed .link {
-      color: $light-link-color-over-background;
+      color: v.$light-link-color-over-background;
     }
 
     .result-success .link:hover,
     .result-failure .link:hover,
     .result-aborted .link:hover,
     .result-suppressed .link:hover {
-      color: $light-link-color-hover-over-background;
+      color: v.$light-link-color-hover-over-background;
     }
 
     .class-row {
 
       .exec-success.focus {
-        background-color: $light-background-color-success-detail;
-        color: $light-exec-text-color-over-background;
+        background-color: v.$light-background-color-success-detail;
+        color: v.$light-exec-text-color-over-background;
       }
 
       .exec-failure.focus {
-        background-color: $light-background-color-failure-detail;
-        color: $light-exec-text-color-over-background;
+        background-color: v.$light-background-color-failure-detail;
+        color: v.$light-exec-text-color-over-background;
       }
 
       .exec-abort.focus {
-        background-color: $light-background-color-abort-detail;
-        color: $light-exec-text-color-over-background;
+        background-color: v.$light-background-color-abort-detail;
+        color: v.$light-exec-text-color-over-background;
       }
 
       .exec-suppress.focus {
-        background-color: $light-background-color-suppressed-detail;
-        color: $light-exec-text-color-over-background;
+        background-color: v.$light-background-color-suppressed-detail;
+        color: v.$light-exec-text-color-over-background;
       }
 
       .exec-success:before {
-        color: $light-text-color-success-prominent-over-background;
+        color: v.$light-text-color-success-prominent-over-background;
       }
 
       .exec-failure:before {
-        color: $light-text-color-failure-over-background;
+        color: v.$light-text-color-failure-over-background;
       }
 
       .exec-abort:before {
-        color: $light-text-color-abort-over-background;
+        color: v.$light-text-color-abort-over-background;
       }
 
       .exec-suppress:before {
-        color: $light-text-color-suppressed-over-background;
+        color: v.$light-text-color-suppressed-over-background;
       }
     }
   }
 
   .summary-view {
     .summary-success {
-      color: $light-text-color-success-prominent;
+      color: v.$light-text-color-success-prominent;
     }
 
     .summary-failure {
-      color: $light-text-color-failure;
+      color: v.$light-text-color-failure;
     }
 
     .summary-abort {
-      color: $light-text-color-abort;
+      color: v.$light-text-color-abort;
     }
 
     .summary-suppress {
-      color: $light-text-color-suppressed;
+      color: v.$light-text-color-suppressed;
     }
   }
 }
 
 body.dark {
-  background: $dark-background-color;
-  color: $dark-text-color;
-  border-color: $dark-border-color;
+  background: v.$dark-background-color;
+  color: v.$dark-text-color;
+  border-color: v.$dark-border-color;
 
 
   .help-button {
-    background-color: $dark-background-color-suppressed-alt;
-    color: $dark-text-color-suppressed;
+    background-color: v.$dark-background-color-suppressed-alt;
+    color: v.$dark-text-color-suppressed;
 
     a {
-      color: $dark-text-color-suppressed;
+      color: v.$dark-text-color-suppressed;
       text-decoration: none;
     }
 
     a:hover {
-      color: $dark-text-color-suppressed;
+      color: v.$dark-text-color-suppressed;
       text-decoration: none;
     }
   }
 
   .default-border-color {
-    border-color: $dark-border-color;
+    border-color: v.$dark-border-color;
   }
 
   .link,a {
-    color: $dark-link-color;
+    color: v.$dark-link-color;
   }
 
   .link:hover,a:hover {
-    color: $dark-link-color-hover;
+    color: v.$dark-link-color-hover;
   }
 
   input {
-    background-color: $dark-input-color;
+    background-color: v.$dark-input-color;
   }
 
   .filter-button {
-    color: $dark-text-color;
-    border-color: $dark-border-color;
+    color: v.$dark-text-color;
+    border-color: v.$dark-border-color;
     text-decoration: none;
   }
 
   .filter-button:hover {
-    color: $dark-text-color;
-    border-color: $dark-border-color;
+    color: v.$dark-text-color;
+    border-color: v.$dark-border-color;
     text-decoration: none;
   }
 
   .filter-rule-section-include {
-    color: $dark-border-color-success;
-    border-color: $dark-border-color-success;
-    background-color: $dark-background-color-success;
+    color: v.$dark-border-color-success;
+    border-color: v.$dark-border-color-success;
+    background-color: v.$dark-background-color-success;
   }
 
   .filter-rule-section-exclude {
-    color: $dark-border-color-failure;
-    border-color: $dark-border-color-failure;
-    background-color: $dark-background-color-failure;
+    color: v.$dark-border-color-failure;
+    border-color: v.$dark-border-color-failure;
+    background-color: v.$dark-background-color-failure;
   }
 
   .text-success {
     @extend .default-border-color;
-    color: $dark-text-color-success;
+    color: v.$dark-text-color-success;
   }
 
   .text-failure {
     @extend .default-border-color;
-    color: $dark-text-color-failure;
+    color: v.$dark-text-color-failure;
   }
 
   .text-abort {
     @extend .default-border-color;
-    color: $dark-text-color-abort;
+    color: v.$dark-text-color-abort;
   }
 
   .text-suppressed {
     @extend .default-border-color;
-    color: $dark-text-color-suppressed
+    color: v.$dark-text-color-suppressed
   }
 
   .mission-success {
-    background-color: $dark-background-color-success;
-    border: 0 $border-style-normal $dark-border-color-success;
-    opacity: $dark-thread-bar-opacity
+    background-color: v.$dark-background-color-success;
+    border: 0 v.$border-style-normal v.$dark-border-color-success;
+    opacity: v.$dark-thread-bar-opacity
   }
 
   .mission-failure {
-    background-color: $dark-background-color-failure;
-    border: 0 $border-style-normal $dark-border-color-failure;
-    opacity: $dark-thread-bar-opacity
+    background-color: v.$dark-background-color-failure;
+    border: 0 v.$border-style-normal v.$dark-border-color-failure;
+    opacity: v.$dark-thread-bar-opacity
   }
 
   .mission-abort {
-    background-color: $dark-background-color-abort;
-    border: 0 $border-style-normal $dark-border-color-abort;
-    opacity: $dark-thread-bar-opacity
+    background-color: v.$dark-background-color-abort;
+    border: 0 v.$border-style-normal v.$dark-border-color-abort;
+    opacity: v.$dark-thread-bar-opacity
   }
 
   .mission-suppressed {
-    background-color: $dark-background-color-suppressed;
-    border: 0 $border-style-normal $dark-border-color-suppressed;
-    opacity: $dark-thread-bar-opacity
+    background-color: v.$dark-background-color-suppressed;
+    border: 0 v.$border-style-normal v.$dark-border-color-suppressed;
+    opacity: v.$dark-thread-bar-opacity
   }
 
   .countdown-success {
     @extend .mission-success;
-    background-color: $dark-background-color-success-alt
+    background-color: v.$dark-background-color-success-alt
   }
 
   .countdown-failure {
     @extend .mission-failure;
-    background-color: $dark-background-color-failure-alt
+    background-color: v.$dark-background-color-failure-alt
   }
 
   .countdown-abort {
     @extend .mission-abort;
-    background-color: $dark-background-color-abort-alt
+    background-color: v.$dark-background-color-abort-alt
   }
 
   .countdown-suppressed {
     @extend .mission-suppressed;
-    background-color: $dark-background-color-suppressed-alt
+    background-color: v.$dark-background-color-suppressed-alt
   }
 
   .detail-view {
 
     .result-success {
-      background-color: $dark-background-color-success-detail;
-      color: $dark-exec-text-color-over-background;
-      border-color: $dark-border-color-over-background;
+      background-color: v.$dark-background-color-success-detail;
+      color: v.$dark-exec-text-color-over-background;
+      border-color: v.$dark-border-color-over-background;
     }
 
     .result-failure {
-      background-color: $dark-background-color-failure-detail;
-      color: $dark-exec-text-color-over-background;
-      border-color: $dark-border-color-over-background;
+      background-color: v.$dark-background-color-failure-detail;
+      color: v.$dark-exec-text-color-over-background;
+      border-color: v.$dark-border-color-over-background;
     }
 
     .result-aborted {
-      background-color: $dark-background-color-abort-detail;
-      color: $dark-exec-text-color-over-background;
-      border-color: $dark-border-color-over-background;
+      background-color: v.$dark-background-color-abort-detail;
+      color: v.$dark-exec-text-color-over-background;
+      border-color: v.$dark-border-color-over-background;
     }
 
     .result-suppressed {
-      background-color: $dark-background-color-suppressed-detail;
-      color: $dark-exec-text-color-over-background;
-      border-color: $dark-border-color-over-background;
+      background-color: v.$dark-background-color-suppressed-detail;
+      color: v.$dark-exec-text-color-over-background;
+      border-color: v.$dark-border-color-over-background;
     }
 
     .result-empty {
@@ -373,96 +373,96 @@ body.dark {
     .exec-title.result-failure,
     .exec-title.result-aborted,
     .exec-title.result-suppressed {
-      border-left-color: $dark-border-color;
+      border-left-color: v.$dark-border-color;
     }
 
     .result-success .link,
     .result-failure .link,
     .result-aborted .link,
     .result-suppressed .link {
-      color: $dark-link-color-over-background;
+      color: v.$dark-link-color-over-background;
     }
 
     .result-success .link:hover,
     .result-failure .link:hover,
     .result-aborted .link:hover,
     .result-suppressed .link:hover {
-      color: $dark-link-color-hover-over-background;
+      color: v.$dark-link-color-hover-over-background;
     }
 
     .class-row {
       .exec-success.focus {
-        background-color: $dark-background-color-success-detail;
-        color: $dark-exec-text-color-over-background;
-        border-color: $dark-border-color-over-background;
+        background-color: v.$dark-background-color-success-detail;
+        color: v.$dark-exec-text-color-over-background;
+        border-color: v.$dark-border-color-over-background;
       }
 
       .exec-failure.focus {
-        background-color: $dark-background-color-failure-detail;
-        color: $dark-exec-text-color-over-background;
-        border-color: $dark-border-color-over-background;
+        background-color: v.$dark-background-color-failure-detail;
+        color: v.$dark-exec-text-color-over-background;
+        border-color: v.$dark-border-color-over-background;
       }
 
       .exec-abort.focus {
-        background-color: $dark-background-color-abort-detail;
-        color: $dark-exec-text-color-over-background;
-        border-color: $dark-border-color-over-background;
+        background-color: v.$dark-background-color-abort-detail;
+        color: v.$dark-exec-text-color-over-background;
+        border-color: v.$dark-border-color-over-background;
       }
 
       .exec-suppress.focus {
-        background-color: $dark-background-color-suppressed-detail;
-        color: $dark-exec-text-color-over-background;
-        border-left-color: $dark-border-color-over-background;
-        border-top-color: $dark-border-color-over-background;
-        border-bottom-color: $dark-border-color-over-background;
-        border-right-color: $dark-border-color;
+        background-color: v.$dark-background-color-suppressed-detail;
+        color: v.$dark-exec-text-color-over-background;
+        border-left-color: v.$dark-border-color-over-background;
+        border-top-color: v.$dark-border-color-over-background;
+        border-bottom-color: v.$dark-border-color-over-background;
+        border-right-color: v.$dark-border-color;
       }
 
       .exec-success:before {
-        color: $dark-text-color-success-prominent;
+        color: v.$dark-text-color-success-prominent;
       }
       .exec-success.focus:before {
-        color: $dark-text-color-success-prominent-over-background;
+        color: v.$dark-text-color-success-prominent-over-background;
       }
 
       .exec-failure:before {
-        color: $dark-text-color-failure;
+        color: v.$dark-text-color-failure;
       }
       .exec-failure.focus:before {
-        color: $dark-text-color-failure-over-background;
+        color: v.$dark-text-color-failure-over-background;
       }
 
       .exec-abort:before {
-        color: $dark-text-color-abort;
+        color: v.$dark-text-color-abort;
       }
       .exec-abort.focus:before {
-         color: $dark-text-color-abort-over-background;
+         color: v.$dark-text-color-abort-over-background;
       }
 
       .exec-suppress:before {
-        color: $dark-text-color-suppressed;
+        color: v.$dark-text-color-suppressed;
       }
       .exec-suppress.focus:before {
-        color: $dark-text-color-suppressed-over-background;
+        color: v.$dark-text-color-suppressed-over-background;
       }
     }
   }
 
   .summary-view {
     .summary-success {
-      color: $dark-text-color-success-prominent;
+      color: v.$dark-text-color-success-prominent;
     }
 
     .summary-failure {
-      color: $dark-text-color-failure;
+      color: v.$dark-text-color-failure;
     }
 
     .summary-abort {
-      color: $dark-text-color-abort;
+      color: v.$dark-text-color-abort;
     }
 
     .summary-suppress {
-      color: $dark-text-color-suppressed;
+      color: v.$dark-text-color-suppressed;
     }
   }
 }

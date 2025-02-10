@@ -1,8 +1,8 @@
-@import "01-variables";
+@use "01-variables" as v;
 
 body .root-container .summary-view {
   position: relative;
-  margin-bottom: $padding-xl;
+  margin-bottom: v.$padding-xl;
 
   .result-summary {
     margin-left: auto;
@@ -16,9 +16,9 @@ body .root-container .summary-view {
   }
 }
 
-@media only screen and (max-width: $break-point-medium-screen-width-max) {
+@media only screen and (max-width: v.$break-point-medium-screen-width-max) {
   body .root-container {
-    $root-width: $break-point-medium-root-width;
+    $root-width: v.$break-point-medium-root-width;
     $exec-time-width: calc($root-width / 8);
     $exec-stat-width: calc($root-width / 12);
     $exec-title-width: calc($root-width / 8);
@@ -28,27 +28,27 @@ body .root-container .summary-view {
       .col-sum-name, .summary-name {
         width: $exec-title-width;
         max-width: $exec-title-width;
-        padding: $padding-normal 0 $padding-normal $padding-normal;
+        padding: v.$padding-normal 0 v.$padding-normal v.$padding-normal;
       }
 
       .col-sum-time, .sum-time {
         width: $exec-time-width;
         max-width: $exec-time-width;
-        padding: $padding-normal 0;
+        padding: v.$padding-normal 0;
       }
 
       .col-sum-count, .sum-stat {
         width: $exec-stat-width;
         max-width: $exec-stat-width;
-        padding: $padding-normal 0;
+        padding: v.$padding-normal 0;
       }
     }
   }
 }
 
-@media only screen and (min-width: $break-point-large-screen-width-min) and (max-width: $break-point-large-screen-width-max) {
+@media only screen and (min-width: v.$break-point-large-screen-width-min) and (max-width: v.$break-point-large-screen-width-max) {
   body .root-container {
-    $root-width: $break-point-large-root-width;
+    $root-width: v.$break-point-large-root-width;
     $exec-time-width: calc($root-width / 14);
     $exec-stat-width: calc($root-width / 18);
     $exec-title-width: calc($root-width / 14);
@@ -58,27 +58,27 @@ body .root-container .summary-view {
       .col-sum-name, .summary-name {
         width: $exec-title-width;
         max-width: $exec-title-width;
-        padding: $padding-normal 0 $padding-normal $padding-normal;
+        padding: v.$padding-normal 0 v.$padding-normal v.$padding-normal;
       }
 
       .col-sum-time, .sum-time {
         width: $exec-time-width;
         max-width: $exec-time-width;
-        padding: $padding-normal 0;
+        padding: v.$padding-normal 0;
       }
 
       .col-sum-count, .sum-stat {
         width: $exec-stat-width;
         max-width: $exec-stat-width;
-        padding: $padding-normal 0;
+        padding: v.$padding-normal 0;
       }
     }
   }
 }
 
-@media only screen and (min-width: $break-point-xl-screen-width-min) {
+@media only screen and (min-width: v.$break-point-xl-screen-width-min) {
   body .root-container {
-    $root-width: $break-point-xl-root-width;
+    $root-width: v.$break-point-xl-root-width;
     $exec-time-width: calc($root-width / 15);
     $exec-stat-width: calc($root-width / 20);
     $exec-title-width: calc($root-width / 15);
@@ -88,19 +88,19 @@ body .root-container .summary-view {
       .col-sum-name, .summary-name {
         width: $exec-title-width;
         max-width: $exec-title-width;
-        padding: $padding-normal 0 $padding-normal $padding-normal;
+        padding: v.$padding-normal 0 v.$padding-normal v.$padding-normal;
       }
 
       .col-sum-time, .sum-time {
         width: $exec-time-width;
         max-width: $exec-time-width;
-        padding: $padding-normal 0;
+        padding: v.$padding-normal 0;
       }
 
       .col-sum-count, .sum-stat {
         width: $exec-stat-width;
         max-width: $exec-stat-width;
-        padding: $padding-normal 0;
+        padding: v.$padding-normal 0;
       }
     }
   }

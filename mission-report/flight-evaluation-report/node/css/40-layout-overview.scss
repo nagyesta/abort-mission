@@ -1,23 +1,23 @@
-@import "01-variables";
+@use "01-variables" as v;
 
 body .root-container .detail-view {
   position: relative;
-  margin-bottom: $padding-xl;
+  margin-bottom: v.$padding-xl;
 
   .float-right {
     position: absolute;
-    right: $padding-normal;
-    top: $padding-normal;
+    right: v.$padding-normal;
+    top: v.$padding-normal;
   }
 
   .detail-view-actions {
     @extend .float-right;
-    top: $padding-xl;
+    top: v.$padding-xl;
   }
 
   .method-times {
-    padding-top: $padding-normal;
-    padding-bottom: $padding-normal;
+    padding-top: v.$padding-normal;
+    padding-bottom: v.$padding-normal;
   }
 
   .class-row {
@@ -28,21 +28,21 @@ body .root-container .detail-view {
     }
 
     .class-name {
-      padding-left: $padding-normal;
+      padding-left: v.$padding-normal;
       position: relative;
       @extend .no-overflow;
 
       .details-actions {
         position: absolute;
-        right: $padding-normal;
-        top: $padding-normal;
-        font-size: $font-size-small;
+        right: v.$padding-normal;
+        top: v.$padding-normal;
+        font-size: v.$font-size-small;
       }
     }
 
     .method-times,.matcher-title {
-      padding-top: $padding-normal;
-      padding-bottom: $padding-normal;
+      padding-top: v.$padding-normal;
+      padding-bottom: v.$padding-normal;
     }
 
     td {
@@ -55,19 +55,19 @@ body .root-container .detail-view {
     }
 
     .class-matchers {
-      padding-left: $padding-normal * 5;
+      padding-left: v.$padding-normal * 5;
 
       ul {
-        padding-left: $padding-normal * 4;
+        padding-left: v.$padding-normal * 4;
 
         li {
-          padding-top: $padding-normal;
+          padding-top: v.$padding-normal;
         }
       }
     }
 
     .exec-title {
-      padding-left: $padding-normal;
+      padding-left: v.$padding-normal;
       position: relative;
       @extend .no-overflow;
 
@@ -77,9 +77,9 @@ body .root-container .detail-view {
 
       .details-actions {
         position: absolute;
-        right: $padding-normal;
-        top: $padding-normal;
-        font-size: $font-size-small;
+        right: v.$padding-normal;
+        top: v.$padding-normal;
+        font-size: v.$font-size-small;
       }
     }
 
@@ -93,9 +93,9 @@ body .root-container .detail-view {
 
     .exec-stat-before {
       position: absolute;
-      top: $padding-normal;
-      left: $padding-normal;
-      font-size: $font-size-smaller;
+      top: v.$padding-normal;
+      left: v.$padding-normal;
+      font-size: v.$font-size-smaller;
     }
 
     .exec-count:before {
@@ -151,14 +151,14 @@ body .root-container .detail-view {
 }
 
 $exec-spacer-width: 16px;
-@media only screen and (max-width: $break-point-medium-screen-width-max) {
+@media only screen and (max-width: v.$break-point-medium-screen-width-max) {
   body .root-container {
-    $root-width: $break-point-medium-root-width;
+    $root-width: v.$break-point-medium-root-width;
     $exec-time-width: calc($root-width / 10);
     $exec-stat-width: calc($root-width / 20);
-    $exec-title-width: $root-width - $exec-time-width - 8 * $exec-stat-width - 11 * $border-width-normal;
+    $exec-title-width: $root-width - $exec-time-width - 8 * $exec-stat-width - 11 * v.$border-width-normal;
     $exec-class-name-width: $exec-title-width - $exec-spacer-width;
-    $class-report-width: $root-width - 2 * $border-width-normal;
+    $class-report-width: $root-width - 2 * v.$border-width-normal;
 
     width: $root-width;
     min-width: $root-width;
@@ -204,14 +204,14 @@ $exec-spacer-width: 16px;
   }
 }
 
-@media only screen and (min-width: $break-point-large-screen-width-min) and (max-width: $break-point-large-screen-width-max) {
+@media only screen and (min-width: v.$break-point-large-screen-width-min) and (max-width: v.$break-point-large-screen-width-max) {
   body .root-container {
-    $root-width: $break-point-large-root-width;
+    $root-width: v.$break-point-large-root-width;
     $exec-time-width: calc($root-width / 10);
     $exec-stat-width: calc($root-width / 20);
-    $exec-title-width: $root-width - $exec-time-width - 8 * $exec-stat-width - 11 * $border-width-normal;
+    $exec-title-width: $root-width - $exec-time-width - 8 * $exec-stat-width - 11 * v.$border-width-normal;
     $exec-class-name-width: $exec-title-width - $exec-spacer-width;
-    $class-report-width: $root-width - 2 * $border-width-normal;
+    $class-report-width: $root-width - 2 * v.$border-width-normal;
 
     width: $root-width;
     min-width: $root-width;
@@ -257,14 +257,14 @@ $exec-spacer-width: 16px;
   }
 }
 
-@media only screen and (min-width: $break-point-xl-screen-width-min) {
+@media only screen and (min-width: v.$break-point-xl-screen-width-min) {
   body .root-container {
-    $root-width: $break-point-xl-root-width;
+    $root-width: v.$break-point-xl-root-width;
     $exec-time-width: calc($root-width / 15);
     $exec-stat-width: calc($root-width / 25);
-    $exec-title-width: $root-width - $exec-time-width - 8 * $exec-stat-width - 11 * $border-width-normal;
+    $exec-title-width: $root-width - $exec-time-width - 8 * $exec-stat-width - 11 * v.$border-width-normal;
     $exec-class-name-width: $exec-title-width - $exec-spacer-width;
-    $class-report-width: $root-width - 2 * $border-width-normal;
+    $class-report-width: $root-width - 2 * v.$border-width-normal;
 
     width: $root-width;
     min-width: $root-width;

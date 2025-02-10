@@ -1,4 +1,4 @@
-@import "01-variables";
+@use "01-variables" as v;
 
 body .theme-toggle-container {
   position: relative;
@@ -6,48 +6,48 @@ body .theme-toggle-container {
 }
 
 body a#theme-toggle {
-  font-size: $font-size-normal;
+  font-size: v.$font-size-normal;
   vertical-align: middle;
   right: 0;
   position: absolute;
-  padding: $padding-small;
-  width: $font-size-normal * 3;
+  padding: v.$padding-small;
+  width: v.$font-size-normal * 3;
   height: 16px;
   display: inline-block;
-  border-radius: $line-height-normal * 0.75;
+  border-radius: v.$line-height-normal * 0.75;
   text-decoration: none;
 }
 
 body.light {
   a#theme-toggle {
-    color: $light-text-color;
-    border: $border-width-normal $border-style-normal $light-border-color;
-    background: $light-background-color;
+    color: v.$light-text-color;
+    border: v.$border-width-normal v.$border-style-normal v.$light-border-color;
+    background: v.$light-background-color;
     text-align: left;
   }
 
   a#theme-toggle:hover {
-    box-shadow: 0 0 10px 10px $dark-background-color;
-    color: $dark-text-color;
-    background: $dark-background-color;
-    border-color: $dark-border-color;
+    box-shadow: 0 0 10px 10px v.$dark-background-color;
+    color: v.$dark-text-color;
+    background: v.$dark-background-color;
+    border-color: v.$dark-border-color;
     text-decoration: none;
   }
 }
 
 body.dark {
   a#theme-toggle {
-    color: $dark-text-color;
-    border: $border-width-normal $border-style-normal $dark-border-color;
-    background: $dark-background-color;
+    color: v.$dark-text-color;
+    border: v.$border-width-normal v.$border-style-normal v.$dark-border-color;
+    background: v.$dark-background-color;
     text-align: right;
   }
 
   a#theme-toggle:hover {
-    box-shadow: 0 0 10px 10px $light-background-color;
-    color: $light-text-color;
-    background: $light-background-color;
-    border-color: $light-border-color;
+    box-shadow: 0 0 10px 10px v.$light-background-color;
+    color: v.$light-text-color;
+    background: v.$light-background-color;
+    border-color: v.$light-border-color;
     text-decoration: none;
   }
 }
