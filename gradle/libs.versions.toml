@@ -23,6 +23,7 @@ testNg = "7.10.2"
 
 lombokPlugin = "8.12.1"
 nodePlugin =  "7.1.0"
+shadowPlugin = "8.3.6"
 gitVersionerPlugin = "1.6.7"
 indexScanPlugin = "3.0.0"
 owaspPlugin = "12.0.2"
@@ -83,6 +84,7 @@ logback-report = ["logback-classic-report", "logback-core-report"]
 [plugins]
 lombok = { id = "io.freefair.lombok", version.ref = "lombokPlugin" }
 node = { id = "com.github.node-gradle.node", version.ref = "nodePlugin" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadowPlugin" }
 versioner = { id = "io.toolebox.git-versioner", version.ref = "gitVersionerPlugin" }
 index-scan = { id = "org.sonatype.gradle.plugins.scan", version.ref = "indexScanPlugin" }
 owasp-dependencycheck = { id = "org.owasp.dependencycheck", version.ref = "owaspPlugin" }

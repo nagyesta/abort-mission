@@ -1,11 +1,11 @@
-@import "01-variables";
+@use "01-variables" as v;
 
 .help-button {
   cursor: pointer;
   text-decoration: none;
   text-align: center;
   vertical-align: middle;
-  padding: $padding-normal;
+  padding: v.$padding-normal;
   position: fixed;
   right: 0;
   bottom: 75px;
@@ -69,7 +69,7 @@
       padding-top: 18px;
       padding-left: 3px;
       padding-right: 3px;
-      border: $border-width-normal $border-style-soft;
+      border: v.$border-width-normal v.$border-style-soft;
       position: relative;
     }
 
@@ -125,7 +125,7 @@
     }
 
     .filter-option-name {
-      max-height: $line-height-normal;
+      max-height: v.$line-height-normal;
       display: block;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -204,7 +204,7 @@
     padding-top: 18px;
     padding-left: 3px;
     padding-right: 3px;
-    border: $border-width-normal $border-style-normal;
+    border: v.$border-width-normal v.$border-style-normal;
     border-radius: 5px;
     vertical-align: baseline;
     position: relative;
@@ -258,70 +258,70 @@
 
 body.light {
   .filter-time-icon {
-    color: $light-border-color-filter-range;
-    border-color: $light-border-color-filter-range;
-    background-color: $light-background-color-suppressed;
+    color: v.$light-border-color-filter-range;
+    border-color: v.$light-border-color-filter-range;
+    background-color: v.$light-background-color-suppressed;
   }
 }
 
 body.dark {
   .filter-time-icon {
-    color: $dark-border-color-filter-range;
-    border-color: $dark-border-color-filter-range;
-    background-color: $dark-background-color-suppressed;
+    color: v.$dark-border-color-filter-range;
+    border-color: v.$dark-border-color-filter-range;
+    background-color: v.$dark-background-color-suppressed;
   }
 }
 
-@media only screen and (max-width: $break-point-medium-screen-width-max) {
+@media only screen and (max-width: v.$break-point-medium-screen-width-max) {
   body .root-container {
-    width: $break-point-medium-root-width;
-    min-width: $break-point-medium-root-width;
-    max-width: $break-point-medium-root-width;
+    width: v.$break-point-medium-root-width;
+    min-width: v.$break-point-medium-root-width;
+    max-width: v.$break-point-medium-root-width;
 
     .filter-module .filter-box {
-      $width: $break-point-medium-root-width - 2 * (42px + 2px) - 6px;
+      $width: v.$break-point-medium-root-width - 2 * (42px + 2px) - 6px;
       width: $width;
       max-width: $width;
     }
 
     .filter-option-name {
-      max-width: $break-point-medium-root-width - 10px;
+      max-width: v.$break-point-medium-root-width - 10px;
     }
   }
 }
 
-@media only screen and (min-width: $break-point-large-screen-width-min) and (max-width: $break-point-large-screen-width-max) {
+@media only screen and (min-width: v.$break-point-large-screen-width-min) and (max-width: v.$break-point-large-screen-width-max) {
   body .root-container {
-    width: $break-point-large-root-width;
-    min-width: $break-point-large-root-width;
-    max-width: $break-point-large-root-width;
+    width: v.$break-point-large-root-width;
+    min-width: v.$break-point-large-root-width;
+    max-width: v.$break-point-large-root-width;
 
     .filter-module .filter-box {
-      $width: $break-point-large-root-width - 2 * (42px + 2px) - 6px;
+      $width: v.$break-point-large-root-width - 2 * (42px + 2px) - 6px;
       width: $width;
       max-width: $width;
     }
 
     .filter-option-name {
-      max-width: $break-point-large-root-width - 10px;
+      max-width: v.$break-point-large-root-width - 10px;
     }
   }
 }
 
-@media only screen and (min-width: $break-point-xl-screen-width-min) {
+@media only screen and (min-width: v.$break-point-xl-screen-width-min) {
   body .root-container {
-    width: $break-point-xl-root-width;
-    min-width: $break-point-xl-root-width;
-    max-width: $break-point-xl-root-width;
+    width: v.$break-point-xl-root-width;
+    min-width: v.$break-point-xl-root-width;
+    max-width: v.$break-point-xl-root-width;
 
     .filter-module .filter-box {
-      $width: $break-point-xl-root-width - 2 * (42px + 2px) - 6px;
+      $width: v.$break-point-xl-root-width - 2 * (42px + 2px) - 6px;
       width: $width;
       max-width: $width;
     }
 
     .filter-option-name {
-      max-width: $break-point-xl-root-width - 10px;
+      max-width: v.$break-point-xl-root-width - 10px;
     }
   }
 }

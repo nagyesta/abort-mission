@@ -1,5 +1,5 @@
 @use "sass:map";
-@import "01-variables";
+@use "01-variables" as v;
 
 $time-stamp-col-width: 120px;
 $thread-col-widths: (
@@ -13,28 +13,28 @@ $thread-col-widths: (
 );
 $details-action-padding: 3px;
 $details-action-col-width-internal: 15px;
-$details-action-col-width: $details-action-padding * 2 + $details-action-col-width-internal + $border-width-normal;
+$details-action-col-width: $details-action-padding * 2 + $details-action-col-width-internal + v.$border-width-normal;
 
 body.light .log-view {
   .thread.highlighted {
-    box-shadow: $light-thread-color-highlight 0 0 50px 1px inset;
+    box-shadow: v.$light-thread-color-highlight 0 0 50px 1px inset;
   }
 
   .filter-range-start {
-    border-top-color: $light-border-color-filter-range;
+    border-top-color: v.$light-border-color-filter-range;
   }
 
   .filter-range-end {
-    border-bottom-color: $light-border-color-filter-range;
+    border-bottom-color: v.$light-border-color-filter-range;
   }
 
   .details-action a {
-    color: $light-link-color;
+    color: v.$light-link-color;
     text-decoration: none;
   }
 
   .details-action a:hover {
-    color: $light-link-color;
+    color: v.$light-link-color;
     text-decoration: none;
     cursor: pointer;
   }
@@ -42,24 +42,24 @@ body.light .log-view {
 
 body.dark .log-view {
   .thread.highlighted {
-    box-shadow: $dark-thread-color-highlight 0 0 50px 1px inset;
+    box-shadow: v.$dark-thread-color-highlight 0 0 50px 1px inset;
   }
 
   .filter-range-start {
-    border-top-color: $dark-border-color-filter-range;
+    border-top-color: v.$dark-border-color-filter-range;
   }
 
   .filter-range-end {
-    border-bottom-color: $dark-border-color-filter-range;
+    border-bottom-color: v.$dark-border-color-filter-range;
   }
 
   .details-action a {
-    color: $dark-link-color;
+    color: v.$dark-link-color;
     text-decoration: none;
   }
 
   .details-action a:hover {
-    color: $dark-link-color;
+    color: v.$dark-link-color;
     text-decoration: none;
     cursor: pointer;
   }
@@ -104,12 +104,12 @@ body.dark .log-view {
   }
 
   tr.filter-range-start {
-    border-top-width: $border-width-normal * 3;
+    border-top-width: v.$border-width-normal * 3;
     border-top-style: solid;
   }
 
   tr.filter-range-end {
-    border-bottom-width: $border-width-normal * 3;
+    border-bottom-width: v.$border-width-normal * 3;
     border-bottom-style: solid;
   }
 
@@ -122,17 +122,17 @@ body.dark .log-view {
 
   .table-header-base {
     @extend .column-base;
-    padding-left: $padding-normal;
-    font-size: $font-size-normal;
-    line-height: $line-height-normal;
+    padding-left: v.$padding-normal;
+    font-size: v.$font-size-normal;
+    line-height: v.$line-height-normal;
     font-weight: bold;
   }
 
   .text-column-base {
     @extend .column-base;
-    padding-left: $padding-normal;
-    font-size: $font-size-normal;
-    line-height: $line-height-normal;
+    padding-left: v.$padding-normal;
+    font-size: v.$font-size-normal;
+    line-height: v.$line-height-normal;
   }
 
   .time-stamp {
@@ -146,20 +146,20 @@ body.dark .log-view {
   }
 
   .thread.thread-start {
-    border-left-width: $border-width-normal;
-    border-right-width: $border-width-normal;
-    border-top-width: $border-width-normal;
+    border-left-width: v.$border-width-normal;
+    border-right-width: v.$border-width-normal;
+    border-top-width: v.$border-width-normal;
   }
 
   .thread.thread-end {
-    border-left-width: $border-width-normal;
-    border-right-width: $border-width-normal;
-    border-bottom-width: $border-width-normal;
+    border-left-width: v.$border-width-normal;
+    border-right-width: v.$border-width-normal;
+    border-bottom-width: v.$border-width-normal;
   }
 
   .thread.thread-cont {
-    border-left-width: $border-width-normal;
-    border-right-width: $border-width-normal;
+    border-left-width: v.$border-width-normal;
+    border-right-width: v.$border-width-normal;
   }
 
   .thread-spacer {
@@ -172,7 +172,7 @@ body.dark .log-view {
 
     .stack-trace {
       line-break: anywhere;
-      padding-left: $padding-xl;
+      padding-left: v.$padding-xl;
     }
   }
 
@@ -249,11 +249,11 @@ body.dark .log-view {
   }
 }
 
-$log-view-space-used-by-borders: 4 * $border-width-normal;
+$log-view-space-used-by-borders: 4 * v.$border-width-normal;
 
-@media only screen and (max-width: $break-point-medium-screen-width-max) {
+@media only screen and (max-width: v.$break-point-medium-screen-width-max) {
   body .root-container {
-    $root-width: $break-point-medium-root-width;
+    $root-width: v.$break-point-medium-root-width;
 
     .log-view {
       .time-stamp {
@@ -410,9 +410,9 @@ $log-view-space-used-by-borders: 4 * $border-width-normal;
   }
 }
 
-@media only screen and (min-width: $break-point-large-screen-width-min) and (max-width: $break-point-large-screen-width-max) {
+@media only screen and (min-width: v.$break-point-large-screen-width-min) and (max-width: v.$break-point-large-screen-width-max) {
   body .root-container {
-    $root-width: $break-point-large-root-width;
+    $root-width: v.$break-point-large-root-width;
 
     .log-view {
       .time-stamp {
@@ -570,9 +570,9 @@ $log-view-space-used-by-borders: 4 * $border-width-normal;
 }
 
 
-@media only screen and (min-width: $break-point-xl-screen-width-min) {
+@media only screen and (min-width: v.$break-point-xl-screen-width-min) {
   body .root-container {
-    $root-width: $break-point-xl-root-width;
+    $root-width: v.$break-point-xl-root-width;
 
     .log-view {
       .time-stamp {

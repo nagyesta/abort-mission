@@ -1,9 +1,9 @@
+@use "01-variables" as v;
 @media print {
-  @import "01-variables";
   body {
-    background: $print-background-color;
-    color: $print-text-color !important;
-    border-color: $print-border-color !important;
+    background: v.$print-background-color;
+    color: v.$print-text-color !important;
+    border-color: v.$print-border-color !important;
   }
 
   .help-button {
@@ -35,7 +35,7 @@
   }
 
   .default-border-color {
-    border-color: $print-border-color !important;
+    border-color: v.$print-border-color !important;
   }
 
   .logo {
@@ -48,87 +48,87 @@
   }
 
   .text-success {
-    color: $print-text-color !important;
+    color: v.$print-text-color !important;
   }
 
   .text-failure {
-    color: $light-text-color-failure !important;
+    color: v.$light-text-color-failure !important;
   }
 
   .text-abort {
-    color: $light-text-color-abort !important;
+    color: v.$light-text-color-abort !important;
   }
 
   .text-suppressed {
-    color: $light-text-color-suppressed !important;
+    color: v.$light-text-color-suppressed !important;
   }
 
   body a {
-    color: $light-link-color !important;
+    color: v.$light-link-color !important;
   }
 
   body a:hover {
-    color: $light-link-color-hover !important;
+    color: v.$light-link-color-hover !important;
   }
 
   .text-success {
     @extend .default-border-color;
-    color: $light-text-color-success;
+    color: v.$light-text-color-success;
   }
 
   .text-failure {
     @extend .default-border-color;
-    color: $light-text-color-failure;
+    color: v.$light-text-color-failure;
   }
 
   .text-abort {
     @extend .default-border-color;
-    color: $light-text-color-abort;
+    color: v.$light-text-color-abort;
   }
 
   .text-suppressed {
     @extend .default-border-color;
-    color: $light-text-color-suppressed
+    color: v.$light-text-color-suppressed
   }
 
   .mission-success {
-    border: $border-width-prominent-print $border-style-normal-print $light-border-color-success !important;
-    opacity: $print-opacity !important;
+    border: v.$border-width-prominent-print v.$border-style-normal-print v.$light-border-color-success !important;
+    opacity: v.$print-opacity !important;
   }
 
   .mission-failure {
-    border: $border-width-prominent-print $border-style-normal-print $light-border-color-failure !important;
-    opacity: $print-opacity !important;
+    border: v.$border-width-prominent-print v.$border-style-normal-print v.$light-border-color-failure !important;
+    opacity: v.$print-opacity !important;
   }
 
   .mission-abort {
-    border: $border-width-prominent-print $border-style-normal-print $light-border-color-abort !important;
-    opacity: $print-opacity !important;
+    border: v.$border-width-prominent-print v.$border-style-normal-print v.$light-border-color-abort !important;
+    opacity: v.$print-opacity !important;
   }
 
   .mission-suppressed {
-    border: $border-width-prominent-print $border-style-normal-print $light-border-color-suppressed !important;
-    opacity: $print-opacity !important;
+    border: v.$border-width-prominent-print v.$border-style-normal-print v.$light-border-color-suppressed !important;
+    opacity: v.$print-opacity !important;
   }
 
   .countdown-success {
-    border: $border-width-prominent-print $border-style-soft-print $light-border-color-success !important;
-    opacity: $print-opacity !important;
+    border: v.$border-width-prominent-print v.$border-style-soft-print v.$light-border-color-success !important;
+    opacity: v.$print-opacity !important;
   }
 
   .countdown-failure {
-    border: $border-width-prominent-print $border-style-soft-print $light-border-color-failure !important;
-    opacity: $print-opacity !important;
+    border: v.$border-width-prominent-print v.$border-style-soft-print v.$light-border-color-failure !important;
+    opacity: v.$print-opacity !important;
   }
 
   .countdown-abort {
-    border: $border-width-prominent-print $border-style-soft-print $light-border-color-abort !important;
-    opacity: $print-opacity !important;
+    border: v.$border-width-prominent-print v.$border-style-soft-print v.$light-border-color-abort !important;
+    opacity: v.$print-opacity !important;
   }
 
   .countdown-suppressed {
-    border: $border-width-prominent-print $border-style-soft-print $light-border-color-suppressed !important;
-    opacity: $print-opacity !important;
+    border: v.$border-width-prominent-print v.$border-style-soft-print v.$light-border-color-suppressed !important;
+    opacity: v.$print-opacity !important;
   }
 
   .thread, .thread-header, .thread-spacer {
