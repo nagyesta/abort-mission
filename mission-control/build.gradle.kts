@@ -46,6 +46,7 @@ tasks.test {
     useJUnitPlatform {
         systemProperty("abort-mission.report.directory", layout.buildDirectory.dir("reports/abort-mission/").get().asFile)
     }
+    finalizedBy(tasks.getByName("jacocoTestReport"))
 }
 
 publishing {

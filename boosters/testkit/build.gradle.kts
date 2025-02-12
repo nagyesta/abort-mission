@@ -55,6 +55,7 @@ tasks.processResources.get().finalizedBy(copyLegalDocs)
 
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.getByName("jacocoTestReport"))
 }
 
 publishing {

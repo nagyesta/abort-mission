@@ -114,6 +114,7 @@ tasks.javadoc.get().dependsOn(tasks.named("processTemplates"))
 
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.getByName("jacocoTestReport"))
 }
 
 publishing {
