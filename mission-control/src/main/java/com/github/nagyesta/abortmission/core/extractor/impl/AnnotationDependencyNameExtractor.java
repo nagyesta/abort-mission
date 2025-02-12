@@ -16,8 +16,7 @@ public abstract class AnnotationDependencyNameExtractor<A extends Annotation> im
     @Override
     public Optional<Set<String>> apply(final Object o) {
         Set<String> tags = new TreeSet<>();
-        if (o instanceof Method) {
-            final Method m = (Method) o;
+        if (o instanceof final Method m) {
             accumulateTags(tags, m.getAnnotationsByType(getType()));
             accumulateTags(tags, m.getDeclaringClass().getAnnotationsByType(getType()));
         } else if (o instanceof Class) {

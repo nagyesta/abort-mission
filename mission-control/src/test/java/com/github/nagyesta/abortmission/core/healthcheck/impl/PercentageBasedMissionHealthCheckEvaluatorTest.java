@@ -124,11 +124,9 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
         final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
 
         //when
-        assertThrows(IllegalArgumentException.class, () -> {
-            PercentageBasedMissionHealthCheckEvaluator
-                    .builder(matcher, new MissionStatisticsCollector(matcher))
-                    .abortThreshold(input);
-        });
+        assertThrows(IllegalArgumentException.class, () -> PercentageBasedMissionHealthCheckEvaluator
+                .builder(matcher, new MissionStatisticsCollector(matcher))
+                .abortThreshold(input));
 
         //then exception
     }

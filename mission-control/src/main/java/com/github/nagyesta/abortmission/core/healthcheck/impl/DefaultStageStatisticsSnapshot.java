@@ -65,10 +65,9 @@ public class DefaultStageStatisticsSnapshot implements StageStatisticsSnapshot {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof DefaultStageStatisticsSnapshot)) {
+        if (!(o instanceof final DefaultStageStatisticsSnapshot that)) {
             return false;
         }
-        final DefaultStageStatisticsSnapshot that = (DefaultStageStatisticsSnapshot) o;
         return failed == that.failed
                 && succeeded == that.succeeded
                 && aborted == that.aborted

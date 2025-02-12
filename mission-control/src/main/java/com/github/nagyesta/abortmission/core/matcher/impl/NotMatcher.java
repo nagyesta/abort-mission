@@ -40,10 +40,9 @@ public class NotMatcher extends BaseMatcher implements MissionHealthCheckMatcher
         if (this == o) {
             return true;
         }
-        if (!(o instanceof NotMatcher)) {
+        if (!(o instanceof final NotMatcher that)) {
             return false;
         }
-        final NotMatcher that = (NotMatcher) o;
         return operand.equals(that.operand);
     }
 

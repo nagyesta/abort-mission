@@ -33,6 +33,8 @@ on:
       - 'gradle/verification-metadata-clean.xml'
       - 'mission-report/flight-evaluation-report/node/package.json'
       - 'mission-report/flight-evaluation-report/node/package-lock.json'
+      - '.idea/**'
+      - '.gitignore'
 
 permissions: read-all
 

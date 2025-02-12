@@ -54,7 +54,6 @@ class LocalDateTimeAdapterTest {
         final LocalDateTimeAdapter underTest = new LocalDateTimeAdapter();
         final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, underTest).create();
 
-        //noinspection LocalCanBeFinal
         try (InputStream stream = getClass().getResourceAsStream(resourceName);
              InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(stream))
         ) {
@@ -75,7 +74,6 @@ class LocalDateTimeAdapterTest {
         final LocalDateTimeAdapter underTest = new LocalDateTimeAdapter();
         final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, underTest).create();
 
-        //noinspection LocalCanBeFinal
         try (InputStream stream = getClass().getResourceAsStream(resourceName);
              InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(stream))
         ) {
@@ -97,7 +95,6 @@ class LocalDateTimeAdapterTest {
         final LocalDateTimeAdapter underTest = new LocalDateTimeAdapter();
         final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, underTest).create();
 
-        //noinspection LocalCanBeFinal
         try (InputStream stream = getClass().getResourceAsStream(resourceName);
              InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(stream))
         ) {

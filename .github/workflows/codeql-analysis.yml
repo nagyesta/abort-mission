@@ -35,6 +35,8 @@ on:
       - '.github/pr-labeler.yml'
       - 'renovate.json'
       - '.whitesource'
+      - '.idea/**'
+      - '.gitignore'
 
 permissions:
   contents: read

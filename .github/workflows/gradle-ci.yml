@@ -26,6 +26,8 @@ on:
       - 'renovate.json'
       - '.whitesource'
       - 'config/ossindex/exclusions.txt'
+      - '.idea/**'
+      - '.gitignore'
 
 permissions:
   contents: read

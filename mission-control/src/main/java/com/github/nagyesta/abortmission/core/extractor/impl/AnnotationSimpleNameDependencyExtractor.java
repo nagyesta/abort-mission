@@ -12,11 +12,10 @@ public class AnnotationSimpleNameDependencyExtractor implements DependencyNameEx
 
     @Override
     public Optional<Set<String>> apply(final Object o) {
-        if (!(o instanceof Class<?>)) {
+        if (!(o instanceof final Class<?> testClass)) {
             return Optional.empty();
         }
 
-        final Class<?> testClass = (Class<?>) o;
         final Set<String> dependencies = Arrays.stream(testClass.getAnnotations())
                 .map(annotation -> annotation.annotationType().getSimpleName()).collect(Collectors.toSet());
         return wrapWithOptional(new TreeSet<>(dependencies));

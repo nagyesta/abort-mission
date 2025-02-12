@@ -48,13 +48,12 @@ public class EnvironmentMatcher extends RegexMatcher implements MissionHealthChe
         if (this == o) {
             return true;
         }
-        if (!(o instanceof EnvironmentMatcher)) {
+        if (!(o instanceof final EnvironmentMatcher that)) {
             return false;
         }
         if (!super.equals(o)) {
             return false;
         }
-        final EnvironmentMatcher that = (EnvironmentMatcher) o;
         return environmentVariableName.equals(that.environmentVariableName);
     }
 

@@ -72,7 +72,6 @@ public class ReportingHelper {
      * @param telemetry The telemetry we need to write.
      * @param json      The json file target.
      */
-    @SuppressWarnings("LocalCanBeFinal")
     protected void writeJson(final LaunchTelemetry telemetry, final File json) {
         try (FileOutputStream stream = new FileOutputStream(json);
              OutputStreamWriter jsonWriter = new OutputStreamWriter(stream, StandardCharsets.UTF_8)) {
@@ -81,6 +80,7 @@ public class ReportingHelper {
                     .create().toJson(telemetry);
             jsonWriter.write(jsonReport);
         } catch (final Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
     }

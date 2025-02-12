@@ -19,11 +19,10 @@ public class AbortMissionHook extends LaunchAbortHook {
 
     @Override
     protected Map<String, Consumer<AbortMissionCommandOps>> defineOutline() {
-        return Collections.singletonMap(CONTEXT_NAME, ops -> {
-            ops.registerHealthCheck(percentageBasedEvaluator(scenarioNameMatcher("^Fuel.+"))
-                    .abortThreshold(1)
-                    .build());
-        });
+        return Collections.singletonMap(CONTEXT_NAME, ops -> ops
+                .registerHealthCheck(percentageBasedEvaluator(scenarioNameMatcher("^Fuel.+"))
+                .abortThreshold(1)
+                .build()));
     }
 
     @Override

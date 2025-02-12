@@ -119,23 +119,15 @@ public final class MissionHealthCheckMatcherBuilder
 
     @Override
     public MissionHealthCheckMatcher build() {
-        switch (Objects.requireNonNull(criteria, "Builder not initialized.")) {
-            case AND:
-                return new AndMatcher(operands);
-            case OR:
-                return new OrMatcher(operands);
-            case NOT:
-                return new NotMatcher(operand);
-            case DEPENDENCY:
-                return new DependencyMatcher(name, extractor);
-            case CLASS:
-                return new ClassMatcher(regex);
-            case ENVIRONMENT:
-                return new EnvironmentMatcher(name, regex);
-            case PROPERTY:
-                return new SystemPropertyMatcher(name, regex);
-            default:
-                throw new UnsupportedOperationException("Unsupported match criteria found: " + criteria);
-        }
+        return switch (Objects.requireNonNull(criteria, "Builder not initialized.")) {
+            case AND -> new AndMatcher(operands);
+            case OR -> new OrMatcher(operands);
+            case NOT -> new NotMatcher(operand);
+            case DEPENDENCY -> new DependencyMatcher(name, extractor);
+            case CLASS -> new ClassMatcher(regex);
+            case ENVIRONMENT -> new EnvironmentMatcher(name, regex);
+            case PROPERTY -> new SystemPropertyMatcher(name, regex);
+            default -> throw new UnsupportedOperationException("Unsupported match criteria found: " + criteria);
+        };
     }
 }
