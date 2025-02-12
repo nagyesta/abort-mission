@@ -55,6 +55,7 @@ tasks.test {
         systemProperty("abort-mission.report.directory", layout.buildDirectory.dir("reports/abort-mission/").get().asFile)
         includeTags("unit", "integration")
     }
+    finalizedBy(tasks.getByName("jacocoTestReport"))
 }
 
 publishing {

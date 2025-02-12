@@ -54,6 +54,7 @@ tasks.test {
     useJUnitPlatform {
         includeTags("unit", "integration")
     }
+    finalizedBy(tasks.getByName("jacocoTestReport"))
 }
 
 publishing {
