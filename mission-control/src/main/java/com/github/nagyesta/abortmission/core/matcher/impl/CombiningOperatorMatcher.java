@@ -50,11 +50,10 @@ public abstract class CombiningOperatorMatcher extends BaseMatcher implements Mi
         if (this == o) {
             return true;
         }
-        if (!(o instanceof CombiningOperatorMatcher)) {
+        if (!(o instanceof final CombiningOperatorMatcher that)) {
             return false;
         }
-        final CombiningOperatorMatcher that = (CombiningOperatorMatcher) o;
-        return getMatchCriteria() == ((CombiningOperatorMatcher) o).getMatchCriteria() && operands.equals(that.operands);
+        return getMatchCriteria() == that.getMatchCriteria() && operands.equals(that.operands);
     }
 
     @Override

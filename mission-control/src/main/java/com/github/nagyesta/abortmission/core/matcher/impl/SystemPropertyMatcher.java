@@ -47,13 +47,12 @@ public class SystemPropertyMatcher extends RegexMatcher implements MissionHealth
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SystemPropertyMatcher)) {
+        if (!(o instanceof final SystemPropertyMatcher that)) {
             return false;
         }
         if (!super.equals(o)) {
             return false;
         }
-        final SystemPropertyMatcher that = (SystemPropertyMatcher) o;
         return systemPropertyName.equals(that.systemPropertyName);
     }
 

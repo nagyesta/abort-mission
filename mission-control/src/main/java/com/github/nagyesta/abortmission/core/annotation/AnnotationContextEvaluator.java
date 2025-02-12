@@ -148,6 +148,7 @@ public final class AnnotationContextEvaluator {
 
     private Optional<Class<? extends MissionOutline>> findClosestDefaultMissionOutline(final Class<?> testInstanceClass) {
         final String[] split = testInstanceClass.getName().split(REGEX_DOT);
+        //noinspection DataFlowIssue
         return IntStream.range(1, split.length)
                 .mapToObj(excludeLast -> Arrays
                         .stream(split)
@@ -170,8 +171,7 @@ public final class AnnotationContextEvaluator {
 
     private boolean hasDefaultMissionOutlineClass(final String packageName) {
         try {
-            MissionOutline.class.isAssignableFrom(Class.forName(packageName + DEFAULT_MISSION_OUTLINE_DEFINITION_CLASS_NAME));
-            return true;
+            return MissionOutline.class.isAssignableFrom(Class.forName(packageName + DEFAULT_MISSION_OUTLINE_DEFINITION_CLASS_NAME));
         } catch (final ClassNotFoundException e) {
             return false;
         }

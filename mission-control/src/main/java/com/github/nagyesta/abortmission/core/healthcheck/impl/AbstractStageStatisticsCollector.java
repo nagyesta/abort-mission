@@ -31,10 +31,9 @@ public abstract class AbstractStageStatisticsCollector implements StageStatistic
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AbstractStageStatisticsCollector)) {
+        if (!(o instanceof final AbstractStageStatisticsCollector that)) {
             return false;
         }
-        final AbstractStageStatisticsCollector that = (AbstractStageStatisticsCollector) o;
         return Objects.equals(matcher, that.matcher);
     }
 

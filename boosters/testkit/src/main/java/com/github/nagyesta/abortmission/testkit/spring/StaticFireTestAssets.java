@@ -83,10 +83,8 @@ public final class StaticFireTestAssets {
                                     .build())
                             .build());
         });
-        plan.put(PARALLEL, ops -> {
-            ops.registerHealthCheck(
-                    reportOnlyEvaluator(matcher().anyClass().build()).build());
-        });
+        plan.put(PARALLEL, ops -> ops
+                .registerHealthCheck(reportOnlyEvaluator(matcher().anyClass().build()).build()));
         return plan;
     }
 

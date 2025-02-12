@@ -81,13 +81,10 @@ public class BaseLaunchTelemetryConverter {
             final Map<String, List<StageTimeMeasurement>> targetMap,
             final Stream<StageTimeMeasurement> timeSeriesStream) {
         timeSeriesStream.collect(Collectors.groupingBy(StageTimeMeasurement::getTestClassId))
-                .forEach((testClassId, measurementList) -> {
-                    measurementList.stream()
-                            .collect(Collectors.groupingBy(StageTimeMeasurement::getTestCaseId))
-                            .forEach((testCaseId, measurements) -> {
-                                mergeIntoIntermediateClassMap(targetMap, testClassId, measurementList);
-                            });
-                });
+                .forEach((testClassId, measurementList) -> measurementList.stream()
+                        .collect(Collectors.groupingBy(StageTimeMeasurement::getTestCaseId))
+                        .forEach((testCaseId, measurements) ->
+                                mergeIntoIntermediateClassMap(targetMap, testClassId, measurementList)));
     }
 
     private void mergeMatcherNamesByClassAndMethodName(
@@ -95,15 +92,12 @@ public class BaseLaunchTelemetryConverter {
             final Stream<StageTimeMeasurement> timeSeriesStream,
             final String evaluator) {
         timeSeriesStream.collect(Collectors.groupingBy(StageTimeMeasurement::getTestClassId))
-                .forEach((testClassId, measurementList) -> {
-                    measurementList.stream()
-                            .collect(Collectors.groupingBy(StageTimeMeasurement::getTestCaseId))
-                            .forEach((testCaseId, measurements) -> {
-                                targetMap.computeIfAbsent(testClassId, key -> new TreeMap<>())
-                                        .computeIfAbsent(testCaseId, key -> new TreeSet<>())
-                                        .add(evaluator);
-                            });
-                });
+                .forEach((testClassId, measurementList) -> measurementList.stream()
+                        .collect(Collectors.groupingBy(StageTimeMeasurement::getTestCaseId))
+                        .forEach((testCaseId, measurements) -> targetMap
+                                .computeIfAbsent(testClassId, key -> new TreeMap<>())
+                                .computeIfAbsent(testCaseId, key -> new TreeSet<>())
+                                .add(evaluator)));
     }
 
     private void mergeIntoIntermediateClassMap(

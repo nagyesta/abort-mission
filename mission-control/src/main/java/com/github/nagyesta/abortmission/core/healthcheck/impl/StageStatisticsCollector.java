@@ -104,10 +104,9 @@ public class StageStatisticsCollector extends AbstractStageStatisticsCollector i
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ReadOnlyStageStatistics)) {
+        if (!(o instanceof final ReadOnlyStageStatistics that)) {
             return false;
         }
-        final ReadOnlyStageStatistics that = (ReadOnlyStageStatistics) o;
         return super.equals(o) && this.getSnapshot().equals(that.getSnapshot());
     }
 

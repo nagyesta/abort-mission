@@ -56,10 +56,9 @@ public class DependencyMatcher implements MissionHealthCheckMatcher {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof DependencyMatcher)) {
+        if (!(o instanceof final DependencyMatcher that)) {
             return false;
         }
-        final DependencyMatcher that = (DependencyMatcher) o;
         return dependencyName.equals(that.dependencyName);
     }
 

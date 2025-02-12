@@ -7,7 +7,6 @@ import java.io.File;
 
 class ConversionPropertiesTest {
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test
     void testConstructorShouldThrowExceptionWhenInputIsnull() {
         //given
@@ -21,7 +20,6 @@ class ConversionPropertiesTest {
         //then + exception
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test
     void testConstructorShouldThrowExceptionWhenOutputIsnull() {
         //given

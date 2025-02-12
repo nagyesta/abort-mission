@@ -99,10 +99,9 @@ public final class TestRunTelemetry implements Comparable<TestRunTelemetry> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof TestRunTelemetry)) {
+        if (!(o instanceof final TestRunTelemetry that)) {
             return false;
         }
-        final TestRunTelemetry that = (TestRunTelemetry) o;
         return start == that.start
                 && end == that.end
                 && Objects.equals(launchId, that.launchId)

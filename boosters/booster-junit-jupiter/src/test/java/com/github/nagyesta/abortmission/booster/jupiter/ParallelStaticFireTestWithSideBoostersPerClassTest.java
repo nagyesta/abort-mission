@@ -64,7 +64,7 @@ public class ParallelStaticFireTestWithSideBoostersPerClassTest {
     private void executeTest(final int wait) throws InterruptedException {
         //given
         ThreadTracker.THREADS_USED.add(Thread.currentThread().getName());
-        LOGGER.info("Running test with max wait: " + wait);
+        LOGGER.info("Running test with max wait: {}", wait);
         Thread.sleep(RANDOM.nextInt(wait));
 
         //when

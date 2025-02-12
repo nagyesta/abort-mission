@@ -61,10 +61,9 @@ public final class MissionStatisticsCollector implements ReadOnlyMissionStatisti
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ReadOnlyMissionStatistics)) {
+        if (!(o instanceof final ReadOnlyMissionStatistics that)) {
             return false;
         }
-        final ReadOnlyMissionStatistics that = (ReadOnlyMissionStatistics) o;
         return Objects.equals(countdown, that.getReadOnlyCountdown())
                 && Objects.equals(mission, that.getReadOnlyMission());
     }

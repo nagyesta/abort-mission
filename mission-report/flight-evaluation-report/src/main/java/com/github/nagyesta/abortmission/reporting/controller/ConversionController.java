@@ -65,12 +65,11 @@ public final class ConversionController {
         try {
             return objectMapper.writer().writeValueAsString(launchHtml);
         } catch (final JsonProcessingException e) {
-            log.error("Unable to serialize launch telemetry: " + e.getMessage(), e);
+            log.error("Unable to serialize launch telemetry: {}", e.getMessage(), e);
             throw new RenderException();
         }
     }
 
-    @SuppressWarnings("LocalCanBeFinal")
     private void render(final Context context) {
         try (FileOutputStream stream = new FileOutputStream(properties.getOutput());
              OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8)) {
@@ -87,7 +86,6 @@ public final class ConversionController {
         return context;
     }
 
-    @SuppressWarnings("LocalCanBeFinal")
     private LaunchJson readValidJson() throws RenderException {
         try (FileInputStream stream = new FileInputStream(properties.getInput());
              InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
@@ -112,7 +110,6 @@ public final class ConversionController {
         }
     }
 
-    @SuppressWarnings("LocalCanBeFinal")
     private JsonSchema getSchema(final boolean relaxed) throws IOException {
         try (InputStream source = getSource(relaxed)) {
             final JsonNode schemaNode = objectMapper.readTree(source);

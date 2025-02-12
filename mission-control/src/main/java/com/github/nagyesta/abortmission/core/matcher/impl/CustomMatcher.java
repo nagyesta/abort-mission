@@ -25,10 +25,9 @@ public abstract class CustomMatcher implements MissionHealthCheckMatcher {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof CustomMatcher)) {
+        if (!(o instanceof final CustomMatcher that)) {
             return false;
         }
-        final CustomMatcher that = (CustomMatcher) o;
         return getName().equals(that.getName());
     }
 
