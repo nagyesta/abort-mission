@@ -19,7 +19,7 @@ jupiter = "5.11.4"
 jupiterPlatform = "1.11.4"
 mockitoCore = "5.15.2"
 cucumber = "7.21.1"
-testNg = "7.10.2"
+testNg = "7.11.0"
 
 lombokPlugin = "8.12.1"
 nodePlugin =  "7.1.0"
