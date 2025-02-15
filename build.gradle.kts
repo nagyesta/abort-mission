@@ -94,6 +94,7 @@ subprojects {
 
         tasks.javadoc.configure {
             (options as StandardJavadocDocletOptions).addBooleanOption("Xdoclint:none", true)
+            (options as StandardJavadocDocletOptions).addBooleanOption("Xdoclint:-missing", true)
         }
 
         jacoco {
@@ -174,10 +175,6 @@ subprojects {
             dependsOn(tasks.check)
         }
 
-        tasks.withType<Javadoc>().configureEach {
-            //options("Xdoclint:-missing", true)
-        }
-
         tasks.withType<Checkstyle>().configureEach {
             configProperties = mutableMapOf<String, Any>(
                     "base_dir" to rootDir.absolutePath.toString(),
@@ -195,10 +192,6 @@ subprojects {
         //Disable metadata publishing and rely on Maven only
         tasks.withType<GenerateModuleMetadata>().configureEach {
             enabled = false
-        }
-
-        tasks.withType<Javadoc> {
-            (options as StandardJavadocDocletOptions).addBooleanOption("Xdoclint:-missing", true)
         }
 
         ossIndexAudit {

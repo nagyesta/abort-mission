@@ -9,7 +9,7 @@ module.exports = function (grunt) {
                     production: true,
                     depth: 5,
                     directory: './',
-                    out: '../build/nodejs-dependency-licenses.csv',
+                    out: '../build/resources/main/META-INF/nodejs-dependency-licenses.csv',
                     csv: true
                 }
             }

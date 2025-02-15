@@ -88,6 +88,7 @@ tasks.register<NpxTask>("processTemplates") {
     })
     outputs.dir(layout.buildDirectory.dir("html-view").get().asFile)
     outputs.dir(layout.buildDirectory.dir("resources/main/templates/html").get().asFile)
+    outputs.file(layout.buildDirectory.dir("resources/main/META-INF/nodejs-dependency-licenses.csv").get().asFile)
     command = "grunt"
     group = "build"
     args.set(listOf())
