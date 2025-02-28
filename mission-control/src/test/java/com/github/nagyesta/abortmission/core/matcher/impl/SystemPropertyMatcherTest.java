@@ -75,14 +75,14 @@ class SystemPropertyMatcherTest extends AbstractMatcherTest {
                                                    final Object component,
                                                    final boolean expected) {
         //given
-        final MissionHealthCheckMatcher underTest = MissionHealthCheckMatcherBuilder.builder()
+        final var underTest = MissionHealthCheckMatcherBuilder.builder()
                 .envVariable(envName)
                 .valuePattern(regex)
                 .build();
         assertInstanceOf(EnvironmentMatcher.class, underTest);
 
         //when
-        final boolean actual = underTest.matches(component);
+        final var actual = underTest.matches(component);
 
         //then
         assertEquals(expected, actual);

@@ -57,14 +57,14 @@ class AndMatcherTest extends BaseCombiningMatcherTest {
     @MethodSource("inputProvider")
     void testMatchesRequiresAllOperandsToMatchWhenCalled(final boolean matches, final Collection<String> operands) {
         //given
-        final MissionHealthCheckMatcherBuilder builder = (MissionHealthCheckMatcherBuilder) builder();
-        for (final String regex : operands) {
+        final var builder = (MissionHealthCheckMatcherBuilder) builder();
+        for (final var regex : operands) {
             builder.and(builder().classNamePattern(regex).build());
         }
-        final MissionHealthCheckMatcher underTest = builder.build();
+        final var underTest = builder.build();
 
         //when
-        final boolean actual = underTest.matches(this.getClass());
+        final var actual = underTest.matches(this.getClass());
 
         //then
         assertEquals(matches, actual);

@@ -107,7 +107,7 @@ public class StaticFireBoosterTest {
                         .succeeded(SUCCESSFUL_PARALLEL_CASES)
                         .aborted(0)
                         .failed(0));
-        final List<String> threadNamesFromTestMethods = ThreadTracker.THREADS_USED.stream()
+        final var threadNamesFromTestMethods = ThreadTracker.THREADS_USED.stream()
                 .sorted().collect(Collectors.toList());
         MissionControl.matchingHealthChecks(PARALLEL, StaticFireTestWithSideBoosters.class)
                 .forEach(evaluator -> {
@@ -116,7 +116,7 @@ public class StaticFireBoosterTest {
                     assertEquals(PARALLEL_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
                             evaluator.getStats().getReadOnlyMission().getSnapshot());
                     //check thread names
-                    final List<String> capturedThreads = evaluator.getStats().getReadOnlyMission()
+                    final var capturedThreads = evaluator.getStats().getReadOnlyMission()
                             .timeSeriesStream()
                             .map(StageTimeMeasurement::getThreadName)
                             .distinct()

@@ -34,7 +34,7 @@ public class BaseLaunchTelemetryConverter {
                                                                      final Map<String, List<StageTimeMeasurement>> byTestClassAccumulator) {
         final SortedMap<String, ClassTelemetry> parsedClasses = new TreeMap<>();
         byTestClassAccumulator.forEach((className, measurementList) -> {
-            final Map<String, Set<String>> matcherNames = matchersByClassAndMethod.getOrDefault(className, Collections.emptyMap());
+            final var matcherNames = matchersByClassAndMethod.getOrDefault(className, Collections.emptyMap());
             parsedClasses.put(className, new ClassTelemetry(classConverter, className, measurementList, matcherNames));
         });
         return Collections.unmodifiableSortedMap(parsedClasses);

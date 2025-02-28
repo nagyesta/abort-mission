@@ -72,12 +72,12 @@ class DependencyMatcherTest extends AbstractMatcherTest {
     @MethodSource("inputProvider")
     void testMatchesShouldUseExactMatchWhenCalledWithString(final boolean matches, final String dependency) {
         //given
-        final MissionHealthCheckMatcher underTest = MissionHealthCheckMatcherBuilder.builder()
+        final var underTest = MissionHealthCheckMatcherBuilder.builder()
                 .dependencyWith(dependency)
                 .extractor(new StringDependencyNameExtractor()).build();
 
         //when
-        final boolean actual = underTest.matches(MATCHING_DEPENDENCY);
+        final var actual = underTest.matches(MATCHING_DEPENDENCY);
 
         //then
         assertEquals(matches, actual);
@@ -88,12 +88,12 @@ class DependencyMatcherTest extends AbstractMatcherTest {
     @MethodSource("unsupportedComponentProvider")
     void testMatchesShouldThrowExceptionWhenCalledWithUnsupportedInput(final Object invalidInput) {
         //given
-        final MissionHealthCheckMatcher underTest = MissionHealthCheckMatcherBuilder.builder()
+        final var underTest = MissionHealthCheckMatcherBuilder.builder()
                 .dependencyWith(MATCHING_DEPENDENCY)
                 .extractor(new StringDependencyNameExtractor()).build();
 
         //when
-        final boolean actual = underTest.matches(invalidInput);
+        final var actual = underTest.matches(invalidInput);
 
         //then
         assertFalse(actual);

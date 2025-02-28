@@ -17,7 +17,7 @@ class ParachuteDropTest {
         //given
 
         //when
-        final boolean actual = underTest.canOpenParachute(parachuteIndex);
+        final var actual = underTest.canOpenParachute(parachuteIndex);
 
         //then
         assertTrue(actual);
@@ -29,7 +29,7 @@ class ParachuteDropTest {
         //given
 
         //when
-        final boolean actual = underTest.canOpenParachute(parachuteIndex);
+        final var actual = underTest.canOpenParachute(parachuteIndex);
 
         //then
         assertFalse(actual);

@@ -39,7 +39,7 @@ public class ClassTelemetryConverter {
             if (StageTimeMeasurement.CLASS_ONLY.equals(method)) {
                 return;
             }
-            final Set<String> names = matcherNames.getOrDefault(method, Collections.emptySet());
+            final var names = matcherNames.getOrDefault(method, Collections.emptySet());
             methodStats.put(method, new StageLaunchStats(filter(measurementList), names));
         });
         return Collections.unmodifiableMap(methodStats);
@@ -56,9 +56,9 @@ public class ClassTelemetryConverter {
                                                   final Map<String, List<StageTimeMeasurement>> byMethods) {
         Objects.requireNonNull(matcherNames, "MatcherNames cannot be null.");
         Objects.requireNonNull(byMethods, "ByMethods cannot be null.");
-        final List<StageTimeMeasurement> classMeasurements = byMethods
+        final var classMeasurements = byMethods
                 .getOrDefault(StageTimeMeasurement.CLASS_ONLY, Collections.emptyList());
-        final Set<String> classMatcherNames = matcherNames
+        final var classMatcherNames = matcherNames
                 .getOrDefault(StageTimeMeasurement.CLASS_ONLY, Collections.emptySet());
         return new StageLaunchStats(filter(classMeasurements), classMatcherNames);
     }
@@ -75,7 +75,7 @@ public class ClassTelemetryConverter {
      */
     public static SortedSet<StageTimeMeasurement> filter(final Collection<StageTimeMeasurement> inputMeasurements) {
         Objects.requireNonNull(inputMeasurements, "Input cannot be null.");
-        final Map<UUID, List<StageTimeMeasurement>> uuidListMap = inputMeasurements.stream()
+        final var uuidListMap = inputMeasurements.stream()
                 .collect(Collectors.groupingBy(StageTimeMeasurement::getLaunchId));
         return uuidListMap.values().stream()
                 .map(measurementList -> measurementList.stream().min(Comparator.comparing(StageTimeMeasurement::getResult)))

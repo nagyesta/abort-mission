@@ -1,7 +1,6 @@
 package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
 import com.github.nagyesta.abortmission.core.MissionControl;
-import com.github.nagyesta.abortmission.core.healthcheck.ReadOnlyMissionStatistics;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
@@ -52,8 +51,8 @@ class AlwaysAbortingMissionHealthCheckEvaluatorTest {
     @NullAndEmptySource
     void testBuilderShouldThrowExceptionWhenoverrideKeywordIsCalledWithInvalidData(final String input) {
         //given
-        final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final AlwaysAbortingMissionHealthCheckEvaluator.Builder underTest = MissionControl.abortingEvaluator(anyClass);
+        final var anyClass = mock(MissionHealthCheckMatcher.class);
+        final var underTest = MissionControl.abortingEvaluator(anyClass);
 
         //when
         Assertions.assertThrows(IllegalArgumentException.class, () -> underTest.overrideKeyword(input));
@@ -67,8 +66,8 @@ class AlwaysAbortingMissionHealthCheckEvaluatorTest {
                                                                    final int countdownComplete,
                                                                    final int failureCount) {
         //given
-        final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final AlwaysAbortingMissionHealthCheckEvaluator underTest = MissionControl.abortingEvaluator(anyClass)
+        final var anyClass = mock(MissionHealthCheckMatcher.class);
+        final var underTest = MissionControl.abortingEvaluator(anyClass)
                 .overrideKeyword("all")
                 .build();
 
@@ -79,7 +78,7 @@ class AlwaysAbortingMissionHealthCheckEvaluatorTest {
                 .forEach(i -> underTest.missionLogger().logAndIncrement(with(StageResult.FAILURE)));
         IntStream.range(0, countdownComplete).parallel()
                 .forEach(i -> underTest.countdownLogger().logAndIncrement(with(StageResult.SUCCESS)));
-        final boolean actual = underTest.shouldAbortCountdown();
+        final var actual = underTest.shouldAbortCountdown();
 
         //then
         assertTrue(actual);
@@ -91,8 +90,8 @@ class AlwaysAbortingMissionHealthCheckEvaluatorTest {
                                                           final int failureCount,
                                                           final int successCount) {
         //given
-        final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final AlwaysAbortingMissionHealthCheckEvaluator underTest = MissionControl.abortingEvaluator(anyClass).build();
+        final var anyClass = mock(MissionHealthCheckMatcher.class);
+        final var underTest = MissionControl.abortingEvaluator(anyClass).build();
 
         //when
         IntStream.range(0, failureCount).parallel()
@@ -101,7 +100,7 @@ class AlwaysAbortingMissionHealthCheckEvaluatorTest {
                 .forEach(i -> underTest.missionLogger().logAndIncrement(with(StageResult.SUCCESS)));
         IntStream.range(0, countdownComplete).parallel()
                 .forEach(i -> underTest.countdownLogger().logAndIncrement(with(StageResult.SUCCESS)));
-        final boolean actual = underTest.shouldAbort();
+        final var actual = underTest.shouldAbort();
 
         //then
         assertTrue(actual);
@@ -110,14 +109,14 @@ class AlwaysAbortingMissionHealthCheckEvaluatorTest {
     @Test
     void testoverrideKeywordShouldReturnProvidedValueWhenCalled() {
         //given
-        final String expected = "expected";
-        final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final AlwaysAbortingMissionHealthCheckEvaluator underTest = MissionControl.abortingEvaluator(anyClass)
+        final var expected = "expected";
+        final var anyClass = mock(MissionHealthCheckMatcher.class);
+        final var underTest = MissionControl.abortingEvaluator(anyClass)
                 .overrideKeyword(expected)
                 .build();
 
         //when
-        final String actual = underTest.overrideKeyword();
+        final var actual = underTest.overrideKeyword();
 
         //then
         assertEquals(expected, actual);
@@ -126,11 +125,11 @@ class AlwaysAbortingMissionHealthCheckEvaluatorTest {
     @Test
     void testGetStatsShouldReturnStatisticsWhenCalled() {
         //given
-        final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final AlwaysAbortingMissionHealthCheckEvaluator underTest = MissionControl.abortingEvaluator(anyClass).build();
+        final var anyClass = mock(MissionHealthCheckMatcher.class);
+        final var underTest = MissionControl.abortingEvaluator(anyClass).build();
 
         //when
-        final ReadOnlyMissionStatistics actual = underTest.getStats();
+        final var actual = underTest.getStats();
 
         //then
         assertNotNull(actual.getReadOnlyMission());
@@ -140,14 +139,14 @@ class AlwaysAbortingMissionHealthCheckEvaluatorTest {
     @Test
     void testShouldSuppressAbortShouldReturnTrueWhenSuppressionIsActivated() {
         //given
-        final String keyWord = "all";
-        final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final AlwaysAbortingMissionHealthCheckEvaluator underTest = spy(MissionControl.abortingEvaluator(anyClass)
+        final var keyWord = "all";
+        final var anyClass = mock(MissionHealthCheckMatcher.class);
+        final var underTest = spy(MissionControl.abortingEvaluator(anyClass)
                 .overrideKeyword(keyWord).build());
         doReturn(Set.of(keyWord)).when(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_SUPPRESS_ABORT_EVALUATORS));
 
         //when
-        final boolean actual = underTest.shouldSuppressAbort();
+        final var actual = underTest.shouldSuppressAbort();
 
         //then
         assertTrue(actual);
@@ -157,11 +156,11 @@ class AlwaysAbortingMissionHealthCheckEvaluatorTest {
     @Test
     void testGetBurnInTestCountShouldReturnConstantValue() {
         //given
-        final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final AlwaysAbortingMissionHealthCheckEvaluator underTest = MissionControl.abortingEvaluator(anyClass).build();
+        final var anyClass = mock(MissionHealthCheckMatcher.class);
+        final var underTest = MissionControl.abortingEvaluator(anyClass).build();
 
         //when
-        final int actual = underTest.getBurnInTestCount();
+        final var actual = underTest.getBurnInTestCount();
 
         //then
         assertEquals(Integer.MAX_VALUE, actual);

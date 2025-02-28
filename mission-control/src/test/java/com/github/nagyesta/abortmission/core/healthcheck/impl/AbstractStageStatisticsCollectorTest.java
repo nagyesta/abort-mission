@@ -40,7 +40,7 @@ class AbstractStageStatisticsCollectorTest {
 
     @SuppressWarnings("checkstyle:MagicNumber")
     public static Stream<Arguments> equalsProvider() {
-        final StageStatisticsCollector collector = new StageStatisticsCollector(MATCHER, 1, 2, 3, 4);
+        final var collector = new StageStatisticsCollector(MATCHER, 1, 2, 3, 4);
         return Stream.<Arguments>builder()
                 .add(Arguments.of(AN_INSTANCE, AN_INSTANCE, true))
                 .add(Arguments.of(AN_INSTANCE, collector, true))
@@ -65,7 +65,7 @@ class AbstractStageStatisticsCollectorTest {
         //given
 
         //when
-        final boolean actual = a.equals(b);
+        final var actual = a.equals(b);
 
         //then
         Assertions.assertEquals(expected, actual);
@@ -91,10 +91,10 @@ class AbstractStageStatisticsCollectorTest {
     void testGetMatcherShouldReturnProvidedMatcherWhenCalled() {
         //given
         @SuppressWarnings("UnnecessaryLocalVariable")
-        final AbstractStageStatisticsCollector underTest = AN_INSTANCE;
+        final var underTest = AN_INSTANCE;
 
         //when
-        final MissionHealthCheckMatcher actual = underTest.getMatcher();
+        final var actual = underTest.getMatcher();
 
         //then
         Assertions.assertEquals(MATCHER, actual);

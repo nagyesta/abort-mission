@@ -30,7 +30,7 @@ public final class PropertiesParser {
     }
 
     public ConversionProperties parseArguments() {
-        final ConversionProperties.ConversionPropertiesBuilder builder = ConversionProperties.builder();
+        final var builder = ConversionProperties.builder();
         parse(INPUT, File::new, builder::input);
         parse(OUTPUT, File::new, builder::output);
         parse(RELAXED, Boolean::valueOf, builder::relaxed);

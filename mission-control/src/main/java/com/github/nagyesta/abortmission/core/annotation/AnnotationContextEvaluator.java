@@ -39,7 +39,7 @@ public final class AnnotationContextEvaluator {
     public <A extends Annotation> Optional<String> findContextName(final Method activeMethod,
                                                                    final Class<A> annotation,
                                                                    final Function<A, String> contextNameExtractor) {
-        final Class<?> activeClass = activeMethod.getDeclaringClass();
+        final var activeClass = activeMethod.getDeclaringClass();
         return findContextName(activeClass, annotation, contextNameExtractor);
     }
 
@@ -57,7 +57,7 @@ public final class AnnotationContextEvaluator {
                                                                    final Function<A, String> contextNameExtractor) {
         Optional<String> result = Optional.empty();
         if (activeClass.isAnnotationPresent(annotation)) {
-            final String contextName = contextNameExtractor.apply(activeClass.getAnnotation(annotation));
+            final var contextName = contextNameExtractor.apply(activeClass.getAnnotation(annotation));
             if (contextName != null && !contextName.trim().isEmpty()) {
                 result = Optional.of(contextName.trim());
             }
@@ -72,9 +72,9 @@ public final class AnnotationContextEvaluator {
      * @return true if the method or the declaring class is annotated with {@link SuppressAbortDecisions}, false otherwise.
      */
     public boolean isAbortSuppressed(final Method activeMethod) {
-        final Class<?> activeClass = activeMethod.getDeclaringClass();
-        final boolean suppressOnMethod = activeMethod.isAnnotationPresent(SuppressAbortDecisions.class);
-        final boolean suppressOnClass = activeClass.isAnnotationPresent(SuppressAbortDecisions.class);
+        final var activeClass = activeMethod.getDeclaringClass();
+        final var suppressOnMethod = activeMethod.isAnnotationPresent(SuppressAbortDecisions.class);
+        final var suppressOnClass = activeClass.isAnnotationPresent(SuppressAbortDecisions.class);
         return suppressOnClass || suppressOnMethod;
     }
 
@@ -96,10 +96,10 @@ public final class AnnotationContextEvaluator {
      * @return the set of ignored exceptions.
      */
     public Set<Class<? extends Exception>> findSuppressedExceptions(final Class<?> testInstanceClass) {
-        final boolean suppressOnClass = testInstanceClass.isAnnotationPresent(SuppressLaunchFailureReporting.class);
+        final var suppressOnClass = testInstanceClass.isAnnotationPresent(SuppressLaunchFailureReporting.class);
         final Set<Class<? extends Exception>> suppressedExceptions = new HashSet<>();
         if (suppressOnClass) {
-            final SuppressLaunchFailureReporting annotation = testInstanceClass.getAnnotation(SuppressLaunchFailureReporting.class);
+            final var annotation = testInstanceClass.getAnnotation(SuppressLaunchFailureReporting.class);
             suppressedExceptions.addAll(Arrays.asList(annotation.forExceptions()));
         }
         return suppressedExceptions;
@@ -115,10 +115,10 @@ public final class AnnotationContextEvaluator {
      * @return the set of ignored exceptions.
      */
     public Set<Class<? extends Exception>> findSuppressedExceptions(final Method activeMethod) {
-        final Set<Class<? extends Exception>> suppressedExceptions = findSuppressedExceptions(activeMethod.getDeclaringClass());
-        final boolean suppressOnMethod = activeMethod.isAnnotationPresent(SuppressLaunchFailureReporting.class);
+        final var suppressedExceptions = findSuppressedExceptions(activeMethod.getDeclaringClass());
+        final var suppressOnMethod = activeMethod.isAnnotationPresent(SuppressLaunchFailureReporting.class);
         if (suppressOnMethod) {
-            final SuppressLaunchFailureReporting annotation = activeMethod.getAnnotation(SuppressLaunchFailureReporting.class);
+            final var annotation = activeMethod.getAnnotation(SuppressLaunchFailureReporting.class);
             suppressedExceptions.addAll(Arrays.asList(annotation.forExceptions()));
         }
         return suppressedExceptions;
@@ -133,11 +133,11 @@ public final class AnnotationContextEvaluator {
     public void findAndApplyLaunchPlanDefinition(final Class<?> testInstanceClass) {
         if (Objects.requireNonNull(testInstanceClass, "Test instance cannot be null.")
                 .isAnnotationPresent(LaunchSequence.class)) {
-            final LaunchSequence annotation = testInstanceClass.getAnnotation(LaunchSequence.class);
-            final Class<? extends MissionOutline> missionOutlineClass = annotation.value();
+            final var annotation = testInstanceClass.getAnnotation(LaunchSequence.class);
+            final var missionOutlineClass = annotation.value();
             doInitialBriefingOfMissionOutline(missionOutlineClass);
         } else {
-            final Optional<Class<? extends MissionOutline>> closestMatch = findClosestDefaultMissionOutline(testInstanceClass);
+            final var closestMatch = findClosestDefaultMissionOutline(testInstanceClass);
             if (closestMatch.isPresent()) {
                 doInitialBriefingOfMissionOutline(closestMatch.get());
             } else if (hasDefaultMissionOutlineClass(ROOT_PACKAGE)) {
@@ -147,7 +147,7 @@ public final class AnnotationContextEvaluator {
     }
 
     private Optional<Class<? extends MissionOutline>> findClosestDefaultMissionOutline(final Class<?> testInstanceClass) {
-        final String[] split = testInstanceClass.getName().split(REGEX_DOT);
+        final var split = testInstanceClass.getName().split(REGEX_DOT);
         //noinspection DataFlowIssue
         return IntStream.range(1, split.length)
                 .mapToObj(excludeLast -> Arrays
@@ -179,7 +179,7 @@ public final class AnnotationContextEvaluator {
 
     private void doInitialBriefingOfMissionOutline(final Class<? extends MissionOutline> missionOutlineClass) {
         try {
-            final MissionOutline outline = missionOutlineClass.getConstructor().newInstance();
+            final var outline = missionOutlineClass.getConstructor().newInstance();
             outline.initialBriefing();
         } catch (final Exception e) {
             throw new IllegalArgumentException("Mission outline cannot be instantiated." + e.getMessage(), e);

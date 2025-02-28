@@ -54,8 +54,8 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     @NullAndEmptySource
     void testBuilderShouldThrowExceptionWhenoverrideKeywordIsCalledWithInvalidData(final String input) {
         //given
-        final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final PercentageBasedMissionHealthCheckEvaluator.Builder underTest = MissionControl.percentageBasedEvaluator(anyClass);
+        final var anyClass = mock(MissionHealthCheckMatcher.class);
+        final var underTest = MissionControl.percentageBasedEvaluator(anyClass);
 
         //when
         Assertions.assertThrows(IllegalArgumentException.class, () -> underTest.overrideKeyword(input));
@@ -71,8 +71,8 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
                                                                    final int failureCount,
                                                                    final boolean expectedCountdownAbort) {
         //given
-        final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final PercentageBasedMissionHealthCheckEvaluator underTest = PercentageBasedMissionHealthCheckEvaluator
+        final var anyClass = mock(MissionHealthCheckMatcher.class);
+        final var underTest = PercentageBasedMissionHealthCheckEvaluator
                 .builder(anyClass, new MissionStatisticsCollector(anyClass))
                 .abortThreshold(1)
                 .burnInTestCount(burnInCount)
@@ -83,7 +83,7 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
         IntStream.range(0, countdownFailure).parallel().forEach(i -> underTest.countdownLogger().logAndIncrement(failure()));
         IntStream.range(0, failureCount).parallel().forEach(i -> underTest.missionLogger().logAndIncrement(failure()));
         IntStream.range(0, countdownComplete).parallel().forEach(i -> underTest.countdownLogger().logAndIncrement(success()));
-        final boolean actual = underTest.shouldAbortCountdown();
+        final var actual = underTest.shouldAbortCountdown();
 
         //then
         assertEquals(expectedCountdownAbort, actual);
@@ -98,8 +98,8 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
                                                                      final int successCount,
                                                                      final boolean expectedCountdownAbort) {
         //given
-        final MissionHealthCheckMatcher anyClass = mock(MissionHealthCheckMatcher.class);
-        final PercentageBasedMissionHealthCheckEvaluator underTest = PercentageBasedMissionHealthCheckEvaluator
+        final var anyClass = mock(MissionHealthCheckMatcher.class);
+        final var underTest = PercentageBasedMissionHealthCheckEvaluator
                 .builder(anyClass, new MissionStatisticsCollector(anyClass))
                 .abortThreshold(ABORT_IF_HALF_FAILED)
                 .burnInTestCount(burnInCount)
@@ -109,7 +109,7 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
         IntStream.range(0, failureCount).parallel().forEach(i -> underTest.missionLogger().logAndIncrement(failure()));
         IntStream.range(0, successCount).parallel().forEach(i -> underTest.missionLogger().logAndIncrement(success()));
         IntStream.range(0, countdownComplete).parallel().forEach(i -> underTest.countdownLogger().logAndIncrement(success()));
-        final boolean actual = underTest.shouldAbort();
+        final var actual = underTest.shouldAbort();
 
         //then
         assertEquals(expectedCountdownAbort, actual);
@@ -121,7 +121,7 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     @ValueSource(ints = {-2, -1, 100, 101})
     void testAbortThresholdShouldThrowExceptionWhenCalledWithInvalidValue(final int input) {
         //given
-        final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
+        final var matcher = mock(MissionHealthCheckMatcher.class);
 
         //when
         assertThrows(IllegalArgumentException.class, () -> PercentageBasedMissionHealthCheckEvaluator
@@ -135,7 +135,7 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     @ValueSource(ints = {-2, -1})
     void testBurnInTestCountShouldThrowExceptionWhenCalledWithInvalidValue(final int input) {
         //given
-        final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
+        final var matcher = mock(MissionHealthCheckMatcher.class);
 
         //when
         assertThrows(IllegalArgumentException.class, () -> PercentageBasedMissionHealthCheckEvaluator
@@ -148,8 +148,8 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     @Test
     void testShouldAbortShouldNotCallInternalMethodWhenDisarmed() {
         //given
-        final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
-        final PercentageBasedMissionHealthCheckEvaluator underTest = spy(PercentageBasedMissionHealthCheckEvaluator
+        final var matcher = mock(MissionHealthCheckMatcher.class);
+        final var underTest = spy(PercentageBasedMissionHealthCheckEvaluator
                 .builder(matcher, new MissionStatisticsCollector(matcher))
                 .abortThreshold(1)
                 .build());
@@ -165,8 +165,8 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     @Test
     void testShouldAbortCountdownShouldNotCallInternalMethodWhenDisarmed() {
         //given
-        final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
-        final PercentageBasedMissionHealthCheckEvaluator underTest = spy(PercentageBasedMissionHealthCheckEvaluator
+        final var matcher = mock(MissionHealthCheckMatcher.class);
+        final var underTest = spy(PercentageBasedMissionHealthCheckEvaluator
                 .builder(matcher, new MissionStatisticsCollector(matcher))
                 .abortThreshold(1)
                 .build());

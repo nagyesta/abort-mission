@@ -23,13 +23,13 @@ class MissionOutlineTest {
     @ValueSource(strings = {EMPTY, NAME})
     void testInitialBriefingShouldAvoidRegisteringTwiceWhenCalledWithTheSameName(final String name) {
         //given
-        final MissionOutline firstOutline = new MissionOutline() {
+        final var firstOutline = new MissionOutline() {
             @Override
             protected Map<String, Consumer<AbortMissionCommandOps>> defineOutline() {
                 return Collections.singletonMap(name, ops -> ops.registerHealthCheck(EVALUATOR));
             }
         };
-        final MissionOutline secondOutline = new MissionOutline() {
+        final var secondOutline = new MissionOutline() {
             @Override
             protected Map<String, Consumer<AbortMissionCommandOps>> defineOutline() {
                 return Collections.singletonMap(name, ops -> Assertions.fail("Should have never called."));

@@ -16,7 +16,7 @@ public class AnnotationSimpleNameDependencyExtractor implements DependencyNameEx
             return Optional.empty();
         }
 
-        final Set<String> dependencies = Arrays.stream(testClass.getAnnotations())
+        final var dependencies = Arrays.stream(testClass.getAnnotations())
                 .map(annotation -> annotation.annotationType().getSimpleName()).collect(Collectors.toSet());
         return wrapWithOptional(new TreeSet<>(dependencies));
     }

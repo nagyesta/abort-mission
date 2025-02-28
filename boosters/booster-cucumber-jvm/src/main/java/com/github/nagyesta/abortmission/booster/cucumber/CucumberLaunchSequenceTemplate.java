@@ -44,8 +44,8 @@ public class CucumberLaunchSequenceTemplate extends AbstractMissionLaunchSequenc
      */
     public Optional<StageTimeStopwatch> launchImminent(final Scenario scenario) {
         LOGGER.debug("Preparing mission for scenario from URI: {} named: {}", scenario.getUri(), scenario.getName());
-        final Set<MissionHealthCheckEvaluator> evaluators = scenarioBasedEvaluatorLookup.apply(scenario);
-        final StageTimeStopwatch countdownStopwatch = new StageTimeStopwatch(scenario.getUri().toString(), StageTimeMeasurement.CLASS_ONLY)
+        final var evaluators = scenarioBasedEvaluatorLookup.apply(scenario);
+        final var countdownStopwatch = new StageTimeStopwatch(scenario.getUri().toString(), StageTimeMeasurement.CLASS_ONLY)
                 .overrideDisplayName(scenario.getName() + " (" + scenario.getUri() + ":" + scenario.getLine() + ")");
         evaluators.forEach(e -> e.countdownLogger().logAndIncrement(countdownStopwatch.stop().apply(StageResult.SUCCESS)));
         return evaluateLaunchAbort(evaluators,
@@ -89,7 +89,7 @@ public class CucumberLaunchSequenceTemplate extends AbstractMissionLaunchSequenc
                 .map(tag -> tag.replaceFirst("^@AbortMission_SuppressFailure_", ""))
                 .forEach(tag -> {
                     try {
-                        final Class<?> aClass = Class.forName(tag);
+                        final var aClass = Class.forName(tag);
                         if (Exception.class.isAssignableFrom(aClass)) {
                             suppressedExceptions.add(aClass.asSubclass(Exception.class));
                         }

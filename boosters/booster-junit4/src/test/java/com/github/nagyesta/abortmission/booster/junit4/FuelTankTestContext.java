@@ -48,7 +48,7 @@ public class FuelTankTestContext {
     @Test
     public void testFuelTankShouldFillWhenCalled() {
         //given
-        final FuelTank underTest = new FuelTank();
+        final var underTest = new FuelTank();
 
         //when
         underTest.load(loadAmount);

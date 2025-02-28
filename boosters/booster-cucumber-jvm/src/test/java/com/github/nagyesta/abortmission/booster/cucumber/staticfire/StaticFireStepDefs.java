@@ -30,7 +30,7 @@ public final class StaticFireStepDefs implements ApplicationContextAware {
 
     @When("Static fire is ignited")
     public void staticFireIsIgnited() {
-        boolean burning = true;
+        var burning = true;
         if (centerCore != null) {
             burning = centerCore.isOnFire();
         }

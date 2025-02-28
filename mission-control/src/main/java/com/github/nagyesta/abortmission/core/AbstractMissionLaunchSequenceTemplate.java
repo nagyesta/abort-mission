@@ -36,9 +36,9 @@ public class AbstractMissionLaunchSequenceTemplate {
     protected Optional<StageTimeStopwatch> evaluateLaunchAbort(final Set<MissionHealthCheckEvaluator> evaluators,
                                                                final StageTimeStopwatch stopwatch,
                                                                final Supplier<Boolean> abortSuppressionDecisionSupplier) {
-        final boolean hasEvaluatorThatSuppressesAbort = evaluators.stream().anyMatch(MissionHealthCheckEvaluator::shouldSuppressAbort);
-        final boolean shouldSuppressAbortDecisions = Boolean.TRUE.equals(Objects.requireNonNull(abortSuppressionDecisionSupplier).get());
-        final boolean reportingDone = evaluateAndAbortIfNeeded(
+        final var hasEvaluatorThatSuppressesAbort = evaluators.stream().anyMatch(MissionHealthCheckEvaluator::shouldSuppressAbort);
+        final var shouldSuppressAbortDecisions = Boolean.TRUE.equals(Objects.requireNonNull(abortSuppressionDecisionSupplier).get());
+        final var reportingDone = evaluateAndAbortIfNeeded(
                 partitionBy(evaluators, missionHealthCheckEvaluator
                         -> !hasEvaluatorThatSuppressesAbort && missionHealthCheckEvaluator.shouldAbort()),
                 shouldSuppressAbortDecisions,
@@ -89,9 +89,9 @@ public class AbstractMissionLaunchSequenceTemplate {
                                                final Boolean isAbortSuppressed,
                                                final Function<StageResult, StageTimeMeasurement> timed,
                                                final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction) {
-        final List<MissionHealthCheckEvaluator> shouldAbort = partitionsByShouldAbort.getOrDefault(true, Collections.emptyList());
-        final List<MissionHealthCheckEvaluator> shouldNotAbort = partitionsByShouldAbort.getOrDefault(false, Collections.emptyList());
-        final boolean hasAnyAbort = !shouldAbort.isEmpty();
+        final var shouldAbort = partitionsByShouldAbort.getOrDefault(true, Collections.emptyList());
+        final var shouldNotAbort = partitionsByShouldAbort.getOrDefault(false, Collections.emptyList());
+        final var hasAnyAbort = !shouldAbort.isEmpty();
         if (hasAnyAbort && Boolean.TRUE.equals(isAbortSuppressed)) {
             partitionsByShouldAbort.values().forEach(list -> list.forEach(
                     logOutcomeAndIncreaseCounter(loggerFunction, timed.apply(SUPPRESSED))

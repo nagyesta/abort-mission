@@ -62,20 +62,20 @@ public class StaticFireBoosterTest {
                 assertEquals(CENTER_CORE_NOMINAL_STATS.getReadOnlyMission().getSnapshot(),
                         evaluator.getStats().getReadOnlyMission().getSnapshot());
                 //check display names
-                final List<String> actualCountdownNames = evaluator.getStats().getReadOnlyCountdown().timeSeriesStream()
+                final var actualCountdownNames = evaluator.getStats().getReadOnlyCountdown().timeSeriesStream()
                         .map(StageTimeMeasurement::getDisplayName)
                         .collect(Collectors.toList());
                 assertIterableEquals(EXPECTED_CENTER_DISPLAY_NAMES, actualCountdownNames);
-                final List<String> actualMissionNames = evaluator.getStats().getReadOnlyMission().timeSeriesStream()
+                final var actualMissionNames = evaluator.getStats().getReadOnlyMission().timeSeriesStream()
                         .map(StageTimeMeasurement::getDisplayName)
                         .collect(Collectors.toList());
                 assertIterableEquals(EXPECTED_CENTER_DISPLAY_NAMES, actualMissionNames);
                 //check exception details
-                final List<String> actualExceptions = evaluator.getStats().getReadOnlyMission().timeSeriesStream()
+                final var actualExceptions = evaluator.getStats().getReadOnlyMission().timeSeriesStream()
                         .filter(s -> s.getResult() == StageResult.FAILURE)
                         .map(StageTimeMeasurement::getThrowableClass)
                         .collect(Collectors.toList());
-                final List<String> actualMessages = evaluator.getStats().getReadOnlyMission().timeSeriesStream()
+                final var actualMessages = evaluator.getStats().getReadOnlyMission().timeSeriesStream()
                         .filter(s -> s.getResult() == StageResult.FAILURE)
                         .map(StageTimeMeasurement::getThrowableMessage)
                         .collect(Collectors.toList());

@@ -49,9 +49,9 @@ class AbortMissionCommandOpsTest {
     @Test
     void testRegisterHealthCheckShouldThrowExceptionWhenCalledTwiceWithTheSame() {
         //given
-        final AbortMissionCommandOps underTest = AbortMissionCommandOps.newInstance();
-        final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
-        final MissionHealthCheckEvaluator evaluator = mock(MissionHealthCheckEvaluator.class);
+        final var underTest = AbortMissionCommandOps.newInstance();
+        final var matcher = mock(MissionHealthCheckMatcher.class);
+        final var evaluator = mock(MissionHealthCheckEvaluator.class);
         when(evaluator.getMatcher()).thenReturn(matcher);
 
         //when

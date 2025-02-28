@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.InOrder;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -47,21 +46,21 @@ class ClassTelemetryTest extends AbstractTelemetryTest {
     @Test
     void testConstructorShouldCallConverterWhenCalledWithValidInput() {
         //given
-        final ClassTelemetryConverter converter = mock(ClassTelemetryConverter.class);
+        final var converter = mock(ClassTelemetryConverter.class);
         final Collection<StageTimeMeasurement> measurements = spy(new HashSet<>());
         final Map<String, Set<String>> matcherNames = spy(new HashMap<>());
 
         final Map<String, List<StageTimeMeasurement>> byMethods = spy(new HashMap<>());
         when(converter.partitionByMethods(same(measurements))).thenReturn(byMethods);
 
-        final StageLaunchStats countdown = new StageLaunchStats(Collections.emptySortedSet(), Collections.emptySet());
+        final var countdown = new StageLaunchStats(Collections.emptySortedSet(), Collections.emptySet());
         when(converter.processCountdownStats(same(matcherNames), same(byMethods))).thenReturn(countdown);
 
         final Map<String, StageLaunchStats> methodStats = new HashMap<>();
         when(converter.processLaunchStats(same(matcherNames), same(byMethods))).thenReturn(methodStats);
 
         //when
-        final ClassTelemetry actual = new ClassTelemetry(converter, CLASS, measurements, matcherNames);
+        final var actual = new ClassTelemetry(converter, CLASS, measurements, matcherNames);
 
         //then
         Assertions.assertNotNull(actual);
@@ -69,7 +68,7 @@ class ClassTelemetryTest extends AbstractTelemetryTest {
         Assertions.assertSame(methodStats, actual.getLaunches());
         Assertions.assertSame(CLASS, actual.getClassName());
 
-        final InOrder inOrder = inOrder(converter);
+        final var inOrder = inOrder(converter);
         inOrder.verify(converter).partitionByMethods(same(measurements));
         inOrder.verify(converter).processCountdownStats(same(matcherNames), same(byMethods));
         inOrder.verify(converter).processLaunchStats(same(matcherNames), same(byMethods));

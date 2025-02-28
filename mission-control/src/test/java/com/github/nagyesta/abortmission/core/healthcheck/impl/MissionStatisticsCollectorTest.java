@@ -82,9 +82,9 @@ class MissionStatisticsCollectorTest {
         //given
 
         //when
-        final boolean actual = a.equals(b);
-        final int actualHashA = Objects.hashCode(a);
-        final int actualHashB = Objects.hashCode(b);
+        final var actual = a.equals(b);
+        final var actualHashA = Objects.hashCode(a);
+        final var actualHashB = Objects.hashCode(b);
 
         //then
         assertEquals(expected, actual);

@@ -68,7 +68,7 @@ public class ParallelStaticFireTestWithSideBoostersPerClassTest {
         Thread.sleep(RANDOM.nextInt(wait));
 
         //when
-        final boolean actual = centerCore.isOnFire();
+        final var actual = centerCore.isOnFire();
 
         //then
         assertTrue(actual);

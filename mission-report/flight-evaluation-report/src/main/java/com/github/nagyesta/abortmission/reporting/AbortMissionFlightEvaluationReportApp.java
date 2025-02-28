@@ -1,6 +1,5 @@
 package com.github.nagyesta.abortmission.reporting;
 
-import com.github.nagyesta.abortmission.reporting.config.ConversionProperties;
 import com.github.nagyesta.abortmission.reporting.exception.RenderException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,12 +11,12 @@ import java.util.List;
 public final class AbortMissionFlightEvaluationReportApp {
 
     public static void main(final String[] args) throws RenderException {
-        final AbortMissionFlightEvaluationReportApp app = new AbortMissionFlightEvaluationReportApp();
+        final var app = new AbortMissionFlightEvaluationReportApp();
         app.execute(app.bootstrap(Arrays.asList(args)));
     }
 
     AbortMissionAppContext bootstrap(final List<String> args) {
-        final ConversionProperties properties = new PropertiesParser(args).parseArguments();
+        final var properties = new PropertiesParser(args).parseArguments();
         return new AbortMissionAppContext(properties);
     }
 

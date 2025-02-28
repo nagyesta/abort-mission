@@ -10,7 +10,7 @@ class ConversionPropertiesTest {
     @Test
     void testConstructorShouldThrowExceptionWhenInputIsnull() {
         //given
-        final ConversionProperties.ConversionPropertiesBuilder builder = ConversionProperties.builder()
+        final var builder = ConversionProperties.builder()
                 .output(new File("out.html"));
 
         //when
@@ -23,7 +23,7 @@ class ConversionPropertiesTest {
     @Test
     void testConstructorShouldThrowExceptionWhenOutputIsnull() {
         //given
-        final ConversionProperties.ConversionPropertiesBuilder builder = ConversionProperties.builder()
+        final var builder = ConversionProperties.builder()
                 .input(new File("in.json"));
 
         //when

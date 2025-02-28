@@ -12,10 +12,10 @@ class ScenarioNameMatcherTest {
     @Test
     void testGetPatternShouldReturnTheOriginalPatternWhenCalled() {
         //given
-        final ScenarioNameMatcher underTest = new ScenarioNameMatcher(PATTERN);
+        final var underTest = new ScenarioNameMatcher(PATTERN);
 
         //when
-        final String actual = underTest.getPattern();
+        final var actual = underTest.getPattern();
 
         //then
         Assertions.assertEquals(PATTERN, actual);
@@ -24,10 +24,10 @@ class ScenarioNameMatcherTest {
     @Test
     void testMatchesShouldReturnFalseWhenCalledWithNonScenarioObjects() {
         //given
-        final ScenarioNameMatcher underTest = new ScenarioNameMatcher(PATTERN);
+        final var underTest = new ScenarioNameMatcher(PATTERN);
 
         //when
-        final boolean actual = underTest.matches(PATTERN);
+        final var actual = underTest.matches(PATTERN);
 
         //then
         Assertions.assertFalse(actual);

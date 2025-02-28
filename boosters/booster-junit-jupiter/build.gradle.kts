@@ -32,8 +32,8 @@ dependencies {
 
 licensee {
     allow("Apache-2.0")
-    allow("MIT")
     allowUrl("https://www.eclipse.org/legal/epl-v20.html")
+    allowUrl("https://opensource.org/license/mit")
 }
 
 val copyLegalDocs = tasks.register<Copy>("copyLegalDocs") {

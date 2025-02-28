@@ -22,10 +22,10 @@ class LaunchJsonToHtmlConverterTest {
     @MethodSource("hashProvider")
     void testShortHashShouldHashContentTo32RadixNumbersWhenCalledWithValidString(final String input, final String expected) {
         //given
-        final LaunchJsonToHtmlConverter underTest = new LaunchJsonToHtmlConverter();
+        final var underTest = new LaunchJsonToHtmlConverter();
 
         //when
-        final String actual = underTest.shortHash(input);
+        final var actual = underTest.shortHash(input);
 
         //then
         Assertions.assertEquals(expected, actual);

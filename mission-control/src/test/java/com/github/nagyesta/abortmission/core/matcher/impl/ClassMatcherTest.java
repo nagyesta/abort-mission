@@ -78,10 +78,10 @@ class ClassMatcherTest extends AbstractMatcherTest {
     @MethodSource("inputProvider")
     void testMatchesShouldMatchFullyQualifiedClassNameToRegexpWhenCalledWithClass(final boolean matches, final String pattern) {
         //given
-        final MissionHealthCheckMatcher underTest = MissionHealthCheckMatcherBuilder.builder().classNamePattern(pattern).build();
+        final var underTest = MissionHealthCheckMatcherBuilder.builder().classNamePattern(pattern).build();
 
         //when
-        final boolean actual = underTest.matches(this.getClass());
+        final var actual = underTest.matches(this.getClass());
 
         //then
         assertEquals(matches, actual);
@@ -91,10 +91,10 @@ class ClassMatcherTest extends AbstractMatcherTest {
     @MethodSource("inputProvider")
     void testMatchesShouldMatchFullyQualifiedClassNameToRegexpWhenCalledWithMethod(final boolean matches, final String pattern) {
         //given
-        final MissionHealthCheckMatcher underTest = MissionHealthCheckMatcherBuilder.builder().classNamePattern(pattern).build();
+        final var underTest = MissionHealthCheckMatcherBuilder.builder().classNamePattern(pattern).build();
 
         //when
-        final boolean actual = underTest.matches(this.getClass().getDeclaredMethods()[0]);
+        final var actual = underTest.matches(this.getClass().getDeclaredMethods()[0]);
 
         //then
         assertEquals(matches, actual);
@@ -105,10 +105,10 @@ class ClassMatcherTest extends AbstractMatcherTest {
     @MethodSource("unsupportedComponentProvider")
     void testMatchesShouldThrowExceptionWhenCalledWithUnsupportedInput(final Object invalidInput) {
         //given
-        final MissionHealthCheckMatcher underTest = MissionHealthCheckMatcherBuilder.builder().classNamePattern(".*").build();
+        final var underTest = MissionHealthCheckMatcherBuilder.builder().classNamePattern(".*").build();
 
         //when
-        final boolean actual = underTest.matches(invalidInput);
+        final var actual = underTest.matches(invalidInput);
 
         //then
         assertFalse(actual);

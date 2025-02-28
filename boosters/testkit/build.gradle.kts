@@ -19,7 +19,7 @@ dependencies {
     implementation(project(":mission-control"))
     implementation(libs.spring.boot.starter)
     implementation(libs.spring.boot.starter.test)
-    implementation(libs.bundles.logback.test)
+    implementation(libs.bundles.logback)
     testImplementation(libs.jupiter.api)
     testImplementation(libs.jupiter.core)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -37,6 +37,7 @@ licensee {
     allowUrl("http://www.eclipse.org/legal/epl-2.0")
     allowUrl("http://www.eclipse.org/org/documents/edl-v10.php")
     allowUrl("https://asm.ow2.io/license.html")
+    allowUrl("https://opensource.org/license/mit")
 }
 
 val copyLegalDocs = tasks.register<Copy>("copyLegalDocs") {

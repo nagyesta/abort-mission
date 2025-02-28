@@ -49,8 +49,8 @@ public abstract class AbstractMissionTemplate<P, T> extends AbstractLaunchSequen
      * @return The end result of the test (optional)
      */
     protected final Optional<T> executeTemplate() {
-        final Optional<StageTimeStopwatch> countdownStopWatch = performPreLaunchInit(evaluationScope, evaluationScope.getSimpleName());
-        final P preparedContext = executePreLaunchPreparation(countdownStopWatch);
+        final var countdownStopWatch = performPreLaunchInit(evaluationScope, evaluationScope.getSimpleName());
+        final var preparedContext = executePreLaunchPreparation(countdownStopWatch);
         return executeLaunch(preparedContext);
     }
 
@@ -77,12 +77,12 @@ public abstract class AbstractMissionTemplate<P, T> extends AbstractLaunchSequen
     }
 
     private Optional<T> executeLaunch(final P preparedContext) {
-        final Optional<StageTimeStopwatch> stopwatch = evaluateLaunchAbort(
+        final var stopwatch = evaluateLaunchAbort(
                 getClassLevelEvaluatorsOnly(), new StageTimeStopwatch(evaluationScope.getName(), "executeLaunch"),
                 () -> annotationContextEvaluator().isAbortSuppressed(evaluationScope)
         );
         try {
-            final Optional<T> result = doLaunch(preparedContext);
+            final var result = doLaunch(preparedContext);
             missionCompletedSuccessfully(getClassLevelEvaluatorsOnly(), stopwatch);
             return result;
         } catch (final Exception e) {

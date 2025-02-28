@@ -35,10 +35,10 @@ public class ParachuteTestContextPerClass {
     @MethodSource("parachuteIndexProvider")
     public void testParachuteShouldOpenWhenCalled(final int index) {
         //given
-        final ParachuteDrop underTest = new ParachuteDrop();
+        final var underTest = new ParachuteDrop();
 
         //when
-        final boolean actual = underTest.canOpenParachute(index);
+        final var actual = underTest.canOpenParachute(index);
 
         //then
         assertTrue(actual, "Parachutes should open.");
@@ -53,7 +53,7 @@ public class ParachuteTestContextPerClass {
 
         @Override
         protected Map<String, Consumer<AbortMissionCommandOps>> defineOutline() {
-            final HashMap<String, Consumer<AbortMissionCommandOps>> plan = new HashMap<>();
+            final var plan = new HashMap<String, Consumer<AbortMissionCommandOps>>();
             plan.put(PER_CLASS_CONTEXT, ops -> ops.registerHealthCheck(
                     percentageBasedEvaluator(
                             matcher().classNamePattern(".+\\.ParachuteTestContextPerClass")

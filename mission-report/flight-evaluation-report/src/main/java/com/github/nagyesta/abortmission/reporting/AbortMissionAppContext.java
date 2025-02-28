@@ -10,9 +10,9 @@ public class AbortMissionAppContext {
     private final ConversionController controller;
 
     public AbortMissionAppContext(final ConversionProperties properties) {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        final LaunchJsonToHtmlConverter launchConverter = new LaunchJsonToHtmlConverter();
-        final TemplateEngine templateEngine = new TemplateEngine();
+        final var objectMapper = new ObjectMapper();
+        final var launchConverter = new LaunchJsonToHtmlConverter();
+        final var templateEngine = new TemplateEngine();
         controller = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
     }
 

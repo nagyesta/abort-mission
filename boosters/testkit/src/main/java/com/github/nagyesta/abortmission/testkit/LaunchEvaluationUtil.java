@@ -25,7 +25,7 @@ public final class LaunchEvaluationUtil {
      * @return The exception classes causing the failures.
      */
     public static List<String> findExceptionsForMissionFailuresOf(final MissionHealthCheckEvaluator evaluator) {
-        final ReadOnlyStageStatistics statistics = evaluator.getStats().getReadOnlyMission();
+        final var statistics = evaluator.getStats().getReadOnlyMission();
         return findExceptions(statistics);
     }
 
@@ -36,7 +36,7 @@ public final class LaunchEvaluationUtil {
      * @return The exception classes causing the failures.
      */
     public static List<String> findExceptionsForCountdownFailuresOf(final MissionHealthCheckEvaluator evaluator) {
-        final ReadOnlyStageStatistics statistics = evaluator.getStats().getReadOnlyCountdown();
+        final var statistics = evaluator.getStats().getReadOnlyCountdown();
         return findExceptions(statistics);
     }
 
@@ -47,7 +47,7 @@ public final class LaunchEvaluationUtil {
      * @return The messages of the exceptions causing the failures.
      */
     public static List<String> findThrowableMessagesForMissionFailuresOf(final MissionHealthCheckEvaluator evaluator) {
-        final ReadOnlyStageStatistics statistics = evaluator.getStats().getReadOnlyMission();
+        final var statistics = evaluator.getStats().getReadOnlyMission();
         return findThrowableMessages(statistics);
     }
 
@@ -58,7 +58,7 @@ public final class LaunchEvaluationUtil {
      * @return The messages of the exceptions causing the failures.
      */
     public static List<String> findThrowableMessagesForCountdownFailuresOf(final MissionHealthCheckEvaluator evaluator) {
-        final ReadOnlyStageStatistics statistics = evaluator.getStats().getReadOnlyCountdown();
+        final var statistics = evaluator.getStats().getReadOnlyCountdown();
         return findThrowableMessages(statistics);
     }
 

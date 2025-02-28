@@ -43,13 +43,13 @@ public final class AbortMissionCommandOps {
      * @return the named context
      */
     public static AbortMissionCommandOps named(final String name) {
-        final String trimmedName = sanitizeKey(name);
+        final var trimmedName = sanitizeKey(name);
         return MissionControlHolder.NAMED_CONTEXTS.get(trimmedName);
     }
 
     private static String sanitizeKey(final String name) {
         Objects.requireNonNull(name, "Context name cannot be null.");
-        final String trimmedName = name.trim();
+        final var trimmedName = name.trim();
         if (trimmedName.isEmpty()) {
             throw new IllegalArgumentException("Context name cannot be empty.");
         }

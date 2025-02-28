@@ -3,7 +3,10 @@ package com.github.nagyesta.abortmission.core.telemetry.stats;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 import com.github.nagyesta.abortmission.core.telemetry.converter.ClassTelemetryConverter;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Contains measurement data and statistics related to a single test class.
@@ -32,7 +35,7 @@ public final class ClassTelemetry {
         Objects.requireNonNull(measurements, "Measurements cannot be null.");
         Objects.requireNonNull(matcherNames, "MatcherNames cannot be null.");
         this.className = Objects.requireNonNull(className, "Class name cannot be null.");
-        final Map<String, List<StageTimeMeasurement>> byMethods = converter.partitionByMethods(measurements);
+        final var byMethods = converter.partitionByMethods(measurements);
         this.countdown = converter.processCountdownStats(matcherNames, byMethods);
         this.launches = converter.processLaunchStats(matcherNames, byMethods);
     }

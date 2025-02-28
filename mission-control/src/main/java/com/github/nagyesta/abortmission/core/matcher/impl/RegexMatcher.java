@@ -58,7 +58,7 @@ public abstract class RegexMatcher extends BaseMatcher implements MissionHealthC
         if (!(this.getClass().isInstance(o))) {
             return false;
         }
-        final RegexMatcher that = this.getClass().cast(o);
+        final var that = this.getClass().cast(o);
         return this.getMatchCriteria() == that.getMatchCriteria() && pattern.equals(that.getPattern());
     }
 

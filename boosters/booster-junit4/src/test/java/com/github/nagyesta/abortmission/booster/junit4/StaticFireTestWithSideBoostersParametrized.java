@@ -58,7 +58,7 @@ public class StaticFireTestWithSideBoostersParametrized {
         //given
 
         //when
-        final boolean actual = sideBooster.isOnFire();
+        final var actual = sideBooster.isOnFire();
 
         //then
         assertTrue(actual);

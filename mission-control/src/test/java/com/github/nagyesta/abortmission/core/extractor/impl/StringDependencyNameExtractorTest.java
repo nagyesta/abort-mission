@@ -5,7 +5,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Collections;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -33,7 +32,7 @@ class StringDependencyNameExtractorTest {
         //given
 
         //when
-        final Optional<Set<String>> actual = underTest.apply(input);
+        final var actual = underTest.apply(input);
 
         //then
         if (expected == null) {

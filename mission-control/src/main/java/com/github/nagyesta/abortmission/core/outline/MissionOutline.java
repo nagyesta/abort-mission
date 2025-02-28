@@ -54,7 +54,7 @@ public abstract class MissionOutline {
     public final void initialBriefing() {
         LOCK.lock();
         try {
-            final Map<String, Consumer<AbortMissionCommandOps>> map = defineOutline();
+            final var map = defineOutline();
             map.forEach((k, v) -> {
                 if (!MissionOutlineHolder.NAMED_CONTEXTS.contains(k)) {
                     LOGGER.debug("Configuring mission outline for context: {}", Optional.of(k)

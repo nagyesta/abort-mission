@@ -15,7 +15,6 @@ import io.cucumber.plugin.event.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -136,12 +135,12 @@ public abstract class LaunchAbortHook {
     @SuppressWarnings("unchecked")
     private Optional<Throwable> getThrowable(final Scenario scenario) {
         try {
-            final Field delegate = scenario.getClass().getDeclaredField("delegate");
+            final var delegate = scenario.getClass().getDeclaredField("delegate");
             delegate.setAccessible(true);
-            final Object testCaseState = delegate.get(scenario);
-            final Field stepResults = testCaseState.getClass().getDeclaredField("stepResults");
+            final var testCaseState = delegate.get(scenario);
+            final var stepResults = testCaseState.getClass().getDeclaredField("stepResults");
             stepResults.setAccessible(true);
-            final List<Result> results = (List<Result>) stepResults.get(testCaseState);
+            final var results = (List<Result>) stepResults.get(testCaseState);
             return Optional.ofNullable(results)
                     .flatMap(r -> r.stream()
                             .filter(res -> res.getStatus() == Status.FAILED)
@@ -168,11 +167,11 @@ public abstract class LaunchAbortHook {
     }
 
     private Set<MissionHealthCheckEvaluator> findEvaluators(final Scenario scenario) {
-        final Optional<String> context = scenario.getSourceTagNames().stream()
+        final var context = scenario.getSourceTagNames().stream()
                 .filter(tag -> tag.startsWith("@AbortMission_Context_"))
                 .map(tag -> tag.replaceFirst("^@AbortMission_Context_", ""))
                 .findFirst();
-        final AbortMissionCommandOps commandOps =
+        final var commandOps =
                 context.map(MissionControl::commandOps).orElse(MissionControl.commandOps());
         return Objects.requireNonNull(commandOps, "Mission context is not found: " + context.orElse("'- DEFAULT - '"))
                 .matchingEvaluators(scenario);

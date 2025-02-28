@@ -121,10 +121,10 @@ class StageTimeMeasurementTest {
         //given
 
         //when
-        final int actualCompare = a.compareTo(b);
-        final boolean actualEquals = a.equals(b);
-        final int actualHashA = Objects.hashCode(a);
-        final int actualHashB = Objects.hashCode(b);
+        final var actualCompare = a.compareTo(b);
+        final var actualEquals = a.equals(b);
+        final var actualHashA = Objects.hashCode(a);
+        final var actualHashB = Objects.hashCode(b);
 
         //then
         Assertions.assertEquals(compareExpected, Integer.signum(actualCompare));
@@ -135,10 +135,10 @@ class StageTimeMeasurementTest {
     @Test
     void testDurationShouldSubtractStartFromEndWhenCalled() {
         //given
-        @SuppressWarnings("UnnecessaryLocalVariable") final StageTimeMeasurement underTest = STAGE_TIME_MEASUREMENT;
+        @SuppressWarnings("UnnecessaryLocalVariable") final var underTest = STAGE_TIME_MEASUREMENT;
 
         //when
-        final long actual = underTest.getDurationMillis();
+        final var actual = underTest.getDurationMillis();
 
         //then
         Assertions.assertEquals(END - START, actual);
@@ -147,10 +147,10 @@ class StageTimeMeasurementTest {
     @Test
     void testToStringShouldContainPrimaryFieldsWhenCalled() {
         //given
-        @SuppressWarnings("UnnecessaryLocalVariable") final StageTimeMeasurement underTest = STAGE_TIME_MEASUREMENT;
+        @SuppressWarnings("UnnecessaryLocalVariable") final var underTest = STAGE_TIME_MEASUREMENT;
 
         //when
-        final String actual = underTest.toString();
+        final var actual = underTest.toString();
 
         //then
         Assertions.assertTrue(actual.contains(CLASS_NAME));

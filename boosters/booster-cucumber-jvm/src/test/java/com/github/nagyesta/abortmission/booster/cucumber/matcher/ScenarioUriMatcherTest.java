@@ -12,10 +12,10 @@ class ScenarioUriMatcherTest {
     @Test
     void testGetPatternShouldReturnTheOriginalPatternWhenCalled() {
         //given
-        final ScenarioUriMatcher underTest = new ScenarioUriMatcher(PATTERN);
+        final var underTest = new ScenarioUriMatcher(PATTERN);
 
         //when
-        final String actual = underTest.getPattern();
+        final var actual = underTest.getPattern();
 
         //then
         Assertions.assertEquals(PATTERN, actual);
@@ -24,10 +24,10 @@ class ScenarioUriMatcherTest {
     @Test
     void testMatchesShouldReturnFalseWhenCalledWithNonScenarioObjects() {
         //given
-        final ScenarioUriMatcher underTest = new ScenarioUriMatcher(PATTERN);
+        final var underTest = new ScenarioUriMatcher(PATTERN);
 
         //when
-        final boolean actual = underTest.matches(PATTERN);
+        final var actual = underTest.matches(PATTERN);
 
         //then
         Assertions.assertFalse(actual);
