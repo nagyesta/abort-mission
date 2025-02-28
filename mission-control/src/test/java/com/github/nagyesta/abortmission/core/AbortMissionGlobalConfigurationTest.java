@@ -14,8 +14,8 @@ class AbortMissionGlobalConfigurationTest {
         //given
 
         //when
-        final AbortMissionGlobalConfiguration first = AbortMissionGlobalConfiguration.shared();
-        final AbortMissionGlobalConfiguration second = AbortMissionGlobalConfiguration.shared();
+        final var first = AbortMissionGlobalConfiguration.shared();
+        final var second = AbortMissionGlobalConfiguration.shared();
 
         //then
         assertSame(first, second);
@@ -25,12 +25,12 @@ class AbortMissionGlobalConfigurationTest {
     @Test
     void testGetStackTraceDepthShouldReturnTheDefaultDepthWhenCalledBeforeSettingThenTheSetValueAfter() {
         //given
-        final int setDepth = 42;
+        final var setDepth = 42;
 
         //when
-        final int initialDepth = AbortMissionGlobalConfiguration.shared().getStackTraceDepth();
+        final var initialDepth = AbortMissionGlobalConfiguration.shared().getStackTraceDepth();
         AbortMissionGlobalConfiguration.shared().setStackTraceDepth(setDepth);
-        final int updatedDepth = AbortMissionGlobalConfiguration.shared().getStackTraceDepth();
+        final var updatedDepth = AbortMissionGlobalConfiguration.shared().getStackTraceDepth();
 
         //then
         assertEquals(AbortMissionGlobalConfiguration.DEFAULT_STACK_TRACE_DEPTH, initialDepth);
@@ -43,9 +43,9 @@ class AbortMissionGlobalConfigurationTest {
         final Predicate<StackTraceElement> setFilter = StackTraceElement::isNativeMethod;
 
         //when
-        final Predicate<StackTraceElement> initialFilter = AbortMissionGlobalConfiguration.shared().getStackTraceFilter();
+        final var initialFilter = AbortMissionGlobalConfiguration.shared().getStackTraceFilter();
         AbortMissionGlobalConfiguration.shared().setStackTraceFilter(setFilter);
-        final Predicate<StackTraceElement> updatedFilter = AbortMissionGlobalConfiguration.shared().getStackTraceFilter();
+        final var updatedFilter = AbortMissionGlobalConfiguration.shared().getStackTraceFilter();
 
         //then
         assertSame(AbortMissionGlobalConfiguration.DEFAULT_STACK_TRACE_FILTER, initialFilter);

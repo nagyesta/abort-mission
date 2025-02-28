@@ -9,12 +9,10 @@ import com.github.nagyesta.abortmission.core.telemetry.watch.StageTimeStopwatch;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 class LaunchEvaluationUtilTest {
 
@@ -25,7 +23,7 @@ class LaunchEvaluationUtilTest {
     @Test
     void testConstructorShouldThrowExceptionWhenCalled() throws NoSuchMethodException {
         //given
-        final Constructor<LaunchEvaluationUtil> constructor = LaunchEvaluationUtil.class.getDeclaredConstructor();
+        final var constructor = LaunchEvaluationUtil.class.getDeclaredConstructor();
         constructor.setAccessible(true);
 
         //when
@@ -41,7 +39,7 @@ class LaunchEvaluationUtilTest {
         evaluator.missionLogger().logAndIncrement(failureMeasurement());
 
         //when
-        final List<String> actual = LaunchEvaluationUtil.findExceptionsForMissionFailuresOf(evaluator);
+        final var actual = LaunchEvaluationUtil.findExceptionsForMissionFailuresOf(evaluator);
 
         //then
         Assertions.assertIterableEquals(List.of(EXPECTED_CLASS), actual);
@@ -54,7 +52,7 @@ class LaunchEvaluationUtilTest {
         evaluator.missionLogger().logAndIncrement(failureMeasurement());
 
         //when
-        final List<String> actual = LaunchEvaluationUtil.findThrowableMessagesForMissionFailuresOf(evaluator);
+        final var actual = LaunchEvaluationUtil.findThrowableMessagesForMissionFailuresOf(evaluator);
 
         //then
         Assertions.assertIterableEquals(List.of(EXPECTED), actual);
@@ -67,7 +65,7 @@ class LaunchEvaluationUtilTest {
         evaluator.countdownLogger().logAndIncrement(failureMeasurement());
 
         //when
-        final List<String> actual = LaunchEvaluationUtil.findExceptionsForCountdownFailuresOf(evaluator);
+        final var actual = LaunchEvaluationUtil.findExceptionsForCountdownFailuresOf(evaluator);
 
         //then
         Assertions.assertIterableEquals(List.of(EXPECTED_CLASS), actual);
@@ -80,7 +78,7 @@ class LaunchEvaluationUtilTest {
         evaluator.countdownLogger().logAndIncrement(failureMeasurement());
 
         //when
-        final List<String> actual = LaunchEvaluationUtil.findThrowableMessagesForCountdownFailuresOf(evaluator);
+        final var actual = LaunchEvaluationUtil.findThrowableMessagesForCountdownFailuresOf(evaluator);
 
         //then
         Assertions.assertIterableEquals(List.of(EXPECTED), actual);
@@ -93,7 +91,7 @@ class LaunchEvaluationUtilTest {
         evaluator.countdownLogger().logAndIncrement(failureMeasurement());
 
         //when
-        final List<String> actual = LaunchEvaluationUtil.findCountdownDisplayNamesForMeasurementsOf(evaluator);
+        final var actual = LaunchEvaluationUtil.findCountdownDisplayNamesForMeasurementsOf(evaluator);
 
         //then
         Assertions.assertIterableEquals(List.of(DISPLAY_NAME), actual);
@@ -106,7 +104,7 @@ class LaunchEvaluationUtilTest {
         evaluator.missionLogger().logAndIncrement(failureMeasurement());
 
         //when
-        final List<String> actual = LaunchEvaluationUtil.findMissionDisplayNamesForMeasurementsOf(evaluator);
+        final var actual = LaunchEvaluationUtil.findMissionDisplayNamesForMeasurementsOf(evaluator);
 
         //then
         Assertions.assertIterableEquals(List.of(DISPLAY_NAME), actual);
@@ -116,9 +114,9 @@ class LaunchEvaluationUtilTest {
     void testForEachNonFilteredStackTraceElementOfMissionFailuresShouldCallConsumerForEachStackTraceElementWhenCalled() {
         //given
         final MissionHealthCheckEvaluator evaluator = getEvaluator();
-        final StageTimeMeasurement measurement = failureMeasurement();
+        final var measurement = failureMeasurement();
         evaluator.missionLogger().logAndIncrement(measurement);
-        final List<String> expected = measurement.getStackTrace();
+        final var expected = measurement.getStackTrace();
         final List<String> actual = new ArrayList<>();
 
         //when
@@ -133,7 +131,7 @@ class LaunchEvaluationUtilTest {
     }
 
     private StageTimeMeasurement failureMeasurement() {
-        final Function<StageResult, StageTimeMeasurement> failure = new StageTimeStopwatch(getClass())
+        final var failure = new StageTimeStopwatch(getClass())
                 .overrideDisplayName(DISPLAY_NAME)
                 .addThrowable(Optional.of(createThrowable()))
                 .stop();

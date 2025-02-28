@@ -117,7 +117,7 @@ public abstract class AbstractMissionHealthCheckEvaluator implements MissionHeal
      * @return The tokenized set of keywords defined by the property value or empty set if not defined.
      */
     protected Set<String> evaluateOverrideList(final String propertyName) {
-        final String property = System.getProperty(propertyName, "");
+        final var property = System.getProperty(propertyName, "");
         return Arrays.stream(property.split(","))
                 .filter(s -> !s.isBlank())
                 .collect(Collectors.toSet());

@@ -37,7 +37,7 @@ public class StaticFireBoosterTest {
     @Test(groups = "integration")
     @SuppressWarnings("checkstyle:MagicNumber")
     public void testAssumption() throws NoSuchMethodException {
-        final TestNG engine = new TestNG();
+        final var engine = new TestNG();
         engine.setOutputDirectory(System.getProperty("java.io.tmpdir") + "/abort-mission/" + this.getClass().getSimpleName());
         engine.setTestClasses(new Class[] {StaticFireTestWithSideBoosters.class, StaticFireTestCenterCoreOnly.class});
         engine.setListenerClasses(Arrays.asList(AbortMissionListener.class, ValidatingTestListener.class));
@@ -83,7 +83,7 @@ public class StaticFireBoosterTest {
     @Test(groups = "integration")
     @SuppressWarnings("checkstyle:MagicNumber")
     public void testParallelAssumption() {
-        final TestNG engine = new TestNG();
+        final var engine = new TestNG();
         engine.setOutputDirectory(System.getProperty("java.io.tmpdir") + "/abort-mission/" + this.getClass().getSimpleName());
         engine.setTestClasses(new Class[] {ParallelStaticFireTestWithSideBoosters.class});
         engine.setListenerClasses(Arrays.asList(AbortMissionListener.class, ParallelValidatingTestListener.class));
@@ -100,13 +100,13 @@ public class StaticFireBoosterTest {
                             evaluator.getStats().getReadOnlyCountdown().getSnapshot());
                     assertEquals(PARALLEL_NOMINAL_STATS_PER_CLASS.getReadOnlyMission().getSnapshot(),
                             evaluator.getStats().getReadOnlyMission().getSnapshot());
-                    final List<String> threadNames = evaluator.getStats().getReadOnlyMission().timeSeriesStream()
+                    final var threadNames = evaluator.getStats().getReadOnlyMission().timeSeriesStream()
                             .map(StageTimeMeasurement::getThreadName)
                             .distinct()
                             .sorted()
                             .collect(Collectors.toList());
                     assertTrue(threadNames.size() > 1, "We should have more than one thread name: " + threadNames);
-                    final List<String> threadsFromTestMethods = ParallelStaticFireTestWithSideBoosters.THREADS_USED.stream()
+                    final var threadsFromTestMethods = ParallelStaticFireTestWithSideBoosters.THREADS_USED.stream()
                             .sorted().collect(Collectors.toList());
                     assertEquals(threadsFromTestMethods, threadNames);
                     forEachNonFilteredStackTraceElementOfMissionFailures(evaluator,

@@ -43,10 +43,10 @@ public class ParachuteTestContext {
     @Test
     public void testParachuteShouldOpenWhenCalled() {
         //given
-        final ParachuteDrop underTest = new ParachuteDrop();
+        final var underTest = new ParachuteDrop();
 
         //when
-        final boolean actual = underTest.canOpenParachute(index);
+        final var actual = underTest.canOpenParachute(index);
 
         //then
         assertTrue("Parachutes should open.", actual);
@@ -61,7 +61,7 @@ public class ParachuteTestContext {
 
         @Override
         protected Map<String, Consumer<AbortMissionCommandOps>> defineOutline() {
-            final HashMap<String, Consumer<AbortMissionCommandOps>> plan = new HashMap<>();
+            final var plan = new HashMap<String, Consumer<AbortMissionCommandOps>>();
             plan.put(SHARED_CONTEXT, ops -> ops.registerHealthCheck(
                     percentageBasedEvaluator(
                             matcher().classNamePattern(".+\\.ParachuteTestContext")

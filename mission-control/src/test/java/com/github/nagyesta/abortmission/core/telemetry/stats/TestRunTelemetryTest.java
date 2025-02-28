@@ -36,7 +36,7 @@ class TestRunTelemetryTest {
                     .build();
 
     public static Stream<Arguments> equalsProvider() {
-        final TestRunTelemetry testRunTelemetry = new TestRunTelemetry(MEASUREMENT_1);
+        final var testRunTelemetry = new TestRunTelemetry(MEASUREMENT_1);
         return Stream.<Arguments>builder()
                 .add(Arguments.of(testRunTelemetry, testRunTelemetry, true))
                 .add(Arguments.of(testRunTelemetry, new TestRunTelemetry(MEASUREMENT_1), true))
@@ -48,10 +48,10 @@ class TestRunTelemetryTest {
     @Test
     void getDurationMillisShouldReturnTheValueSet() {
         //given
-        final TestRunTelemetry underTest = new TestRunTelemetry(MEASUREMENT_1);
+        final var underTest = new TestRunTelemetry(MEASUREMENT_1);
 
         //when
-        final long actual = underTest.getDurationMillis();
+        final var actual = underTest.getDurationMillis();
 
         //then
         assertEquals(MEASUREMENT_1.getDurationMillis(), actual);
@@ -66,7 +66,7 @@ class TestRunTelemetryTest {
         //given
 
         //when
-        final boolean actual = a.equals(b);
+        final var actual = a.equals(b);
 
         //then
         assertEquals(expected, actual);

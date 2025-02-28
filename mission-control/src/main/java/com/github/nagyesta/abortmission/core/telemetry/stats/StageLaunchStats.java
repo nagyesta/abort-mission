@@ -25,7 +25,7 @@ public final class StageLaunchStats {
         Objects.requireNonNull(measurements, "Measurements cannot be null.");
         Objects.requireNonNull(matcherNames, "MatcherNames cannot be null.");
         this.matcherNames = Collections.unmodifiableSortedSet(new TreeSet<>(matcherNames));
-        final TreeSet<StageTimeMeasurement> stageTimeMeasurements = new TreeSet<>(measurements);
+        final var stageTimeMeasurements = new TreeSet<StageTimeMeasurement>(measurements);
         this.timeMeasurements = Collections.unmodifiableSortedSet(stageTimeMeasurements.stream()
                 .map(TestRunTelemetry::new)
                 .collect(Collectors.toCollection(TreeSet::new)));

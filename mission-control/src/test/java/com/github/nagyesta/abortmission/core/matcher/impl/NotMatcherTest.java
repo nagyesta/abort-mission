@@ -71,11 +71,11 @@ class NotMatcherTest extends AbstractMatcherTest {
     @MethodSource("inputProvider")
     void testMatchesShouldNegateWrappedMatcherWhenCalledWithValidComponent(final boolean matches, final String dependency) {
         //given
-        final MissionHealthCheckMatcher underTest = MissionHealthCheckMatcherBuilder.builder()
+        final var underTest = MissionHealthCheckMatcherBuilder.builder()
                 .not(STRING_MATCHER).build();
 
         //when
-        final boolean actual = underTest.matches(dependency);
+        final var actual = underTest.matches(dependency);
 
         //then
         assertEquals(matches, actual);
@@ -86,11 +86,11 @@ class NotMatcherTest extends AbstractMatcherTest {
     @MethodSource("unsupportedComponentProvider")
     void testMatchesShouldThrowExceptionWhenCalledWithUnsupportedInput(final Object invalidInput) {
         //given
-        final MissionHealthCheckMatcher underTest = MissionHealthCheckMatcherBuilder.builder()
+        final var underTest = MissionHealthCheckMatcherBuilder.builder()
                 .not(STRING_MATCHER).build();
 
         //when
-        final boolean actual = underTest.matches(invalidInput);
+        final var actual = underTest.matches(invalidInput);
 
         //then
         assertTrue(actual);

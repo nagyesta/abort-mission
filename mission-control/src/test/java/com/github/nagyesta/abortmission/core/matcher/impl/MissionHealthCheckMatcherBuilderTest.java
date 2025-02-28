@@ -32,7 +32,7 @@ class MissionHealthCheckMatcherBuilderTest {
     void testBuilderShouldAllowBuildingNotMatcherWhenCalledWithValidInput() {
         //given
         //when
-        final MissionHealthCheckMatcher actual = MissionHealthCheckMatcherBuilder.builder()
+        final var actual = MissionHealthCheckMatcherBuilder.builder()
                 .not(A_CLASS_MATCHER)
                 .build();
 
@@ -45,7 +45,7 @@ class MissionHealthCheckMatcherBuilderTest {
     void testBuilderShouldAllowBuildingOrMatcherWhenCalledWithValidInput() {
         //given
         //when
-        final MissionHealthCheckMatcher actual = MissionHealthCheckMatcherBuilder.builder()
+        final var actual = MissionHealthCheckMatcherBuilder.builder()
                 .or(A_CLASS_MATCHER)
                 .orAtLast(A_DEPENDENCY_MATCHER).build();
 
@@ -60,7 +60,7 @@ class MissionHealthCheckMatcherBuilderTest {
     void testBuilderShouldAllowBuildingAndMatcherWhenCalledWithValidInput() {
         //given
         //when
-        final MissionHealthCheckMatcher actual = MissionHealthCheckMatcherBuilder.builder()
+        final var actual = MissionHealthCheckMatcherBuilder.builder()
                 .and(A_CLASS_MATCHER)
                 .andAtLast(A_DEPENDENCY_MATCHER).build();
 
@@ -75,7 +75,7 @@ class MissionHealthCheckMatcherBuilderTest {
     void testBuilderShouldAllowBuildingClassMatcherWhenCalledWithValidInput() {
         //given
         //when
-        final MissionHealthCheckMatcher actual = MissionHealthCheckMatcherBuilder.builder()
+        final var actual = MissionHealthCheckMatcherBuilder.builder()
                 .classNamePattern(REGEX)
                 .build();
 
@@ -88,7 +88,7 @@ class MissionHealthCheckMatcherBuilderTest {
     void testBuilderShouldAllowBuildingDependencyMatcherWhenCalledWithValidInput() {
         //given
         //when
-        final MissionHealthCheckMatcher actual = MissionHealthCheckMatcherBuilder.builder()
+        final var actual = MissionHealthCheckMatcherBuilder.builder()
                 .dependency(NAME)
                 .build();
 
@@ -101,7 +101,7 @@ class MissionHealthCheckMatcherBuilderTest {
     void testBuilderShouldAllowBuildingSystemPropertyMatcherWhenCalledWithValidInput() {
         //given
         //when
-        final MissionHealthCheckMatcher actual = MissionHealthCheckMatcherBuilder.builder()
+        final var actual = MissionHealthCheckMatcherBuilder.builder()
                 .property(NAME)
                 .valuePattern(REGEX)
                 .build();
@@ -116,7 +116,7 @@ class MissionHealthCheckMatcherBuilderTest {
     void testBuilderShouldAllowBuildingEnvVariableMatcherWhenCalledWithValidInput() {
         //given
         //when
-        final MissionHealthCheckMatcher actual = MissionHealthCheckMatcherBuilder.builder()
+        final var actual = MissionHealthCheckMatcherBuilder.builder()
                 .envVariable(NAME)
                 .valuePattern(REGEX)
                 .build();

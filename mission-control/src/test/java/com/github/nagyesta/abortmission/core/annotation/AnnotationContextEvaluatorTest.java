@@ -78,10 +78,10 @@ class AnnotationContextEvaluatorTest {
     void testFindContextNameShouldWorkWithGenericAnnotationsWhenCalledWithClass(final Class<?> component,
                                                                                 final Optional<String> expected) {
         //given
-        final AnnotationContextEvaluator underTest = AnnotationContextEvaluator.shared();
+        final var underTest = AnnotationContextEvaluator.shared();
 
         //when
-        final Optional<String> actual = underTest.findContextName(component, DisplayName.class, DisplayName::value);
+        final var actual = underTest.findContextName(component, DisplayName.class, DisplayName::value);
 
         //then
         Assertions.assertEquals(expected, actual);
@@ -93,10 +93,10 @@ class AnnotationContextEvaluatorTest {
     void testFindContextNameShouldWorkWithGenericAnnotationsWhenCalledWithMethod(final Method component,
                                                                                  final Optional<String> expected) {
         //given
-        final AnnotationContextEvaluator underTest = AnnotationContextEvaluator.shared();
+        final var underTest = AnnotationContextEvaluator.shared();
 
         //when
-        final Optional<String> actual = underTest.findContextName(component, DisplayName.class, DisplayName::value);
+        final var actual = underTest.findContextName(component, DisplayName.class, DisplayName::value);
 
         //then
         Assertions.assertEquals(expected, actual);
@@ -107,10 +107,10 @@ class AnnotationContextEvaluatorTest {
     void testIsAbortSuppressedShouldWorkWhenCalledWithClass(final Class<?> component,
                                                             final boolean expected) {
         //given
-        final AnnotationContextEvaluator underTest = AnnotationContextEvaluator.shared();
+        final var underTest = AnnotationContextEvaluator.shared();
 
         //when
-        final boolean actual = underTest.isAbortSuppressed(component);
+        final var actual = underTest.isAbortSuppressed(component);
 
         //then
         Assertions.assertEquals(expected, actual);
@@ -121,10 +121,10 @@ class AnnotationContextEvaluatorTest {
     void testIsAbortSuppressedShouldWorkWhenCalledWithMethod(final Method component,
                                                              final boolean expected) {
         //given
-        final AnnotationContextEvaluator underTest = AnnotationContextEvaluator.shared();
+        final var underTest = AnnotationContextEvaluator.shared();
 
         //when
-        final boolean actual = underTest.isAbortSuppressed(component);
+        final var actual = underTest.isAbortSuppressed(component);
 
         //then
         Assertions.assertEquals(expected, actual);
@@ -135,10 +135,10 @@ class AnnotationContextEvaluatorTest {
     void testFindSuppressedExceptionsShouldWorkWhenCalledWithClass(final Class<?> component,
                                                                    final Collection<? extends Exception> expected) {
         //given
-        final AnnotationContextEvaluator underTest = AnnotationContextEvaluator.shared();
+        final var underTest = AnnotationContextEvaluator.shared();
 
         //when
-        final Set<Class<? extends Exception>> actual = underTest.findSuppressedExceptions(component);
+        final var actual = underTest.findSuppressedExceptions(component);
 
         //then
         Assertions.assertIterableEquals(expected, actual);
@@ -149,10 +149,10 @@ class AnnotationContextEvaluatorTest {
     void testFindSuppressedExceptionsShouldWorkWhenCalledWithMethod(final Method component,
                                                                     final Collection<? extends Exception> expected) {
         //given
-        final AnnotationContextEvaluator underTest = AnnotationContextEvaluator.shared();
+        final var underTest = AnnotationContextEvaluator.shared();
 
         //when
-        final Set<Class<? extends Exception>> actual = underTest.findSuppressedExceptions(component);
+        final var actual = underTest.findSuppressedExceptions(component);
 
         //then
         Assertions.assertTrue(expected.containsAll(actual));
@@ -162,7 +162,7 @@ class AnnotationContextEvaluatorTest {
     @Test
     void testFindAndApplyLaunchPlanDefinitionShouldFailSilentlyWhenCalledWithoutMatchingConfig() {
         //given
-        final AnnotationContextEvaluator underTest = AnnotationContextEvaluator.shared();
+        final var underTest = AnnotationContextEvaluator.shared();
 
         //when
         underTest.findAndApplyLaunchPlanDefinition(TestClass.class);
@@ -174,7 +174,7 @@ class AnnotationContextEvaluatorTest {
     @Test
     void testFindAndApplyLaunchPlanDefinitionShouldFailWhenMissionOutlineThrowsException() {
         //given
-        final AnnotationContextEvaluator underTest = AnnotationContextEvaluator.shared();
+        final var underTest = AnnotationContextEvaluator.shared();
 
         //when
         Assertions.assertThrows(IllegalArgumentException.class,

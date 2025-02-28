@@ -28,9 +28,9 @@ public class AbortMissionListener implements ITestListener, IClassListener, ISui
 
     @Override
     public void onTestStart(final ITestResult result) {
-        final Class<?> testInstanceClass = result.getTestClass().getRealClass();
-        final Optional<Throwable> throwable = Optional.ofNullable(result.getThrowable());
-        final Optional<StageTimeStopwatch> stopwatch = stopwatchFromStore();
+        final var testInstanceClass = result.getTestClass().getRealClass();
+        final var throwable = Optional.ofNullable(result.getThrowable());
+        final var stopwatch = stopwatchFromStore();
         if (throwable.isPresent()) {
             LOGGER.trace("Countdown failed for class: {} with launch id: {}", testInstanceClass.getSimpleName(),
                     stopwatch.map(StageTimeStopwatch::getLaunchId).orElse(null));
@@ -41,7 +41,7 @@ public class AbortMissionListener implements ITestListener, IClassListener, ISui
                     stopwatch.map(StageTimeStopwatch::getLaunchId).orElse(null));
             launchSequenceTemplate.countdownSuccess(testInstanceClass, stopwatch);
             optionalMethod(result).ifPresent(method -> {
-                final String displayName = resolveDisplayName(result, method);
+                final var displayName = resolveDisplayName(result, method);
                 STORE.set(launchSequenceTemplate.launchImminent(method, displayName));
             });
         }
@@ -58,7 +58,7 @@ public class AbortMissionListener implements ITestListener, IClassListener, ISui
     @Override
     public void onTestSuccess(final ITestResult result) {
         optionalMethod(result).ifPresent(method -> {
-            final Optional<StageTimeStopwatch> stopwatch = stopwatchFromStore();
+            final var stopwatch = stopwatchFromStore();
             LOGGER.trace("Log mission success for class: {} and method: {} with launch id: {}",
                     method.getDeclaringClass().getSimpleName(), method.getName(),
                     stopwatch.map(StageTimeStopwatch::getLaunchId).orElse(null));
@@ -70,7 +70,7 @@ public class AbortMissionListener implements ITestListener, IClassListener, ISui
     public void onTestFailure(final ITestResult result) {
         optionalMethod(result)
                 .ifPresent(method -> {
-                    final Optional<StageTimeStopwatch> stopwatch = stopwatchFromStore();
+                    final var stopwatch = stopwatchFromStore();
                     LOGGER.trace("Log mission failure for class: {} and method: {} with launch id: {}",
                             method.getDeclaringClass().getSimpleName(), method.getName(),
                             stopwatch.map(StageTimeStopwatch::getLaunchId).orElse(null));
@@ -80,7 +80,7 @@ public class AbortMissionListener implements ITestListener, IClassListener, ISui
 
     @Override
     public void onBeforeClass(final ITestClass testClass) {
-        final Class<?> testInstanceClass = testClass.getRealClass();
+        final var testInstanceClass = testClass.getRealClass();
         LOGGER.trace("Preparing test instance for class: {}", testInstanceClass.getSimpleName());
         STORE.set(launchSequenceTemplate.launchGoNoGo(testInstanceClass, testInstanceClass.getSimpleName()));
     }
@@ -91,7 +91,7 @@ public class AbortMissionListener implements ITestListener, IClassListener, ISui
     }
 
     private Optional<StageTimeStopwatch> stopwatchFromStore() {
-        Optional<StageTimeStopwatch> stopWatch = STORE.get();
+        var stopWatch = STORE.get();
         //noinspection OptionalAssignedToNull
         if (stopWatch == null) {
             stopWatch = Optional.empty();

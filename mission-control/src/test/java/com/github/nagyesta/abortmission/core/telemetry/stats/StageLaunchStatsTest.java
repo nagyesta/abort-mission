@@ -55,7 +55,7 @@ class StageLaunchStatsTest extends AbstractTelemetryTest {
                 .collect(Collectors.toCollection(TreeSet::new));
 
         //when
-        final StageLaunchStats actual = new StageLaunchStats(measurements, matcherNames);
+        final var actual = new StageLaunchStats(measurements, matcherNames);
 
         //then
         Assertions.assertThrows(UnsupportedOperationException.class, () -> actual.getMatcherNames().clear());

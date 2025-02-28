@@ -19,11 +19,11 @@ class RunnableMissionTemplateSupportTest extends AbstractMissionTemplateSupportT
         //given
         AnnotationContextEvaluator.shared().findAndApplyLaunchPlanDefinition(RunnableMissionTemplateSupportTest.class);
 
-        final MissionHealthCheckEvaluator evaluator = getRelevantEvaluator(fail);
-        final int countdownStart = evaluator.getCountdownStatistics().getSnapshot().getTotal();
-        final int countdownComplete = evaluator.getCountdownStatistics().getSnapshot().getSucceeded();
-        final int countdownFail = evaluator.getCountdownStatistics().getSnapshot().getFailed();
-        final int missionSuccess = evaluator.getMissionStatistics().getSnapshot().getSucceeded();
+        final var evaluator = getRelevantEvaluator(fail);
+        final var countdownStart = evaluator.getCountdownStatistics().getSnapshot().getTotal();
+        final var countdownComplete = evaluator.getCountdownStatistics().getSnapshot().getSucceeded();
+        final var countdownFail = evaluator.getCountdownStatistics().getSnapshot().getFailed();
+        final var missionSuccess = evaluator.getMissionStatistics().getSnapshot().getSucceeded();
 
         final RunnableMissionTemplateSupport<Boolean> underTest = new RunnableMissionTemplateSupport<>(
                 MissionOutlineDefinition.SELF_PROPELLED_RUNNABLE + fail,

@@ -1,6 +1,5 @@
 package com.github.nagyesta.abortmission.core.telemetry;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -37,11 +35,11 @@ class LocalDateTimeAdapterTest {
     @MethodSource("validWriteSource")
     void testWriteShouldProduceValidOutputWhenCalled(final LocalDateTime input, final String expected) {
         //given
-        final LocalDateTimeAdapter underTest = new LocalDateTimeAdapter();
-        final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, underTest).create();
+        final var underTest = new LocalDateTimeAdapter();
+        final var gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, underTest).create();
 
         //when
-        final String actual = gson.toJson(input);
+        final var actual = gson.toJson(input);
 
         //then
         Assertions.assertEquals(expected, actual);
@@ -50,15 +48,15 @@ class LocalDateTimeAdapterTest {
     @Test
     void testReadShouldReadSingleObjectWhenValidDataIsRead() {
         //given
-        final String resourceName = "/json/date/local-date-time-valid.json";
-        final LocalDateTimeAdapter underTest = new LocalDateTimeAdapter();
-        final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, underTest).create();
+        final var resourceName = "/json/date/local-date-time-valid.json";
+        final var underTest = new LocalDateTimeAdapter();
+        final var gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, underTest).create();
 
-        try (InputStream stream = getClass().getResourceAsStream(resourceName);
-             InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(stream))
+        try (var stream = getClass().getResourceAsStream(resourceName);
+             var reader = new InputStreamReader(Objects.requireNonNull(stream))
         ) {
             //when
-            final LocalDateTime actual = gson.fromJson(reader, LocalDateTime.class);
+            final var actual = gson.fromJson(reader, LocalDateTime.class);
 
             //then
             Assertions.assertEquals(EXPECTED_FROM, actual);
@@ -70,15 +68,15 @@ class LocalDateTimeAdapterTest {
     @Test
     void testReadShouldReadComplexObjectWhenValidDataIsRead() {
         //given
-        final String resourceName = "/json/date/local-date-time-valid-complex.json";
-        final LocalDateTimeAdapter underTest = new LocalDateTimeAdapter();
-        final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, underTest).create();
+        final var resourceName = "/json/date/local-date-time-valid-complex.json";
+        final var underTest = new LocalDateTimeAdapter();
+        final var gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, underTest).create();
 
-        try (InputStream stream = getClass().getResourceAsStream(resourceName);
-             InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(stream))
+        try (var stream = getClass().getResourceAsStream(resourceName);
+             var reader = new InputStreamReader(Objects.requireNonNull(stream))
         ) {
             //when
-            final FromTo actual = gson.fromJson(reader, FromTo.class);
+            final var actual = gson.fromJson(reader, FromTo.class);
 
             //then
             Assertions.assertEquals(EXPECTED_FROM, actual.getFrom());
@@ -91,15 +89,15 @@ class LocalDateTimeAdapterTest {
     @Test
     void testReadShouldReadComplexObjectWhenSomeFieldsAreNull() {
         //given
-        final String resourceName = "/json/date/local-date-time-valid-complex-null.json";
-        final LocalDateTimeAdapter underTest = new LocalDateTimeAdapter();
-        final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, underTest).create();
+        final var resourceName = "/json/date/local-date-time-valid-complex-null.json";
+        final var underTest = new LocalDateTimeAdapter();
+        final var gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, underTest).create();
 
-        try (InputStream stream = getClass().getResourceAsStream(resourceName);
-             InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(stream))
+        try (var stream = getClass().getResourceAsStream(resourceName);
+             var reader = new InputStreamReader(Objects.requireNonNull(stream))
         ) {
             //when
-            final FromTo actual = gson.fromJson(reader, FromTo.class);
+            final var actual = gson.fromJson(reader, FromTo.class);
 
             //then
             Assertions.assertEquals(EXPECTED_FROM, actual.getFrom());

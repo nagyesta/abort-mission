@@ -37,7 +37,7 @@ public class StaticFireTestCenterCoreOnly {
         //given
 
         //when
-        final boolean actual = centerCore.isOnFire();
+        final var actual = centerCore.isOnFire();
 
         //then
         assertTrue(actual);
@@ -48,7 +48,7 @@ public class StaticFireTestCenterCoreOnly {
         //given
 
         //when
-        final boolean actual = centerCore.isOnFire();
+        final var actual = centerCore.isOnFire();
 
         //then
         assertTrue(actual);

@@ -7,7 +7,6 @@ import com.github.nagyesta.abortmission.core.healthcheck.impl.MissionStatisticsC
 import com.github.nagyesta.abortmission.core.matcher.impl.BaseMatcher;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 import com.github.nagyesta.abortmission.core.telemetry.stats.AbstractTelemetryTest;
-import com.github.nagyesta.abortmission.core.telemetry.stats.ClassTelemetry;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -26,8 +25,8 @@ class LaunchTelemetryConverterTest extends AbstractTelemetryTest {
     void testProcessClassStatisticsShould() {
         //given
         final Map<String, AbortMissionCommandOps> nameSpaces = new HashMap<>();
-        final LaunchTelemetryConverter underTest = spy(new LaunchTelemetryConverter());
-        final Stream<MissionHealthCheckEvaluator> stream = Stream.<MissionHealthCheckEvaluator>builder()
+        final var underTest = spy(new LaunchTelemetryConverter());
+        final var stream = Stream.<MissionHealthCheckEvaluator>builder()
                 .add(new SimpleEvaluator(MATCHER_1,
                         Arrays.asList(FIRST_FAIL_1_10, FIRST_PASS_1_10),
                         Collections.emptyList()))
@@ -41,13 +40,13 @@ class LaunchTelemetryConverterTest extends AbstractTelemetryTest {
         doReturn(stream).when(underTest).missionHealthCheckEvaluatorStream(same(nameSpaces));
 
         //when
-        final SortedMap<String, ClassTelemetry> actual = underTest.processClassStatistics(nameSpaces);
+        final var actual = underTest.processClassStatistics(nameSpaces);
 
         //then
         Assertions.assertNotNull(actual);
         verify(underTest).missionHealthCheckEvaluatorStream(same(nameSpaces));
         Assertions.assertIterableEquals(Collections.singleton(CLASS), actual.keySet());
-        final ClassTelemetry classTelemetry = actual.get(CLASS);
+        final var classTelemetry = actual.get(CLASS);
         Assertions.assertEquals(CLASS, classTelemetry.getClassName());
         Assertions.assertIterableEquals(Arrays.asList(MATCHER_1, MATCHER_2), classTelemetry.getCountdown().getMatcherNames());
         Assertions.assertIterableEquals(Arrays.asList(MATCHER_2, MATCHER_3), classTelemetry.getLaunches().get(METHOD).getMatcherNames());

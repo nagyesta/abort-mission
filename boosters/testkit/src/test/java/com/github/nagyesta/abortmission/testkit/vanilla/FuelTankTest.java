@@ -13,7 +13,7 @@ class FuelTankTest {
     @Test
     void testLoadShouldNotThrowExceptionsWhenCalledWithValidNumbers() {
         //given
-        final FuelTank underTest = new FuelTank();
+        final var underTest = new FuelTank();
 
         //when
         underTest.load(SOME_FUEL);
@@ -24,7 +24,7 @@ class FuelTankTest {
     @Test
     void testLoadShouldThrowExceptionsWhenCalledWithNegativeNumbers() {
         //given
-        final FuelTank underTest = new FuelTank();
+        final var underTest = new FuelTank();
 
         //when
         assertThrows(UnsupportedOperationException.class, () -> underTest.load(AN_INVALID_AMOUNT_OF_FUEL));
@@ -35,7 +35,7 @@ class FuelTankTest {
     @Test
     void testLoadShouldThrowExceptionsWhenCalledWithLargeNumbers() {
         //given
-        final FuelTank underTest = new FuelTank();
+        final var underTest = new FuelTank();
 
         //when
         assertThrows(IllegalStateException.class, () -> underTest.load(A_LOT_OF_FUEL));

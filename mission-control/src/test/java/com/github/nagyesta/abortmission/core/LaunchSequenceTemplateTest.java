@@ -12,7 +12,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,12 +45,12 @@ class LaunchSequenceTemplateTest {
     @Test
     void testPerformPreLaunchInitShouldEvaluateCountdownAbortConditionsWhenCalled() {
         //given
-        final Set<MissionHealthCheckEvaluator> evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
+        final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
         final Set<MissionHealthCheckEvaluator> aborting = new HashSet<>();
         addEvaluatorMockWithSpyLogger(aborting, true);
         addEvaluatorMockWithSpyLogger(aborting, true);
         evaluators.addAll(aborting);
-        final LaunchSequenceTemplate underTest = new LaunchSequenceTemplate(() -> {
+        final var underTest = new LaunchSequenceTemplate(() -> {
         }, c -> evaluators, m -> null);
 
         //when
@@ -68,12 +71,12 @@ class LaunchSequenceTemplateTest {
     @Test
     void testPreLaunchInitCompleteShouldEvaluateMissionAbortConditionsWhenCalled() {
         //given
-        final Set<MissionHealthCheckEvaluator> evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
+        final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
         final Set<MissionHealthCheckEvaluator> aborting = new HashSet<>();
         addEvaluatorMockWithSpyLogger(aborting, true);
         addEvaluatorMockWithSpyLogger(aborting, true);
         evaluators.addAll(aborting);
-        final LaunchSequenceTemplate underTest = underTestWithNullFunctions();
+        final var underTest = underTestWithNullFunctions();
 
         //when
         underTest.evaluateLaunchAbort(evaluators, new StageTimeStopwatch(getClass()), () -> false);
@@ -93,9 +96,9 @@ class LaunchSequenceTemplateTest {
     @Test
     void testEvaluateAndAbortIfNeededShouldAbortOnlyOnTheMatchingEvaluatorsWhenCalled() {
         //given
-        final Set<MissionHealthCheckEvaluator> evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
-        final LaunchSequenceTemplate underTest = underTestWithNullFunctions();
-        final Map<Boolean, List<MissionHealthCheckEvaluator>> partitions = evaluators.stream()
+        final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
+        final var underTest = underTestWithNullFunctions();
+        final var partitions = evaluators.stream()
                 .collect(Collectors.partitioningBy(MissionHealthCheckEvaluator::shouldAbort));
 
         //when
@@ -114,12 +117,12 @@ class LaunchSequenceTemplateTest {
     @Test
     void testEvaluateLaunchAbortShouldSuppressAllWhenCalledAndSomeWouldAbort() {
         //given
-        final Set<MissionHealthCheckEvaluator> evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
+        final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
         addEvaluatorMockWithSpyLogger(evaluators, true);
-        final LaunchSequenceTemplate underTest = underTestWithNullFunctions();
+        final var underTest = underTestWithNullFunctions();
 
         //when
-        final Optional<StageTimeStopwatch> stopwatch = underTest.evaluateLaunchAbort(evaluators, new StageTimeStopwatch(getClass()),
+        final var stopwatch = underTest.evaluateLaunchAbort(evaluators, new StageTimeStopwatch(getClass()),
                 () -> true
         );
 
@@ -136,8 +139,8 @@ class LaunchSequenceTemplateTest {
     @Test
     void testCountdownCompletedSuccessfullyShouldLogSuccessIfStopWatchIsPresent() {
         //given
-        final Set<MissionHealthCheckEvaluator> evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
-        final LaunchSequenceTemplate underTest = underTestWithNullFunctions();
+        final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
+        final var underTest = underTestWithNullFunctions();
 
         //when
         underTest.countdownCompletedSuccessfully(evaluators, presentOptionalStopwatch());
@@ -153,8 +156,8 @@ class LaunchSequenceTemplateTest {
     @Test
     void testCountdownCompletedSuccessfullyShouldNotLogSuccessIfStopWatchIsAbsent() {
         //given
-        final Set<MissionHealthCheckEvaluator> evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
-        final LaunchSequenceTemplate underTest = underTestWithNullFunctions();
+        final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
+        final var underTest = underTestWithNullFunctions();
 
         //when
         underTest.countdownCompletedSuccessfully(evaluators, Optional.empty());
@@ -169,8 +172,8 @@ class LaunchSequenceTemplateTest {
     @Test
     void testMissionCompletedSuccessfullyShouldLogSuccessIfStopWatchIsPresent() {
         //given
-        final Set<MissionHealthCheckEvaluator> evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
-        final LaunchSequenceTemplate underTest = underTestWithNullFunctions();
+        final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
+        final var underTest = underTestWithNullFunctions();
 
         //when
         underTest.missionCompletedSuccessfully(evaluators, presentOptionalStopwatch());
@@ -186,8 +189,8 @@ class LaunchSequenceTemplateTest {
     @Test
     void testMissionCompletedSuccessfullyShouldNotLogSuccessIfStopWatchIsAbsent() {
         //given
-        final Set<MissionHealthCheckEvaluator> evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
-        final LaunchSequenceTemplate underTest = underTestWithNullFunctions();
+        final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
+        final var underTest = underTestWithNullFunctions();
 
         //when
         underTest.missionCompletedSuccessfully(evaluators, Optional.empty());
@@ -204,8 +207,8 @@ class LaunchSequenceTemplateTest {
     void testCountdownFailureDetectedShouldLogFailureWhenCalledWithNonSuppressedThrowable(
             final Optional<Throwable> throwable, final Set<Class<? extends Exception>> suppressed) {
         //given
-        final Set<MissionHealthCheckEvaluator> evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
-        final LaunchSequenceTemplate underTest = underTestWithNullFunctions();
+        final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
+        final var underTest = underTestWithNullFunctions();
 
         //when
         underTest.countdownFailureDetected(evaluators, presentOptionalStopwatch(), throwable, suppressed);
@@ -223,8 +226,8 @@ class LaunchSequenceTemplateTest {
     void testMissionFailureDetectedShouldLogFailureWhenCalledWithNonSuppressedThrowable(
             final Optional<Throwable> throwable, final Set<Class<? extends Exception>> suppressed) {
         //given
-        final Set<MissionHealthCheckEvaluator> evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
-        final LaunchSequenceTemplate underTest = underTestWithNullFunctions();
+        final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
+        final var underTest = underTestWithNullFunctions();
 
         //when
         underTest.missionFailureDetected(evaluators, presentOptionalStopwatch(), throwable, suppressed);
@@ -242,8 +245,8 @@ class LaunchSequenceTemplateTest {
         //given
         final Optional<Throwable> throwable = Optional.of(new IllegalArgumentException());
         final Set<Class<? extends Exception>> suppressed = Collections.singleton(IllegalArgumentException.class);
-        final Set<MissionHealthCheckEvaluator> evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
-        final LaunchSequenceTemplate underTest = underTestWithNullFunctions();
+        final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
+        final var underTest = underTestWithNullFunctions();
 
         //when
         underTest.missionFailureDetected(evaluators, presentOptionalStopwatch(), throwable, suppressed);
@@ -259,7 +262,7 @@ class LaunchSequenceTemplateTest {
     @Test
     void testLaunchGoNoGoShouldPerformPreLaunchInitWhenCalled() {
         //given
-        final LaunchSequenceTemplate underTest = spy(underTestWithNullFunctions());
+        final var underTest = spy(underTestWithNullFunctions());
         doReturn(Optional.empty()).when(underTest).performPreLaunchInit(any(), anyString());
 
         //when
@@ -272,8 +275,8 @@ class LaunchSequenceTemplateTest {
     @Test
     void testCountdownFailureShouldFindEvaluatorsAndSuppressedExceptionsWhenCalled() {
         //given
-        final Set<MissionHealthCheckEvaluator> matching = Collections.singleton(mock(MissionHealthCheckEvaluator.class));
-        final LaunchSequenceTemplate underTest = spyWithMethodMatchers(matching, null);
+        final var matching = Collections.singleton(mock(MissionHealthCheckEvaluator.class));
+        final var underTest = spyWithMethodMatchers(matching, null);
 
         //when
         underTest.countdownFailure(this.getClass(), Optional.empty(), Optional.empty());
@@ -285,8 +288,8 @@ class LaunchSequenceTemplateTest {
     @Test
     void testCountdownSuccessShouldFindEvaluatorsWhenCalled() {
         //given
-        final Set<MissionHealthCheckEvaluator> matching = Collections.singleton(mock(MissionHealthCheckEvaluator.class));
-        final LaunchSequenceTemplate underTest = spyWithMethodMatchers(matching, null);
+        final var matching = Collections.singleton(mock(MissionHealthCheckEvaluator.class));
+        final var underTest = spyWithMethodMatchers(matching, null);
 
         //when
         underTest.countdownSuccess(this.getClass(), Optional.empty());
@@ -299,8 +302,8 @@ class LaunchSequenceTemplateTest {
     @Test
     void testLaunchImminentShouldPerformAbortEvaluationWhenCalled() throws NoSuchMethodException {
         //given
-        final Set<MissionHealthCheckEvaluator> matching = Collections.singleton(mock(MissionHealthCheckEvaluator.class));
-        final LaunchSequenceTemplate underTest = spyWithMethodMatchers(null, matching);
+        final var matching = Collections.singleton(mock(MissionHealthCheckEvaluator.class));
+        final var underTest = spyWithMethodMatchers(null, matching);
         doReturn(Optional.empty())
                 .when(underTest).evaluateLaunchAbort(same(matching), any(StageTimeStopwatch.class), any());
 
@@ -314,8 +317,8 @@ class LaunchSequenceTemplateTest {
     @Test
     void testLaunchFailureShouldFindEvaluatorsAndSuppressedExceptionsWhenCalled() throws NoSuchMethodException {
         //given
-        final Set<MissionHealthCheckEvaluator> matching = Collections.singleton(mock(MissionHealthCheckEvaluator.class));
-        final LaunchSequenceTemplate underTest = spyWithMethodMatchers(null, matching);
+        final var matching = Collections.singleton(mock(MissionHealthCheckEvaluator.class));
+        final var underTest = spyWithMethodMatchers(null, matching);
 
         //when
         underTest.launchFailure(this.getClass().getDeclaredMethod(METHOD_NAME), Optional.empty(), Optional.empty());
@@ -327,8 +330,8 @@ class LaunchSequenceTemplateTest {
     @Test
     void testLaunchSuccessShouldFindEvaluatorsWhenCalled() throws NoSuchMethodException {
         //given
-        final Set<MissionHealthCheckEvaluator> matching = Collections.singleton(mock(MissionHealthCheckEvaluator.class));
-        final LaunchSequenceTemplate underTest = spyWithMethodMatchers(null, matching);
+        final var matching = Collections.singleton(mock(MissionHealthCheckEvaluator.class));
+        final var underTest = spyWithMethodMatchers(null, matching);
 
         //when
         underTest.launchSuccess(this.getClass().getDeclaredMethod(METHOD_NAME), Optional.empty());
@@ -381,8 +384,8 @@ class LaunchSequenceTemplateTest {
 
     private Set<MissionHealthCheckEvaluator> addEvaluatorMockWithSpyLogger(final Set<MissionHealthCheckEvaluator> evaluators,
                                                                            final boolean aborting) {
-        final MissionHealthCheckMatcher matcher = mock(MissionHealthCheckMatcher.class);
-        final MissionHealthCheckEvaluator evaluator = mock(MissionHealthCheckEvaluator.class);
+        final var matcher = mock(MissionHealthCheckMatcher.class);
+        final var evaluator = mock(MissionHealthCheckEvaluator.class);
         when(evaluator.countdownLogger()).thenReturn(spy(new StageStatisticsCollector(matcher)));
         when(evaluator.missionLogger()).thenReturn(spy(new StageStatisticsCollector(matcher)));
         when(evaluator.shouldAbort()).thenReturn(aborting);

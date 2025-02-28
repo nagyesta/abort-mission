@@ -49,7 +49,7 @@ public class LaunchAbortTestWatcher extends TestWatcher {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                final Optional<StageTimeStopwatch> stopwatch = launchSequenceTemplate.launchGoNoGo(testClass, testClass.getSimpleName());
+                final var stopwatch = launchSequenceTemplate.launchGoNoGo(testClass, testClass.getSimpleName());
                 try {
                     base.evaluate();
                     launchSequenceTemplate.countdownSuccess(testClass, stopwatch);
@@ -79,7 +79,7 @@ public class LaunchAbortTestWatcher extends TestWatcher {
     private void wrapMethodCall(final Statement base, final Method requiredMethod, final Description description) throws Throwable {
         Optional<StageTimeStopwatch> stopwatch = Optional.empty();
         try {
-            final String displayName = description.getMethodName();
+            final var displayName = description.getMethodName();
             stopwatch = launchSequenceTemplate.launchImminent(requiredMethod, displayName);
             base.evaluate();
             launchSequenceTemplate.launchSuccess(requiredMethod, stopwatch);
@@ -92,7 +92,7 @@ public class LaunchAbortTestWatcher extends TestWatcher {
     }
 
     private Method findRequiredMethod(final Description description) {
-        final Optional<Method> method = findMethodByDescription(description);
+        final var method = findMethodByDescription(description);
         if (method.isEmpty()) {
             throw new IllegalArgumentException("Method not found.");
         }

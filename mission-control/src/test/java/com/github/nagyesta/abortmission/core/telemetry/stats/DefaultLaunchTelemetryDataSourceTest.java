@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.InOrder;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -39,20 +38,20 @@ class DefaultLaunchTelemetryDataSourceTest {
     @Test
     void testFetchClassStatisticsShouldCallConverterWhenConstructedWithValidData() {
         //given
-        final LaunchTelemetryConverter converter = mock(LaunchTelemetryConverter.class);
+        final var converter = mock(LaunchTelemetryConverter.class);
         final Map<String, AbortMissionCommandOps> nameSpaces = spy(new HashMap<>());
         final SortedMap<String, ClassTelemetry> classStats = spy(new TreeMap<>());
         when(converter.processClassStatistics(same(nameSpaces))).thenReturn(classStats);
-        final DefaultLaunchTelemetryDataSource underTest = new DefaultLaunchTelemetryDataSource(converter, nameSpaces);
+        final var underTest = new DefaultLaunchTelemetryDataSource(converter, nameSpaces);
 
         //when
-        final SortedMap<String, ClassTelemetry> actual = underTest.fetchClassStatistics();
+        final var actual = underTest.fetchClassStatistics();
 
         //then
         Assertions.assertNotNull(actual);
         Assertions.assertSame(classStats, actual);
 
-        final InOrder inOrder = inOrder(converter, classStats);
+        final var inOrder = inOrder(converter, classStats);
         inOrder.verify(converter).processClassStatistics(same(nameSpaces));
         inOrder.verifyNoMoreInteractions();
         verifyNoInteractions(nameSpaces);
@@ -61,10 +60,10 @@ class DefaultLaunchTelemetryDataSourceTest {
     @Test
     void testResolveContextMapShouldResolveContextsFromCommandOpsWhenCalled() {
         //given
-        final Set<String> names = AbortMissionCommandOps.contextNames();
+        final var names = AbortMissionCommandOps.contextNames();
 
         //when
-        final Map<String, AbortMissionCommandOps> actual = DefaultLaunchTelemetryDataSource.resolveContextMap();
+        final var actual = DefaultLaunchTelemetryDataSource.resolveContextMap();
 
         //then
         Assertions.assertTrue(actual.keySet().containsAll(names));

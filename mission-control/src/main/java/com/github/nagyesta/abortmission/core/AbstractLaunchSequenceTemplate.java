@@ -40,10 +40,10 @@ public abstract class AbstractLaunchSequenceTemplate extends AbstractMissionLaun
     protected Optional<StageTimeStopwatch> performPreLaunchInit(final Class<?> testInstanceClass, final String displayName) {
         annotationContextEvaluator().findAndApplyLaunchPlanDefinition(testInstanceClass);
 
-        final StageTimeStopwatch watch = new StageTimeStopwatch(testInstanceClass).overrideDisplayName(displayName);
-        final Set<MissionHealthCheckEvaluator> evaluators = classBasedEvaluatorLookup.apply(testInstanceClass);
-        final boolean hasSuppression = evaluators.stream().anyMatch(MissionHealthCheckEvaluator::shouldSuppressAbort);
-        final boolean reportingDone = evaluateAndAbortIfNeeded(
+        final var watch = new StageTimeStopwatch(testInstanceClass).overrideDisplayName(displayName);
+        final var evaluators = classBasedEvaluatorLookup.apply(testInstanceClass);
+        final var hasSuppression = evaluators.stream().anyMatch(MissionHealthCheckEvaluator::shouldSuppressAbort);
+        final var reportingDone = evaluateAndAbortIfNeeded(
                 partitionBy(evaluators, missionHealthCheckEvaluator
                         -> !hasSuppression && missionHealthCheckEvaluator.shouldAbortCountdown()),
                 annotationContextEvaluator().isAbortSuppressed(testInstanceClass),

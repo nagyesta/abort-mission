@@ -1,6 +1,5 @@
 package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
-import com.github.nagyesta.abortmission.core.healthcheck.StageStatisticsSnapshot;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 
 import java.util.Objects;
@@ -40,19 +39,19 @@ public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionH
 
     @Override
     protected boolean shouldAbortInternal() {
-        final StageStatisticsSnapshot snapshot = getMissionStatistics().getSnapshot();
+        final var snapshot = getMissionStatistics().getSnapshot();
         final double totalMissions = snapshot.getTotal();
-        final boolean isActive = burnInTestCount <= totalMissions;
+        final var isActive = burnInTestCount <= totalMissions;
         final double failedOrAborted = snapshot.getNotSuccessful();
-        final double failurePercentage = (failedOrAborted * DOUBLE_100) / totalMissions;
+        final var failurePercentage = (failedOrAborted * DOUBLE_100) / totalMissions;
         return isActive && abortThreshold < failurePercentage;
     }
 
     @Override
     protected boolean shouldAbortCountdownInternal() {
-        final StageStatisticsSnapshot snapshot = getCountdownStatistics().getSnapshot();
-        final boolean isActive = burnInTestCount <= snapshot.getTotal();
-        final boolean countdownNeverCompleted = snapshot.getSucceeded() == 0;
+        final var snapshot = getCountdownStatistics().getSnapshot();
+        final var isActive = burnInTestCount <= snapshot.getTotal();
+        final var countdownNeverCompleted = snapshot.getSucceeded() == 0;
         return isActive && countdownNeverCompleted;
     }
 

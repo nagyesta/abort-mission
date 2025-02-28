@@ -16,15 +16,15 @@ class AbortMissionFlightEvaluationReportAppIntegrationTest {
     @Test
     public void testApplicationContextShouldConfigureSuccessfullyWhenCalled() throws IOException {
         //given
-        final AbortMissionFlightEvaluationReportApp app = new AbortMissionFlightEvaluationReportApp();
+        final var app = new AbortMissionFlightEvaluationReportApp();
         //noinspection ConstantConditions
-        final String input = getClass().getResource("/abort-mission-report.json").getFile();
-        final File output = File.createTempFile("abort-mission-out", ".html");
+        final var input = getClass().getResource("/abort-mission-report.json").getFile();
+        final var output = File.createTempFile("abort-mission-out", ".html");
         output.deleteOnExit();
-        final List<String> args = List.of("--report.input=" + input, "--report.output=" + output);
+        final var args = List.of("--report.input=" + input, "--report.output=" + output);
 
         //when
-        final AbortMissionAppContext actual = app.bootstrap(args);
+        final var actual = app.bootstrap(args);
 
         //then
         assertNotNull(actual);
@@ -33,16 +33,16 @@ class AbortMissionFlightEvaluationReportAppIntegrationTest {
     @Test
     public void testApplicationContextShouldExitWithErrorWhenExecutionFails() throws IOException {
         //given
-        final AbortMissionFlightEvaluationReportApp app = new AbortMissionFlightEvaluationReportApp();
+        final var app = new AbortMissionFlightEvaluationReportApp();
         //noinspection ConstantConditions
-        final File input = new File(getClass().getResource("/abort-mission-report.json").getFile());
-        final File output = File.createTempFile("abort-mission-out", ".html");
+        final var input = new File(getClass().getResource("/abort-mission-report.json").getFile());
+        final var output = File.createTempFile("abort-mission-out", ".html");
         output.deleteOnExit();
-        final ConversionProperties properties = ConversionProperties.builder()
+        final var properties = ConversionProperties.builder()
                 .input(input)
                 .output(output)
                 .build();
-        final AbortMissionAppContext context = spy(new AbortMissionAppContext(properties));
+        final var context = spy(new AbortMissionAppContext(properties));
         doNothing().when(context).exitWithError();
         doThrow(new RenderException()).when(context).controller();
 

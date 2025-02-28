@@ -33,7 +33,7 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     @SuppressWarnings("RedundantThrows")
     @Override
     public void postProcessTestInstance(final Object testInstance, final ExtensionContext context) throws Exception {
-        final Optional<StageTimeStopwatch> stopwatch = launchSequenceTemplate
+        final var stopwatch = launchSequenceTemplate
                 .launchGoNoGo(testInstance.getClass(), getDisplayNameOfContext(context));
         LOGGER.trace("Post-processing test instance of class: {} for launch id: {}",
                 testInstance.getClass(), stopwatch.map(StageTimeStopwatch::getLaunchId).orElse(null));
@@ -44,16 +44,16 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     @SuppressWarnings("RedundantThrows")
     @Override
     public void preDestroyTestInstance(final ExtensionContext context) throws Exception {
-        final Boolean success = context.getStore(NAMESPACE).get(COUNTDOWN_SUCCESS_PREFIX + Thread.currentThread().getName(), Boolean.class);
+        final var success = context.getStore(NAMESPACE).get(COUNTDOWN_SUCCESS_PREFIX + Thread.currentThread().getName(), Boolean.class);
         if (success == Boolean.TRUE) {
             LOGGER.trace("Cleaning up test instance of class: {} where no reporting is necessary",
                     context.getTestClass().map(Class::getSimpleName).orElse(null));
             return;
         }
-        final ExtensionContext parentOrCurrentContext = findClassContext(context).orElse(context);
-        final Optional<StageTimeStopwatch> stopwatch =
+        final var parentOrCurrentContext = findClassContext(context).orElse(context);
+        final var stopwatch =
                 optionalStopwatch(parentOrCurrentContext, COUNTDOWN_START_PREFIX + Thread.currentThread().getName());
-        final Optional<Throwable> throwable = context.getExecutionException()
+        final var throwable = context.getExecutionException()
                 .filter(e -> !(e instanceof TestAbortedException));
         if (throwable.isPresent()) {
             context.getTestClass().ifPresent(testClass -> launchSequenceTemplate.countdownFailure(testClass, throwable, stopwatch));
@@ -66,12 +66,12 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
 
     @Override
     public void testFailed(final ExtensionContext context, final Throwable throwable) {
-        final Optional<StageTimeStopwatch> stopwatch = optionalStopwatch(context, MISSION_START_PREFIX + Thread.currentThread().getName());
-        final Optional<Throwable> rootCause = Optional.of(throwable);
+        final var stopwatch = optionalStopwatch(context, MISSION_START_PREFIX + Thread.currentThread().getName());
+        final var rootCause = Optional.of(throwable);
         if (stopwatch.isEmpty()) {
             findClassContext(context).ifPresent(classContext -> {
                 //this is very challenging to test in this way, but can happen for sure
-                final Optional<StageTimeStopwatch> countdownStopwatch =
+                final var countdownStopwatch =
                         optionalStopwatch(classContext, COUNTDOWN_START_PREFIX + Thread.currentThread().getName());
                 classContext.getTestClass().ifPresent(testClass -> {
                     LOGGER.trace("Logging countdown failure of class: {} due to cause: {} for launch id: {}",
@@ -95,7 +95,7 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     public void testSuccessful(final ExtensionContext context) {
 
         context.getTestMethod().ifPresent(method -> {
-            final Optional<StageTimeStopwatch> stopwatch =
+            final var stopwatch =
                     optionalStopwatch(context, MISSION_START_PREFIX + Thread.currentThread().getName());
             LOGGER.trace("Logging test success of class: {} and method: {} for launch id: {}",
                     method.getDeclaringClass().getSimpleName(), method.getName(),
@@ -110,8 +110,8 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     public void beforeEach(final ExtensionContext context) throws Exception {
         findClassContext(context).ifPresent(this::markCountdownSuccessful);
         context.getTestMethod().ifPresent(method -> {
-            final String displayName = getDisplayNameOfContext(context);
-            final Optional<StageTimeStopwatch> stopwatch = launchSequenceTemplate.launchImminent(method, displayName);
+            final var displayName = getDisplayNameOfContext(context);
+            final var stopwatch = launchSequenceTemplate.launchImminent(method, displayName);
             putOptionalStopwatch(context, stopwatch, MISSION_START_PREFIX + Thread.currentThread().getName());
         });
     }
@@ -124,7 +124,7 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     }
 
     private Optional<ExtensionContext> findClassContext(final ExtensionContext context) {
-        final Optional<ExtensionContext> parent = context.getParent();
+        final var parent = context.getParent();
         //if the test class is not set, we went too far up the chain
         if (context.getStore(NAMESPACE).get(CLASS_LEVEL_MARKER_PREFIX + Thread.currentThread().getName()) == null) {
             return Optional.empty();
@@ -134,13 +134,13 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     }
 
     private void markCountdownSuccessful(final ExtensionContext classContext) {
-        final ExtensionContext.Store parentStore = classContext.getStore(NAMESPACE);
-        final boolean perClassMode = classContext.getTestInstanceLifecycle().filter(l -> l == PER_CLASS).isPresent();
-        final boolean perMethodMode = classContext.getTestInstanceLifecycle().filter(l -> l == PER_METHOD).isPresent();
-        final boolean firstRun = parentStore.get(COUNTDOWN_SUCCESS_PREFIX + Thread.currentThread().getName(), Boolean.class) == null;
+        final var parentStore = classContext.getStore(NAMESPACE);
+        final var perClassMode = classContext.getTestInstanceLifecycle().filter(l -> l == PER_CLASS).isPresent();
+        final var perMethodMode = classContext.getTestInstanceLifecycle().filter(l -> l == PER_METHOD).isPresent();
+        final var firstRun = parentStore.get(COUNTDOWN_SUCCESS_PREFIX + Thread.currentThread().getName(), Boolean.class) == null;
         if ((perClassMode && firstRun) || perMethodMode) {
             classContext.getTestClass().ifPresent(testClass -> {
-                final Optional<StageTimeStopwatch> stopwatch =
+                final var stopwatch =
                         optionalStopwatch(classContext, COUNTDOWN_START_PREFIX + Thread.currentThread().getName());
                 LOGGER.trace("Logging successful countdown of class: {} for launchId: {}",
                         testClass.getSimpleName(), stopwatch.map(StageTimeStopwatch::getLaunchId).orElse(null));
@@ -150,7 +150,7 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
             if (classContext.getTestClass().isEmpty()) {
                 LOGGER.warn("Test class is not found in store. Reporting is most probably incomplete.");
             }
-            final boolean failed = classContext.getExecutionException()
+            final var failed = classContext.getExecutionException()
                     .filter(e -> !(e instanceof TestAbortedException))
                     .isPresent();
             parentStore.put(COUNTDOWN_SUCCESS_PREFIX + Thread.currentThread().getName(), !failed);
@@ -189,7 +189,7 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     }
 
     private ExtensionContext getTestInstanceContext(final ExtensionContext context) {
-        ExtensionContext result = context;
+        var result = context;
         if (context.getTestMethod().isPresent() && context.getParent().isPresent()) {
             result = context.getParent().get();
         }

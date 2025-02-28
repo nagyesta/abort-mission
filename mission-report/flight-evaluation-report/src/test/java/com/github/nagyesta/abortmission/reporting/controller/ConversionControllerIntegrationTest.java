@@ -48,9 +48,9 @@ class ConversionControllerIntegrationTest {
                                                                      final boolean failOnError,
                                                                      final String expectedHtml) throws Exception {
         //given
-        final File inputFile = new File(this.getClass().getResource(jsonResource).getFile());
-        final File expectedFile = new File(this.getClass().getResource(expectedHtml).getFile());
-        final ConversionProperties properties = ConversionProperties.builder()
+        final var inputFile = new File(this.getClass().getResource(jsonResource).getFile());
+        final var expectedFile = new File(this.getClass().getResource(expectedHtml).getFile());
+        final var properties = ConversionProperties.builder()
                 .input(inputFile)
                 .output(File.createTempFile("abort-mission-test", ".html"))
                 .relaxed(relaxed)
@@ -59,17 +59,17 @@ class ConversionControllerIntegrationTest {
 
         properties.getOutput().deleteOnExit();
 
-        final ConversionController underTest = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
+        final var underTest = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
 
         //when
         if (failOnError) {
             assertThrows(RenderException.class, underTest::convert);
         } else {
-            final String actual = underTest.convertJson();
+            final var actual = underTest.convertJson();
 
             //then
-            final List<String> actualLines = List.of(actual.split("\n"));
-            final List<String> expectedLines = Files.readAllLines(expectedFile.toPath(), StandardCharsets.UTF_8);
+            final var actualLines = List.of(actual.split("\n"));
+            final var expectedLines = Files.readAllLines(expectedFile.toPath(), StandardCharsets.UTF_8);
             assertIterableEquals(expectedLines, actualLines);
         }
     }
@@ -77,8 +77,8 @@ class ConversionControllerIntegrationTest {
     @Test
     void testConvertJsonShouldThrowExceptionWhenCalledWithEmptyJson() throws Exception {
         //given
-        final File inputFile = new File(this.getClass().getResource("/abort-mission-report-empty.json").getFile());
-        final ConversionProperties properties = ConversionProperties.builder()
+        final var inputFile = new File(this.getClass().getResource("/abort-mission-report-empty.json").getFile());
+        final var properties = ConversionProperties.builder()
                 .input(inputFile)
                 .output(File.createTempFile("abort-mission-test", ".html"))
                 .relaxed(false)
@@ -86,7 +86,7 @@ class ConversionControllerIntegrationTest {
 
         properties.getOutput().deleteOnExit();
 
-        final ConversionController underTest = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
+        final var underTest = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
 
         //when
         assertThrows(RenderException.class, underTest::convertJson);
@@ -97,8 +97,8 @@ class ConversionControllerIntegrationTest {
     @Test
     void testConvertShouldThrowExceptionWhenCalledWithInvalidJson() throws Exception {
         //given
-        final File inputFile = new File(this.getClass().getResource("/schema/abort-mission-telemetry-relaxed.json").getFile());
-        final ConversionProperties properties = ConversionProperties.builder()
+        final var inputFile = new File(this.getClass().getResource("/schema/abort-mission-telemetry-relaxed.json").getFile());
+        final var properties = ConversionProperties.builder()
                 .input(inputFile)
                 .output(File.createTempFile("abort-mission-test", ".html"))
                 .relaxed(false)
@@ -106,7 +106,7 @@ class ConversionControllerIntegrationTest {
 
         properties.getOutput().deleteOnExit();
 
-        final ConversionController underTest = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
+        final var underTest = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
 
         //when
         assertThrows(RuntimeException.class, underTest::convert);
@@ -117,8 +117,8 @@ class ConversionControllerIntegrationTest {
     @Test
     void testConvertShouldThrowExceptionWhenCalledWithNonExistingInputJson() throws Exception {
         //given
-        final File inputFile = new File("/not-a-real-path.json");
-        final ConversionProperties properties = ConversionProperties.builder()
+        final var inputFile = new File("/not-a-real-path.json");
+        final var properties = ConversionProperties.builder()
                 .input(inputFile)
                 .output(File.createTempFile("abort-mission-test", ".html"))
                 .relaxed(false)
@@ -126,7 +126,7 @@ class ConversionControllerIntegrationTest {
 
         properties.getOutput().deleteOnExit();
 
-        final ConversionController underTest = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
+        final var underTest = new ConversionController(properties, objectMapper, launchConverter, templateEngine);
 
         //when
         assertThrows(RuntimeException.class, underTest::convert);

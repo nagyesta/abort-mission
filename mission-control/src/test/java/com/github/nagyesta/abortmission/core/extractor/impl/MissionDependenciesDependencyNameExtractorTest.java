@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -44,10 +43,10 @@ class MissionDependenciesDependencyNameExtractorTest {
     @MethodSource("methodInputProvider")
     void testApplyShouldMergeAllSourcesWhenCalledWithValidMethods(final Method method, final Set<String> expected) {
         //given
-        final MissionDependenciesDependencyNameExtractor underTest = new MissionDependenciesDependencyNameExtractor();
+        final var underTest = new MissionDependenciesDependencyNameExtractor();
 
         //when
-        final Optional<Set<String>> actual = underTest.apply(method);
+        final var actual = underTest.apply(method);
 
         //then
         if (expected == null) {
@@ -62,10 +61,10 @@ class MissionDependenciesDependencyNameExtractorTest {
     @MethodSource("classInputProvider")
     void testApplyShouldExtractClassDependenciesONlyWhenCalledWithValidClasses(final Class<?> type, final Set<String> expected) {
         //given
-        final MissionDependenciesDependencyNameExtractor underTest = new MissionDependenciesDependencyNameExtractor();
+        final var underTest = new MissionDependenciesDependencyNameExtractor();
 
         //when
-        final Optional<Set<String>> actual = underTest.apply(type);
+        final var actual = underTest.apply(type);
 
         //then
         if (expected == null) {

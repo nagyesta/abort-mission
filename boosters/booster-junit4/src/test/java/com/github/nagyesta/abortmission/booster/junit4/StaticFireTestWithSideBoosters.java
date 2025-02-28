@@ -47,7 +47,7 @@ public class StaticFireTestWithSideBoosters {
         //given
 
         //when
-        final boolean actual = centerCore.isOnFire();
+        final var actual = centerCore.isOnFire();
 
         //then
         assertTrue(actual);

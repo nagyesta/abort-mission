@@ -11,7 +11,7 @@ class StageResultHtmlTest {
         //given
 
         //when
-        final String actual = StageResultHtml.FAILURE.lowerCaseName();
+        final var actual = StageResultHtml.FAILURE.lowerCaseName();
 
         //then
         assertEquals("failure", actual);

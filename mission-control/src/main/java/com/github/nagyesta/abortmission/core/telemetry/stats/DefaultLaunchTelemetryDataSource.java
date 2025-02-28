@@ -38,7 +38,7 @@ public class DefaultLaunchTelemetryDataSource implements LaunchTelemetryDataSour
     }
 
     protected static Map<String, AbortMissionCommandOps> resolveContextMap() {
-        final Map<Boolean, List<String>> contextNames = AbortMissionCommandOps.contextNames().stream()
+        final var contextNames = AbortMissionCommandOps.contextNames().stream()
                 .collect(Collectors.partitioningBy(String::isEmpty));
         final Map<String, AbortMissionCommandOps> nameSpaces = new TreeMap<>();
         contextNames.getOrDefault(false, Collections.emptyList()).forEach(s -> nameSpaces.put(s, AbortMissionCommandOps.named(s)));

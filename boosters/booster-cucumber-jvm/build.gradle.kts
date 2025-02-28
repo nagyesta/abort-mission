@@ -34,10 +34,10 @@ dependencies {
 
 licensee {
     allow("Apache-2.0")
-    allow("MIT")
     allow("EPL-1.0")
     allow("BSD-2-Clause")
     allowUrl("http://www.opensource.org/licenses/mit-license")
+    allowUrl("https://opensource.org/license/mit")
 }
 
 val copyLegalDocs = tasks.register<Copy>("copyLegalDocs") {

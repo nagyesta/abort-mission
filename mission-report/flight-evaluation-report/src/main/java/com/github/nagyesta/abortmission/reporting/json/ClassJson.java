@@ -15,10 +15,10 @@ public class ClassJson {
     private Map<String, StageLaunchStatsJson> launches = new TreeMap<>();
 
     public Stream<TestRunJson> streamAllTimeMeasurements() {
-        final Stream<TestRunJson> countdownStream = Optional.ofNullable(countdown)
+        final var countdownStream = Optional.ofNullable(countdown)
                 .map(StageLaunchStatsJson::getTimeMeasurements)
                 .stream().flatMap(Collection::stream);
-        final Stream<TestRunJson> launchStream = Optional.ofNullable(launches)
+        final var launchStream = Optional.ofNullable(launches)
                 .map(Map::values)
                 .stream().flatMap(Collection::stream)
                 .map(StageLaunchStatsJson::getTimeMeasurements)

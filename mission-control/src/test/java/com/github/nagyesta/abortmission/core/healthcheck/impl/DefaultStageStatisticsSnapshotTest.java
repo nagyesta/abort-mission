@@ -16,7 +16,7 @@ class DefaultStageStatisticsSnapshotTest {
 
     @SuppressWarnings("checkstyle:MagicNumber")
     public static Stream<Arguments> equalsProvider() {
-        final DefaultStageStatisticsSnapshot anInstance = new DefaultStageStatisticsSnapshot(1, 2, 3, 4);
+        final var anInstance = new DefaultStageStatisticsSnapshot(1, 2, 3, 4);
         return Stream.<Arguments>builder()
                 .add(Arguments.of(
                         new DefaultStageStatisticsSnapshot(1, 2, 3, 4),
@@ -76,7 +76,7 @@ class DefaultStageStatisticsSnapshotTest {
         //given
 
         //when
-        final boolean equals = a.equals(b);
+        final var equals = a.equals(b);
 
         //then
         assertEquals(expected, equals);
@@ -102,10 +102,10 @@ class DefaultStageStatisticsSnapshotTest {
     @Test
     void testToStringShouldContainFieldValues() {
         //given
-        final DefaultStageStatisticsSnapshot underTest = new DefaultStageStatisticsSnapshot(1, 2, 3, 4);
+        final var underTest = new DefaultStageStatisticsSnapshot(1, 2, 3, 4);
 
         //when
-        final String actual = underTest.toString();
+        final var actual = underTest.toString();
 
         //then
         assertTrue(actual.contains("DefaultStageStatisticsSnapshot"));

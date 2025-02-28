@@ -26,7 +26,7 @@ public class ParachuteDropTest {
     @Test(groups = "integration")
     @SuppressWarnings("checkstyle:MagicNumber")
     public void testAssumption() {
-        final TestNG engine = new TestNG();
+        final var engine = new TestNG();
         engine.setOutputDirectory(System.getProperty("java.io.tmpdir") + "/abort-mission/" + this.getClass().getSimpleName());
         engine.setTestClasses(new Class[] {ParachuteTestContext.class});
         engine.setListenerClasses(Arrays.asList(AbortMissionListener.class, ValidatingTestListener.class));

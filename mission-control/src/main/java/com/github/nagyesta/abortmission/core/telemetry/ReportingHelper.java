@@ -36,8 +36,8 @@ public class ReportingHelper {
      */
     public void report(final LaunchTelemetryDataSource dataSource) {
         reportingRoot().ifPresent(r -> {
-            final LaunchTelemetry telemetry = launchTelemetry(dataSource);
-            final File json = jsonFile(r);
+            final var telemetry = launchTelemetry(dataSource);
+            final var json = jsonFile(r);
             writeJson(telemetry, json);
         });
     }
@@ -73,9 +73,9 @@ public class ReportingHelper {
      * @param json      The json file target.
      */
     protected void writeJson(final LaunchTelemetry telemetry, final File json) {
-        try (FileOutputStream stream = new FileOutputStream(json);
-             OutputStreamWriter jsonWriter = new OutputStreamWriter(stream, StandardCharsets.UTF_8)) {
-            final String jsonReport = new GsonBuilder()
+        try (var stream = new FileOutputStream(json);
+             var jsonWriter = new OutputStreamWriter(stream, StandardCharsets.UTF_8)) {
+            final var jsonReport = new GsonBuilder()
                     .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                     .create().toJson(telemetry);
             jsonWriter.write(jsonReport);
@@ -92,7 +92,7 @@ public class ReportingHelper {
      * @return the json files descriptor.
      */
     protected File jsonFile(final String reportDir) {
-        final File reportRoot = new File(reportDir);
+        final var reportRoot = new File(reportDir);
         //noinspection ResultOfMethodCallIgnored
         reportRoot.mkdirs();
         return new File(reportRoot, ABORT_MISSION_REPORT_JSON);

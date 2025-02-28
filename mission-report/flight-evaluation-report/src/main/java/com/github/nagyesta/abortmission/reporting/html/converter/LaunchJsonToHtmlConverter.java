@@ -40,19 +40,19 @@ public class LaunchJsonToHtmlConverter {
     }
 
     private LaunchHtml convertClass(final Map.Entry<String, ClassJson> classEntry) {
-        final LaunchHtml countdown = convertCountdown(classEntry.getKey(), classEntry.getValue());
+        final var countdown = convertCountdown(classEntry.getKey(), classEntry.getValue());
         return classEntry.getValue().getLaunches().entrySet().stream()
                 .map(methodEntry -> convertMission(classEntry.getKey(), methodEntry.getKey(), methodEntry.getValue()))
                 .reduce(countdown, this::merge);
     }
 
     private LaunchHtml convertMission(final String className, final String methodName, final StageLaunchStatsJson methodData) {
-        final String classKey = shortHash(className);
-        final String methodKey = shortHash(methodName);
-        final Map<String, String> methodMatchers = methodData.getMatcherNames()
+        final var classKey = shortHash(className);
+        final var methodKey = shortHash(methodName);
+        final var methodMatchers = methodData.getMatcherNames()
                 .stream()
                 .collect(Collectors.toMap(this::shortHash, Function.identity()));
-        final TreeSet<TestRunHtml> launchMeasurements = methodData.getTimeMeasurements().stream()
+        final var launchMeasurements = methodData.getTimeMeasurements().stream()
                 .map(convertMissionMeasurement(classKey, methodKey, methodMatchers))
                 .collect(Collectors.toCollection(TreeSet::new));
         return LaunchHtml.builder()
@@ -64,8 +64,8 @@ public class LaunchJsonToHtmlConverter {
     }
 
     private LaunchHtml convertCountdown(final String className, final ClassJson classData) {
-        final String classKey = shortHash(className);
-        final Map<String, String> classMatchers = classData.getCountdown().getMatcherNames()
+        final var classKey = shortHash(className);
+        final var classMatchers = classData.getCountdown().getMatcherNames()
                 .stream()
                 .collect(Collectors.toMap(this::shortHash, Function.identity()));
         final SortedSet<TestRunHtml> countDownMeasurements = classData.getCountdown().getTimeMeasurements().stream()
@@ -138,7 +138,7 @@ public class LaunchJsonToHtmlConverter {
      * @return The hashed and shortened value.
      */
     protected String shortHash(final String displayName) {
-        final String hash = new BigInteger(sha256(displayName)).abs().toString(HASH_RADIX);
+        final var hash = new BigInteger(sha256(displayName)).abs().toString(HASH_RADIX);
         return hash.substring(0, Math.min(hash.length(), HASH_LENGTH));
     }
 

@@ -25,7 +25,7 @@ dependencies {
     implementation(libs.jackson.databind)
     implementation(libs.thymeleaf)
     implementation(libs.thymeleaf.extras.java8time)
-    implementation(libs.bundles.logback.report)
+    implementation(libs.bundles.logback)
     implementation(libs.findbugs.jsr305)
     annotationProcessor(libs.lombok)
     testImplementation(libs.jupiter.core)
@@ -35,8 +35,8 @@ dependencies {
 
 licensee {
     allow("Apache-2.0")
-    allow("MIT")
     allow("EPL-1.0")
+    allowUrl("https://opensource.org/license/mit")
 }
 
 val copyLegalDocs = tasks.register<Copy>("copyLegalDocs") {

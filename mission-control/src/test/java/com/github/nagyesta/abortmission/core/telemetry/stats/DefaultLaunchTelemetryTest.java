@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.NullSource;
-import org.mockito.InOrder;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -38,21 +37,21 @@ class DefaultLaunchTelemetryTest {
     @Test
     void testConstructorShouldCallFetchClassStatisticsWhenCalledWithValidData() {
         //given
-        final LaunchTelemetryConverter converter = mock(LaunchTelemetryConverter.class);
+        final var converter = mock(LaunchTelemetryConverter.class);
         final Map<String, AbortMissionCommandOps> nameSpaces = spy(new HashMap<>());
         final SortedMap<String, ClassTelemetry> classStats = new TreeMap<>();
         when(converter.processClassStatistics(same(nameSpaces))).thenReturn(classStats);
-        final LaunchTelemetryDataSource dataSource = mock(LaunchTelemetryDataSource.class);
+        final var dataSource = mock(LaunchTelemetryDataSource.class);
         when(dataSource.fetchClassStatistics()).thenReturn(classStats);
 
         //when
-        final DefaultLaunchTelemetry actual = new DefaultLaunchTelemetry(dataSource);
+        final var actual = new DefaultLaunchTelemetry(dataSource);
 
         //then
         Assertions.assertNotNull(actual);
         Assertions.assertSame(classStats, actual.getClasses());
 
-        final InOrder inOrder = inOrder(dataSource);
+        final var inOrder = inOrder(dataSource);
         inOrder.verify(dataSource).fetchClassStatistics();
         inOrder.verifyNoMoreInteractions();
         verifyNoInteractions(nameSpaces);

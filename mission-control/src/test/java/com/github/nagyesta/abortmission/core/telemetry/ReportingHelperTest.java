@@ -22,10 +22,10 @@ class ReportingHelperTest {
     @Test
     void testReportingRootShouldReturnSystemPropertyValue() {
         //given
-        final ReportingHelper underTest = new ReportingHelper();
+        final var underTest = new ReportingHelper();
 
         //when
-        final Optional<String> actual = underTest.reportingRoot();
+        final var actual = underTest.reportingRoot();
 
         //then
         Assertions.assertTrue(actual.isPresent());
@@ -35,14 +35,14 @@ class ReportingHelperTest {
     @Test
     void testTestExecutionFinishedShouldSaveProvidedData() throws IOException {
         //given
-        final ReportingHelper underTest = spy(new ReportingHelper());
-        final String dirname = System.getProperty("java.io.tmpdir") + "/abort-mission/";
+        final var underTest = spy(new ReportingHelper());
+        final var dirname = System.getProperty("java.io.tmpdir") + "/abort-mission/";
         doReturn(Optional.of(dirname)).when(underTest).reportingRoot();
-        final LaunchTelemetryDataSource dataSource = mock(LaunchTelemetryDataSource.class);
+        final var dataSource = mock(LaunchTelemetryDataSource.class);
         when(dataSource.fetchClassStatistics()).thenReturn(Collections.emptySortedMap());
-        final DefaultLaunchTelemetry telemetry = new DefaultLaunchTelemetry(dataSource);
+        final var telemetry = new DefaultLaunchTelemetry(dataSource);
         doReturn(dataSource).when(underTest).launchTelemetryDataSource();
-        final ArgumentCaptor<File> fileCaptor = ArgumentCaptor.forClass(File.class);
+        final var fileCaptor = ArgumentCaptor.forClass(File.class);
         doCallRealMethod().when(underTest).writeJson(any(DefaultLaunchTelemetry.class), fileCaptor.capture());
 
         //when
@@ -51,7 +51,7 @@ class ReportingHelperTest {
         //then
         verify(underTest).reportingRoot();
         verify(underTest).launchTelemetryDataSource();
-        final File file = fileCaptor.getValue();
+        final var file = fileCaptor.getValue();
         Files.readAllLines(file.toPath())
                 .forEach(line -> Assertions.assertEquals(new GsonBuilder()
                         .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
@@ -63,10 +63,10 @@ class ReportingHelperTest {
     @Test
     void testWriteShouldCatchExceptionsWhenThrown() {
         //given
-        final ReportingHelper underTest = new ReportingHelper();
-        final LaunchTelemetryDataSource dataSource = mock(LaunchTelemetryDataSource.class);
+        final var underTest = new ReportingHelper();
+        final var dataSource = mock(LaunchTelemetryDataSource.class);
         when(dataSource.fetchClassStatistics()).thenReturn(Collections.emptySortedMap());
-        final DefaultLaunchTelemetry telemetry = new DefaultLaunchTelemetry(dataSource);
+        final var telemetry = new DefaultLaunchTelemetry(dataSource);
 
         //when
         underTest.writeJson(telemetry, null);
