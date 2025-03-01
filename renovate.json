@@ -12,5 +12,57 @@
   "separateMinorPatch": true,
   "github-actions": {
     "pinDigests": true
-  }
+  },
+
+    "packageRules": [
+        {
+            "groupName": "Github Actions",
+            "matchManagers": [
+                "github-actions"
+            ]
+        },
+        {
+            "groupName": "Jackson dependencies",
+            "matchPackageNames": [
+                "com.fasterxml.jackson.core:{/,}**",
+                "com.fasterxml.jackson.dataformat:{/,}**",
+                "com.fasterxml.jackson.datatype:{/,}**"
+            ]
+        },
+        {
+            "groupName": "Cucumber dependencies",
+            "matchPackageNames": [
+                "io.cucumber:{/,}**"
+            ]
+        },
+        {
+            "groupName": "Thymeleaf dependencies",
+            "matchPackageNames": [
+                "org.thymeleaf:{/,}**",
+                "org.thymeleaf.extras:{/,}**"
+            ]
+        },
+        {
+            "groupName": "JUnit and Jupiter dependencies",
+            "matchPackageNames": [
+                "junit:{/,}**",
+                "org.junit.platform:{/,}**",
+                "org.junit.vintage:{/,}**",
+                "org.junit.jupiter:{/,}**"
+            ]
+        },
+        {
+            "groupName": "Logback dependencies",
+            "matchPackageNames": [
+                "ch.qos.logback:{/,}**"
+            ]
+        },
+        {
+            "groupName": "Spring dependencies",
+            "matchPackageNames": [
+                "org.springframework:{/,}**",
+                "org.springframework.boot:{/,}**"
+            ]
+        }
+    ]
 }

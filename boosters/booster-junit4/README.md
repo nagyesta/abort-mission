@@ -25,7 +25,7 @@ to find out more.
 ```xml
 <dependency>
   <groupId>com.github.nagyesta.abort-mission.boosters</groupId>
-  <artifactId>abort.booster-junit4-experimental</artifactId>
+  <artifactId>abort.booster-junit4</artifactId>
   <version>RELEASE</version>
   <scope>test</scope>
 </dependency>
@@ -33,7 +33,7 @@ to find out more.
 ### Gradle
 
 ```groovy
-testImplementation "com.github.nagyesta.abort-mission.boosters:abort.booster-junit4-experimental:+"
+testImplementation "com.github.nagyesta.abort-mission.boosters:abort.booster-junit4:+"
 ```
 
 ## Configuration
