@@ -31,7 +31,7 @@ checkstyle = "10.21.4"
 jacoco = "0.8.12"
 
 cycloneDxBomPlugin = "2.2.0"
-licenseePlugin = "1.12.0"
+licenseePlugin = "1.13.0"
 nexusPublishPlugin = "2.0.0"
 
 [libraries]
