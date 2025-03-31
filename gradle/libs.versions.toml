@@ -10,7 +10,7 @@ jackson = "2.18.3"
 gson = "2.12.1"
 slf4j = "2.0.17"
 
-lombok = "1.18.36"
+lombok = "1.18.38"
 findbugs = "3.0.2"
 
 junit4 = "4.13.2"
