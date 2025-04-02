@@ -28,7 +28,7 @@ indexScanPlugin = "3.0.0"
 owaspPlugin = "12.1.0"
 
 checkstyle = "10.21.4"
-jacoco = "0.8.12"
+jacoco = "0.8.13"
 
 cycloneDxBomPlugin = "2.2.0"
 licenseePlugin = "1.13.0"
