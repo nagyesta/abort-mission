@@ -7,7 +7,7 @@ thymeleafExtrasTime = "3.0.4.RELEASE"
 logback = "1.5.18"
 jsonSchemaValidator = "1.5.6"
 jackson = "2.18.3"
-gson = "2.12.1"
+gson = "2.13.0"
 slf4j = "2.0.17"
 
 lombok = "1.18.38"
