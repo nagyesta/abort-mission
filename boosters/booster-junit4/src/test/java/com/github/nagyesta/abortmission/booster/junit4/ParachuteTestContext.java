@@ -16,14 +16,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.core.MissionControl.matcher;
 import static com.github.nagyesta.abortmission.core.MissionControl.percentageBasedEvaluator;
 import static com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDropTestAssets.parachuteDropTestInputProvider;
 import static org.junit.Assert.assertTrue;
 
-@SuppressWarnings({"checkstyle:JavadocVariable", "checkstyle:VisibilityModifier"})
+@SuppressWarnings({"checkstyle:JavadocVariable", "checkstyle:VisibilityModifier", "java:S3577", "NewClassNamingConvention"})
+//we want to avoid the default names to pick up only that class which we want
 @LaunchAbortArmed
 @LaunchSequence(ParachuteTestContext.MissionOutlineDef.class)
 @RunWith(Parameterized.class)
@@ -37,7 +37,7 @@ public class ParachuteTestContext {
 
     @Parameterized.Parameters
     public static List<Integer> parachuteIndexProvider() {
-        return parachuteDropTestInputProvider().boxed().collect(Collectors.toList());
+        return parachuteDropTestInputProvider().boxed().toList();
     }
 
     @Test

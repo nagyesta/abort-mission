@@ -11,7 +11,7 @@ import com.github.nagyesta.abortmission.core.matcher.impl.builder.InitialMission
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 /**
  * Provides shorthands for the core functionality of the library.
@@ -135,7 +135,7 @@ public final class MissionControl {
      *
      * @param initMissionOutline The function we can use to define the evaluators.
      */
-    public static void createSharedCommandOps(final Function<AbortMissionCommandOps, AbortMissionCommandOps> initMissionOutline) {
+    public static void createSharedCommandOps(final UnaryOperator<AbortMissionCommandOps> initMissionOutline) {
         if (commandOps() != null) {
             throw new IllegalStateException("Shared instance is already created.");
         }
@@ -148,8 +148,9 @@ public final class MissionControl {
      * @param name               The context name we want to use.
      * @param initMissionOutline The function we can use to define the evaluators.
      */
-    public static void createCommandOps(final String name,
-                                        final Function<AbortMissionCommandOps, AbortMissionCommandOps> initMissionOutline) {
+    public static void createCommandOps(
+            final String name,
+            final UnaryOperator<AbortMissionCommandOps> initMissionOutline) {
         if (commandOps(name) != null) {
             throw new IllegalStateException("Named context instance is already created.");
         }
@@ -205,7 +206,9 @@ public final class MissionControl {
      * @param component   The component we want to match.
      * @return set of matching evaluators
      */
-    public static Set<MissionHealthCheckEvaluator> matchingHealthChecks(final String contextName, final Object component) {
+    public static Set<MissionHealthCheckEvaluator> matchingHealthChecks(
+            final String contextName,
+            final Object component) {
         return AbortMissionCommandOps.named(contextName).matchingEvaluators(component);
     }
 

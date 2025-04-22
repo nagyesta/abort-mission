@@ -72,7 +72,10 @@ public class ReportingHelper {
      * @param telemetry The telemetry we need to write.
      * @param json      The json file target.
      */
-    protected void writeJson(final LaunchTelemetry telemetry, final File json) {
+    @SuppressWarnings("java:S4507")
+    protected void writeJson(
+            final LaunchTelemetry telemetry,
+            final File json) {
         try (var stream = new FileOutputStream(json);
              var jsonWriter = new OutputStreamWriter(stream, StandardCharsets.UTF_8)) {
             final var jsonReport = new GsonBuilder()

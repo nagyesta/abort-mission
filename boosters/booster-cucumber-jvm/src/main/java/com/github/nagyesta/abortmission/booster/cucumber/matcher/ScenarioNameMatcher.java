@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
  * A {@link com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher} implementation
  * for regex matching of Scenario names.
  */
+@SuppressWarnings("java:S2160") //the parent implements equals and hashcode
 public class ScenarioNameMatcher extends CustomMatcher {
 
     private final String pattern;

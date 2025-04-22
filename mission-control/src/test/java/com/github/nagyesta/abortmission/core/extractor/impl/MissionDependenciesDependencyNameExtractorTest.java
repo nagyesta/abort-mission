@@ -80,21 +80,21 @@ class MissionDependenciesDependencyNameExtractorTest {
 
         @MissionDependencies({A, B, C, D})
         public void methodABCD() {
-
+            //test method in order to be able to find the different annotations
         }
 
         public void methodABInherited() {
-
+            //test method in order to be able to find the different annotations
         }
 
         @MissionDependencies(B)
         public void methodAB() {
-
+            //test method in order to be able to find the different annotations
         }
 
         @MissionDependencies(D)
         public void methodABD() {
-
+            //test method in order to be able to find the different annotations
         }
     }
 }

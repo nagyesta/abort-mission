@@ -269,7 +269,7 @@ class LaunchSequenceTemplateTest {
         underTest.launchGoNoGo(this.getClass(), this.getClass().getSimpleName());
 
         //then
-        verify(underTest).performPreLaunchInit(eq(this.getClass()), eq(this.getClass().getSimpleName()));
+        verify(underTest).performPreLaunchInit(this.getClass(), this.getClass().getSimpleName());
     }
 
     @Test

@@ -17,12 +17,13 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.PARALLEL;
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.SIDE_BOOSTER;
 import static org.testng.AssertJUnit.assertTrue;
 
+@SuppressWarnings({"java:S3577", "NewClassNamingConvention"})
+//we want to avoid the default names to pick up only that class which we want
 @LaunchAbortArmed(PARALLEL)
 @Listeners(AbortMissionListener.class)
 @SpringBootTest(classes = StaticFire.class)
@@ -41,7 +42,7 @@ public class ParallelStaticFireTestWithSideBoosters extends AbstractTestNGSpring
         return StaticFireTestAssets.staticFireTestParallelInputProvider().boxed()
                 .map(List::of)
                 .map(List::toArray)
-                .collect(Collectors.toList())
+                .toList()
                 .toArray(new Object[(int) StaticFireTestAssets.staticFireTestParallelInputProvider().count()][1]);
     }
 
@@ -86,6 +87,7 @@ public class ParallelStaticFireTestWithSideBoosters extends AbstractTestNGSpring
         executeTest(wait);
     }
 
+    @SuppressWarnings("java:S2925")
     private void executeTest(final int wait) throws InterruptedException {
         //given
         THREADS_USED.add(Thread.currentThread().getName());

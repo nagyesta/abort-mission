@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 
 import static com.github.nagyesta.abortmission.core.MissionControl.ABORT_MISSION_DISARM_COUNTDOWN;
 import static com.github.nagyesta.abortmission.core.MissionControl.ABORT_MISSION_DISARM_MISSION;
+import static com.github.nagyesta.abortmission.core.healthcheck.impl.PercentageBasedMissionHealthCheckEvaluator.builder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -72,8 +73,7 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
                                                                    final boolean expectedCountdownAbort) {
         //given
         final var anyClass = mock(MissionHealthCheckMatcher.class);
-        final var underTest = PercentageBasedMissionHealthCheckEvaluator
-                .builder(anyClass, new MissionStatisticsCollector(anyClass))
+        final var underTest = builder(anyClass, new MissionStatisticsCollector(anyClass))
                 .abortThreshold(1)
                 .burnInTestCount(burnInCount)
                 .overrideKeyword("any")
@@ -99,8 +99,7 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
                                                                      final boolean expectedCountdownAbort) {
         //given
         final var anyClass = mock(MissionHealthCheckMatcher.class);
-        final var underTest = PercentageBasedMissionHealthCheckEvaluator
-                .builder(anyClass, new MissionStatisticsCollector(anyClass))
+        final var underTest = builder(anyClass, new MissionStatisticsCollector(anyClass))
                 .abortThreshold(ABORT_IF_HALF_FAILED)
                 .burnInTestCount(burnInCount)
                 .build();
@@ -122,10 +121,10 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     void testAbortThresholdShouldThrowExceptionWhenCalledWithInvalidValue(final int input) {
         //given
         final var matcher = mock(MissionHealthCheckMatcher.class);
+        final var builder = builder(matcher, new MissionStatisticsCollector(matcher));
 
         //when
-        assertThrows(IllegalArgumentException.class, () -> PercentageBasedMissionHealthCheckEvaluator
-                .builder(matcher, new MissionStatisticsCollector(matcher))
+        assertThrows(IllegalArgumentException.class, () -> builder
                 .abortThreshold(input));
 
         //then exception
@@ -136,10 +135,10 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     void testBurnInTestCountShouldThrowExceptionWhenCalledWithInvalidValue(final int input) {
         //given
         final var matcher = mock(MissionHealthCheckMatcher.class);
+        final var builder = builder(matcher, new MissionStatisticsCollector(matcher));
 
         //when
-        assertThrows(IllegalArgumentException.class, () -> PercentageBasedMissionHealthCheckEvaluator
-                .builder(matcher, new MissionStatisticsCollector(matcher))
+        assertThrows(IllegalArgumentException.class, () -> builder
                 .burnInTestCount(input));
 
         //then exception
@@ -149,11 +148,10 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     void testShouldAbortShouldNotCallInternalMethodWhenDisarmed() {
         //given
         final var matcher = mock(MissionHealthCheckMatcher.class);
-        final var underTest = spy(PercentageBasedMissionHealthCheckEvaluator
-                .builder(matcher, new MissionStatisticsCollector(matcher))
+        final var underTest = spy(builder(matcher, new MissionStatisticsCollector(matcher))
                 .abortThreshold(1)
                 .build());
-        doReturn(true).when(underTest).isDisarmed(eq(ABORT_MISSION_DISARM_MISSION));
+        doReturn(true).when(underTest).isDisarmed(ABORT_MISSION_DISARM_MISSION);
 
         //when
         underTest.shouldAbort();
@@ -166,11 +164,10 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     void testShouldAbortCountdownShouldNotCallInternalMethodWhenDisarmed() {
         //given
         final var matcher = mock(MissionHealthCheckMatcher.class);
-        final var underTest = spy(PercentageBasedMissionHealthCheckEvaluator
-                .builder(matcher, new MissionStatisticsCollector(matcher))
+        final var underTest = spy(builder(matcher, new MissionStatisticsCollector(matcher))
                 .abortThreshold(1)
                 .build());
-        doReturn(true).when(underTest).isDisarmed(eq(ABORT_MISSION_DISARM_COUNTDOWN));
+        doReturn(true).when(underTest).isDisarmed(ABORT_MISSION_DISARM_COUNTDOWN);
 
         //when
         underTest.shouldAbortCountdown();

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.testkit.engine.EngineTestKit;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.github.nagyesta.abortmission.testkit.LaunchEvaluationUtil.*;
@@ -16,22 +15,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
-public class ParachuteDropTest {
+class ParachuteDropTest {
 
     private static final List<String> EXPECTED_DISPLAY_NAMES_COUNTDOWN = parachuteDropTestInputProvider()
             .mapToObj(i -> "ParachuteTestContext")
-            .collect(Collectors.toUnmodifiableList());
+            .toList();
     private static final List<String> EXPECTED_DISPLAY_NAMES_COUNTDOWN_PER_CLASS = List.of("ParachuteTestContextPerClass");
 
     @SuppressWarnings("checkstyle:MagicNumber")
     private static final List<String> EXPECTED_DISPLAY_NAMES = IntStream.range(0, 10)
             .mapToObj(i -> "testParachuteShouldOpenWhenCalled(int) [" + (i + 1) + "] " + i)
-            .collect(Collectors.toList());
+            .toList();
 
     @Test
     @Tag("integration")
     @SuppressWarnings("checkstyle:MagicNumber")
-    public void testAssumption() {
+    void testAssumption() {
         EngineTestKit
                 .engine("junit-jupiter")
                 .selectors(selectClass(ParachuteTestContext.class))
@@ -63,7 +62,7 @@ public class ParachuteDropTest {
     @Test
     @Tag("integration")
     @SuppressWarnings("checkstyle:MagicNumber")
-    public void testAssumptionPerClass() {
+    void testAssumptionPerClass() {
         EngineTestKit
                 .engine("junit-jupiter")
                 .selectors(selectClass(ParachuteTestContextPerClass.class))

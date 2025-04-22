@@ -10,15 +10,9 @@ import java.util.Objects;
 public abstract class CustomMatcher implements MissionHealthCheckMatcher {
 
     @Override
-    public abstract String getName();
-
-    @Override
     public MatchCriteria getMatchCriteria() {
         return MatchCriteria.CUSTOM;
     }
-
-    @Override
-    public abstract boolean matches(Object component);
 
     @Override
     public boolean equals(final Object o) {

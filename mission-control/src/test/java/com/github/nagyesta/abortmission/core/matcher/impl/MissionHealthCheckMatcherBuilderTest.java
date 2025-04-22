@@ -20,10 +20,10 @@ class MissionHealthCheckMatcherBuilderTest {
     @Test
     void testBuilderShouldThrowExceptionWhenBuildCalledWithoutInitializationFirst() {
         //given
+        final var builder = (MissionHealthCheckMatcherBuilder) MissionHealthCheckMatcherBuilder.builder();
+
         //when
-        assertThrows(NullPointerException.class,
-                () -> ((MissionHealthCheckMatcherBuilder) MissionHealthCheckMatcherBuilder.builder()).build(),
-                "Builder not initialized.");
+        assertThrows(NullPointerException.class, builder::build, "Builder not initialized.");
 
         //then + exception
     }

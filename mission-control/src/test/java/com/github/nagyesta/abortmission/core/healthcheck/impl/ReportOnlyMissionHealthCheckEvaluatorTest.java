@@ -19,7 +19,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("checkstyle:MagicNumber")
@@ -114,14 +113,14 @@ class ReportOnlyMissionHealthCheckEvaluatorTest {
         final var anyClass = mock(MissionHealthCheckMatcher.class);
         final var underTest = spy(MissionControl.reportOnlyEvaluator(anyClass)
                 .overrideKeyword(keyWord).build());
-        doReturn(Set.of(keyWord)).when(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_FORCE_ABORT_EVALUATORS));
+        doReturn(Set.of(keyWord)).when(underTest).evaluateOverrideList(MissionControl.ABORT_MISSION_FORCE_ABORT_EVALUATORS);
 
         //when
         final var actual = underTest.shouldAbort();
 
         //then
         assertTrue(actual);
-        verify(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_FORCE_ABORT_EVALUATORS));
+        verify(underTest).evaluateOverrideList(MissionControl.ABORT_MISSION_FORCE_ABORT_EVALUATORS);
     }
 
     @Test
@@ -131,14 +130,14 @@ class ReportOnlyMissionHealthCheckEvaluatorTest {
         final var anyClass = mock(MissionHealthCheckMatcher.class);
         final var underTest = spy(MissionControl.reportOnlyEvaluator(anyClass)
                 .overrideKeyword(keyWord).build());
-        doReturn(Set.of(keyWord)).when(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_FORCE_ABORT_EVALUATORS));
+        doReturn(Set.of(keyWord)).when(underTest).evaluateOverrideList(MissionControl.ABORT_MISSION_FORCE_ABORT_EVALUATORS);
 
         //when
         final var actual = underTest.shouldAbortCountdown();
 
         //then
         assertTrue(actual);
-        verify(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_FORCE_ABORT_EVALUATORS));
+        verify(underTest).evaluateOverrideList(MissionControl.ABORT_MISSION_FORCE_ABORT_EVALUATORS);
     }
 
     @Test

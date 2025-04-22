@@ -5,9 +5,11 @@
 [![latest-release](https://img.shields.io/github/v/tag/nagyesta/abort-mission?color=blue&logo=git&label=releases&sort=semver)](https://github.com/nagyesta/abort-mission/releases)
 [![JavaCI](https://img.shields.io/github/actions/workflow/status/nagyesta/abort-mission/gradle.yml?logo=github&branch=main)](https://github.com/nagyesta/abort-mission/actions/workflows/gradle.yml)
 
-# Flight Evaluation Report Generator
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=nagyesta_abort-mission&metric=coverage)](https://sonarcloud.io/summary/new_code?id=nagyesta_abort-mission)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nagyesta_abort-mission&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=nagyesta_abort-mission)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=nagyesta_abort-mission&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=nagyesta_abort-mission)
 
-[![codecov flighteval](https://img.shields.io/codecov/c/github/nagyesta/abort-mission?label=Coverage:%20FlightEvaluationReport&flag=flighteval&token=I832ZCIONI)](https://img.shields.io/codecov/c/github/nagyesta/abort-mission?label=Coverage:%20FlightEvaluationReport&flag=flighteval&token=I832ZCIONI)
+# Flight Evaluation Report Generator
 
 Please find the essentials below or check out [the wiki](https://github.com/nagyesta/abort-mission/wiki) for more
 details.

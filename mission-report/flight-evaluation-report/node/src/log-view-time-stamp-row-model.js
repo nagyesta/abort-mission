@@ -114,8 +114,7 @@ class LogViewRow {
     }
 
     addEndingThreads(aRun, threadRowSpan) {
-        for (let t = 0; t < aRun.rowSpan.length; t++) {
-            const rowSpan = aRun.rowSpan[t];
+        for (const rowSpan of aRun.rowSpan) {
             if (rowSpan === 0) {
                 this.addThread(new LogViewCellPlaceholder(threadRowSpan));
             }

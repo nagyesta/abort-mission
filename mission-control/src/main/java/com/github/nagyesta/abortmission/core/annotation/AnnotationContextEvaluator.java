@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 /**
  * Helper class to evaluate annotated elements during the primary mission of the library.
  */
+@SuppressWarnings("java:S6548")
 public final class AnnotationContextEvaluator {
 
     private static final String DEFAULT_MISSION_OUTLINE_DEFINITION_CLASS_NAME = "MissionOutlineDefinition";
@@ -152,7 +153,7 @@ public final class AnnotationContextEvaluator {
         return IntStream.range(1, split.length)
                 .mapToObj(excludeLast -> Arrays
                         .stream(split)
-                        .limit(split.length - excludeLast)
+                        .limit((long) split.length - excludeLast)
                         .collect(Collectors.joining(".")) + ".")
                 .filter(this::hasDefaultMissionOutlineClass)
                 .map(this::getDefaultMissionOutlineClass)
@@ -178,6 +179,9 @@ public final class AnnotationContextEvaluator {
     }
 
     private void doInitialBriefingOfMissionOutline(final Class<? extends MissionOutline> missionOutlineClass) {
+        if (missionOutlineClass == null) {
+            throw new IllegalArgumentException("Mission outline class cannot be null.");
+        }
         try {
             final var outline = missionOutlineClass.getConstructor().newInstance();
             outline.initialBriefing();

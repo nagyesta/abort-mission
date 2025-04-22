@@ -14,29 +14,30 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
-      - 'README.md'
-      - '**/README.md'
-      - '.lift/.toml'
-      - '**/.lift/.toml'
-      - 'CODE_OF_CONDUCT.md'
-      - 'CONTRIBUTING.md'
-      - 'pull_request_template.md'
-      - 'SECURITY.md'
-      - 'LICENSE'
-      - '.github/ISSUE_TEMPLATE/**'
-      - '.github/assets/**'
-      - '.github/workflows/**'
-      - '!.github/workflows/codeql-analysis.yml'
-      - '.github/pr-labeler.yml'
-      - 'renovate.json'
-      - '.whitesource'
-      - '.idea/**'
-      - '.gitignore'
+      - "README.md"
+      - "**/README.md"
+      - ".lift/.toml"
+      - "**/.lift/.toml"
+      - "CODE_OF_CONDUCT.md"
+      - "CONTRIBUTING.md"
+      - "pull_request_template.md"
+      - "SECURITY.md"
+      - "LICENSE"
+      - ".github/ISSUE_TEMPLATE/**"
+      - ".github/assets/**"
+      - ".github/workflows/**"
+      - "!.github/workflows/codeql-analysis.yml"
+      - ".github/pr-labeler.yml"
+      - "renovate.json"
+      - ".whitesource"
+      - ".idea/**"
+      - ".gitignore"
+      - ".qlty/**"
 
 permissions:
   contents: read
@@ -62,7 +63,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@45775bd8235c68ba998cffa5171334d58593da47 # v3.28.15
         with:
-          languages: 'java'
+          languages: "java"
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@06832c7b30a0129d7fb559bcc6e43d26f6374244 # v4.3.1
         with:

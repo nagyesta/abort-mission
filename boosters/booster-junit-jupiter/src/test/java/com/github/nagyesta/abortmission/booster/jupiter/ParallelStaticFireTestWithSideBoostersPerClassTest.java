@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest(classes = StaticFire.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Tag(PER_CLASS)
-public class ParallelStaticFireTestWithSideBoostersPerClassTest {
+class ParallelStaticFireTestWithSideBoostersPerClassTest {
 
     private static final Random RANDOM = new Random();
     private static final Logger LOGGER = LoggerFactory.getLogger(ParallelStaticFireTestWithSideBoostersPerClassTest.class);
@@ -39,28 +39,29 @@ public class ParallelStaticFireTestWithSideBoostersPerClassTest {
 
     @ParameterizedTest
     @MethodSource("attemptIndexProvider")
-    public void testIsOnFire0(final int wait) throws InterruptedException {
+    void testIsOnFire0(final int wait) throws InterruptedException {
         executeTest(wait);
     }
 
     @ParameterizedTest
     @MethodSource("attemptIndexProvider")
-    public void testIsOnFire1(final int wait) throws InterruptedException {
+    void testIsOnFire1(final int wait) throws InterruptedException {
         executeTest(wait);
     }
 
     @ParameterizedTest
     @MethodSource("attemptIndexProvider")
-    public void testIsOnFire2(final int wait) throws InterruptedException {
+    void testIsOnFire2(final int wait) throws InterruptedException {
         executeTest(wait);
     }
 
     @ParameterizedTest
     @MethodSource("attemptIndexProvider")
-    public void testIsOnFire3(final int wait) throws InterruptedException {
+    void testIsOnFire3(final int wait) throws InterruptedException {
         executeTest(wait);
     }
 
+    @SuppressWarnings("java:S2925")
     private void executeTest(final int wait) throws InterruptedException {
         //given
         ThreadTracker.THREADS_USED.add(Thread.currentThread().getName());

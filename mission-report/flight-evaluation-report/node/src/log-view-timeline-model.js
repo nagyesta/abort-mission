@@ -41,17 +41,13 @@ class LogViewTimelineModel {
             const boundaryEnd = this.rootModel.filter.endTime().getTime();
             if (currentItem.timeStamp >= boundaryStart && previousItem.timeStamp < boundaryStart) {
                 currentItem.isBoundaryStart(true);
-            } else {
-                if (currentItem.isBoundaryStart()) {
-                    currentItem.isBoundaryStart(false);
-                }
+            } else if (currentItem.isBoundaryStart()) {
+                currentItem.isBoundaryStart(false);
             }
             if (currentItem.timeStamp <= boundaryEnd && nextItem.timeStamp > boundaryEnd) {
                 currentItem.isBoundaryEnd(true);
-            } else {
-                if (currentItem.isBoundaryEnd()) {
-                    currentItem.isBoundaryEnd(false);
-                }
+            } else if (currentItem.isBoundaryEnd()) {
+                currentItem.isBoundaryEnd(false);
             }
         }
     }
@@ -211,8 +207,7 @@ class LogViewTimelineModel {
     calculateThreadUtilization() {
         const startTime = new Date().getTime();
         const threadCounters = this.initThreadCounters();
-        for (let i = 0; i < this.logEntryMultiMap.length; i++) {
-            const logEntry = this.logEntryMultiMap[i];
+        for (const logEntry of this.logEntryMultiMap) {
             this.countRunsEndingInCurrentMilliSecond(logEntry, threadCounters);
             this.countRunsStartingInCurrentMilliSecond(logEntry, threadCounters);
             this.markThreadsWithRunsStartedBeforeAndEndingAfterCurrentMilliSecond(logEntry, threadCounters);
@@ -224,8 +219,7 @@ class LogViewTimelineModel {
 
     calculateRowSpans() {
         const startTime = new Date().getTime();
-        for (let i = 0; i < this.logEntryMultiMap.length; i++) {
-            const logEntry = this.logEntryMultiMap[i];
+        for (const logEntry of this.logEntryMultiMap) {
             logEntry._temporary.calculateRowSpans();
         }
         const endTime = new Date().getTime();
@@ -234,8 +228,7 @@ class LogViewTimelineModel {
 
     generateRows() {
         const startTime = new Date().getTime();
-        for (let i = 0; i < this.logEntryMultiMap.length; i++) {
-            const logEntry = this.logEntryMultiMap[i];
+        for (const logEntry of this.logEntryMultiMap) {
             logEntry.generateRows();
         }
         const endTime = new Date().getTime();

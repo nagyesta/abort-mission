@@ -16,8 +16,8 @@ class FlightEvaluationReportInitializer {
     }
 
     addIfMissing(target, all, toAdd) {
-        for (let i = 0; i < target.length; i++) {
-            if (target[i].key === toAdd.key) {
+        for (const element of target) {
+            if (element.key === toAdd.key) {
                 return;
             }
         }

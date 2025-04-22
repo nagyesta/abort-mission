@@ -17,9 +17,10 @@ public abstract class SimpleCallableMissionTemplateSupport<T> extends CallableMi
      * @param evaluationScope The class we want to use as the annotated test class which will be used by matchers.
      * @param abortSequence   The {@link Runnable} abort sequence (typically throwing an exception).
      */
-    public SimpleCallableMissionTemplateSupport(final String contextName,
-                                                final Class<?> evaluationScope,
-                                                final Runnable abortSequence) {
+    protected SimpleCallableMissionTemplateSupport(
+            final String contextName,
+            final Class<?> evaluationScope,
+            final Runnable abortSequence) {
         super(contextName, evaluationScope, abortSequence);
     }
 

@@ -13,10 +13,11 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.testkit.vanilla.FuelTankTestAssets.*;
 
+@SuppressWarnings({"java:S3577", "NewClassNamingConvention"})
+//we want to avoid the default names to pick up only that class which we want
 @SuppressLaunchFailureReporting(forExceptions = {UnsupportedOperationException.class})
 @LaunchAbortArmed(CONTEXT_NAME)
 @Listeners(AbortMissionListener.class)
@@ -36,7 +37,8 @@ public class FuelTankTestContext {
         return fuelTankTestInputProvider().boxed()
                 .map(List::of)
                 .map(List::toArray)
-                .collect(Collectors.toList()).toArray(new Object[(int) fuelTankTestInputProvider().count()][1]);
+                .toList()
+                .toArray(new Object[(int) fuelTankTestInputProvider().count()][1]);
     }
 
     @Test(dataProvider = "fuelTankLoadAmountProvider")
@@ -47,7 +49,7 @@ public class FuelTankTestContext {
         //when
         underTest.load(loadAmount);
 
-        //then no exception;
+        //then no exception
     }
 
 }

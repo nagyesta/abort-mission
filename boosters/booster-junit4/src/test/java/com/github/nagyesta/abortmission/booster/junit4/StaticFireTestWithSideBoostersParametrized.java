@@ -16,12 +16,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestContextManager;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.STATIC_FIRE;
 import static org.junit.Assert.assertTrue;
 
-@SuppressWarnings({"checkstyle:JavadocVariable", "checkstyle:VisibilityModifier"})
+@SuppressWarnings({"checkstyle:JavadocVariable", "checkstyle:VisibilityModifier", "java:S3577", "NewClassNamingConvention"})
+//we want to avoid the default names to pick up only that class which we want
 @LaunchAbortArmed(STATIC_FIRE)
 @RunWith(Parameterized.class)
 @SpringBootTest(classes = StaticFire.class)
@@ -40,7 +40,7 @@ public class StaticFireTestWithSideBoostersParametrized {
 
     @Parameterized.Parameters
     public static List<Integer> attemptIndexProvider() {
-        return StaticFireTestAssets.staticFireTestInputProvider().boxed().collect(Collectors.toList());
+        return StaticFireTestAssets.staticFireTestInputProvider().boxed().toList();
     }
 
     @Before

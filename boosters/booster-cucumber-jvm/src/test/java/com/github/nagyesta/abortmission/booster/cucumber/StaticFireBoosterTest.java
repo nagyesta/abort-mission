@@ -13,7 +13,6 @@ import org.junit.platform.testkit.engine.EngineTestKit;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -23,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
-public class StaticFireBoosterTest {
+class StaticFireBoosterTest {
 
     private static final String CENTER_RESOURCE =
             "classpath:com/github/nagyesta/abortmission/booster/cucumber/staticfire/StaticFireCenterCoreOnly.feature";
@@ -39,12 +38,12 @@ public class StaticFireBoosterTest {
                     Stream.of("StaticFire_4 Center core and side booster static fire is burning (" + HEAVY_RESOURCE + ":515)")
             )
             .flatMap(Function.identity())
-            .collect(Collectors.toList());
+            .toList();
 
     @Test
     @Tag("integration")
     @SuppressWarnings("checkstyle:MagicNumber")
-    public void testAssumption() {
+    void testAssumption() {
         AbortMissionGlobalConfiguration.shared().setStackTraceFilter(e -> !e.getClassName().contains("org.springframework"));
         EngineTestKit
                 .engine("junit-vintage")
@@ -64,21 +63,21 @@ public class StaticFireBoosterTest {
                 //check display names
                 final var actualCountdownNames = evaluator.getStats().getReadOnlyCountdown().timeSeriesStream()
                         .map(StageTimeMeasurement::getDisplayName)
-                        .collect(Collectors.toList());
+                        .toList();
                 assertIterableEquals(EXPECTED_CENTER_DISPLAY_NAMES, actualCountdownNames);
                 final var actualMissionNames = evaluator.getStats().getReadOnlyMission().timeSeriesStream()
                         .map(StageTimeMeasurement::getDisplayName)
-                        .collect(Collectors.toList());
+                        .toList();
                 assertIterableEquals(EXPECTED_CENTER_DISPLAY_NAMES, actualMissionNames);
                 //check exception details
                 final var actualExceptions = evaluator.getStats().getReadOnlyMission().timeSeriesStream()
                         .filter(s -> s.getResult() == StageResult.FAILURE)
                         .map(StageTimeMeasurement::getThrowableClass)
-                        .collect(Collectors.toList());
+                        .toList();
                 final var actualMessages = evaluator.getStats().getReadOnlyMission().timeSeriesStream()
                         .filter(s -> s.getResult() == StageResult.FAILURE)
                         .map(StageTimeMeasurement::getThrowableMessage)
-                        .collect(Collectors.toList());
+                        .toList();
                 assertIterableEquals(Collections.emptyList(), actualExceptions);
                 assertIterableEquals(Collections.emptyList(), actualMessages);
             } else {

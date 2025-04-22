@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.testkit.LaunchEvaluationUtil.*;
 import static com.github.nagyesta.abortmission.testkit.vanilla.FuelTankTestAssets.*;
@@ -21,7 +20,7 @@ public class FuelTankTest {
     private static final List<String> EXPECTED_DISPLAY_NAMES_COUNTDOWN = List.of("FuelTankTestContext");
     private static final List<String> EXPECTED_DISPLAY_NAMES = fuelTankTestInputProvider()
             .mapToObj(i -> "testFuelTankShouldFillWhenCalled " + i)
-            .collect(Collectors.toList());
+            .toList();
 
     @Test(groups = "integration")
     @SuppressWarnings("checkstyle:MagicNumber")

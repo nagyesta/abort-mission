@@ -15,13 +15,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.core.MissionControl.matcher;
 import static com.github.nagyesta.abortmission.core.MissionControl.percentageBasedEvaluator;
 import static com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDropTestAssets.parachuteDropTestInputProvider;
 import static org.testng.Assert.assertTrue;
 
+@SuppressWarnings({"java:S3577", "NewClassNamingConvention"})
+//we want to avoid the default names to pick up only that class which we want
 @LaunchAbortArmed
 @Listeners(AbortMissionListener.class)
 @LaunchSequence(ParachuteTestContext.MissionOutlineDef.class)
@@ -32,7 +33,8 @@ public class ParachuteTestContext {
         return parachuteDropTestInputProvider().boxed()
                 .map(List::of)
                 .map(List::toArray)
-                .collect(Collectors.toList()).toArray(new Object[(int) parachuteDropTestInputProvider().count()][1]);
+                .toList()
+                .toArray(new Object[(int) parachuteDropTestInputProvider().count()][1]);
     }
 
     @Test(dataProvider = "parachuteIndexProvider")

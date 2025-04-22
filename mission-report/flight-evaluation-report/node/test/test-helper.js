@@ -198,7 +198,7 @@ function expectMethodDetailsMatch(actualMethods, expectedMethods) {
         expect(selectedData.runs).toEqual(expectedMethods[i].runs);
         expect(selectedData.start).toEqual(expectedMethods[i].start);
         if (selectedData.runs > 0) {
-            const timeStamp = /2023-[0-2][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9]{3}/;
+            const timeStamp = /2023-[0-2]\d-[0-3]\d [0-2]\d:[0-5]\d:[0-5]\d.\d{3}/;
             expect(selectedData.startTimeAsString()).toMatch(timeStamp);
             expect(selectedData.endTimeAsString()).toMatch(timeStamp);
         } else {

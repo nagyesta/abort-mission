@@ -138,15 +138,16 @@ public class LaunchJsonToHtmlConverter {
      * @return The hashed and shortened value.
      */
     protected String shortHash(final String displayName) {
-        final var hash = new BigInteger(sha256(displayName)).abs().toString(HASH_RADIX);
+        final var hash = new BigInteger(sha1(displayName)).abs().toString(HASH_RADIX);
         return hash.substring(0, Math.min(hash.length(), HASH_LENGTH));
     }
 
-    private static byte[] sha256(final String message) {
+    @SuppressWarnings("java:S4790") //the hash algorithm is not used for security
+    private static byte[] sha1(final String message) {
         try {
             return MessageDigest.getInstance("SHA-1").digest(message.getBytes());
         } catch (final NoSuchAlgorithmException e) {
-            throw new UnsupportedOperationException("SHA-256 is not supported on this platform.");
+            throw new UnsupportedOperationException("SHA-1 is not supported on this platform.");
         }
     }
 }

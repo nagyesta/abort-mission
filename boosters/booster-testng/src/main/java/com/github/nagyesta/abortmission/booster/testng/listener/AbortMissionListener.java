@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.core.MissionControl.annotationContextEvaluator;
@@ -91,11 +92,7 @@ public class AbortMissionListener implements ITestListener, IClassListener, ISui
     }
 
     private Optional<StageTimeStopwatch> stopwatchFromStore() {
-        var stopWatch = STORE.get();
-        //noinspection OptionalAssignedToNull
-        if (stopWatch == null) {
-            stopWatch = Optional.empty();
-        }
+        final var stopWatch = Optional.ofNullable(STORE.get()).flatMap(Function.identity());
         STORE.remove();
         return stopWatch;
     }

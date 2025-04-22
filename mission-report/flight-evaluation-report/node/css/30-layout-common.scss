@@ -279,7 +279,7 @@ body.dark {
     max-width: v.$break-point-medium-root-width;
 
     .filter-module .filter-box {
-      $width: v.$break-point-medium-root-width - 2 * (42px + 2px) - 6px;
+      $width: v.$break-point-medium-root-width - 2 * (42px + 2px) - 10px;
       width: $width;
       max-width: $width;
     }
@@ -297,7 +297,7 @@ body.dark {
     max-width: v.$break-point-large-root-width;
 
     .filter-module .filter-box {
-      $width: v.$break-point-large-root-width - 2 * (42px + 2px) - 6px;
+      $width: v.$break-point-large-root-width - 2 * (42px + 2px) - 10px;
       width: $width;
       max-width: $width;
     }
@@ -315,7 +315,7 @@ body.dark {
     max-width: v.$break-point-xl-root-width;
 
     .filter-module .filter-box {
-      $width: v.$break-point-xl-root-width - 2 * (42px + 2px) - 6px;
+      $width: v.$break-point-xl-root-width - 2 * (42px + 2px) - 10px;
       width: $width;
       max-width: $width;
     }

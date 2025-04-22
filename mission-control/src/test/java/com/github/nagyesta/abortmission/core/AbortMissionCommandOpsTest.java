@@ -38,10 +38,11 @@ class AbortMissionCommandOpsTest {
     void testRegisterHealthCheckShouldThrowExceptionWhenCalledAfterContextWasInitialized() {
         //given
         AbortMissionCommandOps.newInstance().finalizeSetup(AFTER_CONTEXT_WAS_INITIALIZED);
+        final var ops = AbortMissionCommandOps.named(AFTER_CONTEXT_WAS_INITIALIZED);
+        final var evaluator = mock(MissionHealthCheckEvaluator.class);
 
         //when
-        Assertions.assertThrows(IllegalStateException.class, () -> AbortMissionCommandOps.named(AFTER_CONTEXT_WAS_INITIALIZED)
-                .registerHealthCheck(mock(MissionHealthCheckEvaluator.class)));
+        Assertions.assertThrows(IllegalStateException.class, () -> ops.registerHealthCheck(evaluator));
 
         //then exception
     }

@@ -18,10 +18,12 @@ import java.util.stream.Stream;
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SuppressWarnings({"java:S3577", "NewClassNamingConvention"})
+//we want to avoid the default names to pick up only that class which we want
 @LaunchAbortArmed(STATIC_FIRE)
 @SpringBootTest(classes = StaticFire.class)
 @Tag(SIDE_BOOSTER)
-public class StaticFireTestWithSideBoosters {
+class StaticFireTestWithSideBoosters {
 
     @Autowired
     private Booster centerCore;
@@ -34,7 +36,7 @@ public class StaticFireTestWithSideBoosters {
 
     @ParameterizedTest
     @MethodSource("attemptIndexProvider")
-    public void testIsOnFire(final int ignore) {
+    void testIsOnFire(final int ignore) {
         //given
 
         //when
@@ -48,7 +50,7 @@ public class StaticFireTestWithSideBoosters {
     @SuppressAbortDecisions
     @Tag(BOOSTER)
     @Tag(CENTER_CORE)
-    public void testIsOnFireNoAbort() {
+    void testIsOnFireNoAbort() {
         //given
 
         //when

@@ -19,7 +19,7 @@ class KeyValueEntityModel {
     }
 
     valuePrefix() {
-        const classRegex = /^([a-zA-Z_$][a-zA-Z0-9_$]*\.)*[a-zA-Z_$][a-zA-Z0-9_$]*(\.[0-9]+)*$/;
+        const classRegex = /^([a-zA-Z_$][a-zA-Z0-9_$]*\.)*[a-zA-Z_$][a-zA-Z0-9_$]*(\.\d+)*$/;
         if (this.entityType === "CLASS" && classRegex.test(this.value)) {
             return this.value.slice(0, this.value.lastIndexOf(".") + 1);
         } else if (this.entityType === "FEATURE" && this.value.includes("/")) {

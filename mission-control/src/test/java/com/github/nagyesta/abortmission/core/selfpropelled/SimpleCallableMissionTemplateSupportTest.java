@@ -47,7 +47,7 @@ class SimpleCallableMissionTemplateSupportTest extends AbstractMissionTemplateSu
         try {
             underTest.call();
         } catch (final IllegalStateException ignore) {
-
+            //ignore
         } catch (final Exception exception) {
             Assertions.fail(exception.getMessage());
         }

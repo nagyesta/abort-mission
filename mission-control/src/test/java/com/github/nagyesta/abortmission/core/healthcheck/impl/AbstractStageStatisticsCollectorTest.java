@@ -18,6 +18,7 @@ class AbstractStageStatisticsCollectorTest {
 
     private static final MissionHealthCheckMatcher MATCHER = MissionControl.matcher().anyClass().build();
     private static final AbstractStageStatisticsCollector AN_INSTANCE = new AbstractStageStatisticsCollector(MATCHER) {
+        @SuppressWarnings("java:S1186") //empty implementation (we just need the method to be there
         @Override
         public void logTimeMeasurement(final StageTimeMeasurement timeMeasurement) {
         }
@@ -90,8 +91,7 @@ class AbstractStageStatisticsCollectorTest {
     @Test
     void testGetMatcherShouldReturnProvidedMatcherWhenCalled() {
         //given
-        @SuppressWarnings("UnnecessaryLocalVariable")
-        final var underTest = AN_INSTANCE;
+        @SuppressWarnings("UnnecessaryLocalVariable") final var underTest = AN_INSTANCE;
 
         //when
         final var actual = underTest.getMatcher();

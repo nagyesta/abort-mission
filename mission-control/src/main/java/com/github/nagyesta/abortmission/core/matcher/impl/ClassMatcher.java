@@ -32,8 +32,8 @@ public class ClassMatcher extends RegexMatcher implements MissionHealthCheckMatc
     protected String convert(final Object component) {
         if (component instanceof Class<?>) {
             return ((Class<?>) component).getName();
-        } else if (component instanceof Method) {
-            return ((Method) component).getDeclaringClass().getName();
+        } else if (component instanceof final Method method) {
+            return method.getDeclaringClass().getName();
         } else {
             throw new IllegalArgumentException("Illegal component type provided: " + component);
         }

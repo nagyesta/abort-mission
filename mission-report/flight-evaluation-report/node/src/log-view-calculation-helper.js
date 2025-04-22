@@ -88,6 +88,7 @@ class LogViewTempCalculationHelper {
         }
     }
 
+    // noinspection JSUnusedLocalSymbols
     calculateRowSpansForStartingRuns() {
         const self = this;
         const started = this.parent.started;
@@ -104,8 +105,7 @@ class LogViewTempCalculationHelper {
 
     calculateRowSpansForEndingRuns() {
         const ended = this.parent.ended;
-        for (let endIndex = 0; endIndex < ended.length; endIndex++) {
-            const logViewRun = ended[endIndex];
+        for (const logViewRun of ended) {
             const result = this.doForEachDefinedValue(this.threadsWithNoActivityDuringEnds, () => 0);
             this.doForEachDefinedValue(this.threadsEnding, () => -1, result);
             this.doForEachDefinedValue(this.threadsContinuing, () => -1, result);
@@ -159,7 +159,7 @@ class LogViewTempCalculationHelper {
 
     generateRows() {
         if (!this.calculationDone) {
-            throw 'ERROR: calculation must be done before row generation';
+            throw new Error('ERROR: calculation must be done before row generation');
         }
         if (this.generationDone) {
             return this.rows;

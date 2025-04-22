@@ -48,18 +48,22 @@
   }
 
   .text-success {
+    @extend .default-border-color;
     color: v.$print-text-color !important;
   }
 
   .text-failure {
+    @extend .default-border-color;
     color: v.$light-text-color-failure !important;
   }
 
   .text-abort {
+    @extend .default-border-color;
     color: v.$light-text-color-abort !important;
   }
 
   .text-suppressed {
+    @extend .default-border-color;
     color: v.$light-text-color-suppressed !important;
   }
 
@@ -69,26 +73,6 @@
 
   body a:hover {
     color: v.$light-link-color-hover !important;
-  }
-
-  .text-success {
-    @extend .default-border-color;
-    color: v.$light-text-color-success;
-  }
-
-  .text-failure {
-    @extend .default-border-color;
-    color: v.$light-text-color-failure;
-  }
-
-  .text-abort {
-    @extend .default-border-color;
-    color: v.$light-text-color-abort;
-  }
-
-  .text-suppressed {
-    @extend .default-border-color;
-    color: v.$light-text-color-suppressed
   }
 
   .mission-success {

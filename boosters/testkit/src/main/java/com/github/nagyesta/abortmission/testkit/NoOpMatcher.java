@@ -5,6 +5,7 @@ import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 /**
  * No-Operation matcher just for simple test result definition.
  */
+@SuppressWarnings("java:S6548")
 public class NoOpMatcher implements MissionHealthCheckMatcher {
 
     /**
