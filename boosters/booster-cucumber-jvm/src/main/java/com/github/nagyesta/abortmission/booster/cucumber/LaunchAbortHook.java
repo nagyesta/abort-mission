@@ -132,7 +132,7 @@ public abstract class LaunchAbortHook {
         //noop
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "java:S3011"})
     private Optional<Throwable> getThrowable(final Scenario scenario) {
         try {
             final var delegate = scenario.getClass().getDeclaredField("delegate");

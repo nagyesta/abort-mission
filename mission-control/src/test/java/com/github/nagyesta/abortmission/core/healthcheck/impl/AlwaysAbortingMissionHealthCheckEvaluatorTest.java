@@ -143,14 +143,14 @@ class AlwaysAbortingMissionHealthCheckEvaluatorTest {
         final var anyClass = mock(MissionHealthCheckMatcher.class);
         final var underTest = spy(MissionControl.abortingEvaluator(anyClass)
                 .overrideKeyword(keyWord).build());
-        doReturn(Set.of(keyWord)).when(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_SUPPRESS_ABORT_EVALUATORS));
+        doReturn(Set.of(keyWord)).when(underTest).evaluateOverrideList(MissionControl.ABORT_MISSION_SUPPRESS_ABORT_EVALUATORS);
 
         //when
         final var actual = underTest.shouldSuppressAbort();
 
         //then
         assertTrue(actual);
-        verify(underTest).evaluateOverrideList(eq(MissionControl.ABORT_MISSION_SUPPRESS_ABORT_EVALUATORS));
+        verify(underTest).evaluateOverrideList(MissionControl.ABORT_MISSION_SUPPRESS_ABORT_EVALUATORS);
     }
 
     @Test

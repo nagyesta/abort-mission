@@ -41,6 +41,8 @@ licensee {
 }
 
 val copyLegalDocs = tasks.register<Copy>("copyLegalDocs") {
+    group = "documentation"
+    description = "Copies legal files and reports."
     from(file("${project.rootProject.projectDir}/LICENSE"))
     from(layout.buildDirectory.file("reports/licensee/artifacts.json").get().asFile)
     from(layout.buildDirectory.file("reports/bom.json").get().asFile)

@@ -37,7 +37,10 @@ public abstract class AbstractMissionTemplate<P, T> extends AbstractLaunchSequen
      * @param evaluationScope The class we want to use as the annotated test class which will be used by matchers.
      * @param abortSequence   The {@link Runnable} abort sequence (typically throwing an exception).
      */
-    protected AbstractMissionTemplate(final String contextName, final Class<?> evaluationScope, final Runnable abortSequence) {
+    protected AbstractMissionTemplate(
+            final String contextName,
+            final Class<?> evaluationScope,
+            final Runnable abortSequence) {
         super(abortSequence, type -> CLASS_ONLY_EVALUATOR_LOOKUP.apply(contextName, type));
         this.contextName = contextName;
         this.evaluationScope = Objects.requireNonNull(evaluationScope, "Test class cannot be null.");

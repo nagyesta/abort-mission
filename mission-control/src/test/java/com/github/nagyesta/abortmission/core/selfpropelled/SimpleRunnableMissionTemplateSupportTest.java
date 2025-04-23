@@ -48,7 +48,7 @@ class SimpleRunnableMissionTemplateSupportTest extends AbstractMissionTemplateSu
         try {
             underTest.run();
         } catch (final IllegalStateException ignore) {
-
+            //ignore
         }
 
         //then

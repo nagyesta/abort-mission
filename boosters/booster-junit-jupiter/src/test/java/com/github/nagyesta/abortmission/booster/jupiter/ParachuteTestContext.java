@@ -20,9 +20,11 @@ import static com.github.nagyesta.abortmission.core.MissionControl.percentageBas
 import static com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDropTestAssets.parachuteDropTestInputProvider;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SuppressWarnings({"java:S3577", "NewClassNamingConvention"})
+//we want to avoid the default names to pick up only that class which we want
 @LaunchAbortArmed
 @LaunchSequence(ParachuteTestContext.MissionOutlineDef.class)
-public class ParachuteTestContext {
+class ParachuteTestContext {
 
     private static Stream<Arguments> parachuteIndexProvider() {
         return parachuteDropTestInputProvider().mapToObj(Arguments::of);
@@ -30,7 +32,7 @@ public class ParachuteTestContext {
 
     @ParameterizedTest
     @MethodSource("parachuteIndexProvider")
-    public void testParachuteShouldOpenWhenCalled(final int index) {
+    void testParachuteShouldOpenWhenCalled(final int index) {
         //given
         final var underTest = new ParachuteDrop();
 

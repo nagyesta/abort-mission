@@ -15,6 +15,8 @@ import org.testng.annotations.Test;
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.*;
 import static org.testng.Assert.assertTrue;
 
+@SuppressWarnings({"java:S3577", "NewClassNamingConvention"})
+//we want to avoid the default names to pick up only that class which we want
 @SuppressAbortDecisions
 @LaunchAbortArmed(STATIC_FIRE)
 @Listeners(AbortMissionListener.class)

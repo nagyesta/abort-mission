@@ -53,7 +53,7 @@ class CallableMissionTemplateSupportTest extends AbstractMissionTemplateSupportT
         try {
             underTest.call();
         } catch (final IllegalStateException ignore) {
-
+            //ignore
         } catch (final Exception exception) {
             Assertions.fail(exception.getMessage());
         }

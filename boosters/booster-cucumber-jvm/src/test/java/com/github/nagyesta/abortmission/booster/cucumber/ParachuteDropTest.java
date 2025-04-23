@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.testkit.engine.EngineTestKit;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.github.nagyesta.abortmission.testkit.LaunchEvaluationUtil.*;
@@ -17,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
-public class ParachuteDropTest {
+class ParachuteDropTest {
 
     private static final int FIRST_LINE_OF_EXAMPLES = 10;
     private static final int LAST_LINE_OF_EXAMPLES = 19;
@@ -25,12 +24,12 @@ public class ParachuteDropTest {
             "classpath:com/github/nagyesta/abortmission/booster/cucumber/parachute/ParachuteDrop.feature";
     private static final List<String> EXPECTED_DISPLAY_NAMES = IntStream.rangeClosed(FIRST_LINE_OF_EXAMPLES, LAST_LINE_OF_EXAMPLES)
             .mapToObj(i -> "Parachute_1 Parachutes should open (" + RESOURCE_NAME + ":" + i + ")")
-            .collect(Collectors.toList());
+            .toList();
 
     @Test
     @Tag("integration")
     @SuppressWarnings("checkstyle:MagicNumber")
-    public void testAssumption() {
+    void testAssumption() {
         EngineTestKit
                 .engine("junit-vintage")
                 .selectors(selectClass(ParachuteTestContext.class))

@@ -5,29 +5,30 @@ name: JavaCI-PR
 
 on:
   push:
-    branches: [ main]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
-      - 'README.md'
-      - '**/README.md'
-      - 'CODE_OF_CONDUCT.md'
-      - 'CONTRIBUTING.md'
-      - 'pull_request_template.md'
-      - '.lift/.toml'
-      - '**/.lift/.toml'
-      - 'SECURITY.md'
-      - 'LICENSE'
-      - '.github/ISSUE_TEMPLATE/**'
-      - '.github/assets/**'
-      - '.github/workflows/**'
-      - '!.github/workflows/gradle-ci.yml'
-      - '.github/pr-labeler.yml'
-      - 'renovate.json'
-      - '.whitesource'
-      - 'config/ossindex/exclusions.txt'
-      - '.idea/**'
-      - '.gitignore'
+      - "README.md"
+      - "**/README.md"
+      - "CODE_OF_CONDUCT.md"
+      - "CONTRIBUTING.md"
+      - "pull_request_template.md"
+      - ".lift/.toml"
+      - "**/.lift/.toml"
+      - "SECURITY.md"
+      - "LICENSE"
+      - ".github/ISSUE_TEMPLATE/**"
+      - ".github/assets/**"
+      - ".github/workflows/**"
+      - "!.github/workflows/gradle-ci.yml"
+      - ".github/pr-labeler.yml"
+      - "renovate.json"
+      - ".whitesource"
+      - "config/ossindex/exclusions.txt"
+      - ".idea/**"
+      - ".gitignore"
+      - ".qlty/**"
 
 permissions:
   contents: read
@@ -36,7 +37,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -61,8 +62,10 @@ jobs:
           cache-disabled: true
       - name: Build with Gradle (if Ubuntu)
         if: ${{ matrix.os == 'ubuntu-latest' }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: >
-          ./gradlew printVersion build sign
+          ./gradlew printVersion build sign sonar
           -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }}
           -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
           -Psigning.secretKeyRingFile=${{ runner.temp }}/.gnupg/secring.gpg
@@ -83,59 +86,3 @@ jobs:
             boosters/**/build/reports/tests/test
             mission-report/**/build/reports/tests/test
           retention-days: 5
-      - name: Upload coverage to Codecov - Core
-        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5.4.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./mission-control/build/reports/jacoco/report.xml
-          flags: core
-          disable_search: true
-          fail_ci_if_error: false
-      - name: Upload coverage to Codecov - Boosters - JUnit4
-        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5.4.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./boosters/booster-junit4/build/reports/jacoco/report.xml
-          flags: junit4
-          disable_search: true
-          fail_ci_if_error: false
-      - name: Upload coverage to Codecov - Boosters - Jupiter
-        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5.4.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./boosters/booster-junit-jupiter/build/reports/jacoco/report.xml
-          flags: jupiter
-          disable_search: true
-          fail_ci_if_error: false
-      - name: Upload coverage to Codecov - Boosters - TestNG
-        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5.4.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./boosters/booster-testng/build/reports/jacoco/report.xml
-          flags: testng
-          disable_search: true
-          fail_ci_if_error: false
-      - name: Upload coverage to Codecov - Boosters - Cucumber JVM
-        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5.4.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./boosters/booster-cucumber-jvm/build/reports/jacoco/report.xml
-          flags: cucumber
-          disable_search: true
-          fail_ci_if_error: false
-      - name: Upload coverage to Codecov - Boosters - Testkit
-        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5.4.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./boosters/testkit/build/reports/jacoco/report.xml
-          flags: testkit
-          disable_search: true
-          fail_ci_if_error: false
-      - name: Upload coverage to Codecov - Reporting - Flight Evaluation Report
-        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5.4.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./mission-report/flight-evaluation-report/build/reports/jacoco/report.xml,./mission-report/flight-evaluation-report/node/build/coverage/cobertura-coverage.xml
-          flags: flighteval
-          disable_search: true
-          fail_ci_if_error: false

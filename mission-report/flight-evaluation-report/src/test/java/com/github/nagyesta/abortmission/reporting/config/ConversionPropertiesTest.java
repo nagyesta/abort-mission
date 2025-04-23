@@ -8,20 +8,19 @@ import java.io.File;
 class ConversionPropertiesTest {
 
     @Test
-    void testConstructorShouldThrowExceptionWhenInputIsnull() {
+    void testConstructorShouldThrowExceptionWhenInputIsNull() {
         //given
         final var builder = ConversionProperties.builder()
                 .output(new File("out.html"));
 
         //when
-        //noinspection Convert2MethodRef
-        Assertions.assertThrows(IllegalArgumentException.class, () -> builder.build());
+        Assertions.assertThrows(IllegalArgumentException.class, builder::build);
 
         //then + exception
     }
 
     @Test
-    void testConstructorShouldThrowExceptionWhenOutputIsnull() {
+    void testConstructorShouldThrowExceptionWhenOutputIsNull() {
         //given
         final var builder = ConversionProperties.builder()
                 .input(new File("in.json"));

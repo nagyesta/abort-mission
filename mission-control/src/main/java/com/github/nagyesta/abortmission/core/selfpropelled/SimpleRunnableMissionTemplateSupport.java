@@ -15,9 +15,10 @@ public abstract class SimpleRunnableMissionTemplateSupport extends RunnableMissi
      * @param evaluationScope The class we want to use as the annotated test class which will be used by matchers.
      * @param abortSequence   The {@link Runnable} abort sequence (typically throwing an exception).
      */
-    public SimpleRunnableMissionTemplateSupport(final String contextName,
-                                                final Class<?> evaluationScope,
-                                                final Runnable abortSequence) {
+    protected SimpleRunnableMissionTemplateSupport(
+            final String contextName,
+            final Class<?> evaluationScope,
+            final Runnable abortSequence) {
         super(contextName, evaluationScope, abortSequence);
     }
 

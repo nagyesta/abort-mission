@@ -19,13 +19,13 @@ dependencies {
     implementation(project(":mission-control"))
     implementation(libs.slf4j.api)
     implementation(libs.testng)
+
     testImplementation(project(":boosters:testkit"))
     testImplementation(libs.spring.boot.starter)
     testImplementation(libs.spring.boot.starter.test) {
         exclude(group = "org.junit.jupiter")
         exclude(group = "org.junit.vintage")
     }
-    implementation(libs.testng)
     constraints {
         testImplementation(libs.bundles.spring.test)
     }
@@ -38,6 +38,8 @@ licensee {
 }
 
 val copyLegalDocs = tasks.register<Copy>("copyLegalDocs") {
+    group = "documentation"
+    description = "Copies legal files and reports."
     from(file("${project.rootProject.projectDir}/LICENSE"))
     from(layout.buildDirectory.file("reports/licensee/artifacts.json").get().asFile)
     from(layout.buildDirectory.file("reports/bom.json").get().asFile)

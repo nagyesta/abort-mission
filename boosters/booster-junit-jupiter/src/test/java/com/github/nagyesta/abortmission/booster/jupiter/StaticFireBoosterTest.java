@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.testkit.engine.EngineTestKit;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.github.nagyesta.abortmission.testkit.LaunchEvaluationUtil.*;
@@ -16,12 +15,12 @@ import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAsse
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
-public class StaticFireBoosterTest {
+class StaticFireBoosterTest {
 
     private static final List<String> EXPECTED_DISPLAY_NAMES_COUNTDOWN_SIDE = IntStream
             .range(0, (int) staticFireTestInputProvider().count() + 1)
             .mapToObj(i -> "StaticFireTestWithSideBoosters")
-            .collect(Collectors.toList());
+            .toList();
     private static final List<String> EXPECTED_DISPLAY_NAMES_COUNTDOWN_PER_CLASS = List.of("StaticFireTestWithSideBoostersPerClass");
     private static final List<String> EXPECTED_DISPLAY_NAMES_SIDE = List.of();
     private static final List<String> EXPECTED_DISPLAY_NAMES_CENTER = List.of("testIsOnFire()");
@@ -29,7 +28,7 @@ public class StaticFireBoosterTest {
     @Test
     @Tag("integration")
     @SuppressWarnings("checkstyle:MagicNumber")
-    public void testAssumption() throws NoSuchMethodException {
+    void testAssumption() throws NoSuchMethodException {
         EngineTestKit
                 .engine("junit-jupiter")
                 .selectors(selectClass(StaticFireTestCenterCoreOnly.class),
@@ -89,7 +88,7 @@ public class StaticFireBoosterTest {
     @Test
     @Tag("integration")
     @SuppressWarnings("checkstyle:MagicNumber")
-    public void testParallelAssumption() {
+    void testParallelAssumption() {
         EngineTestKit
                 .engine("junit-jupiter")
                 .selectors(selectClass(ParallelStaticFireTestWithSideBoostersPerClassTest.class),
@@ -108,7 +107,8 @@ public class StaticFireBoosterTest {
                         .aborted(0)
                         .failed(0));
         final var threadNamesFromTestMethods = ThreadTracker.THREADS_USED.stream()
-                .sorted().collect(Collectors.toList());
+                .sorted()
+                .toList();
         MissionControl.matchingHealthChecks(PARALLEL, StaticFireTestWithSideBoosters.class)
                 .forEach(evaluator -> {
                     assertEquals(PARALLEL_NOMINAL_STATS.getReadOnlyCountdown().getSnapshot(),
@@ -121,7 +121,7 @@ public class StaticFireBoosterTest {
                             .map(StageTimeMeasurement::getThreadName)
                             .distinct()
                             .sorted()
-                            .collect(Collectors.toList());
+                            .toList();
                     assertIterableEquals(threadNamesFromTestMethods, capturedThreads);
                 });
         assertTrue(threadNamesFromTestMethods.size() > 1);

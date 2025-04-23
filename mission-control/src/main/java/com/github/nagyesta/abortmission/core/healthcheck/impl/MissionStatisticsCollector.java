@@ -48,12 +48,12 @@ public final class MissionStatisticsCollector implements ReadOnlyMissionStatisti
 
     @Override
     public ReadOnlyStageStatistics getReadOnlyCountdown() {
-        return countdown;
+        return getCountdown();
     }
 
     @Override
     public ReadOnlyStageStatistics getReadOnlyMission() {
-        return mission;
+        return getMission();
     }
 
     @Override

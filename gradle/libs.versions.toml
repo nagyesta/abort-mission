@@ -33,6 +33,7 @@ jacoco = "0.8.13"
 cycloneDxBomPlugin = "2.2.0"
 licenseePlugin = "1.13.0"
 nexusPublishPlugin = "2.0.0"
+sonarPlugin = "6.1.0.5360"
 
 [libraries]
 spring-core = { module = "org.springframework:spring-core", version.ref = "spring" }
@@ -92,3 +93,4 @@ owasp-dependencycheck = { id = "org.owasp.dependencycheck", version.ref = "owasp
 cyclonedx-bom = { id = "org.cyclonedx.bom", version.ref = "cycloneDxBomPlugin" }
 licensee-plugin = { id = "app.cash.licensee", version.ref = "licenseePlugin" }
 nexus-publish-plugin = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexusPublishPlugin" }
+sonar-qube = { id = "org.sonarqube", version.ref = "sonarPlugin" }

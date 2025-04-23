@@ -7,8 +7,9 @@
 [![JavaCI](https://img.shields.io/github/actions/workflow/status/nagyesta/abort-mission/gradle.yml?logo=github&branch=main)](https://github.com/nagyesta/abort-mission/actions/workflows/gradle.yml)
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6017/badge)](https://bestpractices.coreinfrastructure.org/projects/6017)
-[![code-climate-maintainability](https://img.shields.io/codeclimate/maintainability/nagyesta/abort-mission?logo=code%20climate)](https://img.shields.io/codeclimate/maintainability/nagyesta/abort-mission?logo=code%20climate)
-[![code-climate-tech-debt](https://img.shields.io/codeclimate/tech-debt/nagyesta/abort-mission?logo=code%20climate)](https://img.shields.io/codeclimate/tech-debt/nagyesta/abort-mission?logo=code%20climate)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=nagyesta_abort-mission&metric=coverage)](https://sonarcloud.io/summary/new_code?id=nagyesta_abort-mission)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nagyesta_abort-mission&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=nagyesta_abort-mission)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=nagyesta_abort-mission&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=nagyesta_abort-mission)
 [![last_commit](https://img.shields.io/github/last-commit/nagyesta/abort-mission?logo=git)](https://img.shields.io/github/last-commit/nagyesta/abort-mission?logo=git)
 [![wiki](https://img.shields.io/badge/See-Wiki-informational)](https://github.com/nagyesta/abort-mission/wiki)
 

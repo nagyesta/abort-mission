@@ -16,6 +16,8 @@ public final class MissionHealthCheckMatcherBuilder
         implements InitialMissionHealthCheckMatcherBuilder, OrMatcherBuilder, AndMatcherBuilder, PropertyValueMatcherBuilder,
         DependencyNameExtractorMatcherBuilder, FinalMatcherBuilder {
 
+    private static final String MATCHER_CANNOT_BE_NULL = "matcher cannot be null.";
+
     private MissionHealthCheckMatcher.MatchCriteria criteria;
     private String regex;
     private String name;
@@ -90,14 +92,14 @@ public final class MissionHealthCheckMatcherBuilder
             this.criteria = MissionHealthCheckMatcher.MatchCriteria.AND;
             operands = new TreeSet<>();
         }
-        operands.add(Objects.requireNonNull(matcher, "matcher cannot be null."));
+        operands.add(Objects.requireNonNull(matcher, MATCHER_CANNOT_BE_NULL));
         return this;
     }
 
     @Override
     public FinalMatcherBuilder not(final MissionHealthCheckMatcher matcher) {
         this.criteria = MissionHealthCheckMatcher.MatchCriteria.NOT;
-        this.operand = Objects.requireNonNull(matcher, "matcher cannot be null.");
+        this.operand = Objects.requireNonNull(matcher, MATCHER_CANNOT_BE_NULL);
         return this;
     }
 
@@ -113,7 +115,7 @@ public final class MissionHealthCheckMatcherBuilder
             this.criteria = MissionHealthCheckMatcher.MatchCriteria.OR;
             operands = new TreeSet<>();
         }
-        operands.add(Objects.requireNonNull(matcher, "matcher cannot be null."));
+        operands.add(Objects.requireNonNull(matcher, MATCHER_CANNOT_BE_NULL));
         return this;
     }
 

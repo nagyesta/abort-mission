@@ -15,11 +15,11 @@ import org.junit.runners.Parameterized;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.testkit.vanilla.FuelTankTestAssets.*;
 
-@SuppressWarnings({"checkstyle:JavadocVariable", "checkstyle:VisibilityModifier"})
+@SuppressWarnings({"checkstyle:JavadocVariable", "checkstyle:VisibilityModifier", "java:S3577"})
+//we want to avoid the default names to pick up only that class which we want
 @SuppressLaunchFailureReporting(forExceptions = {UnsupportedOperationException.class})
 @LaunchAbortArmed(CONTEXT_NAME)
 @RunWith(Parameterized.class)
@@ -42,9 +42,10 @@ public class FuelTankTestContext {
 
     @Parameterized.Parameters
     public static List<Integer> fuelTankLoadAmountProvider() {
-        return fuelTankTestInputProvider().boxed().collect(Collectors.toList());
+        return fuelTankTestInputProvider().boxed().toList();
     }
 
+    @SuppressWarnings("java:S2699")
     @Test
     public void testFuelTankShouldFillWhenCalled() {
         //given
@@ -53,7 +54,7 @@ public class FuelTankTestContext {
         //when
         underTest.load(loadAmount);
 
-        //then no exception;
+        //then no exception
     }
 
 }

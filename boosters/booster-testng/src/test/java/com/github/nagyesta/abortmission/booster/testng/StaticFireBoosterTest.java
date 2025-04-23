@@ -12,7 +12,6 @@ import org.testng.xml.XmlSuite;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.testkit.LaunchEvaluationUtil.*;
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.*;
@@ -104,10 +103,11 @@ public class StaticFireBoosterTest {
                             .map(StageTimeMeasurement::getThreadName)
                             .distinct()
                             .sorted()
-                            .collect(Collectors.toList());
+                            .toList();
                     assertTrue(threadNames.size() > 1, "We should have more than one thread name: " + threadNames);
                     final var threadsFromTestMethods = ParallelStaticFireTestWithSideBoosters.THREADS_USED.stream()
-                            .sorted().collect(Collectors.toList());
+                            .sorted()
+                            .toList();
                     assertEquals(threadsFromTestMethods, threadNames);
                     forEachNonFilteredStackTraceElementOfMissionFailures(evaluator,
                             e -> assertTrue(e.startsWith("com.github.nagyesta"), "Unexpected stack trace: " + e));

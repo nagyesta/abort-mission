@@ -7,7 +7,6 @@ import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
 
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
  * Utility class for helping with the evaluation of launch statistics.
@@ -71,7 +70,7 @@ public final class LaunchEvaluationUtil {
     public static List<String> findCountdownDisplayNamesForMeasurementsOf(final MissionHealthCheckEvaluator evaluator) {
         return evaluator.getStats().getReadOnlyCountdown().timeSeriesStream()
                 .map(StageTimeMeasurement::getDisplayName)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -83,7 +82,7 @@ public final class LaunchEvaluationUtil {
     public static List<String> findMissionDisplayNamesForMeasurementsOf(final MissionHealthCheckEvaluator evaluator) {
         return evaluator.getStats().getReadOnlyMission().timeSeriesStream()
                 .map(StageTimeMeasurement::getDisplayName)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -106,13 +105,13 @@ public final class LaunchEvaluationUtil {
         return statistics.timeSeriesStream()
                 .filter(s -> s.getResult() == StageResult.FAILURE)
                 .map(StageTimeMeasurement::getThrowableClass)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private static List<String> findThrowableMessages(final ReadOnlyStageStatistics statistics) {
         return statistics.timeSeriesStream()
                 .filter(s -> s.getResult() == StageResult.FAILURE)
                 .map(StageTimeMeasurement::getThrowableMessage)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

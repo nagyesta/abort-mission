@@ -5,23 +5,16 @@ import com.github.nagyesta.abortmission.core.telemetry.converter.LaunchTelemetry
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.NullSource;
 
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import static org.mockito.Mockito.*;
 
 class DefaultLaunchTelemetryTest {
-
-    private static Stream<Arguments> nullProvider() {
-        return Stream.<Arguments>builder()
-                .add(Arguments.of(null, null))
-                .add(Arguments.of(new LaunchTelemetryConverter(), null))
-                .add(Arguments.of(null, Collections.emptyMap()))
-                .build();
-    }
 
     @ParameterizedTest
     @NullSource

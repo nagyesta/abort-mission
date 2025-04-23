@@ -46,8 +46,8 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     public void preDestroyTestInstance(final ExtensionContext context) throws Exception {
         final var success = context.getStore(NAMESPACE).get(COUNTDOWN_SUCCESS_PREFIX + Thread.currentThread().getName(), Boolean.class);
         if (success == Boolean.TRUE) {
-            LOGGER.trace("Cleaning up test instance of class: {} where no reporting is necessary",
-                    context.getTestClass().map(Class::getSimpleName).orElse(null));
+            final var className = context.getTestClass().map(Class::getSimpleName).orElse(null);
+            LOGGER.trace("Cleaning up test instance of class: {} where no reporting is necessary", className);
             return;
         }
         final var parentOrCurrentContext = findClassContext(context).orElse(context);
@@ -57,8 +57,9 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
                 .filter(e -> !(e instanceof TestAbortedException));
         if (throwable.isPresent()) {
             context.getTestClass().ifPresent(testClass -> launchSequenceTemplate.countdownFailure(testClass, throwable, stopwatch));
+            final var className = context.getTestClass().map(Class::getSimpleName).orElse(null);
             LOGGER.trace("Cleaning up test instance of class: {} and reporting failure due to cause: {}",
-                    context.getTestClass().map(Class::getSimpleName).orElse(null), throwable.get().getClass());
+                    className, throwable.get().getClass());
         }
         putOptionalStopwatch(parentOrCurrentContext, Optional.empty(), COUNTDOWN_START_PREFIX + Thread.currentThread().getName());
         parentOrCurrentContext.getStore(NAMESPACE).remove(CLASS_LEVEL_MARKER_PREFIX + Thread.currentThread().getName());
@@ -190,8 +191,11 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
 
     private ExtensionContext getTestInstanceContext(final ExtensionContext context) {
         var result = context;
-        if (context.getTestMethod().isPresent() && context.getParent().isPresent()) {
-            result = context.getParent().get();
+        if (context.getTestMethod().isPresent()) {
+            final var parent = context.getParent();
+            if (parent.isPresent()) {
+                result = parent.get();
+            }
         }
         return result;
     }

@@ -1,3 +1,4 @@
+import org.sonarqube.gradle.SonarTask
 import org.sonatype.gradle.plugins.scan.ossindex.OutputFormat
 import java.util.*
 
@@ -5,6 +6,7 @@ plugins {
     id("java")
     jacoco
     checkstyle
+    alias(libs.plugins.sonar.qube)
     alias(libs.plugins.versioner)
     alias(libs.plugins.index.scan)
     alias(libs.plugins.owasp.dependencycheck)
@@ -43,6 +45,9 @@ buildscript {
         set("scmProjectUrl", "https://github.com/nagyesta/abort-mission/")
         set("githubMavenRepoUrl", "https://maven.pkg.github.com/nagyesta/abort-mission")
         set("ossrhMavenRepoUrl", "https://oss.sonatype.org/service/local/staging/deploy/maven2")
+        set("sonarOrganization", "nagyesta")
+        set("sonarProjectKey", "nagyesta_abort-mission")
+        set("sonarHostUrl", "https://sonarcloud.io/")
     }
 }
 
@@ -75,6 +80,15 @@ versioner {
 
 versioner.apply()
 
+sonar {
+    properties {
+        //no jacoco report because there are no sources
+        property("sonar.organization", rootProject.extra.get("sonarOrganization") as String)
+        property("sonar.projectKey", rootProject.extra.get("sonarProjectKey") as String)
+        property("sonar.host.url", rootProject.extra.get("sonarHostUrl") as String)
+    }
+}
+
 subprojects {
     if (project.name != "boosters" && project.name != "mission-report") {
         apply(plugin = "java")
@@ -99,6 +113,25 @@ subprojects {
 
         jacoco {
             toolVersion = rootProject.libs.versions.jacoco.get()
+        }
+
+        sonar {
+            properties {
+                if (project.name == "flight-evaluation-report") {
+                    property("sonar.javascript.lcov.reportPaths", project.file("node/build/coverage/lcov.info"))
+                }
+                property("sonar.coverage.jacoco.xmlReportPaths", layout.buildDirectory.file("reports/jacoco/report.xml").get().asFile.path)
+                property("sonar.organization", rootProject.extra.get("sonarOrganization") as String)
+                property("sonar.projectKey", rootProject.extra.get("sonarProjectKey") as String)
+                property("sonar.host.url", rootProject.extra.get("sonarHostUrl") as String)
+            }
+        }
+
+        tasks.withType(SonarTask::class).forEach {
+            it.dependsOn(tasks.jacocoTestReport)
+            if (project.name == "flight-evaluation-report") {
+                it.dependsOn(tasks.getByName(":javascriptTest"))
+            }
         }
 
         tasks.jacocoTestReport {

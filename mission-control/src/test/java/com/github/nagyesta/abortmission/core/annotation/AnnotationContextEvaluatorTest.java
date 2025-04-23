@@ -159,6 +159,7 @@ class AnnotationContextEvaluatorTest {
         Assertions.assertTrue(actual.containsAll(expected));
     }
 
+    @SuppressWarnings("java:S2699")
     @Test
     void testFindAndApplyLaunchPlanDefinitionShouldFailSilentlyWhenCalledWithoutMatchingConfig() {
         //given
@@ -197,6 +198,7 @@ class AnnotationContextEvaluatorTest {
 
     private static final class TestClass {
 
+        @SuppressWarnings("java:S1186") //empty implementation (we just need the method to be there
         @SuppressAbortDecisions
         private void method() {
 
@@ -206,6 +208,7 @@ class AnnotationContextEvaluatorTest {
     @DisplayName(EMPTY_CONTEXT_NAME)
     private static final class EmptyTestClass {
 
+        @SuppressWarnings("java:S1186") //empty implementation (we just need the method to be there
         @SuppressLaunchFailureReporting(forExceptions = NullPointerException.class)
         private void method() {
 
@@ -218,6 +221,7 @@ class AnnotationContextEvaluatorTest {
     @LaunchSequence(MissionOutlineDef.class)
     private static final class AnnotatedTestClass {
 
+        @SuppressWarnings("java:S1186") //empty implementation (we just need the method to be there
         @SuppressLaunchFailureReporting(forExceptions = IllegalStateException.class)
         private void method() {
 

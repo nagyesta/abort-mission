@@ -14,11 +14,12 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.*;
 import static org.testng.Assert.assertTrue;
 
+@SuppressWarnings({"java:S3577", "NewClassNamingConvention"})
+//we want to avoid the default names to pick up only that class which we want
 @LaunchAbortArmed(STATIC_FIRE)
 @Listeners(AbortMissionListener.class)
 @SpringBootTest(classes = StaticFire.class)
@@ -35,7 +36,7 @@ public class StaticFireTestWithSideBoosters extends AbstractTestNGSpringContextT
         return StaticFireTestAssets.staticFireTestInputProvider().boxed()
                 .map(List::of)
                 .map(List::toArray)
-                .collect(Collectors.toList())
+                .toList()
                 .toArray(new Object[(int) StaticFireTestAssets.staticFireTestInputProvider().count()][1]);
     }
 

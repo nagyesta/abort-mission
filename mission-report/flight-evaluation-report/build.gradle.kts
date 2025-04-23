@@ -27,9 +27,12 @@ dependencies {
     implementation(libs.thymeleaf.extras.java8time)
     implementation(libs.bundles.logback)
     implementation(libs.findbugs.jsr305)
+
     annotationProcessor(libs.lombok)
-    testImplementation(libs.jupiter.core)
+
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    testImplementation(libs.jupiter.core)
     testImplementation(libs.mockito.core)
 }
 
@@ -40,6 +43,8 @@ licensee {
 }
 
 val copyLegalDocs = tasks.register<Copy>("copyLegalDocs") {
+    group = "documentation"
+    description = "Copies legal files and reports."
     from(file("${project.rootProject.projectDir}/LICENSE"))
     from(layout.buildDirectory.file("reports/licensee/artifacts.json").get().asFile)
     from(layout.buildDirectory.file("reports/bom.json").get().asFile)
@@ -60,6 +65,8 @@ node {
 }
 
 tasks.register<NpxTask>("javascriptTest") {
+    group = "build"
+    description = "Tests JavaScript sources."
     inputs.files(fileTree("node/src/") {
         include("**.js")
     })
@@ -75,11 +82,15 @@ tasks.register<NpxTask>("javascriptTest") {
 }
 
 tasks.register<Delete>("cleanTemplates") {
+    group = "build"
+    description = "Cleans the previously built templates."
     delete(layout.buildDirectory.dir("html-view").get().asFileTree)
     delete(layout.buildDirectory.dir("resources/main/templates/html").get().asFileTree)
 }
 
 tasks.register<NpxTask>("processTemplates") {
+    group = "build"
+    description = "Processes JavaScript and CSS sources."
     inputs.files(fileTree("node/src/") {
         include("**.js")
     })
@@ -90,7 +101,6 @@ tasks.register<NpxTask>("processTemplates") {
     outputs.dir(layout.buildDirectory.dir("resources/main/templates/html").get().asFile)
     outputs.file(layout.buildDirectory.dir("resources/main/META-INF/nodejs-dependency-licenses.csv").get().asFile)
     command = "grunt"
-    group = "build"
     args.set(listOf())
     dependsOn(tasks.named("javascriptTest"))
 }

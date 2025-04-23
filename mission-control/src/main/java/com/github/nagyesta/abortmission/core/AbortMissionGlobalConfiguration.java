@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 /**
  * Global configuration for Abort-Mission.
  */
+@SuppressWarnings("java:S6548")
 public final class AbortMissionGlobalConfiguration {
 
     static final int DEFAULT_STACK_TRACE_DEPTH = 10;

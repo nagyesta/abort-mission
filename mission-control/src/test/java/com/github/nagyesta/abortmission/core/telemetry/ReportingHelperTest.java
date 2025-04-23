@@ -60,6 +60,7 @@ class ReportingHelperTest {
         Assertions.assertTrue(file.delete());
     }
 
+    @SuppressWarnings("java:S2699")
     @Test
     void testWriteShouldCatchExceptionsWhenThrown() {
         //given

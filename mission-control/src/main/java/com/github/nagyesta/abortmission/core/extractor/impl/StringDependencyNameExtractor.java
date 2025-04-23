@@ -14,7 +14,7 @@ public class StringDependencyNameExtractor implements DependencyNameExtractor {
     @Override
     public Optional<Set<String>> apply(final Object component) {
         return Optional.ofNullable(component)
-                .filter(c -> c instanceof String)
+                .filter(String.class::isInstance)
                 .map(String.class::cast)
                 .filter(s -> !s.isEmpty())
                 .map(Collections::singleton);

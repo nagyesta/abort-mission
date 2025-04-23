@@ -30,8 +30,7 @@ class LogViewTimeStampModel {
                 this.noneVisible(false);
             }
         } else {
-            for (let i = 0; i < this.rows.length; i++) {
-                const row = this.rows[i];
+            for (const row of this.rows) {
                 if (row.visible()) {
                     if (this.noneVisible()) {
                         this.noneVisible(false);

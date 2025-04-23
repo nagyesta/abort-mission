@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
@@ -66,7 +65,7 @@ class ClassJsonTest {
         final var actual = underTest.streamAllTimeMeasurements();
 
         //then
-        final var actualList = actual.collect(Collectors.toList());
+        final var actualList = actual.toList();
         assertIterableEquals(new TreeSet<>(Set.of(countdown1, launch1, launch2, launch3, countdown2)), actualList);
     }
 
@@ -87,7 +86,7 @@ class ClassJsonTest {
         final var actual = underTest.streamAllTimeMeasurements();
 
         //then
-        final var actualList = actual.collect(Collectors.toList());
+        final var actualList = actual.toList();
         assertIterableEquals(new TreeSet<>(Set.of(countdown2, countdown1)), actualList);
     }
 
@@ -113,7 +112,7 @@ class ClassJsonTest {
         final var actual = underTest.streamAllTimeMeasurements();
 
         //then
-        final var actualList = actual.collect(Collectors.toList());
+        final var actualList = actual.toList();
         assertIterableEquals(new TreeSet<>(Set.of(launch2, launch3, launch1)), actualList);
     }
 

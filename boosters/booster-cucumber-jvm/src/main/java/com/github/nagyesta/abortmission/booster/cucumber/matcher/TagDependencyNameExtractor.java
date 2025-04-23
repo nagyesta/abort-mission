@@ -16,7 +16,7 @@ public class TagDependencyNameExtractor implements DependencyNameExtractor {
     @Override
     public Optional<Set<String>> apply(final Object component) {
         return Optional.ofNullable(component)
-                .filter(c -> c instanceof Scenario)
+                .filter(Scenario.class::isInstance)
                 .map(Scenario.class::cast)
                 .map(Scenario::getSourceTagNames)
                 .map(Collection::stream)

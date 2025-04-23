@@ -58,9 +58,11 @@ class StageLaunchStatsTest extends AbstractTelemetryTest {
         final var actual = new StageLaunchStats(measurements, matcherNames);
 
         //then
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> actual.getMatcherNames().clear());
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> actual.getTimeMeasurements().clear());
-        Assertions.assertIterableEquals(matcherNames, actual.getMatcherNames());
-        Assertions.assertIterableEquals(testRunTelemetries, actual.getTimeMeasurements());
+        final var actualMatcherNames = actual.getMatcherNames();
+        final var actualTimeMeasurements = actual.getTimeMeasurements();
+        Assertions.assertThrows(UnsupportedOperationException.class, actualMatcherNames::clear);
+        Assertions.assertThrows(UnsupportedOperationException.class, actualTimeMeasurements::clear);
+        Assertions.assertIterableEquals(matcherNames, actualMatcherNames);
+        Assertions.assertIterableEquals(testRunTelemetries, actualTimeMeasurements);
     }
 }

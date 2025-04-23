@@ -17,7 +17,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets.STATIC_FIRE;
 import static org.junit.Assert.assertTrue;
 
-@SuppressWarnings("checkstyle:JavadocVariable")
+@SuppressWarnings({"checkstyle:JavadocVariable", "java:S4144", "java:S3577", "NewClassNamingConvention"})
+//we want to avoid the default names to pick up only that class which we want
 @SuppressAbortDecisions
 @LaunchAbortArmed(STATIC_FIRE)
 @RunWith(SpringRunner.class)

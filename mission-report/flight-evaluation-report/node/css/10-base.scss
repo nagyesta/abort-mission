@@ -7,11 +7,8 @@ body .root-container {
   margin-right: auto;
   font-family: v.$font-family;
   font-size: v.$font-size-normal;
-}
 
-/* Base styles */
-
-body .root-container {
+  /* Base styles */
   h1.header {
     font-size: v.$font-size-h1;
     font-weight: bold;

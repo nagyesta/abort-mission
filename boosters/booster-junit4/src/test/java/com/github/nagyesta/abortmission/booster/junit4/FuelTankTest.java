@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.testkit.engine.EngineTestKit;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.github.nagyesta.abortmission.testkit.LaunchEvaluationUtil.*;
@@ -16,18 +15,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
-public class FuelTankTest {
+class FuelTankTest {
 
     private static final List<String> EXPECTED_DISPLAY_NAMES_COUNTDOWN = fuelTankTestInputProvider()
             .mapToObj(i -> "FuelTankTestContext")
-            .collect(Collectors.toList());
+            .toList();
     private static final List<String> EXPECTED_DISPLAY_NAMES = IntStream.range(0, (int) fuelTankTestInputProvider().count())
             .mapToObj(i -> "testFuelTankShouldFillWhenCalled[" + i + "]")
-            .collect(Collectors.toList());
+            .toList();
 
     @Test
     @Tag("integration")
-    public void testAssumption() {
+    void testAssumption() {
         EngineTestKit
                 .engine("junit-vintage")
                 .selectors(selectClass(FuelTankTestContext.class))

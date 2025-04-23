@@ -15,9 +15,11 @@ import java.util.stream.Stream;
 
 import static com.github.nagyesta.abortmission.testkit.vanilla.FuelTankTestAssets.*;
 
+@SuppressWarnings({"java:S3577", "NewClassNamingConvention"})
+//we want to avoid the default names to pick up only that class which we want
 @SuppressLaunchFailureReporting(forExceptions = {UnsupportedOperationException.class})
 @LaunchAbortArmed(CONTEXT_NAME)
-public class FuelTankTestContext {
+class FuelTankTestContext {
 
     static {
         new MissionOutline() {
@@ -32,16 +34,17 @@ public class FuelTankTestContext {
         return fuelTankTestInputProvider().mapToObj(Arguments::of);
     }
 
+    @SuppressWarnings("java:S2699")
     @ParameterizedTest
     @MethodSource("fuelTankLoadAmountProvider")
-    public void testFuelTankShouldFillWhenCalled(final int loadAmount) {
+    void testFuelTankShouldFillWhenCalled(final int loadAmount) {
         //given
         final var underTest = new FuelTank();
 
         //when
         underTest.load(loadAmount);
 
-        //then no exception;
+        //then no exception
     }
 
 }

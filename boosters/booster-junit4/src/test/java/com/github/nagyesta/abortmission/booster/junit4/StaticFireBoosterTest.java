@@ -8,7 +8,6 @@ import org.springframework.beans.factory.UnsatisfiedDependencyException;
 
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.github.nagyesta.abortmission.testkit.LaunchEvaluationUtil.*;
@@ -17,14 +16,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
-public class StaticFireBoosterTest {
+class StaticFireBoosterTest {
 
     private static final List<String> EXPECTED_DISPLAY_NAMES_COUNTDOWN = Stream.<Stream<String>>builder()
             .add(Stream.of("StaticFireTestWithSideBoosters"))
             .add(staticFireTestInputProvider().mapToObj(i -> "StaticFireTestWithSideBoostersParametrized"))
             .build()
             .flatMap(Function.identity())
-            .collect(Collectors.toList());
+            .toList();
     private static final List<String> EXPECTED_DISPLAY_NAMES = List.of("testIsOnFire");
     private static final String EXCEPTION = UnsatisfiedDependencyException.class.getName();
     private static final String MESSAGE_FORMAT = "Error creating bean with name "
@@ -37,11 +36,11 @@ public class StaticFireBoosterTest {
     private static final List<String> MESSAGES = Stream
             .of("StaticFireTestWithSideBoosters", "StaticFireTestWithSideBoostersParametrized")
             .map(s -> String.format(MESSAGE_FORMAT, s))
-            .collect(Collectors.toList());
+            .toList();
 
     @Test
     @Tag("integration")
-    public void testAssumption() throws NoSuchMethodException {
+    void testAssumption() throws NoSuchMethodException {
         EngineTestKit
                 .engine("junit-vintage")
                 .selectors(selectClass(StaticFireTestCenterCoreOnly.class),

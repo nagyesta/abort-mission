@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 class AbortMissionFlightEvaluationReportAppIntegrationTest {
 
     @Test
-    public void testApplicationContextShouldConfigureSuccessfullyWhenCalled() throws IOException {
+    void testApplicationContextShouldConfigureSuccessfullyWhenCalled() throws IOException {
         //given
         final var app = new AbortMissionFlightEvaluationReportApp();
         //noinspection ConstantConditions
@@ -31,7 +31,7 @@ class AbortMissionFlightEvaluationReportAppIntegrationTest {
     }
 
     @Test
-    public void testApplicationContextShouldExitWithErrorWhenExecutionFails() throws IOException {
+    void testApplicationContextShouldExitWithErrorWhenExecutionFails() throws IOException {
         //given
         final var app = new AbortMissionFlightEvaluationReportApp();
         //noinspection ConstantConditions

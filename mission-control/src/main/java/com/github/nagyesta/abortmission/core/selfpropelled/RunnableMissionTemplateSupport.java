@@ -7,7 +7,8 @@ import java.util.Optional;
  *
  * @param <P> The type we want to produce as the result of the test preparation and pass to the test phase.
  */
-public abstract class RunnableMissionTemplateSupport<P> extends AbstractMissionTemplate<P, Void> implements RunnableMissionTemplate<P> {
+public abstract class RunnableMissionTemplateSupport<P>
+        extends AbstractMissionTemplate<P, Void> implements RunnableMissionTemplate<P> {
 
     /**
      * Constructor passing through initialization parameters to the superclass.
@@ -16,9 +17,10 @@ public abstract class RunnableMissionTemplateSupport<P> extends AbstractMissionT
      * @param evaluationScope The class we want to use as the annotated test class which will be used by matchers.
      * @param abortSequence   The {@link Runnable} abort sequence (typically throwing an exception).
      */
-    public RunnableMissionTemplateSupport(final String contextName,
-                                          final Class<?> evaluationScope,
-                                          final Runnable abortSequence) {
+    protected RunnableMissionTemplateSupport(
+            final String contextName,
+            final Class<?> evaluationScope,
+            final Runnable abortSequence) {
         super(contextName, evaluationScope, abortSequence);
     }
 
