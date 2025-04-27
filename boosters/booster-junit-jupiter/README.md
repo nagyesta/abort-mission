@@ -12,7 +12,7 @@
 
 # JUnit Jupiter Booster
 
-Please find the essentials below or check out [the wiki](https://github.com/nagyesta/abort-mission/wiki) for more details. 
+Please find the essentials below or check out [the wiki](https://github.com/nagyesta/abort-mission/wiki) for more details.
 
 # Quick-start
 
@@ -32,6 +32,8 @@ to find out more.
   <scope>test</scope>
 </dependency>
 ```
+
+
 ### Gradle
 
 ```groovy
@@ -43,9 +45,9 @@ testImplementation "com.github.nagyesta.abort-mission.boosters:abort.booster-jun
 The minimal setup consists of only 3 steps in case you are using this booster.
 
 1. Implement [MissionOutline](../../mission-control/src/main/java/com/github/nagyesta/abortmission/core/outline/MissionOutline.java) named as `MissionOutlineDefinition`
-preferably in your root package
+   preferably in your root package
 2. Annotate your tests with [@LaunchAbortArmed](./src/main/java/com/github/nagyesta/abortmission/booster/jupiter/annotation/LaunchAbortArmed.java)
-   1. Make sure the Extension we are adding is the one running first (in case you are using others, like the ones offered by Spring.)
+    1. Make sure the Extension we are adding is the one running first (in case you are using others, like the ones offered by Spring.)
 3. Use the additional core annotations or the `@Tag` annotation provided by Jupiter to define your dependencies and group your tests properly
 
 **Note:** Using `PER_CLASS` lifecycle makes countdown abort evaluation less effective as test classes are reused.

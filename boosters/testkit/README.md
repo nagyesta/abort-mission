@@ -12,7 +12,7 @@
 
 # Booster Test Kit
 
-Please find the essentials below or check out [the wiki](https://github.com/nagyesta/abort-mission/wiki) for more details. 
+Please find the essentials below or check out [the wiki](https://github.com/nagyesta/abort-mission/wiki) for more details.
 
 # Quick-start
 
@@ -32,6 +32,7 @@ to find out more.
   <scope>test</scope>
 </dependency>
 ```
+
 ### Gradle
 
 ```groovy

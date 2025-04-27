@@ -3,7 +3,7 @@ name: "OSS-Index-Scan"
 on:
   schedule:
     # * is a special character in YAML, so we have to quote this string
-    - cron: '0 7 * * 1,3,5'
+    - cron: "0 7 * * 1,3,5"
 
 permissions: read-all
 

@@ -49,11 +49,11 @@ will at least take a look.
 
 - [Mission Control](mission-control)
 - Boosters
-  - [Cucumber JVM](boosters/booster-cucumber-jvm)
-  - [JUnit 4](boosters/booster-junit4)
-  - [JUnit Jupiter](boosters/booster-junit-jupiter)
-  - [TestNG](boosters/booster-testng)
-  - [Booster Test Kit](boosters/testkit)
+    - [Cucumber JVM](boosters/booster-cucumber-jvm)
+    - [JUnit 4](boosters/booster-junit4)
+    - [JUnit Jupiter](boosters/booster-junit-jupiter)
+    - [TestNG](boosters/booster-testng)
+    - [Booster Test Kit](boosters/testkit)
 - Mission Report
     - [Flight Evaluation Report](mission-report/flight-evaluation-report)
 - Strongback (All modules removed in 4.1.x)
@@ -69,14 +69,14 @@ certain phases of a rocket launch. This section can help you understand what hap
 Each test offers a slightly different situation, but the following list will cover all counters we
 will rely on when using Abort-Mission.
 
-| Measurement point  | What happens there?                       |
-| ------------------ | ----------------------------------------- |
-| Countdown failed   | Test instance post processing failed      |
-| Countdown abort    | Test instance post processing prevented   |
-| Countdown success  | Test instance post processed successfully |
-| Mission abort      | Test start prevented / abort after start  |
-| Mission failed     | Test failed                               | 
-| Mission success    | Test executed successfully                | 
+| Measurement point | What happens there?                       |
+| ----------------- | ----------------------------------------- |
+| Countdown failed  | Test instance post processing failed      |
+| Countdown abort   | Test instance post processing prevented   |
+| Countdown success | Test instance post processed successfully |
+| Mission abort     | Test start prevented / abort after start  |
+| Mission failed    | Test failed                               |
+| Mission success   | Test executed successfully                |
 
 ## How it works
 
@@ -86,13 +86,13 @@ The oversimplified model used by this project relies on the following elements:
 - A number of **Mission Health Check Matchers** which allow the library to identify which category the test class belongs to
 - A similar amount of **Mission Health Check Evaluators** which define thresholds for the decision-making
 - A bunch of annotations to help with the configuration such as
-  - Defining which of the named Mission Contexts do we want to use
-  - Allowing suppression of abort decisions for certain tests
-  - Ignoring certain exceptions that are causing failures
+    - Defining which of the named Mission Contexts do we want to use
+    - Allowing suppression of abort decisions for certain tests
+    - Ignoring certain exceptions that are causing failures
 
 From all of these, sooner or later you will need to have a Launch Sequence Template that will act as a controller
 which knows how your specific test framework needs to bind with the lifecycle stages we need to maintain. This
 is probably the hardest part to pull off, don't worry, if you are using a booster that was created for your
 test framework, it should be easy, the booster will do the heavy-lifting (after all that is the job of a booster).
 
-Once you have these, you are probably fine.  
+Once you have these, you are probably fine.

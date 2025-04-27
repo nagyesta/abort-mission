@@ -12,7 +12,7 @@
 
 # TestNG Booster
 
-Please find the essentials below or check out [the wiki](https://github.com/nagyesta/abort-mission/wiki) for more details. 
+Please find the essentials below or check out [the wiki](https://github.com/nagyesta/abort-mission/wiki) for more details.
 
 # Quick-start
 
@@ -32,6 +32,8 @@ to find out more.
   <scope>test</scope>
 </dependency>
 ```
+
+
 ### Gradle
 
 ```groovy
@@ -43,7 +45,7 @@ testImplementation "com.github.nagyesta.abort-mission.boosters:abort.booster-tes
 The minimal setup consists of only 4 steps in case you are using this booster.
 
 1. Implement [MissionOutline](../../mission-control/src/main/java/com/github/nagyesta/abortmission/core/outline/MissionOutline.java) named as `MissionOutlineDefinition`
-preferably in your root package
+   preferably in your root package
 2. Annotate your tests with [@LaunchAbortArmed](./src/main/java/com/github/nagyesta/abortmission/booster/testng/annotation/LaunchAbortArmed.java)
 3. Add [AbortMissionListener](./src/main/java/com/github/nagyesta/abortmission/booster/testng/listener/AbortMissionListener.java) to your tests as a listener.
 4. Use the additional core annotations or the `groups` attribute of the `@Test` annotation provided by TestNG to define your dependencies and group your tests properly

@@ -44,16 +44,16 @@ testImplementation "com.github.nagyesta.abort-mission.boosters:abort.booster-cuc
 
 The minimal setup consists of only 3 steps in case you are using this booster.
 
-1. Create a Cucumber hook implementing ```com.github.nagyesta.abortmission.booster.cucumber.LaunchAbortHook```
+1. Create a Cucumber hook implementing `com.github.nagyesta.abortmission.booster.cucumber.LaunchAbortHook`
    . [See example](src/test/java/com/github/nagyesta/abortmission/booster/cucumber/fueltank/AbortMissionHook.java)
-2. Use the plugin named ```com.github.nagyesta.abortmission.booster.cucumber.AbortMissionPlugin```
+2. Use the plugin named `com.github.nagyesta.abortmission.booster.cucumber.AbortMissionPlugin`
 3. Annotate your scenarios with the Abort-Mission tags:
-    1. ```@AbortMission_Context_ContextName``` if you want to use a named context
-    2. ```@AbortMission_SuppressAbort``` if you want to suppress abort decisions
-    3. ```@AbortMission_SuppressFailure_fully.qualified.name.of.an.Exception``` to suppress exception related failure
+    1. `@AbortMission_Context_ContextName` if you want to use a named context
+    2. `@AbortMission_SuppressAbort` if you want to suppress abort decisions
+    3. `@AbortMission_SuppressFailure_fully.qualified.name.of.an.Exception` to suppress exception related failure
        reporting
 
-**NOTE:** Please make sure to use ```relaxed``` schema validation when you are generating the flight evaluation report.
+**NOTE:** Please make sure to use `relaxed` schema validation when you are generating the flight evaluation report.
 
 ## Examples
 
