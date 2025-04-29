@@ -14,12 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class DependencyMatcherTest extends AbstractMatcherTest {
 
-    public static final Class<?> CLASS_LITERAL = DependencyMatcherTest.class;
-    public static final long LONG_42 = 42L;
-    public static final String MATCHING_DEPENDENCY = "MatchingDependency";
-    public static final String UNKNOWN_DEPENDENCY = "UnknownDependency";
-    public static final StringDependencyNameExtractor STRING_EXTRACTOR = new StringDependencyNameExtractor();
-    public static final MissionHealthCheckMatcher STRING_MATCHER = MissionHealthCheckMatcherBuilder.builder()
+    private static final Class<?> CLASS_LITERAL = DependencyMatcherTest.class;
+    private static final long LONG_42 = 42L;
+    private static final String MATCHING_DEPENDENCY = "MatchingDependency";
+    private static final String UNKNOWN_DEPENDENCY = "UnknownDependency";
+    private static final StringDependencyNameExtractor STRING_EXTRACTOR = new StringDependencyNameExtractor();
+    private static final MissionHealthCheckMatcher STRING_MATCHER = MissionHealthCheckMatcherBuilder.builder()
             .dependencyWith(MATCHING_DEPENDENCY)
             .extractor(STRING_EXTRACTOR)
             .build();

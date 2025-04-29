@@ -14,16 +14,16 @@ import static com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasureme
 
 class StageTimeMeasurementTest {
 
-    public static final String METHOD_NAME = "methodName";
-    public static final String METHOD_NAME_2 = "methodName2";
-    public static final String CLASS_NAME = "className";
-    public static final String CLASS_NAME_2 = "className2";
-    public static final int START = 10;
-    public static final int START_2 = 12;
-    public static final int END = 25;
-    public static final int END_2 = 20;
-    public static final UUID LAUNCH_ID = UUID.randomUUID();
-    public static final StageTimeMeasurement STAGE_TIME_MEASUREMENT = builder()
+    private static final String METHOD_NAME = "methodName";
+    private static final String METHOD_NAME_2 = "methodName2";
+    private static final String CLASS_NAME = "className";
+    private static final String CLASS_NAME_2 = "className2";
+    private static final int START = 10;
+    private static final int START_2 = 12;
+    private static final int END = 25;
+    private static final int END_2 = 20;
+    private static final UUID LAUNCH_ID = UUID.randomUUID();
+    private static final StageTimeMeasurement STAGE_TIME_MEASUREMENT = builder()
                     .setLaunchId(LAUNCH_ID)
                     .setTestClassId(CLASS_NAME)
                     .setTestCaseId(METHOD_NAME)

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @Tag("unit")
 class TagDependencyNameExtractorTest {
 
-    public static final String STRING = "string";
+    private static final String STRING = "string";
 
     @Test
     void testApplyShouldReturnEmptyOptionalWhenCalledWithNeitherClassNorMethod() {

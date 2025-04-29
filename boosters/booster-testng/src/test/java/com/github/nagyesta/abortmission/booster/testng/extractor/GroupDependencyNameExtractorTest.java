@@ -6,7 +6,7 @@ import static org.testng.Assert.assertFalse;
 
 class GroupDependencyNameExtractorTest {
 
-    public static final String STRING = "string";
+    private static final String STRING = "string";
 
     @Test(groups = "unit")
     void testApplyShouldReturnEmptyOptionalWhenCalledWithNeitherClassNorMethod() {

@@ -9,11 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class MissionHealthCheckMatcherBuilderTest {
 
     private static final String REGEX = "regex_value";
-    public static final MissionHealthCheckMatcher A_CLASS_MATCHER = MissionHealthCheckMatcherBuilder.builder()
+    private static final MissionHealthCheckMatcher A_CLASS_MATCHER = MissionHealthCheckMatcherBuilder.builder()
             .classNamePattern(REGEX)
             .build();
     private static final String NAME = "name_value";
-    public static final MissionHealthCheckMatcher A_DEPENDENCY_MATCHER = MissionHealthCheckMatcherBuilder.builder()
+    private static final MissionHealthCheckMatcher A_DEPENDENCY_MATCHER = MissionHealthCheckMatcherBuilder.builder()
             .dependency(NAME)
             .build();
 

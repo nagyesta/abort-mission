@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AndMatcherTest extends BaseCombiningMatcherTest {
 
-    public static final MissionHealthCheckMatcher ANY_TEST_CLASS = MissionControl.matcher()
+    private static final MissionHealthCheckMatcher ANY_TEST_CLASS = MissionControl.matcher()
             .and(ANY_CLASS_MATCHER)
             .andAtLast(TEST_CLASS_MATCHER)
             .build();

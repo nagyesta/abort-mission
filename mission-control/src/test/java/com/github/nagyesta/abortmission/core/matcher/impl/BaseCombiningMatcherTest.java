@@ -9,9 +9,15 @@ import java.util.stream.Stream;
 
 abstract class BaseCombiningMatcherTest extends AbstractMatcherTest {
 
+    /**
+     * Matches any class.
+     */
     protected static final MissionHealthCheckMatcher ANY_CLASS_MATCHER = MissionHealthCheckMatcherBuilder.builder()
             .anyClass()
             .build();
+    /**
+     * Matches test classes.
+     */
     protected static final MissionHealthCheckMatcher TEST_CLASS_MATCHER =
             MissionHealthCheckMatcherBuilder.builder().classNamePattern(".*Test").build();
 
