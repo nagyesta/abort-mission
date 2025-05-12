@@ -37,6 +37,7 @@ licensee {
     allow("EPL-1.0")
     allow("BSD-2-Clause")
     allowUrl("http://www.opensource.org/licenses/mit-license")
+    allowUrl("https://www.opensource.org/licenses/mit-license")
     allowUrl("https://opensource.org/license/mit")
 }
 
