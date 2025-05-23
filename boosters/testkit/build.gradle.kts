@@ -32,7 +32,7 @@ licensee {
     allow("Apache-2.0")
     allow("MIT")
     allow("EPL-1.0")
-    allow("BSD-3-Clause")
+    allowUrl("https://raw.githubusercontent.com/hamcrest/JavaHamcrest/master/LICENSE")
     allowUrl("https://www.eclipse.org/legal/epl-v20.html")
     allowUrl("http://www.eclipse.org/legal/epl-2.0")
     allowUrl("http://www.eclipse.org/org/documents/edl-v10.php")
