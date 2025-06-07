@@ -25,7 +25,7 @@ nodePlugin = "7.1.0"
 shadowPlugin = "8.3.6"
 gitVersionerPlugin = "1.6.7"
 indexScanPlugin = "3.1.1"
-owaspPlugin = "12.1.1"
+owaspPlugin = "12.1.2"
 
 checkstyle = "10.25.0"
 jacoco = "0.8.13"
