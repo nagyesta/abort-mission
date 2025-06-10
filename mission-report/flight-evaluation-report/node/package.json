@@ -34,7 +34,7 @@
     "author": "Istvan Zoltan Nagy <nagyesta@gmail.com>",
     "license": "MIT",
     "devDependencies": {
-        "@jest/globals": "^29.7.0",
+        "@jest/globals": "^30.0.0",
         "grunt": "^1.6.1",
         "grunt-assets-inline": "^1.2.4",
         "grunt-contrib-concat": "^2.1.0",
@@ -44,8 +44,8 @@
         "grunt-contrib-uglify": "^5.2.2",
         "grunt-license-finder": "^2.0.0",
         "grunt-webpack": "^7.0.0",
-        "jest": "^29.7.0",
-        "jest-cli": "^29.7.0",
+        "jest": "^30.0.0",
+        "jest-cli": "^30.0.0",
         "load-grunt-tasks": "^5.1.0",
         "sass": "^1.87.0"
     },
