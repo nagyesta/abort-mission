@@ -44,7 +44,8 @@ buildscript {
         set("scmConnection", "scm:git:https://github.com/nagyesta/abort-mission.git")
         set("scmProjectUrl", "https://github.com/nagyesta/abort-mission/")
         set("githubMavenRepoUrl", "https://maven.pkg.github.com/nagyesta/abort-mission")
-        set("ossrhMavenRepoUrl", "https://oss.sonatype.org/service/local/staging/deploy/maven2")
+        set("ossrhMavenRepoUrl", "https://ossrh-staging-api.central.sonatype.com/service/local/")
+        set("ossrhSnapshotRepoUrl", "https://central.sonatype.com/repository/maven-snapshots/")
         set("sonarOrganization", "nagyesta")
         set("sonarProjectKey", "nagyesta_abort-mission")
         set("sonarHostUrl", "https://sonarcloud.io/")
@@ -300,6 +301,8 @@ tasks.jacocoTestReport {
 nexusPublishing {
     repositories {
         sonatype {
+            nexusUrl.set(uri(rootProject.extra.get("ossrhMavenRepoUrl").toString()))
+            snapshotRepositoryUrl.set(uri(rootProject.extra.get("ossrhSnapshotRepoUrl").toString()))
             username = rootProject.extra.get("ossrhUser").toString()
             password = rootProject.extra.get("ossrhPass").toString()
         }
