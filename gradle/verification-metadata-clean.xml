@@ -7,9 +7,10 @@
         <trusted-artifacts>
             <trust file=".*-javadoc[.]jar" regex="true"/>
             <trust file=".*-sources[.]jar" regex="true"/>
+            <trust file=".*[.]pom" regex="true"/>
             <trust file=".*[.]module" regex="true"/>
+            <trust file=".*[.]zip" regex="true"/>
             <trust file="node-.*[.]tar[.]gz" regex="true"/>
-            <trust file="node-.*[.]zip" regex="true"/>
         </trusted-artifacts>
     </configuration>
 </verification-metadata>
