@@ -114,7 +114,8 @@ tasks.shadowJar {
     exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
     archiveClassifier.set("")
 }
-tasks.build.get().finalizedBy(tasks.shadowJar)
+tasks.shadowJar.get().dependsOn(tasks.jar)
+tasks.build.get().dependsOn(tasks.shadowJar)
 
 tasks.processResources.get().finalizedBy(tasks.named("processTemplates"))
 tasks.jar.get().dependsOn(tasks.named("processTemplates"))
