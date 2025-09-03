@@ -17,7 +17,7 @@ junit4 = "4.13.2"
 jupiter = "5.13.4"
 jupiterPlatform = "1.13.4"
 mockitoCore = "5.19.0"
-cucumber = "7.28.0"
+cucumber = "7.28.1"
 testNg = "7.11.0"
 
 lombokPlugin = "8.14.2"
