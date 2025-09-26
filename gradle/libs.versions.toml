@@ -22,7 +22,7 @@ testNg = "7.11.0"
 
 lombokPlugin = "8.14.2"
 nodePlugin = "7.1.0"
-shadowPlugin = "9.2.1"
+shadowPlugin = "9.2.2"
 gitVersionerPlugin = "1.6.7"
 indexScanPlugin = "3.1.2"
 owaspPlugin = "12.1.6"
