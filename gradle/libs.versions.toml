@@ -27,7 +27,7 @@ gitVersionerPlugin = "1.6.7"
 indexScanPlugin = "3.1.4"
 owaspPlugin = "12.1.6"
 
-checkstyle = "11.0.1"
+checkstyle = "11.1.0"
 jacoco = "0.8.13"
 
 cycloneDxBomPlugin = "2.4.1"
