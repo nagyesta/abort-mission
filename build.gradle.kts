@@ -237,7 +237,7 @@ subprojects {
             excludeVulnerabilityIds = rootProject.extra.get("ossIndexExclusions") as MutableSet<String>
         }
 
-        tasks.cyclonedxBom {
+        tasks.cyclonedxDirectBom {
             if (project.name.endsWith("flight-evaluation-report")) {
                 projectType.set(org.cyclonedx.model.Component.Type.APPLICATION)
             } else {
@@ -246,7 +246,6 @@ subprojects {
             schemaVersion.set(Version.VERSION_16)
             includeConfigs.set(listOf("runtimeClasspath"))
             skipConfigs.set(listOf("compileClasspath", "testCompileClasspath"))
-            skipProjects.set(listOf())
             jsonOutput = project.layout.buildDirectory.file("reports/bom.json").get().asFile
             //noinspection UnnecessaryQualifiedReference
             val attachmentText = org.cyclonedx.model.AttachmentText()
