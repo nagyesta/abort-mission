@@ -30,7 +30,7 @@ owaspPlugin = "12.1.6"
 checkstyle = "12.0.0"
 jacoco = "0.8.13"
 
-cycloneDxBomPlugin = "3.0.0"
+cycloneDxBomPlugin = "3.0.1"
 licenseePlugin = "1.13.0"
 nexusPublishPlugin = "2.0.0"
 sonarPlugin = "6.3.1.5724"
