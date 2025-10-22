@@ -32,7 +32,7 @@ dependencies {
 
 licensee {
     allow("Apache-2.0")
-    allowUrl("https://www.eclipse.org/legal/epl-v20.html")
+    allow("EPL-2.0")
     allowUrl("https://opensource.org/license/mit")
 }
 

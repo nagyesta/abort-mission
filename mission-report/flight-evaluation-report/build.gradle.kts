@@ -123,6 +123,7 @@ tasks.shadowJar.get().dependsOn(tasks.named("processTemplates"))
 tasks.checkstyleMain.get().dependsOn(tasks.named("processTemplates"))
 tasks.compileTestJava.get().dependsOn(tasks.named("processTemplates"))
 tasks.javadoc.get().dependsOn(tasks.named("processTemplates"))
+tasks.sonarResolver.get().dependsOn(tasks.named("processTemplates"))
 
 tasks.test {
     useJUnitPlatform()
