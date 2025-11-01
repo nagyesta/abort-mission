@@ -43,10 +43,11 @@ class ConversionControllerIntegrationTest {
 
     @ParameterizedTest
     @MethodSource("validInputSource")
-    void testConvertJsonShouldConvertJsonDataWhenCalledWithValidJson(final String jsonResource,
-                                                                     final boolean relaxed,
-                                                                     final boolean failOnError,
-                                                                     final String expectedHtml) throws Exception {
+    void testConvertJsonShouldConvertJsonDataWhenCalledWithValidJson(
+            final String jsonResource,
+            final boolean relaxed,
+            final boolean failOnError,
+            final String expectedHtml) throws Exception {
         //given
         final var inputFile = new File(this.getClass().getResource(jsonResource).getFile());
         final var expectedFile = new File(this.getClass().getResource(expectedHtml).getFile());
