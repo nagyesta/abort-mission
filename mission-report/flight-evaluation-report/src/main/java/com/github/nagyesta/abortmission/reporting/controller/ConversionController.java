@@ -7,11 +7,8 @@ import com.github.nagyesta.abortmission.reporting.exception.RenderException;
 import com.github.nagyesta.abortmission.reporting.html.LaunchHtml;
 import com.github.nagyesta.abortmission.reporting.html.converter.LaunchJsonToHtmlConverter;
 import com.github.nagyesta.abortmission.reporting.json.LaunchJson;
-import com.networknt.schema.JsonSchema;
-import com.networknt.schema.JsonSchemaFactory;
-import com.networknt.schema.SpecVersion;
-import com.networknt.schema.ValidationMessage;
-import com.networknt.schema.serialization.JsonNodeReader;
+import com.networknt.schema.*;
+import com.networknt.schema.Error;
 import lombok.extern.slf4j.Slf4j;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -95,7 +92,7 @@ public final class ConversionController {
             final var violations = schema.validate(rootNode);
             if (!violations.isEmpty()) {
                 violations.stream()
-                        .map(ValidationMessage::getMessage)
+                        .map(Error::getMessage)
                         .forEach(log::error);
                 throw new IllegalArgumentException("validation failed.");
             }
@@ -111,18 +108,13 @@ public final class ConversionController {
         }
     }
 
-    private JsonSchema getSchema(final boolean relaxed) throws IOException {
+    private Schema getSchema(final boolean relaxed) throws IOException {
         try (var source = getSource(relaxed)) {
-            final var schemaNode = objectMapper.readTree(source);
-            final var jsonNodeReader = JsonNodeReader.builder()
-                    .locationAware()
-                    .jsonMapper(objectMapper)
-                    .build();
-            final var factory = JsonSchemaFactory
-                    .builder(JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7))
-                    .jsonNodeReader(jsonNodeReader)
-                    .build();
-            return factory.getSchema(schemaNode);
+            final var schemaRegistryConfig = SchemaRegistryConfig.builder().build();
+            final var schemaRegistry = SchemaRegistry.withDefaultDialect(SpecificationVersion.DRAFT_2020_12,
+                    builder -> builder.schemaRegistryConfig(schemaRegistryConfig));
+
+            return schemaRegistry.getSchema(source, InputFormat.JSON);
         }
     }
 
