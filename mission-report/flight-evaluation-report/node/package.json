@@ -1,55 +1,56 @@
 {
-    "name": "abort-mission",
-    "version": "1.0.0",
-    "description": "",
-    "main": "app.js",
-    "scripts": {
-        "test": "jest --coverage"
-    },
-    "jest": {
-        "testEnvironment": "node",
-        "testMatch": [
-            "./**/*.test.js"
-        ],
-        "collectCoverage": true,
-        "coverageDirectory": "./build/coverage/",
-        "coverageReporters": [
-            "cobertura",
-            "lcov",
-            "html"
-        ],
-        "coveragePathIgnorePatterns": [
-            "/node_modules/",
-            "/coverage/",
-            "/test/"
-        ],
-        "coverageThreshold": {
-            "global": {
-                "branches": 90,
-                "functions": 90,
-                "lines": 90
-            }
-        }
-    },
-    "author": "Istvan Zoltan Nagy <nagyesta@gmail.com>",
-    "license": "MIT",
-    "devDependencies": {
-        "@jest/globals": "^30.0.0",
-        "grunt": "^1.6.1",
-        "grunt-assets-inline": "^1.2.4",
-        "grunt-contrib-concat": "^2.1.0",
-        "grunt-contrib-cssmin": "^5.0.0",
-        "grunt-contrib-htmlmin": "^3.1.0",
-        "grunt-contrib-sass": "^2.0.0",
-        "grunt-contrib-uglify": "^5.2.2",
-        "grunt-license-finder": "^2.0.0",
-        "grunt-webpack": "^7.0.0",
-        "jest": "^30.0.0",
-        "jest-cli": "^30.0.0",
-        "load-grunt-tasks": "^5.1.0",
-        "sass": "^1.87.0"
-    },
-    "dependencies": {
-        "knockout": "^3.5.1"
+  "name" : "abort-mission",
+  "version" : "1.0.0",
+  "description" : "",
+  "main" : "app.js",
+  "scripts" : {
+    "test" : "jest --coverage"
+  },
+  "jest" : {
+    "testEnvironment" : "node",
+    "testMatch" : [
+      "./**/*.test.js"
+    ],
+    "collectCoverage" : true,
+    "coverageDirectory" : "./build/coverage/",
+    "coverageReporters" : [
+      "cobertura",
+      "lcov",
+      "html"
+    ],
+    "coveragePathIgnorePatterns" : [
+      "/node_modules/",
+      "/coverage/",
+      "/test/"
+    ],
+    "coverageThreshold" : {
+      "global" : {
+        "branches" : 90,
+        "functions" : 90,
+        "lines" : 90
+      }
     }
+  },
+  "author" : "Istvan Zoltan Nagy <nagyesta@gmail.com>",
+  "license" : "MIT",
+  "devDependencies" : {
+    "@jest/globals" : "^30.0.0",
+    "grunt" : "^1.6.1",
+    "grunt-assets-inline" : "^1.2.4",
+    "grunt-contrib-concat" : "^2.1.0",
+    "grunt-contrib-cssmin" : "^5.0.0",
+    "grunt-contrib-htmlmin" : "^3.1.0",
+    "grunt-contrib-sass" : "^2.0.0",
+    "grunt-contrib-uglify" : "^5.2.2",
+    "grunt-license-finder" : "^2.0.0",
+    "grunt-webpack" : "^7.0.0",
+    "jest" : "^30.0.0",
+    "jest-cli" : "^30.0.0",
+    "load-grunt-tasks" : "^5.1.0",
+    "sass" : "^1.87.0"
+  },
+  "dependencies" : {
+    "knockout" : "^3.5.1",
+    "glob" : ">=10.5.0"
+  }
 }
