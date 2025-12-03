@@ -60,8 +60,20 @@ tasks.processResources.get().finalizedBy(copyLegalDocs)
 
 node {
     download.set(true)
-    version.set("22.13.1")
+    version.set("24.11.1")
     nodeProjectDir.set(file("${project.projectDir}/node"))
+}
+
+tasks.register<NpxTask>("npmInstallDependencies") {
+    group = "build"
+    description = "Install dependencies for JavaScript sources."
+    inputs.files(fileTree("node/") {
+        include("package.json", "package-lock.json")
+    })
+    command = "npm"
+    args.set(listOf("ci", "--ignore-scripts"))
+    dependsOn(tasks.named("nodeSetup"))
+    dependsOn(tasks.named("npmSetup"))
 }
 
 tasks.register<NpxTask>("javascriptTest") {
@@ -74,11 +86,8 @@ tasks.register<NpxTask>("javascriptTest") {
         include("**.test.js")
     })
     command = "npm"
-    group = "build"
     args.set(listOf("test"))
-    dependsOn(tasks.named("nodeSetup"))
-    dependsOn(tasks.named("npmSetup"))
-    dependsOn(tasks.named("npmInstall"))
+    dependsOn(tasks.named("npmInstallDependencies"))
 }
 
 tasks.register<Delete>("cleanTemplates") {
