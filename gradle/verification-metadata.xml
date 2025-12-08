@@ -12,6 +12,7 @@
          <trust file="node-.*[.]tar[.]gz" regex="true"/>
       </trusted-artifacts>
    </configuration>
+    
    <components>
       <component group="aopalliance" name="aopalliance" version="1.0">
          <artifact name="aopalliance-1.0.jar">
