@@ -1,6 +1,5 @@
 package com.github.nagyesta.abortmission.reporting.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nagyesta.abortmission.reporting.config.ConversionProperties;
 import com.github.nagyesta.abortmission.reporting.exception.RenderException;
 import com.github.nagyesta.abortmission.reporting.html.converter.LaunchJsonToHtmlConverter;
@@ -9,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.thymeleaf.TemplateEngine;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;

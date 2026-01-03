@@ -7,7 +7,7 @@
 [![JavaCI](https://img.shields.io/github/actions/workflow/status/nagyesta/abort-mission/gradle.yml?logo=github&branch=main)](https://github.com/nagyesta/abort-mission/actions/workflows/gradle.yml)
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6017/badge)](https://bestpractices.coreinfrastructure.org/projects/6017)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=nagyesta_abort-mission&metric=coverage)](https://sonarcloud.io/summary/new_code?id=nagyesta_abort-mission)
+[![Sonar Coverage](https://img.shields.io/sonar/coverage/nagyesta_abort-mission?server=https%3A%2F%2Fsonarcloud.io&logo=sonarcloud&logoColor=white)](https://sonarcloud.io/summary/new_code?id=nagyesta_abort-mission)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nagyesta_abort-mission&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=nagyesta_abort-mission)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=nagyesta_abort-mission&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=nagyesta_abort-mission)
 [![last_commit](https://img.shields.io/github/last-commit/nagyesta/abort-mission?logo=git)](https://img.shields.io/github/last-commit/nagyesta/abort-mission?logo=git)

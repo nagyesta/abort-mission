@@ -1,5 +1,6 @@
 package com.github.nagyesta.abortmission.reporting.html;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.nagyesta.abortmission.reporting.json.StageResultJson;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,9 @@ import java.util.UUID;
 @Builder
 @Data
 @SuppressWarnings({"checkstyle:DesignForExtension", "checkstyle:JavadocVariable"})
+@JsonPropertyOrder({
+        "classKey", "methodKey", "countdown", "matcherKeys", "launchId", "result",
+        "start", "end", "displayName", "threadName", "throwableClass", "throwableMessage", "stackTrace"})
 public final class TestRunHtml implements Comparable<TestRunHtml> {
 
     @NonNull
