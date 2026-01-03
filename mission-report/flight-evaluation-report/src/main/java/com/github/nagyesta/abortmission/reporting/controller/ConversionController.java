@@ -1,7 +1,5 @@
 package com.github.nagyesta.abortmission.reporting.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nagyesta.abortmission.reporting.config.ConversionProperties;
 import com.github.nagyesta.abortmission.reporting.exception.RenderException;
 import com.github.nagyesta.abortmission.reporting.html.LaunchHtml;
@@ -14,6 +12,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -26,10 +25,11 @@ public final class ConversionController {
     private final LaunchJsonToHtmlConverter converter;
     private final TemplateEngine templateEngine;
 
-    public ConversionController(final ConversionProperties properties,
-                                final ObjectMapper objectMapper,
-                                final LaunchJsonToHtmlConverter converter,
-                                final TemplateEngine templateEngine) {
+    public ConversionController(
+            final ConversionProperties properties,
+            final ObjectMapper objectMapper,
+            final LaunchJsonToHtmlConverter converter,
+            final TemplateEngine templateEngine) {
         this.properties = properties;
         this.objectMapper = objectMapper;
         this.converter = converter;
@@ -62,7 +62,7 @@ public final class ConversionController {
     private String writeAsJson(final LaunchHtml launchHtml) {
         try {
             return objectMapper.writer().writeValueAsString(launchHtml);
-        } catch (final JsonProcessingException e) {
+        } catch (final Exception e) {
             log.error("Unable to serialize launch telemetry: {}", e.getMessage(), e);
             throw new RenderException();
         }

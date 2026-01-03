@@ -1,5 +1,6 @@
 package com.github.nagyesta.abortmission.reporting.html;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
@@ -9,6 +10,7 @@ import java.util.SortedSet;
 
 @Builder
 @Data
+@JsonPropertyOrder({"matchers", "classNames", "methodNames", "runs"})
 public final class LaunchHtml {
 
     @NonNull

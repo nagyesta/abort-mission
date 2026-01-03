@@ -1,10 +1,10 @@
 package com.github.nagyesta.abortmission.reporting;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nagyesta.abortmission.reporting.config.ConversionProperties;
 import com.github.nagyesta.abortmission.reporting.controller.ConversionController;
 import com.github.nagyesta.abortmission.reporting.html.converter.LaunchJsonToHtmlConverter;
 import org.thymeleaf.TemplateEngine;
+import tools.jackson.databind.ObjectMapper;
 
 public class AbortMissionAppContext {
     private final ConversionController controller;
