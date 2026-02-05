@@ -35,7 +35,9 @@ public class LaunchAbortTestWatcher extends TestWatcher {
     }
 
     @Override
-    public Statement apply(final Statement base, final Description description) {
+    public Statement apply(
+            final Statement base,
+            final Description description) {
         final Statement wrapped;
         if (base instanceof RunBefores || base instanceof RunAfters) {
             wrapped = wrapPreparationCall(base);
@@ -63,7 +65,9 @@ public class LaunchAbortTestWatcher extends TestWatcher {
         };
     }
 
-    private Statement wrapTestMethodCall(final Statement base, final Description description) {
+    private Statement wrapTestMethodCall(
+            final Statement base,
+            final Description description) {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
@@ -76,7 +80,10 @@ public class LaunchAbortTestWatcher extends TestWatcher {
         };
     }
 
-    private void wrapMethodCall(final Statement base, final Method requiredMethod, final Description description) throws Throwable {
+    private void wrapMethodCall(
+            final Statement base,
+            final Method requiredMethod,
+            final Description description) throws Throwable {
         Optional<StageTimeStopwatch> stopwatch = Optional.empty();
         try {
             final var displayName = description.getMethodName();

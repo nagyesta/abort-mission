@@ -22,7 +22,7 @@ public class LaunchTelemetryConverter extends BaseLaunchTelemetryConverter {
     }
 
     /**
-     * Creates new instance using the provided classConverter.
+     * Creates a new instance using the provided classConverter.
      *
      * @param classConverter The class converter we will use for class level parsing.
      */
@@ -61,38 +61,42 @@ public class LaunchTelemetryConverter extends BaseLaunchTelemetryConverter {
     }
 
     /**
-     * Adds all matcher name from the evaluator to all the classes and methods where it matched during the execution.
+     * Adds all matcher names from the evaluator to all the classes and methods where it matched during the execution.
      *
      * @param matchersByClassAndMethod The target map containing previous matches we knew about.
      * @param evaluator                The currently examined evaluator.
      */
-    protected void mergeInto(final Map<String, Map<String, Set<String>>> matchersByClassAndMethod,
-                             final MissionHealthCheckEvaluator evaluator) {
+    protected void mergeInto(
+            final Map<String, Map<String, Set<String>>> matchersByClassAndMethod,
+            final MissionHealthCheckEvaluator evaluator) {
         Objects.requireNonNull(matchersByClassAndMethod, "Target map cannot be null.");
         Objects.requireNonNull(evaluator, "Evaluator cannot be null.");
         mergeInto(matchersByClassAndMethod,
                 evaluator.getCountdownStatistics().timeSeriesStream(),
                 evaluator.getMissionStatistics().timeSeriesStream(),
-                addoverrideKeywordIfPresent(evaluator.overrideKeyword(), evaluator.getMatcher().getName()));
+                addOverrideKeywordIfPresent(evaluator.overrideKeyword(), evaluator.getMatcher().getName()));
     }
 
     /**
-     * Adds all matcher name from the evaluator to all the classes and methods where it matched during the execution.
+     * Adds all matcher names from the evaluator to all the classes and methods where it matched during the execution.
      *
      * @param measurementsByClassName The target map containing time series data per class.
      * @param countdownStatistics     The currently examined countdown statistics.
      * @param missionStatistics       The currently examined mission statistics.
      */
-    protected void mergeInto(final Map<String, List<StageTimeMeasurement>> measurementsByClassName,
-                             final ReadOnlyStageStatistics countdownStatistics,
-                             final ReadOnlyStageStatistics missionStatistics) {
+    protected void mergeInto(
+            final Map<String, List<StageTimeMeasurement>> measurementsByClassName,
+            final ReadOnlyStageStatistics countdownStatistics,
+            final ReadOnlyStageStatistics missionStatistics) {
         Objects.requireNonNull(measurementsByClassName, "Target map cannot be null.");
         Objects.requireNonNull(countdownStatistics, "CountdownStatistics cannot be null.");
         Objects.requireNonNull(missionStatistics, "MissionStatistics cannot be null.");
         mergeInto(measurementsByClassName, countdownStatistics.timeSeriesStream(), missionStatistics.timeSeriesStream());
     }
 
-    private String addoverrideKeywordIfPresent(final String overrideKeyword, final String name) {
+    private String addOverrideKeywordIfPresent(
+            final String overrideKeyword,
+            final String name) {
         return Optional.ofNullable(overrideKeyword)
                 .map(kw -> "[" + kw + "] " + name)
                 .orElse(name);

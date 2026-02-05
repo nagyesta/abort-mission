@@ -17,7 +17,9 @@ public class SystemPropertyMatcher extends RegexMatcher implements MissionHealth
      * @param systemPropertyName The property name.
      * @param valuePattern       The regular expression.
      */
-    SystemPropertyMatcher(final String systemPropertyName, final String valuePattern) {
+    SystemPropertyMatcher(
+            final String systemPropertyName,
+            final String valuePattern) {
         super(valuePattern, "System property value regex cannot be null.");
         this.systemPropertyName = Objects.requireNonNull(systemPropertyName, "System property name cannot be null.");
     }

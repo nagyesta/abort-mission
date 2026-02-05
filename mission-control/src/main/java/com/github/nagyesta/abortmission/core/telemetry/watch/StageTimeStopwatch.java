@@ -34,7 +34,9 @@ public final class StageTimeStopwatch implements StageTimeMeasurementDataProvide
      * @param testClassId The id of the test class.
      * @param testCaseId  The id of the test method in the scope of the class.
      */
-    public StageTimeStopwatch(final String testClassId, final String testCaseId) {
+    public StageTimeStopwatch(
+            final String testClassId,
+            final String testCaseId) {
         this.testClassId = Objects.requireNonNull(testClassId, "Test class cannot be null.");
         this.testCaseId = Optional.ofNullable(testCaseId).orElse(CLASS_ONLY);
         this.start = System.currentTimeMillis();
@@ -64,7 +66,7 @@ public final class StageTimeStopwatch implements StageTimeMeasurementDataProvide
 
     /**
      * Overrides the thread name used for the measurement.
-     * This can add additional information in case of parallel test execution.
+     * This can add additional information in the case of parallel test execution.
      *
      * @param threadName The name of the thread.
      * @return this
@@ -78,7 +80,7 @@ public final class StageTimeStopwatch implements StageTimeMeasurementDataProvide
     /**
      * Overrides the display name used for the measurement.
      * This information will help the user to identify the test case in the reports,
-     * including the parameters used in case of parameterized tests.
+     * including the parameters used in the case of parameterized tests.
      *
      * @param displayName The name of the thread.
      * @return this

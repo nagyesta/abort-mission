@@ -12,7 +12,9 @@ import java.time.ZoneOffset;
 public class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
 
     @Override
-    public void write(final JsonWriter out, final LocalDateTime value) throws IOException {
+    public void write(
+            final JsonWriter out,
+            final LocalDateTime value) throws IOException {
         if (value == null) {
             out.nullValue();
         } else {

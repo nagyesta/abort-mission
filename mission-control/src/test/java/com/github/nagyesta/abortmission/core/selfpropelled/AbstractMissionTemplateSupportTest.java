@@ -11,8 +11,9 @@ abstract class AbstractMissionTemplateSupportTest {
         throw new TestAbortedException();
     }
 
-    protected MissionHealthCheckEvaluator getMissionHealthCheckEvaluator(final Class<?> component,
-                                                                         final String name) {
+    protected MissionHealthCheckEvaluator getMissionHealthCheckEvaluator(
+            final Class<?> component,
+            final String name) {
         final var evaluators = MissionControl.matchingHealthChecks(name, component);
         final var first = evaluators.stream().findFirst();
         Assertions.assertTrue(first.isPresent());

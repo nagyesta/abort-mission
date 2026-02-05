@@ -33,7 +33,9 @@ class LocalDateTimeAdapterTest {
 
     @ParameterizedTest
     @MethodSource("validWriteSource")
-    void testWriteShouldProduceValidOutputWhenCalled(final LocalDateTime input, final String expected) {
+    void testWriteShouldProduceValidOutputWhenCalled(
+            final LocalDateTime input,
+            final String expected) {
         //given
         final var underTest = new LocalDateTimeAdapter();
         final var gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, underTest).create();

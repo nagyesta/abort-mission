@@ -38,7 +38,10 @@ public final class PropertiesParser {
         return builder.build();
     }
 
-    private <T> void parse(final String parameter, final Function<String, T> mapper, final Consumer<T> consumer) {
+    private <T> void parse(
+            final String parameter,
+            final Function<String, T> mapper,
+            final Consumer<T> consumer) {
         args.stream().filter(s -> s.startsWith(parameter)).findFirst()
                 .map(s -> s.replaceFirst(Pattern.quote(parameter + EQUALS), EMPTY))
                 .map(mapper).ifPresent(consumer);

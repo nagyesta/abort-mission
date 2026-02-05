@@ -116,7 +116,10 @@ class ClassJsonTest {
         assertIterableEquals(new TreeSet<>(Set.of(launch2, launch3, launch1)), actualList);
     }
 
-    private static TestRunJson getTestRunJson(final int start, final int end, final StageResultJson result) {
+    private static TestRunJson getTestRunJson(
+            final int start,
+            final int end,
+            final StageResultJson result) {
         final var launch3 = new TestRunJson();
         launch3.setStart(start);
         launch3.setEnd(end);

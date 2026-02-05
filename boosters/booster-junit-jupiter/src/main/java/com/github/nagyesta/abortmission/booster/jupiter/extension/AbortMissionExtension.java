@@ -32,7 +32,9 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
 
     @SuppressWarnings("RedundantThrows")
     @Override
-    public void postProcessTestInstance(final Object testInstance, final ExtensionContext context) throws Exception {
+    public void postProcessTestInstance(
+            final Object testInstance,
+            final ExtensionContext context) throws Exception {
         final var stopwatch = launchSequenceTemplate
                 .launchGoNoGo(testInstance.getClass(), getDisplayNameOfContext(context));
         LOGGER.trace("Post-processing test instance of class: {} for launch id: {}",
@@ -66,7 +68,9 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
     }
 
     @Override
-    public void testFailed(final ExtensionContext context, final Throwable throwable) {
+    public void testFailed(
+            final ExtensionContext context,
+            final Throwable throwable) {
         final var stopwatch = optionalStopwatch(context, MISSION_START_PREFIX + Thread.currentThread().getName());
         final var rootCause = Optional.of(throwable);
         if (stopwatch.isEmpty()) {
@@ -174,12 +178,17 @@ public class AbortMissionExtension implements TestInstancePostProcessor, TestWat
                 .orElseGet(() -> matchingHealthChecks(testClass));
     }
 
-    private Optional<StageTimeStopwatch> optionalStopwatch(final ExtensionContext context, final String key) {
+    private Optional<StageTimeStopwatch> optionalStopwatch(
+            final ExtensionContext context,
+            final String key) {
         return Optional.ofNullable(getTestInstanceContext(context).getStore(NAMESPACE).getOrDefault(key, StageTimeStopwatch.class, null));
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    private void putOptionalStopwatch(final ExtensionContext context, final Optional<StageTimeStopwatch> stopwatch, final String key) {
+    private void putOptionalStopwatch(
+            final ExtensionContext context,
+            final Optional<StageTimeStopwatch> stopwatch,
+            final String key) {
         LOGGER.trace("Storing stopwatch for key: {} with launchId: {}",
                 key, stopwatch.map(StageTimeStopwatch::getLaunchId).orElse(null));
         if (stopwatch.isPresent()) {

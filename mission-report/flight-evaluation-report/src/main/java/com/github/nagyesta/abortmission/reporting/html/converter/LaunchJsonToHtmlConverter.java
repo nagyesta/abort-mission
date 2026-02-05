@@ -46,7 +46,10 @@ public class LaunchJsonToHtmlConverter {
                 .reduce(countdown, this::merge);
     }
 
-    private LaunchHtml convertMission(final String className, final String methodName, final StageLaunchStatsJson methodData) {
+    private LaunchHtml convertMission(
+            final String className,
+            final String methodName,
+            final StageLaunchStatsJson methodData) {
         final var classKey = shortHash(className);
         final var methodKey = shortHash(methodName);
         final var methodMatchers = methodData.getMatcherNames()
@@ -63,7 +66,9 @@ public class LaunchJsonToHtmlConverter {
                 .build();
     }
 
-    private LaunchHtml convertCountdown(final String className, final ClassJson classData) {
+    private LaunchHtml convertCountdown(
+            final String className,
+            final ClassJson classData) {
         final var classKey = shortHash(className);
         final var classMatchers = classData.getCountdown().getMatcherNames()
                 .stream()
@@ -79,7 +84,9 @@ public class LaunchJsonToHtmlConverter {
                 .build();
     }
 
-    private LaunchHtml merge(final LaunchHtml a, final LaunchHtml b) {
+    private LaunchHtml merge(
+            final LaunchHtml a,
+            final LaunchHtml b) {
         return LaunchHtml.builder()
                 .matchers(mergeMaps(a.getMatchers(), b.getMatchers()))
                 .classNames(mergeMaps(a.getClassNames(), b.getClassNames()))
@@ -88,19 +95,24 @@ public class LaunchJsonToHtmlConverter {
                 .build();
     }
 
-    private static Map<String, String> mergeMaps(final Map<String, String> a, final Map<String, String> b) {
+    private static Map<String, String> mergeMaps(
+            final Map<String, String> a,
+            final Map<String, String> b) {
         return Stream.concat(a.entrySet().stream(), b.entrySet().stream())
                 .distinct()
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    private static SortedSet<TestRunHtml> mergeSets(final Set<TestRunHtml> a, final Set<TestRunHtml> b) {
+    private static SortedSet<TestRunHtml> mergeSets(
+            final Set<TestRunHtml> a,
+            final Set<TestRunHtml> b) {
         return Stream.concat(a.stream(), b.stream())
                 .collect(Collectors.toCollection(TreeSet::new));
     }
 
     private static Function<TestRunJson, TestRunHtml> convertCountdownMeasurement(
-            final String classKey, final Map<String, String> classMatchers) {
+            final String classKey,
+            final Map<String, String> classMatchers) {
         return testRunJson -> convertCommonMeasurementFields(classKey, classMatchers, testRunJson)
                 .methodKey(null)
                 .countdown(true)
@@ -108,7 +120,9 @@ public class LaunchJsonToHtmlConverter {
     }
 
     private static Function<TestRunJson, TestRunHtml> convertMissionMeasurement(
-            final String classKey, final String methodKey, final Map<String, String> methodMatchers) {
+            final String classKey,
+            final String methodKey,
+            final Map<String, String> methodMatchers) {
         return testRunJson -> convertCommonMeasurementFields(classKey, methodMatchers, testRunJson)
                 .methodKey(methodKey)
                 .countdown(false)
@@ -116,7 +130,9 @@ public class LaunchJsonToHtmlConverter {
     }
 
     private static TestRunHtml.TestRunHtmlBuilder convertCommonMeasurementFields(
-            final String classKey, final Map<String, String> matchers, final TestRunJson testRunJson) {
+            final String classKey,
+            final Map<String, String> matchers,
+            final TestRunJson testRunJson) {
         return TestRunHtml.builder()
                 .classKey(classKey)
                 .matcherKeys(matchers.keySet())

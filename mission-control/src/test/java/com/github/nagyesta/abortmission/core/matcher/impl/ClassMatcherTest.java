@@ -76,7 +76,9 @@ class ClassMatcherTest extends AbstractMatcherTest {
 
     @ParameterizedTest
     @MethodSource("inputProvider")
-    void testMatchesShouldMatchFullyQualifiedClassNameToRegexpWhenCalledWithClass(final boolean matches, final String pattern) {
+    void testMatchesShouldMatchFullyQualifiedClassNameToRegexpWhenCalledWithClass(
+            final boolean matches,
+            final String pattern) {
         //given
         final var underTest = MissionHealthCheckMatcherBuilder.builder().classNamePattern(pattern).build();
 
@@ -89,7 +91,9 @@ class ClassMatcherTest extends AbstractMatcherTest {
 
     @ParameterizedTest
     @MethodSource("inputProvider")
-    void testMatchesShouldMatchFullyQualifiedClassNameToRegexpWhenCalledWithMethod(final boolean matches, final String pattern) {
+    void testMatchesShouldMatchFullyQualifiedClassNameToRegexpWhenCalledWithMethod(
+            final boolean matches,
+            final String pattern) {
         //given
         final var underTest = MissionHealthCheckMatcherBuilder.builder().classNamePattern(pattern).build();
 
@@ -117,9 +121,10 @@ class ClassMatcherTest extends AbstractMatcherTest {
     @ParameterizedTest
     @MethodSource("equalsAndHashCodeProvider")
     @Override
-    protected void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(final MissionHealthCheckMatcher a,
-                                                                     final MissionHealthCheckMatcher b,
-                                                                     final boolean expected) {
+    protected void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(
+            final MissionHealthCheckMatcher a,
+            final MissionHealthCheckMatcher b,
+            final boolean expected) {
         super.testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(a, b, expected);
     }
 }

@@ -30,8 +30,9 @@ public class CucumberLaunchSequenceTemplate extends AbstractMissionLaunchSequenc
      * @param abortSequence                The {@link Runnable} which aborts the tests (usually by throwing an exception)
      * @param scenarioBasedEvaluatorLookup The {@link Function} that will be used for evaluator lookup.
      */
-    public CucumberLaunchSequenceTemplate(final Runnable abortSequence,
-                                          final Function<Scenario, Set<MissionHealthCheckEvaluator>> scenarioBasedEvaluatorLookup) {
+    public CucumberLaunchSequenceTemplate(
+            final Runnable abortSequence,
+            final Function<Scenario, Set<MissionHealthCheckEvaluator>> scenarioBasedEvaluatorLookup) {
         super(abortSequence);
         this.scenarioBasedEvaluatorLookup = Objects.requireNonNull(scenarioBasedEvaluatorLookup, "Scenario evaluator cannot be null.");
     }
@@ -39,7 +40,7 @@ public class CucumberLaunchSequenceTemplate extends AbstractMissionLaunchSequenc
     /**
      * Marks completion of the test instance preparation.
      *
-     * @param scenario The test Scenario which is ready for execution.
+     * @param scenario The test Scenario, which is ready for execution.
      * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
      */
     public Optional<StageTimeStopwatch> launchImminent(final Scenario scenario) {
@@ -56,14 +57,17 @@ public class CucumberLaunchSequenceTemplate extends AbstractMissionLaunchSequenc
     }
 
     /**
-     * Indicates that a failure happened during test run.
+     * Indicates that a failure happened during a test run.
      *
      * @param scenario  The test Scenario we executed.
      * @param rootCause The root cause of the failure.
-     * @param stopwatch Captures when did the launch start.
+     * @param stopwatch Captures when the launch started.
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public void launchFailure(final Scenario scenario, final Optional<Throwable> rootCause, final Optional<StageTimeStopwatch> stopwatch) {
+    public void launchFailure(
+            final Scenario scenario,
+            final Optional<Throwable> rootCause,
+            final Optional<StageTimeStopwatch> stopwatch) {
         LOGGER.debug("Mission failed for scenario from URI: {} named: {}", scenario.getUri(), scenario.getName());
         missionFailureDetected(scenarioBasedEvaluatorLookup.apply(scenario), stopwatch,
                 Optional.of(rootCause.orElse(new Exception())), findSuppressedExceptions(scenario)
@@ -73,11 +77,13 @@ public class CucumberLaunchSequenceTemplate extends AbstractMissionLaunchSequenc
     /**
      * Wraps up the mission by logging a successful run.
      *
-     * @param scenario  The test Scenario which was executed.
-     * @param stopwatch Captures when did the launch start.
+     * @param scenario  The test Scenario, which was executed.
+     * @param stopwatch Captures when the launch started.
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public void launchSuccess(final Scenario scenario, final Optional<StageTimeStopwatch> stopwatch) {
+    public void launchSuccess(
+            final Scenario scenario,
+            final Optional<StageTimeStopwatch> stopwatch) {
         LOGGER.debug("Mission successful for scenario from URI: {} named: {}", scenario.getUri(), scenario.getName());
         missionCompletedSuccessfully(scenarioBasedEvaluatorLookup.apply(scenario), stopwatch);
     }

@@ -62,9 +62,10 @@ class AlwaysAbortingMissionHealthCheckEvaluatorTest {
 
     @ParameterizedTest
     @MethodSource("countdownEvaluatorProvider")
-    void testShouldAbortCountdownShouldAlwaysReturnFalseWhenCalled(final int countdownFailure,
-                                                                   final int countdownComplete,
-                                                                   final int failureCount) {
+    void testShouldAbortCountdownShouldAlwaysReturnFalseWhenCalled(
+            final int countdownFailure,
+            final int countdownComplete,
+            final int failureCount) {
         //given
         final var anyClass = mock(MissionHealthCheckMatcher.class);
         final var underTest = MissionControl.abortingEvaluator(anyClass)
@@ -86,9 +87,10 @@ class AlwaysAbortingMissionHealthCheckEvaluatorTest {
 
     @ParameterizedTest
     @MethodSource("launchEvaluatorProvider")
-    void testShouldAbortShouldAlwaysReturnFalseWhenCalled(final int countdownComplete,
-                                                          final int failureCount,
-                                                          final int successCount) {
+    void testShouldAbortShouldAlwaysReturnFalseWhenCalled(
+            final int countdownComplete,
+            final int failureCount,
+            final int successCount) {
         //given
         final var anyClass = mock(MissionHealthCheckMatcher.class);
         final var underTest = MissionControl.abortingEvaluator(anyClass).build();

@@ -29,33 +29,35 @@ public final class AnnotationContextEvaluator {
     }
 
     /**
-     * Finds the context name using a booster specific annotation based on a test method.
+     * Finds the context name using a booster-specific annotation based on a test method.
      *
      * @param activeMethod         The test method we would like to execute.
-     * @param annotation           The booster specific annotation class.
+     * @param annotation           The booster-specific annotation class.
      * @param contextNameExtractor A function that can extract the name from the annotation.
      * @param <A>                  The annotation type.
      * @return An optional context name. If empty, the shared context will be used.
      */
-    public <A extends Annotation> Optional<String> findContextName(final Method activeMethod,
-                                                                   final Class<A> annotation,
-                                                                   final Function<A, String> contextNameExtractor) {
+    public <A extends Annotation> Optional<String> findContextName(
+            final Method activeMethod,
+            final Class<A> annotation,
+            final Function<A, String> contextNameExtractor) {
         final var activeClass = activeMethod.getDeclaringClass();
         return findContextName(activeClass, annotation, contextNameExtractor);
     }
 
     /**
-     * Finds the context name using a booster specific annotation based on a test class.
+     * Finds the context name using a booster-specific annotation based on a test class.
      *
      * @param activeClass          The test class we would like to execute.
-     * @param annotation           The booster specific annotation class.
+     * @param annotation           The booster-specific annotation class.
      * @param contextNameExtractor A function that can extract the name from the annotation.
      * @param <A>                  The annotation type.
      * @return An optional context name. If empty, the shared context will be used.
      */
-    public <A extends Annotation> Optional<String> findContextName(final Class<?> activeClass,
-                                                                   final Class<A> annotation,
-                                                                   final Function<A, String> contextNameExtractor) {
+    public <A extends Annotation> Optional<String> findContextName(
+            final Class<?> activeClass,
+            final Class<A> annotation,
+            final Function<A, String> contextNameExtractor) {
         Optional<String> result = Optional.empty();
         if (activeClass.isAnnotationPresent(annotation)) {
             final var contextName = contextNameExtractor.apply(activeClass.getAnnotation(annotation));
@@ -67,7 +69,7 @@ public final class AnnotationContextEvaluator {
     }
 
     /**
-     * Returns whether abort decisions should be overruled/suppressed in case of the test method.
+     * Returns whether abort decisions should be overruled/suppressed in the case of the test method.
      *
      * @param activeMethod The test method.
      * @return true if the method or the declaring class is annotated with {@link SuppressAbortDecisions}, false otherwise.
@@ -80,7 +82,7 @@ public final class AnnotationContextEvaluator {
     }
 
     /**
-     * Returns whether abort decisions should be overruled/suppressed in case of the test class.
+     * Returns whether abort decisions should be overruled/suppressed in the case of the test class.
      *
      * @param activeClass The test class.
      * @return true if the class is annotated with {@link SuppressAbortDecisions}, false otherwise.

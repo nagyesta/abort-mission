@@ -25,8 +25,9 @@ class DefaultLaunchTelemetryDataSourceTest {
 
     @ParameterizedTest
     @MethodSource("nullProvider")
-    void testConstructorShouldThrowExceptionWhenCalledWithNull(final LaunchTelemetryConverter converter,
-                                                               final Map<String, AbortMissionCommandOps> nameSpaces) {
+    void testConstructorShouldThrowExceptionWhenCalledWithNull(
+            final LaunchTelemetryConverter converter,
+            final Map<String, AbortMissionCommandOps> nameSpaces) {
         //given
 
         //when

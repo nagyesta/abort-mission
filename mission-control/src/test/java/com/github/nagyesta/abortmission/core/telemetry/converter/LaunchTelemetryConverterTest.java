@@ -78,10 +78,11 @@ class LaunchTelemetryConverterTest extends AbstractTelemetryTest {
 
     private static final class SimpleEvaluator extends AbstractMissionHealthCheckEvaluator {
 
-        private SimpleEvaluator(final String matcherName,
-                                final List<StageTimeMeasurement> countdown,
-                                final List<StageTimeMeasurement> mission) {
-            super(new SimpleMatcher(matcherName), new MissionStatisticsCollector(new SimpleMatcher(matcherName)));
+        private SimpleEvaluator(
+                final String matcherName,
+                final List<StageTimeMeasurement> countdown,
+                final List<StageTimeMeasurement> mission) {
+            super(new SimpleMatcher(matcherName), new MissionStatisticsCollector(new SimpleMatcher(matcherName)), Set.of(), null);
             countdown.forEach(m -> this.countdownLogger().logAndIncrement(m));
             mission.forEach(m -> this.missionLogger().logAndIncrement(m));
         }

@@ -69,7 +69,9 @@ class NotMatcherTest extends AbstractMatcherTest {
 
     @ParameterizedTest
     @MethodSource("inputProvider")
-    void testMatchesShouldNegateWrappedMatcherWhenCalledWithValidComponent(final boolean matches, final String dependency) {
+    void testMatchesShouldNegateWrappedMatcherWhenCalledWithValidComponent(
+            final boolean matches,
+            final String dependency) {
         //given
         final var underTest = MissionHealthCheckMatcherBuilder.builder()
                 .not(STRING_MATCHER).build();
@@ -99,9 +101,10 @@ class NotMatcherTest extends AbstractMatcherTest {
     @ParameterizedTest
     @MethodSource("equalsAndHashCodeProvider")
     @Override
-    protected void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(final MissionHealthCheckMatcher a,
-                                                                     final MissionHealthCheckMatcher b,
-                                                                     final boolean expected) {
+    protected void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(
+            final MissionHealthCheckMatcher a,
+            final MissionHealthCheckMatcher b,
+            final boolean expected) {
         super.testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(a, b, expected);
     }
 }

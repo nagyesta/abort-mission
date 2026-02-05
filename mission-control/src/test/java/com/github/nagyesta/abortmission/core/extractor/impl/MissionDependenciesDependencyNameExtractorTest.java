@@ -41,7 +41,9 @@ class MissionDependenciesDependencyNameExtractorTest {
 
     @ParameterizedTest
     @MethodSource("methodInputProvider")
-    void testApplyShouldMergeAllSourcesWhenCalledWithValidMethods(final Method method, final Set<String> expected) {
+    void testApplyShouldMergeAllSourcesWhenCalledWithValidMethods(
+            final Method method,
+            final Set<String> expected) {
         //given
         final var underTest = new MissionDependenciesDependencyNameExtractor();
 
@@ -59,7 +61,9 @@ class MissionDependenciesDependencyNameExtractorTest {
 
     @ParameterizedTest
     @MethodSource("classInputProvider")
-    void testApplyShouldExtractClassDependenciesONlyWhenCalledWithValidClasses(final Class<?> type, final Set<String> expected) {
+    void testApplyShouldExtractClassDependenciesONlyWhenCalledWithValidClasses(
+            final Class<?> type,
+            final Set<String> expected) {
         //given
         final var underTest = new MissionDependenciesDependencyNameExtractor();
 
@@ -80,21 +84,21 @@ class MissionDependenciesDependencyNameExtractorTest {
 
         @MissionDependencies({A, B, C, D})
         public void methodABCD() {
-            //test method in order to be able to find the different annotations
+            //test method to be able to find the different annotations
         }
 
         public void methodABInherited() {
-            //test method in order to be able to find the different annotations
+            //test method to be able to find the different annotations
         }
 
         @MissionDependencies(B)
         public void methodAB() {
-            //test method in order to be able to find the different annotations
+            //test method to be able to find the different annotations
         }
 
         @MissionDependencies(D)
         public void methodABD() {
-            //test method in order to be able to find the different annotations
+            //test method to be able to find the different annotations
         }
     }
 }

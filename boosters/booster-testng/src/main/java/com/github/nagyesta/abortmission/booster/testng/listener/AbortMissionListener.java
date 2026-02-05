@@ -48,7 +48,9 @@ public class AbortMissionListener implements ITestListener, IClassListener, ISui
         }
     }
 
-    private String resolveDisplayName(final ITestResult result, final Method method) {
+    private String resolveDisplayName(
+            final ITestResult result,
+            final Method method) {
         return method.getName() + Optional.ofNullable(result.getParameters())
                 .filter(p -> p.length > 0)
                 .map(p -> Arrays.stream(p).map(Object::toString).collect(Collectors.joining(",")))

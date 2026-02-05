@@ -154,7 +154,9 @@ public abstract class LaunchAbortHook {
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    private void storeOptionalStopwatch(final Scenario scenario, final Optional<StageTimeStopwatch> stopwatch) {
+    private void storeOptionalStopwatch(
+            final Scenario scenario,
+            final Optional<StageTimeStopwatch> stopwatch) {
         if (stopwatch.isPresent()) {
             stopwatchMap.put(scenario.getId(), stopwatch.get());
         } else {

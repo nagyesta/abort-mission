@@ -24,14 +24,15 @@ public class BaseLaunchTelemetryConverter {
     }
 
     /**
-     * Creates new partitions based on thy matcher and measurement maps.
+     * Creates new partitions based on the matcher and measurement maps.
      *
      * @param matchersByClassAndMethod The Map containing the Set of matcher names for each method of each class.
-     * @param byTestClassAccumulator   The Map containing the time series data per ech class.
+     * @param byTestClassAccumulator   The Map containing the time series data per each class.
      * @return The repartitioned data in {@link ClassTelemetry} format.
      */
-    protected SortedMap<String, ClassTelemetry> repartitionByClasses(final Map<String, Map<String, Set<String>>> matchersByClassAndMethod,
-                                                                     final Map<String, List<StageTimeMeasurement>> byTestClassAccumulator) {
+    protected SortedMap<String, ClassTelemetry> repartitionByClasses(
+            final Map<String, Map<String, Set<String>>> matchersByClassAndMethod,
+            final Map<String, List<StageTimeMeasurement>> byTestClassAccumulator) {
         final SortedMap<String, ClassTelemetry> parsedClasses = new TreeMap<>();
         byTestClassAccumulator.forEach((className, measurementList) -> {
             final var matcherNames = matchersByClassAndMethod.getOrDefault(className, Collections.emptyMap());
@@ -41,17 +42,18 @@ public class BaseLaunchTelemetryConverter {
     }
 
     /**
-     * Adds all matcher name from the evaluator to all the classes and methods where it matched during the execution.
+     * Adds all matcher names from the evaluator to all the classes and methods where it matched during the execution.
      *
      * @param matchersByClassAndMethod The names of all matchers applicable for the particular classes and methods.
      * @param countdownTimeSeries      The currently examined countdown statistics as a time series stream.
      * @param missionTimeSeries        The currently examined mission statistics as a time series stream.
      * @param matcherName              The name of the matcher which was used for collecting the time series data.
      */
-    protected void mergeInto(final Map<String, Map<String, Set<String>>> matchersByClassAndMethod,
-                             final Stream<StageTimeMeasurement> countdownTimeSeries,
-                             final Stream<StageTimeMeasurement> missionTimeSeries,
-                             final String matcherName) {
+    protected void mergeInto(
+            final Map<String, Map<String, Set<String>>> matchersByClassAndMethod,
+            final Stream<StageTimeMeasurement> countdownTimeSeries,
+            final Stream<StageTimeMeasurement> missionTimeSeries,
+            final String matcherName) {
         Objects.requireNonNull(matchersByClassAndMethod, "Target map cannot be null.");
         Objects.requireNonNull(countdownTimeSeries, "CountdownTimeSeries cannot be null.");
         Objects.requireNonNull(missionTimeSeries, "MissionTimeSeries cannot be null.");
@@ -61,15 +63,16 @@ public class BaseLaunchTelemetryConverter {
     }
 
     /**
-     * Adds all matcher name from the evaluator to all the classes and methods where it matched during the execution.
+     * Adds all matcher names from the evaluator to all the classes and methods where it matched during the execution.
      *
      * @param measurementsByClassName The target map containing time series data per class.
      * @param countdownTimeSeries     The currently examined countdown statistics as a time series stream.
      * @param missionTimeSeries       The currently examined mission statistics as a time series stream.
      */
-    protected void mergeInto(final Map<String, List<StageTimeMeasurement>> measurementsByClassName,
-                             final Stream<StageTimeMeasurement> countdownTimeSeries,
-                             final Stream<StageTimeMeasurement> missionTimeSeries) {
+    protected void mergeInto(
+            final Map<String, List<StageTimeMeasurement>> measurementsByClassName,
+            final Stream<StageTimeMeasurement> countdownTimeSeries,
+            final Stream<StageTimeMeasurement> missionTimeSeries) {
         Objects.requireNonNull(measurementsByClassName, "Target map cannot be null.");
         Objects.requireNonNull(countdownTimeSeries, "CountdownTimeSeries cannot be null.");
         Objects.requireNonNull(missionTimeSeries, "MissionTimeSeries cannot be null.");

@@ -24,7 +24,9 @@ public class DependencyMatcher implements MissionHealthCheckMatcher {
      * @param dependencyName The name of the dependency.
      * @param extractor      The extractor we want to use for dependency name extraction.
      */
-    DependencyMatcher(final String dependencyName, final DependencyNameExtractor extractor) {
+    DependencyMatcher(
+            final String dependencyName,
+            final DependencyNameExtractor extractor) {
         Objects.requireNonNull(dependencyName, "Dependency name cannot be null.");
         this.dependencyName = dependencyName;
         this.extractor = Optional.ofNullable(extractor).orElseGet(MissionDependenciesDependencyNameExtractor::new);

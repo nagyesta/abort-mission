@@ -1,6 +1,7 @@
 package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
 import com.github.nagyesta.abortmission.core.MissionControl;
+import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 import com.github.nagyesta.abortmission.core.telemetry.StageResult;
 import com.github.nagyesta.abortmission.core.telemetry.StageTimeMeasurement;
@@ -20,8 +21,7 @@ import java.util.stream.Stream;
 import static com.github.nagyesta.abortmission.core.MissionControl.ABORT_MISSION_DISARM_COUNTDOWN;
 import static com.github.nagyesta.abortmission.core.MissionControl.ABORT_MISSION_DISARM_MISSION;
 import static com.github.nagyesta.abortmission.core.healthcheck.impl.PercentageBasedMissionHealthCheckEvaluator.builder;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("checkstyle:MagicNumber")
@@ -53,7 +53,7 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"a b", "a_Z"})
     @NullAndEmptySource
-    void testBuilderShouldThrowExceptionWhenoverrideKeywordIsCalledWithInvalidData(final String input) {
+    void testBuilderShouldThrowExceptionWhenOverrideKeywordIsCalledWithInvalidData(final String input) {
         //given
         final var anyClass = mock(MissionHealthCheckMatcher.class);
         final var underTest = MissionControl.percentageBasedEvaluator(anyClass);
@@ -66,11 +66,12 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
 
     @ParameterizedTest
     @MethodSource("countdownEvaluatorProvider")
-    void testBurnInThresholdsAreWorkingWhenPreparationStepsAreUsed(final int burnInCount,
-                                                                   final int countdownFailure,
-                                                                   final int countdownComplete,
-                                                                   final int failureCount,
-                                                                   final boolean expectedCountdownAbort) {
+    void testBurnInThresholdsAreWorkingWhenPreparationStepsAreUsed(
+            final int burnInCount,
+            final int countdownFailure,
+            final int countdownComplete,
+            final int failureCount,
+            final boolean expectedCountdownAbort) {
         //given
         final var anyClass = mock(MissionHealthCheckMatcher.class);
         final var underTest = builder(anyClass, new MissionStatisticsCollector(anyClass))
@@ -91,12 +92,45 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     }
 
     @ParameterizedTest
+    @MethodSource("countdownEvaluatorProvider")
+    void testBurnInThresholdsAreIgnoredWhenTheDependencyIsAborting(
+            final int burnInCount,
+            final int countdownFailure,
+            final int countdownComplete,
+            final int failureCount) {
+        //given
+        final var dependency = mock(MissionHealthCheckEvaluator.class);
+        when(dependency.shouldAbort()).thenReturn(true);
+        when(dependency.shouldAbortCountdown()).thenReturn(true);
+        final var anyClass = mock(MissionHealthCheckMatcher.class);
+        final var underTest = builder(anyClass, new MissionStatisticsCollector(anyClass))
+                .abortThreshold(1)
+                .burnInTestCount(burnInCount)
+                .dependsOn(dependency)
+                .overrideKeyword("any")
+                .build();
+
+        //when
+        IntStream.range(0, countdownFailure).parallel().forEach(i -> underTest.countdownLogger().logAndIncrement(failure()));
+        IntStream.range(0, failureCount).parallel().forEach(i -> underTest.missionLogger().logAndIncrement(failure()));
+        IntStream.range(0, countdownComplete).parallel().forEach(i -> underTest.countdownLogger().logAndIncrement(success()));
+        final var actual = underTest.shouldAbort();
+        final var actualCountDown = underTest.shouldAbortCountdown();
+
+        //then
+        assertTrue(actual);
+        assertTrue(actualCountDown);
+        assertEquals(burnInCount, underTest.getBurnInTestCount());
+    }
+
+    @ParameterizedTest
     @MethodSource("launchEvaluatorProvider")
-    void testBurnInThresholdsAreWorkingWhenNoPreparationStepsAreUsed(final int burnInCount,
-                                                                     final int countdownComplete,
-                                                                     final int failureCount,
-                                                                     final int successCount,
-                                                                     final boolean expectedCountdownAbort) {
+    void testBurnInThresholdsAreWorkingWhenNoPreparationStepsAreUsed(
+            final int burnInCount,
+            final int countdownComplete,
+            final int failureCount,
+            final int successCount,
+            final boolean expectedCountdownAbort) {
         //given
         final var anyClass = mock(MissionHealthCheckMatcher.class);
         final var underTest = builder(anyClass, new MissionStatisticsCollector(anyClass))

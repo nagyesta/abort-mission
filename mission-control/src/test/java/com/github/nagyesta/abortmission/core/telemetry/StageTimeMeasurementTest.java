@@ -24,13 +24,13 @@ class StageTimeMeasurementTest {
     private static final int END_2 = 20;
     private static final UUID LAUNCH_ID = UUID.randomUUID();
     private static final StageTimeMeasurement STAGE_TIME_MEASUREMENT = builder()
-                    .setLaunchId(LAUNCH_ID)
-                    .setTestClassId(CLASS_NAME)
-                    .setTestCaseId(METHOD_NAME)
-                    .setResult(StageResult.SUPPRESSED)
-                    .setStart(START)
-                    .setEnd(END)
-                    .build();
+            .setLaunchId(LAUNCH_ID)
+            .setTestClassId(CLASS_NAME)
+            .setTestCaseId(METHOD_NAME)
+            .setResult(StageResult.SUPPRESSED)
+            .setStart(START)
+            .setEnd(END)
+            .build();
 
     private static Stream<Arguments> objectPairProvider() {
         return Stream.<Arguments>builder()
@@ -115,9 +115,10 @@ class StageTimeMeasurementTest {
 
     @ParameterizedTest
     @MethodSource("objectPairProvider")
-    void testEqualsAndCompareToAndHashCodeShouldBeInSyncWhenCalled(final StageTimeMeasurement a,
-                                                                   final StageTimeMeasurement b,
-                                                                   final int compareExpected) {
+    void testEqualsAndCompareToAndHashCodeShouldBeInSyncWhenCalled(
+            final StageTimeMeasurement a,
+            final StageTimeMeasurement b,
+            final int compareExpected) {
         //given
 
         //when

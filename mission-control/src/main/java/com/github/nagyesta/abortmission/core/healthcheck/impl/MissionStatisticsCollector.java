@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * The component counting mission success/failure events in order to aid abort decision-making.
+ * The component counting mission success/failure events to aid abort decision-making.
  */
 public final class MissionStatisticsCollector implements ReadOnlyMissionStatistics {
 
@@ -29,11 +29,12 @@ public final class MissionStatisticsCollector implements ReadOnlyMissionStatisti
     /**
      * Constructor allowing us to set a starting value for each statistic we store.
      *
-     * @param countdown The countdown specific statistics.
-     * @param mission   The mission specific statistics.
+     * @param countdown The countdown-specific statistics.
+     * @param mission   The mission-specific statistics.
      */
-    public MissionStatisticsCollector(final StageStatistics countdown,
-                                      final StageStatistics mission) {
+    public MissionStatisticsCollector(
+            final StageStatistics countdown,
+            final StageStatistics mission) {
         this.countdown = Objects.requireNonNull(countdown, "Countdown statistics cannot be null.");
         this.mission = Objects.requireNonNull(mission, "Mission statistics cannot be null.");
     }

@@ -92,7 +92,8 @@ public final class LaunchEvaluationUtil {
      * @param action    The action we want to apply.
      */
     public static void forEachNonFilteredStackTraceElementOfMissionFailures(
-            final MissionHealthCheckEvaluator evaluator, final Consumer<String> action) {
+            final MissionHealthCheckEvaluator evaluator,
+            final Consumer<String> action) {
         evaluator.getStats().getReadOnlyMission().timeSeriesStream()
                 .filter(s -> s.getResult() == StageResult.FAILURE)
                 .map(StageTimeMeasurement::getStackTrace)

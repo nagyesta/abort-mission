@@ -16,7 +16,9 @@ class OrMatcherTest extends BaseCombiningMatcherTest {
 
     @ParameterizedTest
     @MethodSource("inputProvider")
-    void testMatchesRequiresOnlyOneOperandToMatchWhenCalled(final boolean matches, final Collection<String> operands) {
+    void testMatchesRequiresOnlyOneOperandToMatchWhenCalled(
+            final boolean matches,
+            final Collection<String> operands) {
         //given
         final var builder = (MissionHealthCheckMatcherBuilder) builder();
         for (final var regex : operands) {

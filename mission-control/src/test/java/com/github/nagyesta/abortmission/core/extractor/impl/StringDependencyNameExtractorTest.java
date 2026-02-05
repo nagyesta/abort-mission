@@ -28,7 +28,9 @@ class StringDependencyNameExtractorTest {
 
     @ParameterizedTest
     @MethodSource("dependencyConversionProvider")
-    void testApplyShouldFilterAndCastInputWhenCalled(final Object input, final Set<String> expected) {
+    void testApplyShouldFilterAndCastInputWhenCalled(
+            final Object input,
+            final Set<String> expected) {
         //given
 
         //when

@@ -6,8 +6,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Contains statistical information about a single stage pf the launch,
- * e.g. post-processing stats related to the same single test class
+ * Contains statistical information about a single stage of the launch.
+ * E.g., post-processing stats related to the same single test class
  * or stats collected related to the same test method (during all calls).
  */
 public final class StageLaunchStats {
@@ -21,7 +21,9 @@ public final class StageLaunchStats {
      * @param measurements The <b>pre-filtered</b> measurements containing only one data point per test launch.
      * @param matcherNames The names of evaluators matching the stage represented by this instance.
      */
-    public StageLaunchStats(final SortedSet<StageTimeMeasurement> measurements, final Set<String> matcherNames) {
+    public StageLaunchStats(
+            final SortedSet<StageTimeMeasurement> measurements,
+            final Set<String> matcherNames) {
         Objects.requireNonNull(measurements, "Measurements cannot be null.");
         Objects.requireNonNull(matcherNames, "MatcherNames cannot be null.");
         this.matcherNames = Collections.unmodifiableSortedSet(new TreeSet<>(matcherNames));

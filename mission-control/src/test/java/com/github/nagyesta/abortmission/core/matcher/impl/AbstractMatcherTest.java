@@ -8,9 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 abstract class AbstractMatcherTest {
 
-    protected void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(final MissionHealthCheckMatcher a,
-                                                                     final MissionHealthCheckMatcher b,
-                                                                     final boolean expected) {
+    protected void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(
+            final MissionHealthCheckMatcher a,
+            final MissionHealthCheckMatcher b,
+            final boolean expected) {
         //given
 
         //when

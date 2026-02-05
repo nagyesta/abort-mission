@@ -23,7 +23,11 @@ public class DefaultStageStatisticsSnapshot implements StageStatisticsSnapshot {
      * @param aborted    The number of aborted measurements.
      * @param suppressed The number of suppressed measurements.
      */
-    public DefaultStageStatisticsSnapshot(final int failed, final int succeeded, final int aborted, final int suppressed) {
+    public DefaultStageStatisticsSnapshot(
+            final int failed,
+            final int succeeded,
+            final int aborted,
+            final int suppressed) {
         this.failed = failed;
         this.succeeded = succeeded;
         this.aborted = aborted;
