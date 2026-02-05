@@ -35,8 +35,9 @@ class StageLaunchStatsTest extends AbstractTelemetryTest {
 
     @ParameterizedTest
     @MethodSource("nullProvider")
-    void testConstructorShouldThrowExceptionWhenCalledWithNull(final SortedSet<StageTimeMeasurement> measurements,
-                                                               final Set<String> matcherNames) {
+    void testConstructorShouldThrowExceptionWhenCalledWithNull(
+            final SortedSet<StageTimeMeasurement> measurements,
+            final Set<String> matcherNames) {
         //given
 
         //when
@@ -47,8 +48,9 @@ class StageLaunchStatsTest extends AbstractTelemetryTest {
 
     @ParameterizedTest
     @MethodSource("constructorProvider")
-    void testConstructorShouldCopyButNotChangeInputWhenCalledWithValidInput(final SortedSet<StageTimeMeasurement> measurements,
-                                                                            final Set<String> matcherNames) {
+    void testConstructorShouldCopyButNotChangeInputWhenCalledWithValidInput(
+            final SortedSet<StageTimeMeasurement> measurements,
+            final Set<String> matcherNames) {
         //given
         final Set<TestRunTelemetry> testRunTelemetries = measurements.stream()
                 .map(TestRunTelemetry::new)

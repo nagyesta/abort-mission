@@ -16,7 +16,11 @@ public final class ConversionProperties {
     private boolean relaxed;
     private boolean failOnError;
 
-    private ConversionProperties(final File input, final File output, final boolean relaxed, final boolean failOnError) {
+    private ConversionProperties(
+            final File input,
+            final File output,
+            final boolean relaxed,
+            final boolean failOnError) {
         this.input = Optional.ofNullable(input)
                 .orElseThrow(() -> new IllegalArgumentException("Missing input parameter. Expected: " + INPUT + "=<file.json>"));
         this.output = output;

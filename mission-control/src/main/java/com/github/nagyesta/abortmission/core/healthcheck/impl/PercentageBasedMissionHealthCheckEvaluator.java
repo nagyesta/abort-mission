@@ -1,11 +1,14 @@
 package com.github.nagyesta.abortmission.core.healthcheck.impl;
 
+import com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
- * {@link com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator} implementation based on failure to success
+ * {@link com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator} implementation based on failure-to-success
  * percentage thresholds.
  */
 @SuppressWarnings("checkstyle:FinalClass")
@@ -18,13 +21,14 @@ public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionH
 
     private PercentageBasedMissionHealthCheckEvaluator(final Builder builder) {
         super(Objects.requireNonNull(builder, "Builder cannot be null.").matcher,
-                builder.statisticsCollector, builder.overrideKeyword);
+                builder.statisticsCollector, builder.dependsOn, builder.overrideKeyword);
         this.burnInTestCount = builder.burnInTestCount;
         this.abortThreshold = builder.abortThreshold;
     }
 
-    public static Builder builder(final MissionHealthCheckMatcher matcher,
-                                  final MissionStatisticsCollector statisticsCollector) {
+    public static Builder builder(
+            final MissionHealthCheckMatcher matcher,
+            final MissionStatisticsCollector statisticsCollector) {
         return new Builder(matcher, statisticsCollector);
     }
 
@@ -65,8 +69,11 @@ public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionH
         private int burnInTestCount = BURN_IN_LOWER_LIMIT;
         private int abortThreshold = PERCENTAGE_LOWER_LIMIT;
         private String overrideKeyword;
+        private Set<MissionHealthCheckEvaluator> dependsOn = new HashSet<>();
 
-        private Builder(final MissionHealthCheckMatcher matcher, final MissionStatisticsCollector statisticsCollector) {
+        private Builder(
+                final MissionHealthCheckMatcher matcher,
+                final MissionStatisticsCollector statisticsCollector) {
             this.matcher = Objects.requireNonNull(matcher, "Matcher cannot be null.");
             this.statisticsCollector = Objects.requireNonNull(statisticsCollector, "Statistic collector cannot be null.");
         }
@@ -84,6 +91,12 @@ public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionH
                 throw new IllegalArgumentException("Abort threshold must be in the 0-99 range (inclusive).");
             }
             this.abortThreshold = abortThreshold;
+            return this;
+        }
+
+        public Builder dependsOn(final MissionHealthCheckEvaluator evaluator) {
+            Objects.requireNonNull(evaluator, "Evaluator cannot be null.");
+            this.dependsOn.add(evaluator);
             return this;
         }
 

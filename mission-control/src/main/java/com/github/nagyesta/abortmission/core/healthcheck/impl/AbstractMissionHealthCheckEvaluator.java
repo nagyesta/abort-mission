@@ -20,30 +20,24 @@ public abstract class AbstractMissionHealthCheckEvaluator implements MissionHeal
     private final MissionHealthCheckMatcher matcher;
     private final MissionStatisticsCollector stats;
     private final String overrideKeyword;
-
-    /**
-     * Sets the matcher and the mission statistics collector.
-     *
-     * @param matcher The health check matcher mentioned by {@link MissionHealthCheckEvaluator#getMatcher()}.
-     * @param stats   The statistics collector mentioned by {@link MissionHealthCheckEvaluator#getStats()}.
-     */
-    protected AbstractMissionHealthCheckEvaluator(final MissionHealthCheckMatcher matcher,
-                                                  final MissionStatisticsCollector stats) {
-        this(matcher, stats, null);
-    }
+    private final Set<MissionHealthCheckEvaluator> dependsOn;
 
     /**
      * Sets the matcher and the mission statistics collector.
      *
      * @param matcher         The health check matcher mentioned by {@link MissionHealthCheckEvaluator#getMatcher()}.
      * @param stats           The statistics collector mentioned by {@link MissionHealthCheckEvaluator#getStats()}.
+     * @param dependsOn       The health check evaluators this evaluator depends on.
      * @param overrideKeyword The keyword used for fine-grained abort/disarm overrides.
      */
-    protected AbstractMissionHealthCheckEvaluator(final MissionHealthCheckMatcher matcher,
-                                                  final MissionStatisticsCollector stats,
-                                                  final String overrideKeyword) {
+    protected AbstractMissionHealthCheckEvaluator(
+            final MissionHealthCheckMatcher matcher,
+            final MissionStatisticsCollector stats,
+            final Set<MissionHealthCheckEvaluator> dependsOn,
+            final String overrideKeyword) {
         this.matcher = matcher;
         this.stats = stats;
+        this.dependsOn = Set.copyOf(dependsOn);
         this.overrideKeyword = overrideKeyword;
     }
 
@@ -99,7 +93,7 @@ public abstract class AbstractMissionHealthCheckEvaluator implements MissionHeal
         if (isDisarmed(ABORT_MISSION_DISARM_MISSION)) {
             return false;
         }
-        return shouldForceAbort() || shouldAbortInternal();
+        return shouldForceAbort() || areDependenciesAborting() || shouldAbortInternal();
     }
 
     @Override
@@ -107,7 +101,7 @@ public abstract class AbstractMissionHealthCheckEvaluator implements MissionHeal
         if (isDisarmed(ABORT_MISSION_DISARM_COUNTDOWN)) {
             return false;
         }
-        return shouldForceAbort() || shouldAbortCountdownInternal();
+        return shouldForceAbort() || areDependenciesAbortingCountdown() || shouldAbortCountdownInternal();
     }
 
     /**
@@ -131,6 +125,22 @@ public abstract class AbstractMissionHealthCheckEvaluator implements MissionHeal
      */
     protected boolean isDisarmed(final String switchName) {
         return Boolean.TRUE.toString().equalsIgnoreCase(System.getProperty(switchName));
+    }
+
+    /**
+     * Returns true if any of the dependencies are aborting the mission, false otherwise.
+     * @return dependency status
+     */
+    protected boolean areDependenciesAborting() {
+        return dependsOn.stream().anyMatch(MissionHealthCheckEvaluator::shouldAbort);
+    }
+
+    /**
+     * Returns true if any of the dependencies are aborting the countdown, false otherwise.
+     * @return dependency status
+     */
+    protected boolean areDependenciesAbortingCountdown() {
+        return dependsOn.stream().anyMatch(MissionHealthCheckEvaluator::shouldAbortCountdown);
     }
 
     /**

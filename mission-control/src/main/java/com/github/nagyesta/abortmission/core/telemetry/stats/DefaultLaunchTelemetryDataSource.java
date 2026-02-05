@@ -20,8 +20,9 @@ public class DefaultLaunchTelemetryDataSource implements LaunchTelemetryDataSour
      * @param converter  The converter we are using to help to process the data.
      * @param nameSpaces The namespaces used during test execution,
      */
-    public DefaultLaunchTelemetryDataSource(final LaunchTelemetryConverter converter,
-                                            final Map<String, AbortMissionCommandOps> nameSpaces) {
+    public DefaultLaunchTelemetryDataSource(
+            final LaunchTelemetryConverter converter,
+            final Map<String, AbortMissionCommandOps> nameSpaces) {
         this.converter = Objects.requireNonNull(converter, "Converter cannot be null.");
         this.nameSpaces = Objects.requireNonNull(nameSpaces, "Namespaces cannot be null.");
     }

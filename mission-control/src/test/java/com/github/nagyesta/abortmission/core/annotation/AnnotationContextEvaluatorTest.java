@@ -75,8 +75,9 @@ class AnnotationContextEvaluatorTest {
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     @ParameterizedTest
     @MethodSource("contextNameClassProvider")
-    void testFindContextNameShouldWorkWithGenericAnnotationsWhenCalledWithClass(final Class<?> component,
-                                                                                final Optional<String> expected) {
+    void testFindContextNameShouldWorkWithGenericAnnotationsWhenCalledWithClass(
+            final Class<?> component,
+            final Optional<String> expected) {
         //given
         final var underTest = AnnotationContextEvaluator.shared();
 
@@ -90,8 +91,9 @@ class AnnotationContextEvaluatorTest {
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     @ParameterizedTest
     @MethodSource("contextNameMethodProvider")
-    void testFindContextNameShouldWorkWithGenericAnnotationsWhenCalledWithMethod(final Method component,
-                                                                                 final Optional<String> expected) {
+    void testFindContextNameShouldWorkWithGenericAnnotationsWhenCalledWithMethod(
+            final Method component,
+            final Optional<String> expected) {
         //given
         final var underTest = AnnotationContextEvaluator.shared();
 
@@ -104,8 +106,9 @@ class AnnotationContextEvaluatorTest {
 
     @ParameterizedTest
     @MethodSource("abortSuppressedClassProvider")
-    void testIsAbortSuppressedShouldWorkWhenCalledWithClass(final Class<?> component,
-                                                            final boolean expected) {
+    void testIsAbortSuppressedShouldWorkWhenCalledWithClass(
+            final Class<?> component,
+            final boolean expected) {
         //given
         final var underTest = AnnotationContextEvaluator.shared();
 
@@ -118,8 +121,9 @@ class AnnotationContextEvaluatorTest {
 
     @ParameterizedTest
     @MethodSource("abortSuppressedMethodProvider")
-    void testIsAbortSuppressedShouldWorkWhenCalledWithMethod(final Method component,
-                                                             final boolean expected) {
+    void testIsAbortSuppressedShouldWorkWhenCalledWithMethod(
+            final Method component,
+            final boolean expected) {
         //given
         final var underTest = AnnotationContextEvaluator.shared();
 
@@ -132,8 +136,9 @@ class AnnotationContextEvaluatorTest {
 
     @ParameterizedTest
     @MethodSource("failureSuppressedClassProvider")
-    void testFindSuppressedExceptionsShouldWorkWhenCalledWithClass(final Class<?> component,
-                                                                   final Collection<? extends Exception> expected) {
+    void testFindSuppressedExceptionsShouldWorkWhenCalledWithClass(
+            final Class<?> component,
+            final Collection<? extends Exception> expected) {
         //given
         final var underTest = AnnotationContextEvaluator.shared();
 
@@ -146,8 +151,9 @@ class AnnotationContextEvaluatorTest {
 
     @ParameterizedTest
     @MethodSource("failureSuppressedMethodProvider")
-    void testFindSuppressedExceptionsShouldWorkWhenCalledWithMethod(final Method component,
-                                                                    final Collection<? extends Exception> expected) {
+    void testFindSuppressedExceptionsShouldWorkWhenCalledWithMethod(
+            final Method component,
+            final Collection<? extends Exception> expected) {
         //given
         final var underTest = AnnotationContextEvaluator.shared();
 

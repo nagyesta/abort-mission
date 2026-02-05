@@ -31,10 +31,11 @@ class ClassTelemetryTest extends AbstractTelemetryTest {
 
     @ParameterizedTest
     @MethodSource("nullProvider")
-    void testConstructorShouldThrowExceptionWhenCalledWithNulls(final ClassTelemetryConverter converter,
-                                                                final String className,
-                                                                final Collection<StageTimeMeasurement> measurements,
-                                                                final Map<String, Set<String>> matcherNames) {
+    void testConstructorShouldThrowExceptionWhenCalledWithNulls(
+            final ClassTelemetryConverter converter,
+            final String className,
+            final Collection<StageTimeMeasurement> measurements,
+            final Map<String, Set<String>> matcherNames) {
         //given
 
         //when

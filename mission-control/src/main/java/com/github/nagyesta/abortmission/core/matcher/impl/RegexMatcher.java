@@ -19,7 +19,9 @@ public abstract class RegexMatcher extends BaseMatcher implements MissionHealthC
      * @param pattern The regular expression.
      * @param message The message we want to use in case the expression is null.
      */
-    RegexMatcher(final String pattern, final String message) {
+    RegexMatcher(
+            final String pattern,
+            final String message) {
         this.pattern = Objects.requireNonNull(pattern, message);
         this.compiledPattern = Pattern.compile(pattern);
     }

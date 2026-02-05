@@ -177,6 +177,7 @@ subprojects {
                             "com.github.nagyesta.abortmission.testkit.spring.StaticFireTestAssets",
                             "com.github.nagyesta.abortmission.testkit.vanilla.FuelTankTestAssets",
                             "com.github.nagyesta.abortmission.testkit.vanilla.ParachuteDropTestAssets",
+                            "com.github.nagyesta.abortmission.testkit.vanilla.WeatherTestAssets",
                             "com.github.nagyesta.abortmission.testkit.NoOpMatcher",
                             "com.github.nagyesta.abortmission.booster.junit4.support.LaunchAbortTestWatcher.1",
                             "com.github.nagyesta.abortmission.reporting.AbortMissionFlightEvaluationReportApp",

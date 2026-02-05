@@ -44,7 +44,9 @@ public abstract class AnnotationDependencyNameExtractor<A extends Annotation> im
      */
     protected abstract Collection<String> extractValuesFromAnnotation(A annotation);
 
-    private void accumulateTags(final Set<String> tags, final A[] annotations) {
+    private void accumulateTags(
+            final Set<String> tags,
+            final A[] annotations) {
         if (annotations != null) {
             Arrays.stream(annotations)
                     .map(this::extractValuesFromAnnotation)

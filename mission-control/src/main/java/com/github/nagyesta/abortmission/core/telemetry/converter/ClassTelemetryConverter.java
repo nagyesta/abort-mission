@@ -30,8 +30,9 @@ public class ClassTelemetryConverter {
      * @param byMethods    The time series information per method name.
      * @return The parsed statistics of each method.
      */
-    public Map<String, StageLaunchStats> processLaunchStats(final Map<String, Set<String>> matcherNames,
-                                                            final Map<String, List<StageTimeMeasurement>> byMethods) {
+    public Map<String, StageLaunchStats> processLaunchStats(
+            final Map<String, Set<String>> matcherNames,
+            final Map<String, List<StageTimeMeasurement>> byMethods) {
         Objects.requireNonNull(matcherNames, "MatcherNames cannot be null.");
         Objects.requireNonNull(byMethods, "ByMethods cannot be null.");
         final Map<String, StageLaunchStats> methodStats = new TreeMap<>();
@@ -52,8 +53,9 @@ public class ClassTelemetryConverter {
      * @param byMethods    The time series information per method name.
      * @return The parsed statistics of the test instance post-processing.
      */
-    public StageLaunchStats processCountdownStats(final Map<String, Set<String>> matcherNames,
-                                                  final Map<String, List<StageTimeMeasurement>> byMethods) {
+    public StageLaunchStats processCountdownStats(
+            final Map<String, Set<String>> matcherNames,
+            final Map<String, List<StageTimeMeasurement>> byMethods) {
         Objects.requireNonNull(matcherNames, "MatcherNames cannot be null.");
         Objects.requireNonNull(byMethods, "ByMethods cannot be null.");
         final var classMeasurements = byMethods
@@ -62,7 +64,6 @@ public class ClassTelemetryConverter {
                 .getOrDefault(StageTimeMeasurement.CLASS_ONLY, Collections.emptySet());
         return new StageLaunchStats(filter(classMeasurements), classMatcherNames);
     }
-
 
 
     /**

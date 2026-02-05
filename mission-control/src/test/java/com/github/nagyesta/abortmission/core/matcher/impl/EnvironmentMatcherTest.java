@@ -70,10 +70,11 @@ class EnvironmentMatcherTest extends AbstractMatcherTest {
 
     @ParameterizedTest
     @MethodSource("validInputProvider")
-    void testMatchesShouldWorkRegardlessOfTheInput(final String envName,
-                                                   final String regex,
-                                                   final Object component,
-                                                   final boolean expected) {
+    void testMatchesShouldWorkRegardlessOfTheInput(
+            final String envName,
+            final String regex,
+            final Object component,
+            final boolean expected) {
         //given
         final var underTest = MissionHealthCheckMatcherBuilder.builder()
                 .envVariable(envName)
@@ -91,9 +92,10 @@ class EnvironmentMatcherTest extends AbstractMatcherTest {
     @ParameterizedTest
     @MethodSource("equalsAndHashCodeProvider")
     @Override
-    protected void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(final MissionHealthCheckMatcher a,
-                                                                     final MissionHealthCheckMatcher b,
-                                                                     final boolean expected) {
+    protected void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(
+            final MissionHealthCheckMatcher a,
+            final MissionHealthCheckMatcher b,
+            final boolean expected) {
         super.testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(a, b, expected);
     }
 

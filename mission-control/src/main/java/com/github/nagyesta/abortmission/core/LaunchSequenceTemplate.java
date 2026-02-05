@@ -29,9 +29,10 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
      * @param classBasedEvaluatorLookup  The {@link Function} that will be used for evaluator lookup when the tested component is a class.
      * @param methodBasedEvaluatorLookup The {@link Function} that will be used for evaluator lookup when the tested component is a method.
      */
-    public LaunchSequenceTemplate(final Runnable abortSequence,
-                                  final Function<Class<?>, Set<MissionHealthCheckEvaluator>> classBasedEvaluatorLookup,
-                                  final Function<Method, Set<MissionHealthCheckEvaluator>> methodBasedEvaluatorLookup) {
+    public LaunchSequenceTemplate(
+            final Runnable abortSequence,
+            final Function<Class<?>, Set<MissionHealthCheckEvaluator>> classBasedEvaluatorLookup,
+            final Function<Method, Set<MissionHealthCheckEvaluator>> methodBasedEvaluatorLookup) {
         super(abortSequence, classBasedEvaluatorLookup);
         this.methodBasedEvaluatorLookup = Objects.requireNonNull(methodBasedEvaluatorLookup, "Method evaluator cannot be null.");
     }
@@ -43,21 +44,25 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
      * @param displayName       The display name of the test case.
      * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
      */
-    public Optional<StageTimeStopwatch> launchGoNoGo(final Class<?> testInstanceClass, final String displayName) {
+    public Optional<StageTimeStopwatch> launchGoNoGo(
+            final Class<?> testInstanceClass,
+            final String displayName) {
         LOGGER.debug("Preparing countdown for class: {}", testInstanceClass.getSimpleName());
         return this.performPreLaunchInit(testInstanceClass, displayName);
     }
 
     /**
-     * Indicates that a failure happened during test post-processing.
+     * Indicates that a failure happened during the test post-processing.
      *
      * @param testClass The test class which was post-processed.
-     * @param rootCause The exception identified as root cause of the issue.
-     * @param stopwatch Captures when did the countdown start.
+     * @param rootCause The exception identified as the root cause of the issue.
+     * @param stopwatch Captures when the countdown started.
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public void countdownFailure(final Class<?> testClass, final Optional<Throwable> rootCause,
-                                 final Optional<StageTimeStopwatch> stopwatch) {
+    public void countdownFailure(
+            final Class<?> testClass,
+            final Optional<Throwable> rootCause,
+            final Optional<StageTimeStopwatch> stopwatch) {
         LOGGER.debug("Countdown failed for class: {} due to root cause: {}", testClass.getSimpleName(), rootCause);
         countdownFailureDetected(classBasedEvaluatorLookup().apply(testClass), stopwatch, rootCause,
                 annotationContextEvaluator().findSuppressedExceptions(testClass)
@@ -68,10 +73,12 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
      * Wraps up the post-processing by logging a successful countdown.
      *
      * @param testClass The test class which was post-processed.
-     * @param stopwatch Captures when did the countdown start.
+     * @param stopwatch Captures when the countdown started.
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public void countdownSuccess(final Class<?> testClass, final Optional<StageTimeStopwatch> stopwatch) {
+    public void countdownSuccess(
+            final Class<?> testClass,
+            final Optional<StageTimeStopwatch> stopwatch) {
         LOGGER.debug("Countdown completed for class: {}", testClass.getSimpleName());
         countdownCompletedSuccessfully(classBasedEvaluatorLookup().apply(testClass), stopwatch);
     }
@@ -83,7 +90,9 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
      * @param displayName The display name of the test case.
      * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
      */
-    public Optional<StageTimeStopwatch> launchImminent(final Method method, final String displayName) {
+    public Optional<StageTimeStopwatch> launchImminent(
+            final Method method,
+            final String displayName) {
         LOGGER.debug("Preparing mission for class: {} method: {}", method.getDeclaringClass().getSimpleName(), method.getName());
         return evaluateLaunchAbort(methodBasedEvaluatorLookup.apply(method),
                 new StageTimeStopwatch(method).overrideDisplayName(displayName),
@@ -92,14 +101,17 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
     }
 
     /**
-     * Indicates that a failure happened during test run.
+     * Indicates that a failure happened during a test run.
      *
      * @param method    The method we executed.
-     * @param rootCause The exception identified as root cause of the issue.
-     * @param stopwatch Captures when did the launch start.
+     * @param rootCause The exception identified as the root cause of the issue.
+     * @param stopwatch Captures when the launch started.
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public void launchFailure(final Method method, final Optional<Throwable> rootCause, final Optional<StageTimeStopwatch> stopwatch) {
+    public void launchFailure(
+            final Method method,
+            final Optional<Throwable> rootCause,
+            final Optional<StageTimeStopwatch> stopwatch) {
         LOGGER.debug("Mission failed for class: {} method: {} due to: {}",
                 method.getDeclaringClass().getSimpleName(), method.getName(), rootCause);
         missionFailureDetected(methodBasedEvaluatorLookup.apply(method), stopwatch,
@@ -111,10 +123,12 @@ public class LaunchSequenceTemplate extends AbstractLaunchSequenceTemplate {
      * Wraps up the mission by logging a successful run.
      *
      * @param method    The test method which was executed.
-     * @param stopwatch Captures when did the launch start.
+     * @param stopwatch Captures when the launch started.
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public void launchSuccess(final Method method, final Optional<StageTimeStopwatch> stopwatch) {
+    public void launchSuccess(
+            final Method method,
+            final Optional<StageTimeStopwatch> stopwatch) {
         LOGGER.debug("Mission successful for class: {} method: {}", method.getDeclaringClass().getSimpleName(), method.getName());
         missionCompletedSuccessfully(methodBasedEvaluatorLookup.apply(method), stopwatch);
     }

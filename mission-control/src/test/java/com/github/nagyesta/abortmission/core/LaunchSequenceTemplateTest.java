@@ -205,7 +205,8 @@ class LaunchSequenceTemplateTest {
     @ParameterizedTest
     @MethodSource("nonSuppressedThrowableProvider")
     void testCountdownFailureDetectedShouldLogFailureWhenCalledWithNonSuppressedThrowable(
-            final Optional<Throwable> throwable, final Set<Class<? extends Exception>> suppressed) {
+            final Optional<Throwable> throwable,
+            final Set<Class<? extends Exception>> suppressed) {
         //given
         final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
         final var underTest = underTestWithNullFunctions();
@@ -224,7 +225,8 @@ class LaunchSequenceTemplateTest {
     @ParameterizedTest
     @MethodSource("nonSuppressedThrowableProvider")
     void testMissionFailureDetectedShouldLogFailureWhenCalledWithNonSuppressedThrowable(
-            final Optional<Throwable> throwable, final Set<Class<? extends Exception>> suppressed) {
+            final Optional<Throwable> throwable,
+            final Set<Class<? extends Exception>> suppressed) {
         //given
         final var evaluators = addEvaluatorMockWithSpyLogger(new HashSet<>(), false);
         final var underTest = underTestWithNullFunctions();
@@ -340,8 +342,9 @@ class LaunchSequenceTemplateTest {
         verify(underTest).missionCompletedSuccessfully(same(matching), eq(Optional.empty()));
     }
 
-    private LaunchSequenceTemplate spyWithMethodMatchers(final Set<MissionHealthCheckEvaluator> classMatcher,
-                                                         final Set<MissionHealthCheckEvaluator> methodMatcher) {
+    private LaunchSequenceTemplate spyWithMethodMatchers(
+            final Set<MissionHealthCheckEvaluator> classMatcher,
+            final Set<MissionHealthCheckEvaluator> methodMatcher) {
         return spy(new LaunchSequenceTemplate(() -> fail(SHOULDN_T_BE_CALLED),
                 c -> failIfNull(classMatcher),
                 m -> failIfNull(methodMatcher)));
@@ -382,8 +385,9 @@ class LaunchSequenceTemplateTest {
         verify(logger).logAndIncrement(argThat(s -> s.getResult() == StageResult.ABORT));
     }
 
-    private Set<MissionHealthCheckEvaluator> addEvaluatorMockWithSpyLogger(final Set<MissionHealthCheckEvaluator> evaluators,
-                                                                           final boolean aborting) {
+    private Set<MissionHealthCheckEvaluator> addEvaluatorMockWithSpyLogger(
+            final Set<MissionHealthCheckEvaluator> evaluators,
+            final boolean aborting) {
         final var matcher = mock(MissionHealthCheckMatcher.class);
         final var evaluator = mock(MissionHealthCheckEvaluator.class);
         when(evaluator.countdownLogger()).thenReturn(spy(new StageStatisticsCollector(matcher)));

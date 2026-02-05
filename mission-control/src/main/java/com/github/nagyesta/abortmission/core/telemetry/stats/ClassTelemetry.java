@@ -27,10 +27,11 @@ public final class ClassTelemetry {
      *                     each methodName of the class (including instance port-processing
      *                     as a special method).
      */
-    public ClassTelemetry(final ClassTelemetryConverter converter,
-                          final String className,
-                          final Collection<StageTimeMeasurement> measurements,
-                          final Map<String, Set<String>> matcherNames) {
+    public ClassTelemetry(
+            final ClassTelemetryConverter converter,
+            final String className,
+            final Collection<StageTimeMeasurement> measurements,
+            final Map<String, Set<String>> matcherNames) {
         Objects.requireNonNull(converter, "Converter cannot be null.");
         Objects.requireNonNull(measurements, "Measurements cannot be null.");
         Objects.requireNonNull(matcherNames, "MatcherNames cannot be null.");

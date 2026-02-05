@@ -55,7 +55,9 @@ class AndMatcherTest extends BaseCombiningMatcherTest {
 
     @ParameterizedTest
     @MethodSource("inputProvider")
-    void testMatchesRequiresAllOperandsToMatchWhenCalled(final boolean matches, final Collection<String> operands) {
+    void testMatchesRequiresAllOperandsToMatchWhenCalled(
+            final boolean matches,
+            final Collection<String> operands) {
         //given
         final var builder = (MissionHealthCheckMatcherBuilder) builder();
         for (final var regex : operands) {
@@ -85,9 +87,10 @@ class AndMatcherTest extends BaseCombiningMatcherTest {
     @ParameterizedTest
     @MethodSource("equalsAndHashCodeProvider")
     @Override
-    protected void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(final MissionHealthCheckMatcher a,
-                                                                     final MissionHealthCheckMatcher b,
-                                                                     final boolean expected) {
+    protected void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(
+            final MissionHealthCheckMatcher a,
+            final MissionHealthCheckMatcher b,
+            final boolean expected) {
         super.testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(a, b, expected);
     }
 }

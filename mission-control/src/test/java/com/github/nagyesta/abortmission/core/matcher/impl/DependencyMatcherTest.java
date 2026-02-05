@@ -70,7 +70,9 @@ class DependencyMatcherTest extends AbstractMatcherTest {
 
     @ParameterizedTest
     @MethodSource("inputProvider")
-    void testMatchesShouldUseExactMatchWhenCalledWithString(final boolean matches, final String dependency) {
+    void testMatchesShouldUseExactMatchWhenCalledWithString(
+            final boolean matches,
+            final String dependency) {
         //given
         final var underTest = MissionHealthCheckMatcherBuilder.builder()
                 .dependencyWith(dependency)
@@ -102,9 +104,10 @@ class DependencyMatcherTest extends AbstractMatcherTest {
     @ParameterizedTest
     @MethodSource("equalsAndHashCodeProvider")
     @Override
-    protected void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(final MissionHealthCheckMatcher a,
-                                                                     final MissionHealthCheckMatcher b,
-                                                                     final boolean expected) {
+    protected void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(
+            final MissionHealthCheckMatcher a,
+            final MissionHealthCheckMatcher b,
+            final boolean expected) {
         super.testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(a, b, expected);
     }
 }

@@ -20,7 +20,9 @@ class LaunchJsonToHtmlConverterTest {
 
     @ParameterizedTest
     @MethodSource("hashProvider")
-    void testShortHashShouldHashContentTo32RadixNumbersWhenCalledWithValidString(final String input, final String expected) {
+    void testShortHashShouldHashContentTo32RadixNumbersWhenCalledWithValidString(
+            final String input,
+            final String expected) {
         //given
         final var underTest = new LaunchJsonToHtmlConverter();
 

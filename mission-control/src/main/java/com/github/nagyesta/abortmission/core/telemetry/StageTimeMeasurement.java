@@ -34,7 +34,9 @@ public final class StageTimeMeasurement implements Comparable<StageTimeMeasureme
      * @param measurementDataProvider The data provider for the measurement.
      * @param stageResult             The outcome of the stage execution.
      */
-    public StageTimeMeasurement(final StageTimeMeasurementDataProvider measurementDataProvider, final StageResult stageResult) {
+    public StageTimeMeasurement(
+            final StageTimeMeasurementDataProvider measurementDataProvider,
+            final StageResult stageResult) {
         Objects.requireNonNull(measurementDataProvider, "StageTimeMeasurementDataProvider cannot be null.");
         this.launchId = Objects.requireNonNull(measurementDataProvider.getLaunchId(), "Launch Id cannot be null.");
         this.testClassId = Objects.requireNonNull(measurementDataProvider.getTestClassId(), "TestClassId cannot be null.");

@@ -82,7 +82,7 @@ public final class AbortMissionCommandOps {
     }
 
     /**
-     * Finalizes the setup of the current instance as shared instance.
+     * Finalizes the setup of the current instance as a shared instance.
      */
     public void finalizeSetupAsShared() {
         doFinalizeSetup(MissionControlHolder.SHARED_INSTANCE);

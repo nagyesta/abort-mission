@@ -33,9 +33,10 @@ public class AbstractMissionLaunchSequenceTemplate {
      * @param abortSuppressionDecisionSupplier The supplier which helps us figure out whether abort decisions are suppressed.
      * @return A stageTimeStopwatch started to measure execution times (won't be present if reporting already happened).
      */
-    protected Optional<StageTimeStopwatch> evaluateLaunchAbort(final Set<MissionHealthCheckEvaluator> evaluators,
-                                                               final StageTimeStopwatch stopwatch,
-                                                               final Supplier<Boolean> abortSuppressionDecisionSupplier) {
+    protected Optional<StageTimeStopwatch> evaluateLaunchAbort(
+            final Set<MissionHealthCheckEvaluator> evaluators,
+            final StageTimeStopwatch stopwatch,
+            final Supplier<Boolean> abortSuppressionDecisionSupplier) {
         final var hasEvaluatorThatSuppressesAbort = evaluators.stream().anyMatch(MissionHealthCheckEvaluator::shouldSuppressAbort);
         final var shouldSuppressAbortDecisions = Boolean.TRUE.equals(Objects.requireNonNull(abortSuppressionDecisionSupplier).get());
         final var reportingDone = evaluateAndAbortIfNeeded(
@@ -51,15 +52,16 @@ public class AbstractMissionLaunchSequenceTemplate {
      * Handles a failure after launch was initiated.
      *
      * @param evaluators           The matching evaluators.
-     * @param stopwatch            Captures when did the test run start.
-     * @param rootCause            The exception identified as root cause for the launch failure.
-     * @param suppressedExceptions The exceptions which must be ignored when identified as root cause.
+     * @param stopwatch            Captures when the test run started.
+     * @param rootCause            The exception identified as the root cause for the launch failure.
+     * @param suppressedExceptions The exceptions which must be ignored when identified as the root cause.
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    protected void missionFailureDetected(final Set<MissionHealthCheckEvaluator> evaluators,
-                                          final Optional<StageTimeStopwatch> stopwatch,
-                                          final Optional<Throwable> rootCause,
-                                          final Set<Class<? extends Exception>> suppressedExceptions) {
+    protected void missionFailureDetected(
+            final Set<MissionHealthCheckEvaluator> evaluators,
+            final Optional<StageTimeStopwatch> stopwatch,
+            final Optional<Throwable> rootCause,
+            final Set<Class<? extends Exception>> suppressedExceptions) {
         failureDetected(isNotSuppressed(rootCause, suppressedExceptions), evaluators, stopwatch.map(s -> s.addThrowable(rootCause)),
                 MissionHealthCheckEvaluator::missionLogger);
     }
@@ -68,11 +70,12 @@ public class AbstractMissionLaunchSequenceTemplate {
      * Marks a successful launch.
      *
      * @param evaluators The matching evaluators.
-     * @param stopwatch  Captures when did the execution start.
+     * @param stopwatch  Captures when the execution started.
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    protected void missionCompletedSuccessfully(final Set<MissionHealthCheckEvaluator> evaluators,
-                                                final Optional<StageTimeStopwatch> stopwatch) {
+    protected void missionCompletedSuccessfully(
+            final Set<MissionHealthCheckEvaluator> evaluators,
+            final Optional<StageTimeStopwatch> stopwatch) {
         completedSuccessfully(evaluators, stopwatch, MissionHealthCheckEvaluator::missionLogger);
     }
 
@@ -82,13 +85,14 @@ public class AbstractMissionLaunchSequenceTemplate {
      * @param partitionsByShouldAbort The matching evaluators partitioned by their abort decisions.
      * @param isAbortSuppressed       The abort is suppressed by the test class or method.
      * @param timed                   The stopwatch initialized for the test method we are executing now.
-     * @param loggerFunction          The function we are using to obtain the logger.
+     * @param loggerFunction          The function we are using to get the logger.
      * @return true if the reporting is already taken care of.
      */
-    protected boolean evaluateAndAbortIfNeeded(final Map<Boolean, List<MissionHealthCheckEvaluator>> partitionsByShouldAbort,
-                                               final Boolean isAbortSuppressed,
-                                               final Function<StageResult, StageTimeMeasurement> timed,
-                                               final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction) {
+    protected boolean evaluateAndAbortIfNeeded(
+            final Map<Boolean, List<MissionHealthCheckEvaluator>> partitionsByShouldAbort,
+            final Boolean isAbortSuppressed,
+            final Function<StageResult, StageTimeMeasurement> timed,
+            final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction) {
         final var shouldAbort = partitionsByShouldAbort.getOrDefault(true, Collections.emptyList());
         final var shouldNotAbort = partitionsByShouldAbort.getOrDefault(false, Collections.emptyList());
         final var hasAnyAbort = !shouldAbort.isEmpty();
@@ -112,17 +116,19 @@ public class AbstractMissionLaunchSequenceTemplate {
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    protected final boolean isNotSuppressed(final Optional<Throwable> rootCause,
-                                            final Set<Class<? extends Exception>> suppressedExceptions) {
+    protected final boolean isNotSuppressed(
+            final Optional<Throwable> rootCause,
+            final Set<Class<? extends Exception>> suppressedExceptions) {
         return rootCause.isEmpty()
                 || suppressedExceptions.stream().noneMatch(exType -> exType.isInstance(rootCause.get()));
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    protected final void failureDetected(final boolean isNotSuppressed,
-                                         final Set<MissionHealthCheckEvaluator> evaluators,
-                                         final Optional<StageTimeStopwatch> stopwatch,
-                                         final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction) {
+    protected final void failureDetected(
+            final boolean isNotSuppressed,
+            final Set<MissionHealthCheckEvaluator> evaluators,
+            final Optional<StageTimeStopwatch> stopwatch,
+            final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction) {
         stopwatch.ifPresent(stageTimeStopwatch -> {
             if (isNotSuppressed) {
                 evaluators.forEach(logOutcomeAndIncreaseCounter(loggerFunction, stageTimeStopwatch.stop().apply(FAILURE)));
@@ -133,14 +139,17 @@ public class AbstractMissionLaunchSequenceTemplate {
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    protected final void completedSuccessfully(final Set<MissionHealthCheckEvaluator> evaluators,
-                                               final Optional<StageTimeStopwatch> stopwatch,
-                                               final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction) {
+    protected final void completedSuccessfully(
+            final Set<MissionHealthCheckEvaluator> evaluators,
+            final Optional<StageTimeStopwatch> stopwatch,
+            final Function<MissionHealthCheckEvaluator, StatisticsLogger> loggerFunction) {
         stopwatch.map(StageTimeStopwatch::stop)
                 .ifPresent(watch -> evaluators.forEach(logOutcomeAndIncreaseCounter(loggerFunction, watch.apply(SUCCESS))));
     }
 
-    protected final Optional<StageTimeStopwatch> emptyIfTrue(final boolean reportingDone, final StageTimeStopwatch stopwatch) {
+    protected final Optional<StageTimeStopwatch> emptyIfTrue(
+            final boolean reportingDone,
+            final StageTimeStopwatch stopwatch) {
         if (reportingDone) {
             return Optional.empty();
         } else {

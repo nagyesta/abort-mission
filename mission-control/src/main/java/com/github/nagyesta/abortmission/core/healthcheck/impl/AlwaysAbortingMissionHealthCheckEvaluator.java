@@ -3,6 +3,7 @@ package com.github.nagyesta.abortmission.core.healthcheck.impl;
 import com.github.nagyesta.abortmission.core.matcher.MissionHealthCheckMatcher;
 
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * {@link com.github.nagyesta.abortmission.core.healthcheck.MissionHealthCheckEvaluator} implementation intended to always abort.
@@ -12,11 +13,12 @@ public class AlwaysAbortingMissionHealthCheckEvaluator extends AbstractMissionHe
 
     private AlwaysAbortingMissionHealthCheckEvaluator(final Builder builder) {
         super(Objects.requireNonNull(builder, "Builder cannot be null.").matcher,
-                builder.statisticsCollector, builder.overrideKeyword);
+                builder.statisticsCollector, Set.of(), builder.overrideKeyword);
     }
 
-    public static Builder builder(final MissionHealthCheckMatcher matcher,
-                                  final MissionStatisticsCollector statisticsCollector) {
+    public static Builder builder(
+            final MissionHealthCheckMatcher matcher,
+            final MissionStatisticsCollector statisticsCollector) {
         return new Builder(matcher, statisticsCollector);
     }
 
@@ -41,8 +43,9 @@ public class AlwaysAbortingMissionHealthCheckEvaluator extends AbstractMissionHe
         private final MissionStatisticsCollector statisticsCollector;
         private String overrideKeyword;
 
-        private Builder(final MissionHealthCheckMatcher matcher,
-                        final MissionStatisticsCollector statisticsCollector) {
+        private Builder(
+                final MissionHealthCheckMatcher matcher,
+                final MissionStatisticsCollector statisticsCollector) {
             this.matcher = Objects.requireNonNull(matcher, "Matcher cannot be null.");
             this.statisticsCollector = Objects.requireNonNull(statisticsCollector, "Statistic collector cannot be null.");
         }

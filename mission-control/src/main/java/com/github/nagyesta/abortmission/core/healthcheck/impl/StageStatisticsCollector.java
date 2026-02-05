@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 /**
- * The component counting mission success/failure events in order to aid abort decision-making.
+ * The component counting mission success/failure events to aid abort decision-making.
  */
 public class StageStatisticsCollector extends AbstractStageStatisticsCollector implements StageStatistics {
 
@@ -46,8 +46,12 @@ public class StageStatisticsCollector extends AbstractStageStatisticsCollector i
      * @param succeeded  The number of times test or preparation was completed successfully.
      * @param suppressed The number of times abort/failure reporting was suppressed.
      */
-    public StageStatisticsCollector(final MissionHealthCheckMatcher matcher,
-                                    final int failed, final int aborted, final int succeeded, final int suppressed) {
+    public StageStatisticsCollector(
+            final MissionHealthCheckMatcher matcher,
+            final int failed,
+            final int aborted,
+            final int succeeded,
+            final int suppressed) {
         super(matcher);
         this.failed = new AtomicInteger(failed);
         this.aborted = new AtomicInteger(aborted);

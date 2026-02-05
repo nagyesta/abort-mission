@@ -76,7 +76,8 @@ class MissionStatisticsCollectorTest {
 
     @ParameterizedTest
     @MethodSource("equalsAndHashCodeProvider")
-    void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(final MissionStatisticsCollector a,
+    void testEqualsAndHashCodeShouldBehaveInSyncWhenCalled(
+            final MissionStatisticsCollector a,
                                                            final MissionStatisticsCollector b,
                                                            final boolean expected) {
         //given

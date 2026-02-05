@@ -18,7 +18,9 @@ public class EnvironmentMatcher extends RegexMatcher implements MissionHealthChe
      * @param environmentVariableName The property name.
      * @param valuePattern            The regular expression.
      */
-    EnvironmentMatcher(final String environmentVariableName, final String valuePattern) {
+    EnvironmentMatcher(
+            final String environmentVariableName,
+            final String valuePattern) {
         super(valuePattern, "Env variable value regex cannot be null.");
         this.environmentVariableName = Objects.requireNonNull(environmentVariableName, "Env var name cannot be null.");
     }
