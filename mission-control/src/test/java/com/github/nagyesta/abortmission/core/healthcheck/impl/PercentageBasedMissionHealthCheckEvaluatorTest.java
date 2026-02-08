@@ -151,7 +151,7 @@ class PercentageBasedMissionHealthCheckEvaluatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-2, -1, 100, 101})
+    @ValueSource(ints = {-2, -1, 101, 102})
     void testAbortThresholdShouldThrowExceptionWhenCalledWithInvalidValue(final int input) {
         //given
         final var matcher = mock(MissionHealthCheckMatcher.class);

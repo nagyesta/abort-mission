@@ -61,7 +61,7 @@ public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionH
 
     @SuppressWarnings({"checkstyle:HiddenField", "checkstyle:DesignForExtension"})
     public static final class Builder {
-        private static final int PERCENTAGE_UPPER_LIMIT = 99;
+        private static final int PERCENTAGE_UPPER_LIMIT = 100;
         private static final int PERCENTAGE_LOWER_LIMIT = 0;
         private static final int BURN_IN_LOWER_LIMIT = 1;
         private final MissionStatisticsCollector statisticsCollector;
@@ -88,7 +88,7 @@ public class PercentageBasedMissionHealthCheckEvaluator extends AbstractMissionH
 
         public Builder abortThreshold(final int abortThreshold) {
             if (abortThreshold < PERCENTAGE_LOWER_LIMIT || abortThreshold > PERCENTAGE_UPPER_LIMIT) {
-                throw new IllegalArgumentException("Abort threshold must be in the 0-99 range (inclusive).");
+                throw new IllegalArgumentException("Abort threshold must be in the 0-100 range (inclusive).");
             }
             this.abortThreshold = abortThreshold;
             return this;
