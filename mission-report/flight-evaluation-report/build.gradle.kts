@@ -38,7 +38,7 @@ dependencies {
 
 licensee {
     allow("Apache-2.0")
-    allow("EPL-1.0")
+    allow("EPL-2.0")
     allowUrl("https://opensource.org/license/mit")
 }
 
