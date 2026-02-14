@@ -31,7 +31,6 @@ dependencies {
 licensee {
     allow("Apache-2.0")
     allow("MIT")
-    allow("EPL-1.0")
     allow("EPL-2.0")
     allowUrl("https://raw.githubusercontent.com/hamcrest/JavaHamcrest/master/LICENSE")
     allowUrl("http://www.eclipse.org/org/documents/edl-v10.php")
