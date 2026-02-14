@@ -36,7 +36,6 @@ licensee {
     allow("Apache-2.0")
     allow("EPL-1.0")
     allow("BSD-2-Clause")
-    allowUrl("http://www.opensource.org/licenses/mit-license")
     allowUrl("https://www.opensource.org/licenses/mit-license")
     allowUrl("https://opensource.org/license/mit")
 }
@@ -51,6 +50,7 @@ val copyLegalDocs = tasks.register<Copy>("copyLegalDocs") {
     rename("artifacts.json", "dependency-licenses.json")
     rename("bom.json", "SBOM.json")
 }.get()
+tasks.cyclonedxDirectBom.get().dependsOn(":mission-control:jar")
 copyLegalDocs.dependsOn(tasks.licensee)
 copyLegalDocs.dependsOn(tasks.cyclonedxDirectBom)
 tasks.javadoc.get().dependsOn(copyLegalDocs)

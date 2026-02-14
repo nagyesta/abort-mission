@@ -31,7 +31,6 @@ dependencies {
 licensee {
     allow("Apache-2.0")
     allow("MIT")
-    allow("EPL-1.0")
     allow("EPL-2.0")
     allowUrl("https://raw.githubusercontent.com/hamcrest/JavaHamcrest/master/LICENSE")
     allowUrl("http://www.eclipse.org/org/documents/edl-v10.php")
@@ -49,6 +48,7 @@ val copyLegalDocs = tasks.register<Copy>("copyLegalDocs") {
     rename("artifacts.json", "dependency-licenses.json")
     rename("bom.json", "SBOM.json")
 }.get()
+tasks.cyclonedxDirectBom.get().dependsOn(":mission-control:jar")
 copyLegalDocs.dependsOn(tasks.licensee)
 copyLegalDocs.dependsOn(tasks.cyclonedxDirectBom)
 tasks.javadoc.get().dependsOn(copyLegalDocs)
