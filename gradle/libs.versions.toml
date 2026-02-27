@@ -16,7 +16,7 @@ findbugs = "3.0.2"
 junit4 = "4.13.2"
 jupiter = "6.0.3"
 jupiterPlatform = "6.0.3"
-mockitoCore = "5.21.0"
+mockitoCore = "5.22.0"
 cucumber = "7.34.2"
 testNg = "7.12.0"
 
