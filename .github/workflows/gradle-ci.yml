@@ -19,7 +19,7 @@ on:
       - "!.github/workflows/gradle-ci.yml"
       - "renovate.json"
       - ".whitesource"
-      - "config/ossindex/exclusions.txt"
+      - "config/dependency-check/**"
       - ".idea/**"
       - ".gitignore"
       - ".qlty/**"

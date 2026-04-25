@@ -18,6 +18,7 @@ on:
       - "LICENSE"
       - ".github/**"
       - "!.github/workflows/codeql-analysis.yml"
+      - "config/dependency-check/**"
       - "renovate.json"
       - ".whitesource"
       - ".idea/**"
@@ -57,5 +58,3 @@ jobs:
         run: ./gradlew build -x test
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4.35.2
-      - name: Check dependencies with Gradle
-        run: ./gradlew ossIndexAudit -PossIndexUsername=${{ secrets.OSS_INDEX_USER }} -PossIndexPassword=${{ secrets.OSS_INDEX_PASSWORD }} --info
