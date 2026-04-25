@@ -24,7 +24,6 @@ lombokPlugin = "9.4.0"
 nodePlugin = "7.1.0"
 shadowPlugin = "9.4.1"
 gitVersionerPlugin = "1.6.7"
-indexScanPlugin = "3.1.5"
 owaspPlugin = "12.2.1"
 
 checkstyle = "12.3.1"
@@ -88,7 +87,6 @@ lombok = { id = "io.freefair.lombok", version.ref = "lombokPlugin" }
 node = { id = "com.github.node-gradle.node", version.ref = "nodePlugin" }
 shadow = { id = "com.gradleup.shadow", version.ref = "shadowPlugin" }
 versioner = { id = "io.toolebox.git-versioner", version.ref = "gitVersionerPlugin" }
-index-scan = { id = "org.sonatype.gradle.plugins.scan", version.ref = "indexScanPlugin" }
 owasp-dependencycheck = { id = "org.owasp.dependencycheck", version.ref = "owaspPlugin" }
 cyclonedx-bom = { id = "org.cyclonedx.bom", version.ref = "cycloneDxBomPlugin" }
 licensee-plugin = { id = "app.cash.licensee", version.ref = "licenseePlugin" }

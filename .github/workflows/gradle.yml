@@ -22,7 +22,7 @@ on:
       - "gradle/wrapper/gradle-wrapper.jar"
       - "gradlew"
       - "gradlew.bat"
-      - "config/ossindex/exclusions.txt"
+      - "config/dependency-check/**"
       - "gradle/verification-metadata-clean.xml"
       - "mission-report/flight-evaluation-report/node/package.json"
       - "mission-report/flight-evaluation-report/node/package-lock.json"
