@@ -43,7 +43,7 @@
     "grunt-contrib-sass" : "^2.0.0",
     "grunt-contrib-uglify" : "^5.2.2",
     "grunt-license-finder" : "^2.0.0",
-    "grunt-webpack" : "^7.0.0",
+    "grunt-webpack" : "^8.0.0",
     "jest" : "^30.0.0",
     "jest-cli" : "^30.0.0",
     "load-grunt-tasks" : "^5.1.0",
