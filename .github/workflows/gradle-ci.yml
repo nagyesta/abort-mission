@@ -48,11 +48,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - name: Decode key (if Ubuntu)
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: |
-          mkdir -p ${{ runner.temp }}/.gnupg/
-          echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}" | base64 --decode > ${{ runner.temp }}/.gnupg/secring.gpg
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e # v6.1.0
         with:
@@ -62,17 +57,10 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: >
-          ./gradlew printVersion build sign sonar
-          -Psigning.keyId=${{ secrets.SIGNING_KEY_ID }}
-          -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-          -Psigning.secretKeyRingFile=${{ runner.temp }}/.gnupg/secring.gpg
+          ./gradlew printVersion build sonar
       - name: Build with Gradle (if Windows)
         if: ${{ matrix.os != 'ubuntu-latest' }}
         run: ./gradlew printVersion build
-      - name: Clean-up GPG key (if Ubuntu)
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: |
-          rm -rf ${{ runner.temp }}/.gnupg/
       - name: Upload Test reports - All
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
