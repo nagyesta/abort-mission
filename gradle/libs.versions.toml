@@ -27,7 +27,7 @@ gitVersionerPlugin = "1.6.7"
 owaspPlugin = "12.2.2"
 
 checkstyle = "12.3.1"
-jacoco = "0.8.14"
+jacoco = "0.8.15"
 
 cycloneDxBomPlugin = "3.2.4"
 licenseePlugin = "1.14.1"
