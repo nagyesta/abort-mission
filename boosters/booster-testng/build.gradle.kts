@@ -26,6 +26,7 @@ dependencies {
         exclude(group = "org.junit.jupiter")
         exclude(group = "org.junit.vintage")
     }
+    testImplementation(libs.bundles.logback)
     constraints {
         testImplementation(libs.bundles.spring.test)
     }

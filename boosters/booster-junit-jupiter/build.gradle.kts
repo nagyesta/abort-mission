@@ -24,6 +24,7 @@ dependencies {
     testImplementation(project(":boosters:testkit"))
     testImplementation(libs.spring.boot.starter)
     testImplementation(libs.spring.boot.starter.test)
+    testImplementation(libs.bundles.logback)
     testImplementation(libs.jupiter.platform.testkit)
     constraints {
         testImplementation(libs.bundles.spring.test)
