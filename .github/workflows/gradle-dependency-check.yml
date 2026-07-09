@@ -3,6 +3,16 @@ name: "DependencyCheck"
 on:
   push:
     branches: ["main"]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["main"]
+    paths:
+      - "gradle/**"
+      - ".release-trigger"
+      - ".snyk"
+      - ".github/workflows/gradle-dependency-check.yml"
+      - "mission-report/flight-evaluation-report/node/package.json"
+      - "mission-report/flight-evaluation-report/node/package-lock.json"
   workflow_dispatch:
   schedule:
     # * is a special character in YAML, so we have to quote this string
@@ -11,41 +21,30 @@ on:
 permissions: read-all
 
 jobs:
-  analyze:
-    name: Analyze
+  security:
+    permissions:
+      # required for all workflows
+      security-events: write
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - name: Validate Gradle wrapper
-        uses: gradle/actions/wrapper-validation@3f131e8634966bd73d06cc69884922b02e6faf92 # v6.2.0
-      - name: Set up JDK 17
-        uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5.5.0
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/gradle@9adf32b1121593767fc3c057af55b55db032dc04 # v1.0.0
+        continue-on-error: true # To make sure that SARIF upload gets called
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          distribution: temurin
-          java-version: 17
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92 # v6.2.0
-      - name: Cache DependencyCheck data
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+          command: test
+          args: >
+            --fail-on=all
+            --all-projects
+            --show-vulnerable-paths=all
+            --configuration-matching="^runtimeClasspath|compileClassPath|testRuntimeClasspath|testCompileClassPath$" 
+            --sarif-file-output=snyk.sarif
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4.37.0
         with:
-          path: ${{ env.GRADLE_USER_HOME }}/dependency-check-data/**
-          key: gradle-build-dependency-check
-          restore-keys: |
-            gradle-build-dependency-check
-      - name: Check dependencies with Gradle (If not scheduled)
-        if: ${{ github.event_name != 'schedule' }}
-        run: >
-          ./gradlew dependencyCheckAnalyze 
-          -PnvdApiKey=${{ secrets.NVD_API_KEY }} 
-          --no-parallel
-      - name: Check dependencies with Gradle (If scheduled)
-        if: ${{ github.event_name == 'schedule' }}
-        run: >
-          ./gradlew dependencyCheckAnalyze 
-          -PnvdApiKey=${{ secrets.NVD_API_KEY }} 
-          -PossIndexUsername=${{ secrets.OSS_INDEX_USER }} 
-          -PossIndexPassword=${{ secrets.OSS_INDEX_PASSWORD }} 
-          --no-parallel
+          sarif_file: snyk.sarif
+
 

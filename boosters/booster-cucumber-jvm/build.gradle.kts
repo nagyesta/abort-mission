@@ -23,6 +23,7 @@ dependencies {
     testImplementation(project(":boosters:testkit"))
     testImplementation(libs.spring.boot.starter)
     testImplementation(libs.spring.boot.starter.test)
+    testImplementation(libs.bundles.logback)
     testImplementation(libs.cucumber.spring)
     testImplementation(libs.jupiter.core)
     testImplementation(libs.jupiter.vintage.engine)

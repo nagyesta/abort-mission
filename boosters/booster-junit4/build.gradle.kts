@@ -16,16 +16,17 @@ extra.apply {
 }
 
 dependencies {
-    implementation( project(":mission-control"))
-    implementation( libs.junit)
-    testImplementation( project(":boosters:testkit"))
-    testImplementation( libs.spring.boot.starter)
-    testImplementation( libs.spring.boot.starter.test)
-    testImplementation( libs.jupiter.core)
-    testImplementation( libs.jupiter.vintage.engine)
-    testImplementation( libs.jupiter.platform.testkit)
+    implementation(project(":mission-control"))
+    implementation(libs.junit)
+    testImplementation(project(":boosters:testkit"))
+    testImplementation(libs.spring.boot.starter)
+    testImplementation(libs.spring.boot.starter.test)
+    testImplementation(libs.bundles.logback)
+    testImplementation(libs.jupiter.core)
+    testImplementation(libs.jupiter.vintage.engine)
+    testImplementation(libs.jupiter.platform.testkit)
     constraints {
-        testImplementation( libs.bundles.spring.test)
+        testImplementation(libs.bundles.spring.test)
     }
 }
 

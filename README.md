@@ -13,6 +13,9 @@
 [![last_commit](https://img.shields.io/github/last-commit/nagyesta/abort-mission?logo=git)](https://img.shields.io/github/last-commit/nagyesta/abort-mission?logo=git)
 [![wiki](https://img.shields.io/badge/See-Wiki-informational)](https://github.com/nagyesta/abort-mission/wiki)
 
+> [!NOTE]
+> This project is secured by [Snyk](https://snyk.io)
+
 Abort-Mission is a lightweight Java library providing flexible test abortion support for test groups to allow fast failures.
 
 ## What does this mean?
