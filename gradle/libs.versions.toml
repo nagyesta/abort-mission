@@ -1,5 +1,5 @@
 [versions]
-spring = "7.0.8"
+spring = "7.0.9"
 springBoot = "4.1.0"
 snakeYaml = "2.6"
 thymeleaf = "3.1.5.RELEASE"
