@@ -8,7 +8,7 @@ logback = "1.6.3"
 jsonSchemaValidator = "3.0.7"
 jackson = "3.2.2"
 gson = "2.14.0"
-slf4j = "2.0.18"
+slf4j = "2.0.19"
 
 lombok = "1.18.48"
 findbugs = "3.0.2"
