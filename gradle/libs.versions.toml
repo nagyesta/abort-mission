@@ -20,7 +20,7 @@ mockitoCore = "5.24.0"
 cucumber = "8.0.3"
 testNg = "7.12.0"
 
-lombokPlugin = "9.7.0"
+lombokPlugin = "9.8.0"
 nodePlugin = "7.1.0"
 shadowPlugin = "9.6.1"
 gitVersionerPlugin = "1.6.7"
