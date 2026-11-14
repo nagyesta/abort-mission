@@ -2,7 +2,7 @@
 spring = "7.0.10"
 springBoot = "4.1.2"
 snakeYaml = "2.7"
-thymeleaf = "3.1.6.RELEASE"
+thymeleaf = "3.1.7.RELEASE"
 thymeleafExtrasTime = "3.0.4.RELEASE"
 logback = "1.6.6"
 jsonSchemaValidator = "3.0.9"
